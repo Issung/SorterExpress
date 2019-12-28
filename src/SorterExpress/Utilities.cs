@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using SorterExpress.Forms;
 using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,11 @@ using Vlc.DotNet.Forms;
 
 namespace SorterExpress
 {
+    public enum FileType { Image, Video, Other };
+
     class Utilities
     {
         //public static MD5 md5 = null;
-        public enum FileType { Image, Video, Other };
         public static readonly string[] videoFileExtensions = { ".webm", ".avi", ".mp4", ".flv" };
         public static readonly string[] imageFileExtensions = { ".jpg", ".jpeg", ".jpg_large", ".png", ".bmp", ".gif" };
 
@@ -76,7 +78,7 @@ namespace SorterExpress
         {
             var vlcControl = (VlcControl)sender;
 
-            if (!String.IsNullOrWhiteSpace(Settings.Default.VlcLocation))
+            if (String.IsNullOrWhiteSpace(Settings.Default.VlcLocation))
             {
                 string programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\VideoLAN\\VLC";
                 string x86programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86) + "\\VideoLAN\\VLC";
@@ -214,6 +216,7 @@ namespace SorterExpress
         {
             if (nth <= 0)
                 throw new ArgumentException("Can not find the zeroth index of substring in string. Must start with 1");
+
             int offset = str.IndexOf(value);
             for (int i = 1; i < nth; i++)
             {

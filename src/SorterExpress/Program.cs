@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Linq;
 using System.Threading;
+using SorterExpress.Forms;
 
 namespace SorterExpress
 {

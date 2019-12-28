@@ -1,9 +1,9 @@
 ﻿Todo
 	It is possible that an image or video won't able to be read for some various reasons (already open, corrupted). Need to account for this using try/catch statements.
 	Account for the possibility of 0 files or 0 folders.
-	Opening file dialog at the desired location using pref last_used_directory just isnt working.
 	Seems like there is a problem when doing an undo then saving the image again the fileindex appears to 'go backwards 1'.
 	Mute button is kind of glitched, muting and setting the volume trackbar to 0 fires the event and sets unmuted volume to 0.
+	Chance that when searching for duplicates that the loading gets stuck a few away from max and never finishes.
 
 Maybe
 	
@@ -16,7 +16,5 @@ Done
 	Make it so that changing similarity percentage and searching again doesnt regenerate all file prints unless necessary.
 
 Notes
-	this.vlcControl.VlcLibDirectoryNeeded += new System.EventHandler<Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs>(Helpers.vlclibDirectoryNeeded);
-	this.vlcControl.VlcLibDirectoryNeeded += new EventHandler<VlcLibDirectoryNeededEventArgs>(Helpers.vlclibDirectoryNeeded);
 	Redrawing "Updating" Split Container While Dragging: https://stackoverflow.com/q/6521731/8306962
-	Mac Track Bar: https://www.codeguru.com/csharp/csharp/cs_controls/custom/article.php/c12101/Advanced-TrackBar-Slider-Control-with-MAC-Style-C.htm
+	Mac Track Bar Source: https://www.codeguru.com/csharp/csharp/cs_controls/custom/article.php/c12101/Advanced-TrackBar-Slider-Control-with-MAC-Style-C.htm
