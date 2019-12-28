@@ -1,5 +1,4 @@
 ﻿using System;
-using SorterExpress.Forms;
 using System.Windows.Forms;
 
 namespace SorterExpress.Forms

@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using SorterExpress.Controls;
-using SorterExpress.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,7 +8,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Vlc.DotNet.Forms;
+using Microsoft.VisualBasic.FileIO;
+using SorterExpress.Controls;
+using SorterExpress.Properties;
 
 namespace SorterExpress.Forms
 {
@@ -47,13 +46,12 @@ namespace SorterExpress.Forms
 
             this.FormClosed += ApplicationExit;
 
-            ///
+            threadCountNumeric.Value = Environment.ProcessorCount;
 
-            threadCountNumeric.Value = System.Environment.ProcessorCount;
-
-            printsWorker = new BackgroundWorker();
-            printsWorker.WorkerReportsProgress = true;
-            printsWorker.WorkerSupportsCancellation = true;
+            printsWorker = new BackgroundWorker {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
             printsWorker.DoWork += Worker_DoWork;
             printsWorker.ProgressChanged += Worker_ProgressChanged;
             printsWorker.RunWorkerCompleted += Worker_Completed;
@@ -63,7 +61,7 @@ namespace SorterExpress.Forms
             videosCheckBox.Checked = Settings.Default.DuplicatesSearchVideos;
 
             if (Settings.Default.DuplicatesSearchThreadCount == 0)
-                threadCountNumeric.Value = System.Environment.ProcessorCount;
+                threadCountNumeric.Value = Environment.ProcessorCount;
             else
                 threadCountNumeric.Value = Settings.Default.DuplicatesSearchThreadCount;
 
@@ -74,11 +72,35 @@ namespace SorterExpress.Forms
             }
         }
 
+        private void LoadDirectory(DirectoryInfo dirInfo)
+        {
+            this.directory = dirInfo.FullName;
+
+            if (searchSubfoldersCheckBox.Checked)
+                this.files = Utilities.RecursivelyGetFileNames(dirInfo.FullName);
+            else
+                this.files = dirInfo.GetFileNamesList();
+
+            Logs.Log(true, "Opened '" + directory + "' and found " + files.Count + " files.");
+
+            Utilities.PrintExtensionCounts(files);
+
+            UpdateFileCountLabel();
+            Console.WriteLine("Image file count: " + files.Where(t => Utilities.FileIsImage(t)).Count());
+            Console.WriteLine("Video file count: " + files.Where(t => Utilities.FileIsVideo(t)).Count());
+
+            searchSubfoldersCheckBox.Enabled = true;
+            similarityNumeric.Enabled = true;
+            imagesCheckBox.Enabled = true;
+            videosCheckBox.Enabled = true;
+            threadCountNumeric.Enabled = true;
+            searchButton.Enabled = true;
+        }
+
         public List<string> GetSearchScope(List<string> files)
         {
             return files.Where(
-                t =>
-                (imagesCheckBox.Checked && Utilities.FileIsImage(t)) ||
+                t => (imagesCheckBox.Checked && Utilities.FileIsImage(t)) ||
                 (videosCheckBox.Checked && Utilities.FileIsVideo(t)))
                 .ToList();
         }
@@ -93,8 +115,7 @@ namespace SorterExpress.Forms
             scopeCount = scope.Count;
 
             duplicates = new List<Duplicate>();
-            //prints.RemoveAll(t => !scope.Contains(Path.GetFileName(t.file)));
-            prints.RemoveAll(t => !scope.Contains(t.file.Replace(directory + "\\", "")));
+            prints.RemoveAll(t => !scope.Contains(t.file.Replace(directory, "")));
 
             GeneratePrints(scope, prints, sender as BackgroundWorker, e);
 
@@ -108,7 +129,7 @@ namespace SorterExpress.Forms
 
             for (int i = matchesListBox.Items.Count; i < duplicates.Count; i++)
             {
-                matchesListBox.Items.Add($"{matchesListBox.Items.Count + 1}. Chance: {Math.Round(duplicates[i].chance * 100)}%");
+                matchesListBox.Items.Add($"{matchesListBox.Items.Count + 1}. Chance: {Math.Round(duplicates[i].Chance * 100)}%");
             }
         }
 
@@ -145,9 +166,11 @@ namespace SorterExpress.Forms
             finishedThreads = 0;
 
             cancelTokenSource = new CancellationTokenSource();
-            var options = new ParallelOptions();
-            options.MaxDegreeOfParallelism = (int)threadCountNumeric.Value;
-            options.CancellationToken = cancelTokenSource.Token;
+
+            var options = new ParallelOptions {
+                MaxDegreeOfParallelism = (int)threadCountNumeric.Value,
+                CancellationToken = cancelTokenSource.Token
+            };
 
             try
             {
@@ -160,50 +183,75 @@ namespace SorterExpress.Forms
                             state.Stop();
                         else
                         {
-                            FilePrint print;
-                            
-                            if (!prints.Exists(t => t.file.Replace(directory + "\\", "") == filename))
-                            {
-                                print = new FilePrint(directory + "\\" + filename);
-                                prints.Add(print);
-                            }
-                            else
-                            {
-                                print = prints.Find(t => t.file.Replace(directory + "\\", "") == filename);
-                            }
+                            FilePrint print = null;
 
-                            for (int i = 0; i < prints.Count; i++)
+                            try
                             {
-                                if (print.file != prints[i].file)
+                                if (!prints.Exists(t => t.file.Replace(directory, "") == filename))
                                 {
-                                    if (FilePrint.GetSimilarityPercentage(print, prints[i]) >= similarityNumeric.Value)
-                                    {
-                                        try
-                                        {
-                                            //if (duplicates.Where(t => t.file2 == print.file && t.file1 == prints[i].file).Count() == 0)
-                                            if (!duplicates.Exists(t => t.file2 == print.file && t.file1 == prints[i].file))
-                                            {
-                                                Duplicate duplicate = new Duplicate(print, prints[i]);
-                                                duplicates.Add(duplicate);
-                                            }
-                                        }
-                                        catch (InvalidOperationException ioe)
-                                        {
-                                            Console.WriteLine("InvalidOperationException generating prints. " + ioe.ToString());
-                                        }
-                                    }
+                                    print = new FilePrint(directory + "\\" + filename);
+                                    prints.Add(print);
+                                }
+                                else
+                                {
+                                    //This should never get hit...
+                                    print = prints.Find(t => t.file.Replace(directory, "") == filename);
                                 }
                             }
+                            catch //Exceptions can occur from accessing files.
+                            {
+                                Console.WriteLine($"Error occured while generating print for file {directory}\\{filename}.");
+                                print = null;
+                            }
 
-                            finishedThreads++;
-                            worker.ReportProgress(finishedThreads * 100 / files.Count);
+                            if (print != null)
+                            {
+                                // For each print that is currently generated
+                                for (int i = 0; i < prints.Count; i++)
+                                {
+                                    try
+                                    {
+                                        // Don't match with self
+                                        if (print.file != prints[i].file)
+                                        {
+                                            // If similarity is above threshold
+                                            if (FilePrint.GetSimilarityPercentage(print, prints[i]) >= similarityNumeric.Value)
+                                            {
+                                                try
+                                                {
+                                                    // If the duplicate hasnt already been found or found in reverse (x is like y |or| y is like x)
+                                                    if (!duplicates.Exists(t => t.File2 == print.file && t.File1 == prints[i].file))
+                                                    {
+                                                        duplicates.Add(new Duplicate(print, prints[i]));
+                                                    }
+                                                }
+                                                catch (InvalidOperationException ioe)
+                                                {
+                                                    Console.WriteLine($"Encountered InvalidOperationException while generating prints. {ioe.Message} - {ioe.StackTrace}");
+                                                }
+                                            }
+                                        }
+                                    }
+                                    catch (IndexOutOfRangeException ioore)
+                                    {
+                                        Console.WriteLine($"Encountered IndexOutOfRangeException while generating prints. {ioore.Message} - {ioore.StackTrace}");
+                                        // Catching the if statement "if (print.file != prints[i].file)". Can occasionally get ahead of itself (2% chance).
+                                    }
+                                }
+
+                                finishedThreads++;
+                                worker.ReportProgress(finishedThreads * 100 / files.Count);
+                            }
                         }
-                    }
-                );
+                    });
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException oce)
             {
-
+                Console.WriteLine($"Encountered OperationCanceledException while generating prints, this is probably intentional. {oce.Message} - {oce.StackTrace}");
+            }
+            catch (NullReferenceException nre)
+            {
+                Console.WriteLine($"Encountered NullReferenceException while generating prints. {nre.Message} - {nre.StackTrace}");
             }
 
             return prints;
@@ -274,7 +322,7 @@ namespace SorterExpress.Forms
 
         private void ShowFileInfo(Side side, Size size)
         {
-            var filename = side == Side.Left ? duplicates[matchesListBox.SelectedIndex].file1 : duplicates[matchesListBox.SelectedIndex].file2;
+            var filename = side == Side.Left ? duplicates[matchesListBox.SelectedIndex].File1 : duplicates[matchesListBox.SelectedIndex].File2;
             var vlcControl = side == Side.Left ? mediaViewerLeft.VlcControl : mediaViewerLeft.VlcControl;
             RichTextBox infoBox = (side == Side.Left) ? infoRichTextBoxLeft : infoRichTextBoxRight;
 
@@ -287,15 +335,15 @@ namespace SorterExpress.Forms
             }
 
             var tags = Utilities.GetTags(filename);
-            var vsTags = Utilities.GetTags(side == Side.Left ? duplicates[matchesListBox.SelectedIndex].file2 : duplicates[matchesListBox.SelectedIndex].file1);
+            var otherFileTags = Utilities.GetTags(side == Side.Left ? duplicates[matchesListBox.SelectedIndex].File2 : duplicates[matchesListBox.SelectedIndex].File1);
 
             infoBox.Text += $"'Tags': {tags.Length}\n";
 
             for (int i = 0; i < tags.Length; i++)
             {
-                if (vsTags.Contains(tags[i]))
-                    infoBox.SelectionFont = new Font(infoBox.Font, FontStyle.Regular);
-                else
+                infoBox.SelectionFont = new Font(infoBox.Font, FontStyle.Regular);
+
+                if (!otherFileTags.Contains(tags[i]))
                     infoBox.SelectionFont = new Font(infoBox.Font, FontStyle.Bold);
 
                 infoBox.AppendText($"{tags[i]}\n");
@@ -318,31 +366,6 @@ namespace SorterExpress.Forms
             }
 
             fileCountLabel.Text = $"Files: {count}";
-        }
-
-        private void LoadDirectory(DirectoryInfo dirInfo)
-        {
-            this.directory = dirInfo.FullName;
-
-            if (searchSubfoldersCheckBox.Checked)
-                this.files = Utilities.RecursivelyGetFileNames(dirInfo.FullName);
-            else
-                this.files = dirInfo.GetFileNamesList();
-
-            Logs.Log(true, "Opened '" + directory + "' and found " + files.Count + " files.");
-
-            Utilities.PrintExtensionCounts(files);
-
-            UpdateFileCountLabel();
-            Console.WriteLine("Image file count: " + files.Where(t => Utilities.FileIsImage(t)).Count());
-            Console.WriteLine("Video file count: " + files.Where(t => Utilities.FileIsVideo(t)).Count());
-
-            searchSubfoldersCheckBox.Enabled = true;
-            similarityNumeric.Enabled = true;
-            imagesCheckBox.Enabled = true;
-            videosCheckBox.Enabled = true;
-            threadCountNumeric.Enabled = true;
-            searchButton.Enabled = true;
         }
 
         private void BeginSearch()
@@ -382,11 +405,11 @@ namespace SorterExpress.Forms
                     {
                         if (FilePrint.GetSimilarityPercentage(prints[i], prints[j]) >= similarityNumeric.Value)
                         {
-                            if (duplicates.Where(t => t.file2 == prints[i].file && t.file1 == prints[i].file).Count() == 0)
+                            if (duplicates.Where(t => t.File2 == prints[i].file && t.File1 == prints[i].file).Count() == 0)
                             {
                                 Duplicate duplicate = new Duplicate(prints[i], prints[j]);
                                 duplicates.Add(duplicate);
-                                matchesListBox.Items.Add($"{matchesListBox.Items.Count + 1}. Chance: {duplicate.chance * 100}%");
+                                matchesListBox.Items.Add($"{matchesListBox.Items.Count + 1}. Chance: {duplicate.Chance * 100}%");
                             }
                         }
                     }
@@ -435,7 +458,7 @@ namespace SorterExpress.Forms
 
             for (int i = 0; i < duplicates.Count; i++)
             {
-                if (duplicates[i].file1 == filePath || duplicates[i].file2 == filePath)
+                if (duplicates[i].File1 == filePath || duplicates[i].File2 == filePath)
                 {
                     duplicates.RemoveAt(i);
                     matchesListBox.Items.RemoveAt(i);
@@ -465,7 +488,7 @@ namespace SorterExpress.Forms
             {
                 int selectedIndex = matchesListBox.SelectedIndex;
 
-                DeleteFile(inspectingDuplicate.file2);
+                DeleteFile(inspectingDuplicate.File2);
 
                 if (matchesListBox.Items.Count > selectedIndex)
                     matchesListBox.SelectedIndex = selectedIndex;
@@ -480,7 +503,7 @@ namespace SorterExpress.Forms
             {
                 int selectedIndex = matchesListBox.SelectedIndex;
 
-                DeleteFile(inspectingDuplicate.file1);
+                DeleteFile(inspectingDuplicate.File1);
 
                 if (matchesListBox.Items.Count > selectedIndex)
                     matchesListBox.SelectedIndex = selectedIndex;
@@ -505,8 +528,8 @@ namespace SorterExpress.Forms
                 Console.WriteLine("matchesListBox_SelectedIndexChanged");
                 inspectingDuplicate = duplicates[matchesListBox.SelectedIndex];
 
-                LoadFile(Side.Left, inspectingDuplicate.file1);
-                LoadFile(Side.Right, inspectingDuplicate.file2);
+                LoadFile(Side.Left, inspectingDuplicate.File1);
+                LoadFile(Side.Right, inspectingDuplicate.File2);
             }
             else
             {
@@ -525,36 +548,6 @@ namespace SorterExpress.Forms
                 LoadDirectory(dirInfo);
             }
         }
-
-        /*private void videoScrubUpdate(object sender, EventArgs e)
-        {
-            if (vlcControlLeft.IsPlaying)
-                videoPositionTrackBarLeft.Value = (int)(vlcControlLeft.Position * 100);
-
-            if (vlcControlRight.IsPlaying)
-                videoPositionTrackBarRight.Value = (int)(vlcControlRight.Position * 100);
-        }
-
-        private void videoPositionTrackbar_MouseDown(object sender, MouseEventArgs e)
-        {
-            var vlc = sender == videoPositionTrackBarLeft ? vlcControlLeft : vlcControlRight;
-            vlc.Pause();
-        }
-
-        private void videoPositionTrackbar_ValueScrolled(object sender, EventArgs e)
-        {
-            var trackBar = (MACTrackBar)sender;
-            var vlc = sender == videoPositionTrackBarLeft ? vlcControlLeft : vlcControlRight;
-            vlc.Position = (trackBar.Value / 100f);
-        }
-
-        private void videoPositionTrackbar_MouseUp(object sender, MouseEventArgs e)
-        {
-            var trackBar = (MACTrackBar)sender;
-            var vlc = sender == videoPositionTrackBarLeft ? vlcControlLeft : vlcControlRight;
-            vlc.Position = (trackBar.Value / 100f);
-            vlc.Play();
-        }*/
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
@@ -578,14 +571,12 @@ namespace SorterExpress.Forms
 
         private void SearchSubfoldersCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            //TODO: Refactor this code somewhere else, also use in constructor/load methods.
             if (directory != null && !String.IsNullOrWhiteSpace(directory))
             {
                 if (searchSubfoldersCheckBox.Checked)
                 {
-                    /*files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories)
-                        .Select(t => t.Replace(directory, ""))
-                        .ToList();*/
-                    files = Utilities.RecursivelyGetFileNames(directory).Select(t => t.Replace(directory, "")).ToList();
+                    files = Utilities.RecursivelyGetFileNames(directory).Select(t => t.Replace(directory, "").Substring(1)).ToList();
                 }
                 else
                     files = Directory.GetFiles(directory)
@@ -594,13 +585,6 @@ namespace SorterExpress.Forms
             }
 
             UpdateFileCountLabel();
-        }
-
-        #endregion
-
-        private void DuplicatesForm_Load(object sender, EventArgs e)
-        {
-
         }
 
         /// <summary>
@@ -613,7 +597,7 @@ namespace SorterExpress.Forms
                 int selectedIndex = matchesListBox.SelectedIndex;
 
                 // Can't do DeleteFile(inspectingDuplicate.fileX) because the duplicate object will be deleted after the first operation.
-                string file1 = inspectingDuplicate.file1, file2 = inspectingDuplicate.file2;
+                string file1 = inspectingDuplicate.File1, file2 = inspectingDuplicate.File2;
 
                 DeleteFile(file1);
                 DeleteFile(file2);
@@ -624,6 +608,8 @@ namespace SorterExpress.Forms
                     matchesListBox.SelectedIndex = matchesListBox.Items.Count - 1;
             }
         }
+
+        #endregion
 
         private void ApplicationExit(object sender, FormClosedEventArgs e)
         {

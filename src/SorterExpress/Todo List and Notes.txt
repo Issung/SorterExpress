@@ -4,6 +4,12 @@
 	Seems like there is a problem when doing an undo then saving the image again the fileindex appears to 'go backwards 1'.
 	Mute button is kind of glitched, muting and setting the volume trackbar to 0 fires the event and sets unmuted volume to 0.
 	Chance that when searching for duplicates that the loading gets stuck a few away from max and never finishes.
+	Add sortable list to duplicate searcher so user can search by most likely to be duplicate.
+	Highlighting tags in bold that are not on the other file in the duplicate finder seems to be broken.
+	Add more options to duplicate finder:
+		Merge tags to selected copy.
+		Keep largest.
+		Keep file with most tags.
 
 Maybe
 	

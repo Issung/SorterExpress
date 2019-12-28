@@ -4,7 +4,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 using System.Drawing;
-using Vlc.DotNet.Forms;
 using SorterExpress.Properties;
 
 namespace SorterExpress.Forms

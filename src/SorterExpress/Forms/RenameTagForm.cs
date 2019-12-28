@@ -2,10 +2,8 @@
 using System.IO;
 using System.Data;
 using System.Linq;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Vlc.DotNet.Forms;
 
 namespace SorterExpress.Forms
 {

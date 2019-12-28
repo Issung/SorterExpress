@@ -25,9 +25,6 @@ public class FilePrint
         }
         else if (Utilities.FileIsVideo(filePath))
         {
-            //ShellFile shellFile = ShellFile.FromFilePath(filePath);
-            //Bitmap shellThumb = shellFile.Thumbnail.SmallBitmap;
-
             if (ffmpeg == null)
                 ffmpeg = new FFMPEG();
 
@@ -38,16 +35,14 @@ public class FilePrint
             if (!File.Exists(output))
                 ffmpeg.GetThumbnailWait(filePath, output, 60);
 
-            this.size = new Size(0, 0);// ffprobe.GetSizeWait(filePath);
+            this.size = new Size(0, 0);
 
             // Should put a try catch around this, if file is corrupted or anything it leads to issues.
             img = new Bitmap(output);
-            //img = new Bitmap(shellThumb);
 
             CalculatePicturePrint(img);
 
             img.Dispose();
-            //shellFile.Dispose();
         }
     }
 
