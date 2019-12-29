@@ -120,6 +120,24 @@
   <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="infoRichTextBoxLeft.ToolTip" xml:space="preserve">
+    <value>A tag in bold indicates it is not on the other file.
+A tag in italics indicates it is found in your custom tag library.
+A tag in both bold &amp; italics indicates both of the above things.
+'Tags' is in quotes as this program can only guess what is intended as a tag and what is not.</value>
+  </data>
+  <data name="infoRichTextBoxRight.ToolTip" xml:space="preserve">
+    <value>A tag in bold indicates it is not on the other file.
+A tag in italics indicates it is found in your custom tag library.
+A tag in both bold &amp; italics indicates both of the above things.
+'Tags' is in quotes as this program can only guess what is intended as a tag and what is not.
+</value>
+  </data>
+  <data name="onlyKeepLibraryTagsCheckBox.ToolTip" xml:space="preserve">
+    <value>When using the "Merge File Tags" option, if this option is ticked then only tags
+that are found within your custom tag collection will be kept in the merge. 
+This can be useful to get rid of "non-tags" like post IDs, eg. 127437018616.</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

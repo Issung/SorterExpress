@@ -9,7 +9,7 @@ namespace SorterExpress.Forms
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+        
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -50,20 +50,22 @@ namespace SorterExpress.Forms
             this.threadCountNumeric = new System.Windows.Forms.NumericUpDown();
             this.cancelButton = new System.Windows.Forms.Button();
             this.searchSubfoldersCheckBox = new System.Windows.Forms.CheckBox();
+            this.mergeFileTagsCheckBox = new System.Windows.Forms.CheckBox();
+            this.onlyKeepLibraryTagsCheckBox = new System.Windows.Forms.CheckBox();
             this.loadingLabel = new System.Windows.Forms.Label();
             this.filenameRichTextBoxLeft = new System.Windows.Forms.RichTextBox();
             this.filenameRichTextBoxRight = new System.Windows.Forms.RichTextBox();
             this.sidesLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.leftPanel = new System.Windows.Forms.Panel();
-            this.mediaViewerLeft = new SorterExpress.Controls.MediaViewer();
             this.rightPanel = new System.Windows.Forms.Panel();
-            this.mediaViewerRight = new SorterExpress.Controls.MediaViewer();
             this.keepButtonsLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.fileCountLabel = new System.Windows.Forms.Label();
             this.keepNeitherButton = new System.Windows.Forms.Button();
+            this.mediaViewerLeft = new SorterExpress.Controls.MediaViewer();
+            this.mediaViewerRight = new SorterExpress.Controls.MediaViewer();
             ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).BeginInit();
             this.sidesLayoutPanel.SuspendLayout();
@@ -175,30 +177,28 @@ namespace SorterExpress.Forms
             // infoRichTextBoxLeft
             // 
             this.infoRichTextBoxLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.infoRichTextBoxLeft.Enabled = false;
             this.infoRichTextBoxLeft.Location = new System.Drawing.Point(0, 0);
             this.infoRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(10);
             this.infoRichTextBoxLeft.Name = "infoRichTextBoxLeft";
-            this.infoRichTextBoxLeft.Size = new System.Drawing.Size(100, 256);
+            this.infoRichTextBoxLeft.ReadOnly = true;
+            this.infoRichTextBoxLeft.Size = new System.Drawing.Size(100, 235);
             this.infoRichTextBoxLeft.TabIndex = 3;
             this.infoRichTextBoxLeft.Text = "";
-            this.toolTip.SetToolTip(this.infoRichTextBoxLeft, "A tag in bold indicates it is not on the other file.\r\nTags may not be actual tags" +
-        ".");
+            this.toolTip.SetToolTip(this.infoRichTextBoxLeft, resources.GetString("infoRichTextBoxLeft.ToolTip"));
             // 
             // infoRichTextBoxRight
             // 
             this.infoRichTextBoxRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.infoRichTextBoxRight.Enabled = false;
             this.infoRichTextBoxRight.Location = new System.Drawing.Point(10, 0);
             this.infoRichTextBoxRight.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.infoRichTextBoxRight.Name = "infoRichTextBoxRight";
-            this.infoRichTextBoxRight.Size = new System.Drawing.Size(100, 256);
+            this.infoRichTextBoxRight.ReadOnly = true;
+            this.infoRichTextBoxRight.Size = new System.Drawing.Size(100, 235);
             this.infoRichTextBoxRight.TabIndex = 3;
             this.infoRichTextBoxRight.Text = "";
-            this.toolTip.SetToolTip(this.infoRichTextBoxRight, "A tag in bold indicates it is not on the other file.\r\nTags may not be actual tags" +
-        ".");
+            this.toolTip.SetToolTip(this.infoRichTextBoxRight, resources.GetString("infoRichTextBoxRight.ToolTip"));
             // 
             // searchButton
             // 
@@ -294,6 +294,33 @@ namespace SorterExpress.Forms
             this.searchSubfoldersCheckBox.UseVisualStyleBackColor = true;
             this.searchSubfoldersCheckBox.CheckedChanged += new System.EventHandler(this.SearchSubfoldersCheckBox_CheckedChanged);
             // 
+            // mergeFileTagsCheckBox
+            // 
+            this.mergeFileTagsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.mergeFileTagsCheckBox.AutoSize = true;
+            this.mergeFileTagsCheckBox.Location = new System.Drawing.Point(197, 306);
+            this.mergeFileTagsCheckBox.Name = "mergeFileTagsCheckBox";
+            this.mergeFileTagsCheckBox.Size = new System.Drawing.Size(112, 17);
+            this.mergeFileTagsCheckBox.TabIndex = 28;
+            this.mergeFileTagsCheckBox.Text = "Merge File Tags �";
+            this.toolTip.SetToolTip(this.mergeFileTagsCheckBox, "When selecting a file to keep (left or right), if this option is ticked, then Sor" +
+        "ter Express will merge\r\nthe tags of both the filenames together and rename the k" +
+        "ept file with the new tags combination.");
+            this.mergeFileTagsCheckBox.UseVisualStyleBackColor = true;
+            this.mergeFileTagsCheckBox.CheckedChanged += new System.EventHandler(this.mergeFileTagsCheckBox_CheckedChanged);
+            // 
+            // onlyKeepLibraryTagsCheckBox
+            // 
+            this.onlyKeepLibraryTagsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.onlyKeepLibraryTagsCheckBox.AutoSize = true;
+            this.onlyKeepLibraryTagsCheckBox.Location = new System.Drawing.Point(315, 306);
+            this.onlyKeepLibraryTagsCheckBox.Name = "onlyKeepLibraryTagsCheckBox";
+            this.onlyKeepLibraryTagsCheckBox.Size = new System.Drawing.Size(205, 17);
+            this.onlyKeepLibraryTagsCheckBox.TabIndex = 29;
+            this.onlyKeepLibraryTagsCheckBox.Text = "Only keep tags that are in tag library �";
+            this.toolTip.SetToolTip(this.onlyKeepLibraryTagsCheckBox, resources.GetString("onlyKeepLibraryTagsCheckBox.ToolTip"));
+            this.onlyKeepLibraryTagsCheckBox.UseVisualStyleBackColor = true;
+            // 
             // loadingLabel
             // 
             this.loadingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -311,10 +338,10 @@ namespace SorterExpress.Forms
             this.filenameRichTextBoxLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filenameRichTextBoxLeft.Enabled = false;
             this.filenameRichTextBoxLeft.Location = new System.Drawing.Point(0, 0);
             this.filenameRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(0);
             this.filenameRichTextBoxLeft.Name = "filenameRichTextBoxLeft";
+            this.filenameRichTextBoxLeft.ReadOnly = true;
             this.filenameRichTextBoxLeft.Size = new System.Drawing.Size(343, 50);
             this.filenameRichTextBoxLeft.TabIndex = 13;
             this.filenameRichTextBoxLeft.Text = "";
@@ -324,10 +351,10 @@ namespace SorterExpress.Forms
             this.filenameRichTextBoxRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filenameRichTextBoxRight.Enabled = false;
             this.filenameRichTextBoxRight.Location = new System.Drawing.Point(353, 0);
             this.filenameRichTextBoxRight.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.filenameRichTextBoxRight.Name = "filenameRichTextBoxRight";
+            this.filenameRichTextBoxRight.ReadOnly = true;
             this.filenameRichTextBoxRight.Size = new System.Drawing.Size(334, 50);
             this.filenameRichTextBoxRight.TabIndex = 14;
             this.filenameRichTextBoxRight.Text = "";
@@ -346,7 +373,7 @@ namespace SorterExpress.Forms
             this.sidesLayoutPanel.Name = "sidesLayoutPanel";
             this.sidesLayoutPanel.RowCount = 1;
             this.sidesLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.sidesLayoutPanel.Size = new System.Drawing.Size(686, 256);
+            this.sidesLayoutPanel.Size = new System.Drawing.Size(686, 235);
             this.sidesLayoutPanel.TabIndex = 15;
             // 
             // leftPanel
@@ -357,17 +384,8 @@ namespace SorterExpress.Forms
             this.leftPanel.Location = new System.Drawing.Point(0, 0);
             this.leftPanel.Margin = new System.Windows.Forms.Padding(0);
             this.leftPanel.Name = "leftPanel";
-            this.leftPanel.Size = new System.Drawing.Size(343, 256);
+            this.leftPanel.Size = new System.Drawing.Size(343, 235);
             this.leftPanel.TabIndex = 5;
-            // 
-            // mediaViewerLeft
-            // 
-            this.mediaViewerLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mediaViewerLeft.Location = new System.Drawing.Point(100, 0);
-            this.mediaViewerLeft.Name = "mediaViewerLeft";
-            this.mediaViewerLeft.Size = new System.Drawing.Size(243, 256);
-            this.mediaViewerLeft.TabIndex = 4;
-            this.mediaViewerLeft.VideoPosition = -1F;
             // 
             // rightPanel
             // 
@@ -377,19 +395,8 @@ namespace SorterExpress.Forms
             this.rightPanel.Location = new System.Drawing.Point(343, 0);
             this.rightPanel.Margin = new System.Windows.Forms.Padding(0);
             this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Size = new System.Drawing.Size(343, 256);
+            this.rightPanel.Size = new System.Drawing.Size(343, 235);
             this.rightPanel.TabIndex = 4;
-            // 
-            // mediaViewerRight
-            // 
-            this.mediaViewerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mediaViewerRight.Location = new System.Drawing.Point(110, 0);
-            this.mediaViewerRight.Name = "mediaViewerRight";
-            this.mediaViewerRight.Size = new System.Drawing.Size(233, 256);
-            this.mediaViewerRight.TabIndex = 4;
-            this.mediaViewerRight.VideoPosition = -1F;
             // 
             // keepButtonsLayoutPanel
             // 
@@ -463,11 +470,33 @@ namespace SorterExpress.Forms
             this.keepNeitherButton.UseVisualStyleBackColor = true;
             this.keepNeitherButton.Click += new System.EventHandler(this.keepNeitherButton_Click);
             // 
+            // mediaViewerLeft
+            // 
+            this.mediaViewerLeft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mediaViewerLeft.Location = new System.Drawing.Point(100, 0);
+            this.mediaViewerLeft.Name = "mediaViewerLeft";
+            this.mediaViewerLeft.Size = new System.Drawing.Size(243, 235);
+            this.mediaViewerLeft.TabIndex = 4;
+            this.mediaViewerLeft.VideoPosition = -1F;
+            // 
+            // mediaViewerRight
+            // 
+            this.mediaViewerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mediaViewerRight.Location = new System.Drawing.Point(110, 0);
+            this.mediaViewerRight.Name = "mediaViewerRight";
+            this.mediaViewerRight.Size = new System.Drawing.Size(233, 235);
+            this.mediaViewerRight.TabIndex = 4;
+            this.mediaViewerRight.VideoPosition = -1F;
+            // 
             // DuplicatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(893, 411);
+            this.Controls.Add(this.onlyKeepLibraryTagsCheckBox);
+            this.Controls.Add(this.mergeFileTagsCheckBox);
             this.Controls.Add(this.keepNeitherButton);
             this.Controls.Add(this.searchSubfoldersCheckBox);
             this.Controls.Add(this.fileCountLabel);
@@ -536,5 +565,7 @@ namespace SorterExpress.Forms
         private System.Windows.Forms.Button keepNeitherButton;
         private Controls.MediaViewer mediaViewerLeft;
         private Controls.MediaViewer mediaViewerRight;
+        private System.Windows.Forms.CheckBox mergeFileTagsCheckBox;
+        private System.Windows.Forms.CheckBox onlyKeepLibraryTagsCheckBox;
     }
 }

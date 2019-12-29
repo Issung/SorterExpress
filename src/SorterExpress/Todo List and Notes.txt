@@ -5,9 +5,8 @@
 	Mute button is kind of glitched, muting and setting the volume trackbar to 0 fires the event and sets unmuted volume to 0.
 	Chance that when searching for duplicates that the loading gets stuck a few away from max and never finishes.
 	Add sortable list to duplicate searcher so user can search by most likely to be duplicate.
-	Highlighting tags in bold that are not on the other file in the duplicate finder seems to be broken.
+	
 	Add more options to duplicate finder:
-		Merge tags to selected copy.
 		Keep largest.
 		Keep file with most tags.
 
@@ -15,6 +14,10 @@ Maybe
 	
 
 Done
+	Highlighting tags in bold that are not on the other file in the duplicate finder is fixed.
+	Add more options to duplicate finder:
+		Merge tags to selected copy.
+
 	Add ability to rename a tag in all given files.
 	Add video functionality to duplicate finder.
 		Mute buttons not yet working.

@@ -39,6 +39,9 @@ namespace SorterExpress.Forms
 
         Duplicate inspectingDuplicate;
 
+        public bool MergeFileTags { get { return mergeFileTagsCheckBox.Checked; } }
+        public bool OnlyKeepLibraryTags { get { return onlyKeepLibraryTagsCheckBox.Checked; } }
+
         public DuplicatesForm(DirectoryInfo dirInfo)
         {
             InitializeComponent();
@@ -59,6 +62,10 @@ namespace SorterExpress.Forms
             similarityNumeric.Value = Settings.Default.DuplicatesSearchSimilarityPercentage;
             imagesCheckBox.Checked = Settings.Default.DuplicatesSearchImages;
             videosCheckBox.Checked = Settings.Default.DuplicatesSearchVideos;
+
+            mergeFileTagsCheckBox.Checked = Settings.Default.DuplicatesMergeFileTags;
+            onlyKeepLibraryTagsCheckBox.Checked = Settings.Default.DuplicatesOnlyKeepTagsInLibrary;
+            onlyKeepLibraryTagsCheckBox.Enabled = mergeFileTagsCheckBox.Checked;
 
             if (Settings.Default.DuplicatesSearchThreadCount == 0)
                 threadCountNumeric.Value = Environment.ProcessorCount;
@@ -237,6 +244,10 @@ namespace SorterExpress.Forms
                                         Console.WriteLine($"Encountered IndexOutOfRangeException while generating prints. {ioore.Message} - {ioore.StackTrace}");
                                         // Catching the if statement "if (print.file != prints[i].file)". Can occasionally get ahead of itself (2% chance).
                                     }
+                                    catch (NullReferenceException nre)
+                                    {
+                                        Console.WriteLine($"Encountered NullReferenceException while generating prints. {nre.Message} - {nre.StackTrace}");
+                                    }
                                 }
 
                                 finishedThreads++;
@@ -288,17 +299,16 @@ namespace SorterExpress.Forms
 
             if (Utilities.FileIsImage(filePath))
             {
-                string location = (filePath.Contains("/") || filePath.Contains("\\") ? filePath : directory + "/" + filePath);
-                mediaViewer.LoadMedia(location);
+                //string location = (filePath.Contains("/") || filePath.Contains("\\") ? filePath : directory + "/" + filePath);
+                //mediaViewer.LoadMedia(location);
+                mediaViewer.LoadMedia(filePath);
                 ShowFileInfo(side, mediaViewer.PictureBox.Image.Size);
-                
             }
             else if (Utilities.FileIsVideo(filePath))
             {
                 mediaViewer.LoadMedia(filePath);
 
                 Size size = prints.Find(t => t.file == filePath)?.size ?? new Size(0, 0);
-                ShowFileInfo(side, size);
 
                 mediaViewer.VlcControl.Playing += (o, ea) =>
                 {
@@ -313,38 +323,48 @@ namespace SorterExpress.Forms
                             string width = media.TracksInformations.Length > 0 ? media.TracksInformations[0].Video.Width.ToString() : "?";
                             string height = media.TracksInformations.Length > 0 ? media.TracksInformations[0].Video.Height.ToString() : "?";
 
-                            infoBox.Text = $"Width: {width}\nHeight: {height}\nDuration: {media.Duration.Seconds}s\n" + infoBox.Text;
+                            infoBox.AppendText($"Width: {width}\n" +
+                                $"Height: {height}\n" +
+                                $"Duration: {media.Duration.Seconds}s\n");
+
+                            ShowFileInfo(side, size, false);
                         }
                     });
                 };
             }
         }
 
-        private void ShowFileInfo(Side side, Size size)
+        private void ShowFileInfo(Side side, Size size, bool clear = true)
         {
             var filename = side == Side.Left ? duplicates[matchesListBox.SelectedIndex].File1 : duplicates[matchesListBox.SelectedIndex].File2;
-            var vlcControl = side == Side.Left ? mediaViewerLeft.VlcControl : mediaViewerLeft.VlcControl;
             RichTextBox infoBox = (side == Side.Left) ? infoRichTextBoxLeft : infoRichTextBoxRight;
 
-            infoBox.Text = "";
+            if (clear)
+                infoBox.Text = "";
 
             if (size.Width != 0 && size.Height != 0)
             {
-                infoBox.Text += $"Width: {size.Width}\n";
-                infoBox.Text += $"Height: {size.Height}\n";
+                infoBox.AppendText($"Width: {size.Width}\n");
+                infoBox.AppendText($"Height: {size.Height}\n");
             }
 
             var tags = Utilities.GetTags(filename);
             var otherFileTags = Utilities.GetTags(side == Side.Left ? duplicates[matchesListBox.SelectedIndex].File2 : duplicates[matchesListBox.SelectedIndex].File1);
 
-            infoBox.Text += $"'Tags': {tags.Length}\n";
+            infoBox.AppendText($"'Tags': {tags.Length}\n");
 
             for (int i = 0; i < tags.Length; i++)
             {
                 infoBox.SelectionFont = new Font(infoBox.Font, FontStyle.Regular);
 
                 if (!otherFileTags.Contains(tags[i]))
-                    infoBox.SelectionFont = new Font(infoBox.Font, FontStyle.Bold);
+                    infoBox.SelectionFont = new Font(infoBox.Font, infoBox.SelectionFont.Style | FontStyle.Bold);
+
+                if (Settings.Default.Tags.Contains(tags[i]))
+                    infoBox.SelectionFont = new Font(infoBox.Font, infoBox.SelectionFont.Style | FontStyle.Italic);
+
+                //if (!otherFileTags.Contains(tags[i]) && Settings.Default.Tags.Contains(tags[i]))
+                    //infoBox.SelectionFont = new Font(infoBox.Font, FontStyle.Bold | FontStyle.Italic);
 
                 infoBox.AppendText($"{tags[i]}\n");
             }
@@ -480,15 +500,43 @@ namespace SorterExpress.Forms
             }
         }
 
-        #region Form Events
-
-        private void KeepLeftButton_Click(object sender, EventArgs e)
+        private void KeepSide(Side side)
         {
             if (CheckDeletingFilesOkay())
             {
+                mediaViewerLeft.UnloadMedia();
+                mediaViewerRight.UnloadMedia();
+
+                string fileToKeep = (side == Side.Left) ? inspectingDuplicate.File1 : inspectingDuplicate.File2;
+                string fileToDelete = (side == Side.Left) ? inspectingDuplicate.File2 : inspectingDuplicate.File1;
+
                 int selectedIndex = matchesListBox.SelectedIndex;
 
-                DeleteFile(inspectingDuplicate.File2);
+                if (MergeFileTags)
+                {
+                    var mergedTags = Utilities.GetTags(fileToKeep).ToList();
+                    mergedTags.AddRange(Utilities.GetTags(fileToDelete));
+                    mergedTags = mergedTags.GroupBy(t => t).Select(t => t.Key).ToList();
+
+                    if (OnlyKeepLibraryTags)
+                    {
+                        mergedTags.RemoveAll(t => !Settings.Default.Tags.Contains(t));
+                    }
+
+                    mergedTags.Sort();
+
+                    string fileToKeepNewName = string.Join(" ", mergedTags) + Path.GetExtension(fileToKeep).ToLower();
+
+                    Utilities.MoveFile(
+                        fileToKeep, $"{Path.GetDirectoryName(fileToKeep)}\\{fileToKeepNewName}");
+
+                    Console.WriteLine($"Renamed");
+                    Console.WriteLine(Path.GetFileName(fileToKeep));
+                    Console.WriteLine("to");
+                    Console.WriteLine(fileToKeepNewName);
+                }
+
+                DeleteFile(fileToDelete);
 
                 if (matchesListBox.Items.Count > selectedIndex)
                     matchesListBox.SelectedIndex = selectedIndex;
@@ -497,19 +545,16 @@ namespace SorterExpress.Forms
             }
         }
 
+        #region Form Events
+
+        private void KeepLeftButton_Click(object sender, EventArgs e)
+        {
+            KeepSide(Side.Left);
+        }
+
         private void KeepRightButton_Click(object sender, EventArgs e)
         {
-            if (CheckDeletingFilesOkay())
-            {
-                int selectedIndex = matchesListBox.SelectedIndex;
-
-                DeleteFile(inspectingDuplicate.File1);
-
-                if (matchesListBox.Items.Count > selectedIndex)
-                    matchesListBox.SelectedIndex = selectedIndex;
-                else if (matchesListBox.Items.Count != 0)
-                    matchesListBox.SelectedIndex = matchesListBox.Items.Count - 1;
-            }
+            KeepSide(Side.Right);
         }
 
         private void KeepBothButton_Click(object sender, EventArgs e)
@@ -587,9 +632,6 @@ namespace SorterExpress.Forms
             UpdateFileCountLabel();
         }
 
-        /// <summary>
-        /// AKA Delete Both
-        /// </summary>
         private void keepNeitherButton_Click(object sender, EventArgs e)
         {
             if (CheckDeletingFilesOkay())
@@ -609,6 +651,11 @@ namespace SorterExpress.Forms
             }
         }
 
+        private void mergeFileTagsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            onlyKeepLibraryTagsCheckBox.Enabled = mergeFileTagsCheckBox.Checked;
+        }
+
         #endregion
 
         private void ApplicationExit(object sender, FormClosedEventArgs e)
@@ -617,6 +664,8 @@ namespace SorterExpress.Forms
             Settings.Default.DuplicatesSearchImages = imagesCheckBox.Checked;
             Settings.Default.DuplicatesSearchVideos = videosCheckBox.Checked;
             Settings.Default.DuplicatesSearchThreadCount = (int)threadCountNumeric.Value;
+            Settings.Default.DuplicatesMergeFileTags = MergeFileTags;
+            Settings.Default.DuplicatesOnlyKeepTagsInLibrary = OnlyKeepLibraryTags;
 
             Settings.Default.Save();
         }
