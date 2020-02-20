@@ -11,10 +11,10 @@ This project has a range of abilities at this point in time, including:
 * Finding duplicates in your library using a simple algorithm.
 
 Here you can see the main sorting window. It features your tag collection on the left which is searchable, folder collection in the middle and image preview on the right with some extra controls to skip through your libarary. This will probably be where you spend most of your time if you wish to sort your library.
-![Main sorting window](https://i.imgur.com/8BQTu7t.png)
+![Main sorting window](https://i.imgur.com/ieyN2iC.png)
 
 Here is the duplicate search window, it searches for duplicate images in your collection, it works well for certain types of images (lewd in particular). It supports videos by taking the first frame of the video as an image. Can search recursively through all folders in a directory and is multithreaded to greatly speed up the searching process.
-![Duplicate searching window](https://i.imgur.com/ODnjSAL.png)
+![Duplicate searching window](https://i.imgur.com/aZGtKIR.png)
 
 ## Prerequisites
 
