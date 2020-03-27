@@ -11,6 +11,8 @@ namespace SorterExpress.Controls
     {
         VlcControl vlcControl;
 
+        public string CurrentMedia { get; private set; }
+
         bool repeat = true;
         private bool mute;
         private int lastVolume;
@@ -84,6 +86,13 @@ namespace SorterExpress.Controls
 
         public void LoadMedia(string path)
         {
+            // Don't attempt to load the same media that is already loaded, but put the media back to the start.
+            if (path == CurrentMedia)
+            {
+                vlcControl.Position = 0f;
+                return;
+            }
+
             Console.WriteLine($"Loading media {path}");
             FileType fileType = Utilities.GetFileType(path);
 
@@ -137,7 +146,9 @@ namespace SorterExpress.Controls
                 ShowErrorMessageBox(
                     $"File format '{Path.GetExtension(path).ToLower()}' not supported."
                 );
-            }            
+            }
+
+            CurrentMedia = path;
         }
 
         private void ShowErrorMessageBox(Exception e)

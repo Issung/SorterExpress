@@ -14,7 +14,7 @@ namespace SorterExpress
 
         public static string LOG_FILE { get; } = PROGRAMDATA_PATH + "\\logs.l";
 
-        public static string VIDEO_THUMBS_PATH { get; } = PROGRAMDATA_PATH + "\\VideoThumbs\\";
+        public static string THUMBS_PATH { get; } = PROGRAMDATA_PATH + "\\Thumbs\\";
 
         /// <summary>
         /// The main entry point for the application.
@@ -59,6 +59,14 @@ namespace SorterExpress
                 else if (args[0] == "duplicates")
                 {
                     Application.Run(new DuplicatesForm(new DirectoryInfo(args.Last())));
+                }
+                else if (args[0] == "masstag")
+                {
+                    Application.Run(new MassTagForm(new DirectoryInfo(args.Last())));
+                }
+                else if (args[0] == "renametag")
+                {
+                    //Application.Run(new RenameTagForm(new DirectoryInfo(args.Last())));
                 }
             }
         }

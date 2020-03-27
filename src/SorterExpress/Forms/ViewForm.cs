@@ -129,7 +129,7 @@ namespace SorterExpress.Forms
 
             if (Utilities.videoFileExtensions.Contains(Path.GetExtension(filename)))
             {
-                string thumbnailFilename = Program.VIDEO_THUMBS_PATH + "\\" + Utilities.MD5(filename) + ".jpg";
+                string thumbnailFilename = Program.THUMBS_PATH + "\\" + Utilities.MD5(filename) + ".jpg";
 
                 if (!File.Exists(thumbnailFilename))
                 {

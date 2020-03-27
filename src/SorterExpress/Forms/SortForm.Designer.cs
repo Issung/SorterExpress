@@ -235,7 +235,8 @@ namespace SorterExpress.Forms
             this.undoButton.Size = new System.Drawing.Size(61, 23);
             this.undoButton.TabIndex = 2;
             this.undoButton.Text = "Undo";
-            this.tooltip.SetToolTip(this.undoButton, "Undo the last file save and reload it\'s tags.");
+            this.tooltip.SetToolTip(this.undoButton, "Undo the last file save/move and reload it\'s tags.\r\nCannot yet undo deletes, but " +
+        "you can recover them yourself from the recycle bin!\r\n");
             this.undoButton.UseVisualStyleBackColor = true;
             this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
             // 
@@ -328,9 +329,9 @@ namespace SorterExpress.Forms
             this.noteLabel.AutoSize = true;
             this.noteLabel.Location = new System.Drawing.Point(7, 90);
             this.noteLabel.Name = "noteLabel";
-            this.noteLabel.Size = new System.Drawing.Size(35, 13);
+            this.noteLabel.Size = new System.Drawing.Size(30, 13);
             this.noteLabel.TabIndex = 38;
-            this.noteLabel.Text = "Notes";
+            this.noteLabel.Text = "Note";
             // 
             // deleteButton
             // 
@@ -440,7 +441,7 @@ namespace SorterExpress.Forms
             this.subfoldersPanel.Location = new System.Drawing.Point(271, 69);
             this.subfoldersPanel.Name = "subfoldersPanel";
             this.subfoldersPanel.Size = new System.Drawing.Size(213, 240);
-            this.subfoldersPanel.TabIndex = 51;
+            this.subfoldersPanel.TabIndex = 52;
             // 
             // tagsPanel
             // 

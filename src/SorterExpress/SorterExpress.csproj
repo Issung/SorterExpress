@@ -15,7 +15,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,6 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -95,6 +96,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Move.cs" />
+    <Compile Include="Classes\SortableBindingList\PropertyComparer.cs" />
+    <Compile Include="Classes\SortableBindingList\SortableBindingList.cs" />
     <Compile Include="Classes\SubfolderInfo.cs" />
     <Compile Include="Controls\ScrollPanel.cs">
       <SubType>Component</SubType>

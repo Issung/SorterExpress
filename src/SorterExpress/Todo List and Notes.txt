@@ -1,19 +1,32 @@
 ﻿Todo
-	It is possible that an image or video won't able to be read for some various reasons (already open, corrupted). Need to account for this using try/catch statements.
-	Account for the possibility of 0 files or 0 folders.
-	Seems like there is a problem when doing an undo then saving the image again the fileindex appears to 'go backwards 1'.
-	Mute button is kind of glitched, muting and setting the volume trackbar to 0 fires the event and sets unmuted volume to 0.
-	Chance that when searching for duplicates that the loading gets stuck a few away from max and never finishes.
-	Add sortable list to duplicate searcher so user can search by most likely to be duplicate.
+	General:
+		Mute button is kind of glitched, muting and setting the volume trackbar to 0 fires the event and sets unmuted volume to 0.
+		It is possible that an image or video won't able to be read for some various reasons (already open, corrupted). Need to account for this using try/catch statements.
+		Account for the possibility of 0 files or 0 folders.
+		Undo button for deleting a file, is doable because file is moved to recycle bin but a bit tricky.
 	
-	Add more options to duplicate finder:
-		Keep largest.
-		Keep file with most tags.
+	Sorter:
+		Seems like there is a problem when doing an undo then saving the image again the fileindex appears to 'go backwards 1'.
+	
+	Viewer:
+		Stop grid horizontal scroll bar appearing.
 
-Maybe
-	
+	Rename Tag:
+		Update constructor to take an argument and open a folder instantly.
+
+	Duplicate Finder:
+		Chance that when searching for duplicates that the loading gets stuck a few away from max and never finishes.
+		Option to only search for duplicates between current directory and subdirectories instead of searching for duplicates between subdirectories?
+		Add sortable list to duplicate searcher so user can search by most likely to be duplicate.
+		Add more options?
+			Keep largest?
+			Keep file with most tags?
 
 Done
+	Added mass-tag argument to automatically open that window.
+	Changed design of duplicate list in duplicate finder, addeing image previews, using databinding.
+	Hash images and save small thumbs like with video thumbs done.
+
 	Highlighting tags in bold that are not on the other file in the duplicate finder is fixed.
 	Add more options to duplicate finder:
 		Merge tags to selected copy.

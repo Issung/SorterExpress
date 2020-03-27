@@ -139,9 +139,9 @@
             // 
             this.errorMessageTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.errorMessageTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.errorMessageTextBox.Enabled = false;
             this.errorMessageTextBox.Location = new System.Drawing.Point(0, 0);
             this.errorMessageTextBox.Name = "errorMessageTextBox";
+            this.errorMessageTextBox.ReadOnly = true;
             this.errorMessageTextBox.Size = new System.Drawing.Size(400, 400);
             this.errorMessageTextBox.TabIndex = 30;
             this.errorMessageTextBox.TabStop = false;
@@ -183,6 +183,7 @@
             this.muteButton.TabStop = false;
             this.muteButton.Text = "🔊";
             this.muteButton.UseVisualStyleBackColor = true;
+            this.muteButton.Click += new System.EventHandler(this.muteButton_Click);
             // 
             // videoPauseButton
             // 
@@ -195,6 +196,7 @@
             this.videoPauseButton.TabStop = false;
             this.videoPauseButton.Text = "❚❚";
             this.videoPauseButton.UseVisualStyleBackColor = true;
+            this.videoPauseButton.Click += new System.EventHandler(this.videoPauseButton_Click);
             // 
             // videoPlayButton
             // 
@@ -207,6 +209,7 @@
             this.videoPlayButton.TabStop = false;
             this.videoPlayButton.Text = "▶";
             this.videoPlayButton.UseVisualStyleBackColor = true;
+            this.videoPlayButton.Click += new System.EventHandler(this.videoPlayButton_Click);
             // 
             // MediaViewer
             // 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GChan.Controls;
 using Microsoft.VisualBasic.FileIO;
 using SorterExpress.Controls;
 using SorterExpress.Properties;
@@ -21,7 +22,17 @@ namespace SorterExpress.Forms
         public List<string> files;
 
         public List<FilePrint> prints;
-        public List<Duplicate> duplicates;
+        //public List<Duplicate> duplicates;
+        public SortableBindingList<Duplicate> duplicates;
+
+        /// <summary>
+        /// When changing the selected index of matchesDataGridView programmatically
+        /// like in KeepBoth(), MatchesGridViewSelectedRow returns the index of the previously
+        /// selected column, can't figure out why, so we're currently using this to override that.
+        /// If this is NOT -1, then we're using it as the index to load the next duplicate.
+        /// TODO: Figure out this behaviour and get rid of this awful hack.
+        /// </summary>
+        int selectedIndexOverride = -1;
 
         public int finishedThreads = 0;
 
@@ -42,10 +53,21 @@ namespace SorterExpress.Forms
         public bool MergeFileTags { get { return mergeFileTagsCheckBox.Checked; } }
         public bool OnlyKeepLibraryTags { get { return onlyKeepLibraryTagsCheckBox.Checked; } }
 
+        public int MatchesGridViewSelectedRow { get { return matchesDataGridView?.CurrentCell?.RowIndex ?? -1; } }
+
         public DuplicatesForm(DirectoryInfo dirInfo)
         {
             InitializeComponent();
             form = this;
+
+            ///Stuff designer can't do
+            
+            matchesDataGridView.AutoGenerateColumns = false;
+            duplicates = new SortableBindingList<Duplicate>();
+            matchesDataGridView.DataSource = duplicates;
+            duplicates.ListChanged += Duplicates_ListChanged;
+
+            ///Stuff designer can't do
 
             this.FormClosed += ApplicationExit;
 
@@ -75,13 +97,26 @@ namespace SorterExpress.Forms
             if (dirInfo != null)
             {
                 LoadDirectory(dirInfo);
-                BeginSearch();
             }
+        }
+
+        private void Duplicates_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            UpdateFileCountLabel();
         }
 
         private void LoadDirectory(DirectoryInfo dirInfo)
         {
             this.directory = dirInfo.FullName;
+
+            if (files != null)
+                files.Clear();
+
+            if (duplicates != null)
+                duplicates.Clear();
+
+            if (prints != null)
+                prints.Clear();
 
             if (searchSubfoldersCheckBox.Checked)
                 this.files = Utilities.RecursivelyGetFileNames(dirInfo.FullName);
@@ -121,7 +156,9 @@ namespace SorterExpress.Forms
             var scope = GetSearchScope(files);
             scopeCount = scope.Count;
 
-            duplicates = new List<Duplicate>();
+            Invoke((MethodInvoker)delegate () { 
+                duplicates.Clear();
+            });
             prints.RemoveAll(t => !scope.Contains(t.file.Replace(directory, "")));
 
             GeneratePrints(scope, prints, sender as BackgroundWorker, e);
@@ -134,10 +171,10 @@ namespace SorterExpress.Forms
             loadingLabel.Text = $"Searching..\n{finishedThreads}/{scopeCount}";
             progressBar.Value = e.ProgressPercentage;
 
-            for (int i = matchesListBox.Items.Count; i < duplicates.Count; i++)
+            /*for (int i = matchesDataGridView.Items.Count; i < duplicates.Count; i++)
             {
                 matchesListBox.Items.Add($"{matchesListBox.Items.Count + 1}. Chance: {Math.Round(duplicates[i].Chance * 100)}%");
-            }
+            }*/
         }
 
         private void Worker_Completed(object sender, RunWorkerCompletedEventArgs e)
@@ -151,7 +188,7 @@ namespace SorterExpress.Forms
             threadCountNumeric.Enabled = true;
             searchButton.Enabled = true;
             cancelButton.Enabled = false;
-            matchesListBox.Height += 26;
+            matchesDataGridView.Height += 26;
             loadingLabel.Hide();
             progressBar.Hide();
 
@@ -161,8 +198,8 @@ namespace SorterExpress.Forms
 
         private List<FilePrint> GeneratePrints(List<string> files, List<FilePrint> prints, BackgroundWorker worker, DoWorkEventArgs dwea)
         {
-            if (!Directory.Exists(Program.VIDEO_THUMBS_PATH))
-                Directory.CreateDirectory(Program.VIDEO_THUMBS_PATH);
+            if (!Directory.Exists(Program.THUMBS_PATH))
+                Directory.CreateDirectory(Program.THUMBS_PATH);
 
             if (files == null)
             {
@@ -227,9 +264,12 @@ namespace SorterExpress.Forms
                                                 try
                                                 {
                                                     // If the duplicate hasnt already been found or found in reverse (x is like y |or| y is like x)
-                                                    if (!duplicates.Exists(t => t.File2 == print.file && t.File1 == prints[i].file))
+                                                    //if (!duplicates.Exists(t => t.File2Path == print.file && t.File1Path == prints[i].file))
+                                                    if (!duplicates.Any(t => t.File2Path == print.file && t.File1Path == prints[i].file))
                                                     {
-                                                        duplicates.Add(new Duplicate(print, prints[i]));
+                                                        Invoke((MethodInvoker)delegate () { 
+                                                            duplicates.Add(new Duplicate(print, prints[i]));
+                                                        });
                                                     }
                                                 }
                                                 catch (InvalidOperationException ioe)
@@ -336,7 +376,8 @@ namespace SorterExpress.Forms
 
         private void ShowFileInfo(Side side, Size size, bool clear = true)
         {
-            var filename = side == Side.Left ? duplicates[matchesListBox.SelectedIndex].File1 : duplicates[matchesListBox.SelectedIndex].File2;
+            int selectedRowIndex = MatchesGridViewSelectedRow;
+            var filename = side == Side.Left ? duplicates[selectedRowIndex].File1Path : duplicates[selectedRowIndex].File2Path;
             RichTextBox infoBox = (side == Side.Left) ? infoRichTextBoxLeft : infoRichTextBoxRight;
 
             if (clear)
@@ -349,7 +390,7 @@ namespace SorterExpress.Forms
             }
 
             var tags = Utilities.GetTags(filename);
-            var otherFileTags = Utilities.GetTags(side == Side.Left ? duplicates[matchesListBox.SelectedIndex].File2 : duplicates[matchesListBox.SelectedIndex].File1);
+            var otherFileTags = Utilities.GetTags(side == Side.Left ? duplicates[selectedRowIndex].File2Path : duplicates[selectedRowIndex].File1Path);
 
             infoBox.AppendText($"'Tags': {tags.Length}\n");
 
@@ -360,7 +401,7 @@ namespace SorterExpress.Forms
                 if (!otherFileTags.Contains(tags[i]))
                     infoBox.SelectionFont = new Font(infoBox.Font, infoBox.SelectionFont.Style | FontStyle.Bold);
 
-                if (Settings.Default.Tags.Contains(tags[i]))
+                if (Settings.Default.Tags?.Contains(tags[i]) ?? false)
                     infoBox.SelectionFont = new Font(infoBox.Font, infoBox.SelectionFont.Style | FontStyle.Italic);
 
                 //if (!otherFileTags.Contains(tags[i]) && Settings.Default.Tags.Contains(tags[i]))
@@ -385,7 +426,7 @@ namespace SorterExpress.Forms
                     count += files.Where(t => Utilities.FileIsVideo(t)).Count();
             }
 
-            fileCountLabel.Text = $"Files: {count}";
+            fileCountLabel.Text = $"Files: {count} Matches: {duplicates.Count}";
         }
 
         private void BeginSearch()
@@ -393,12 +434,12 @@ namespace SorterExpress.Forms
             stopwatch = new System.Diagnostics.Stopwatch();
             stopwatch.Start();
 
-            matchesListBox.Items.Clear();
+            duplicates.Clear();
             searchButton.Enabled = false;
             cancelButton.Enabled = true;
             loadingLabel.Show();
             progressBar.Show();
-            matchesListBox.Height -= 26;
+            matchesDataGridView.Height -= 26;
             searchSubfoldersCheckBox.Enabled = false;
             similarityNumeric.Enabled = false;
             threadCountNumeric.Enabled = false;
@@ -415,7 +456,6 @@ namespace SorterExpress.Forms
             options.CancellationToken = cancelTokenSource.Token;
 
             duplicates.Clear();
-            matchesListBox.Items.Clear();
 
             for (int i = 0; i < prints.Count; i++)
             {
@@ -425,11 +465,11 @@ namespace SorterExpress.Forms
                     {
                         if (FilePrint.GetSimilarityPercentage(prints[i], prints[j]) >= similarityNumeric.Value)
                         {
-                            if (duplicates.Where(t => t.File2 == prints[i].file && t.File1 == prints[i].file).Count() == 0)
+                            if (duplicates.Where(t => t.File2Path == prints[i].file && t.File1Path == prints[i].file).Count() == 0)
                             {
                                 Duplicate duplicate = new Duplicate(prints[i], prints[j]);
                                 duplicates.Add(duplicate);
-                                matchesListBox.Items.Add($"{matchesListBox.Items.Count + 1}. Chance: {duplicate.Chance * 100}%");
+                                //matchesListBox.Items.Add($"{matchesListBox.Items.Count + 1}. Chance: {duplicate.Chance * 100}%");
                             }
                         }
                     }
@@ -478,10 +518,9 @@ namespace SorterExpress.Forms
 
             for (int i = 0; i < duplicates.Count; i++)
             {
-                if (duplicates[i].File1 == filePath || duplicates[i].File2 == filePath)
+                if (duplicates[i].File1Path == filePath || duplicates[i].File2Path == filePath)
                 {
                     duplicates.RemoveAt(i);
-                    matchesListBox.Items.RemoveAt(i);
 
                     // Go back an index because future objects will move down an index.
                     i--;
@@ -507,10 +546,8 @@ namespace SorterExpress.Forms
                 mediaViewerLeft.UnloadMedia();
                 mediaViewerRight.UnloadMedia();
 
-                string fileToKeep = (side == Side.Left) ? inspectingDuplicate.File1 : inspectingDuplicate.File2;
-                string fileToDelete = (side == Side.Left) ? inspectingDuplicate.File2 : inspectingDuplicate.File1;
-
-                int selectedIndex = matchesListBox.SelectedIndex;
+                string fileToKeep = (side == Side.Left) ? inspectingDuplicate.File1Path : inspectingDuplicate.File2Path;
+                string fileToDelete = (side == Side.Left) ? inspectingDuplicate.File2Path : inspectingDuplicate.File1Path;
 
                 if (MergeFileTags)
                 {
@@ -538,10 +575,10 @@ namespace SorterExpress.Forms
 
                 DeleteFile(fileToDelete);
 
-                if (matchesListBox.Items.Count > selectedIndex)
+                /*if (matchesListBox.Items.Count > selectedIndex)
                     matchesListBox.SelectedIndex = selectedIndex;
                 else if (matchesListBox.Items.Count != 0)
-                    matchesListBox.SelectedIndex = matchesListBox.Items.Count - 1;
+                    matchesListBox.SelectedIndex = matchesListBox.Items.Count - 1;*/
             }
         }
 
@@ -559,28 +596,63 @@ namespace SorterExpress.Forms
 
         private void KeepBothButton_Click(object sender, EventArgs e)
         {
-            if (matchesListBox.SelectedIndex < matchesListBox.Items.Count - 1)
+            int selectedIndex = MatchesGridViewSelectedRow;
+            if (selectedIndex < duplicates.Count - 1)
             {
-                matchesListBox.SelectedIndex++;
+                //matchesListBox.SelectedIndex++;
+                //matchesDataGridView.ClearSelection();
+                //matchesDataGridView.Rows[selectedIndex + 1].Selected = true;
+                selectedIndexOverride = selectedIndex + 1;
+                matchesDataGridView.CurrentCell = matchesDataGridView.Rows[selectedIndex + 1].Cells[0];
+                //matchesDataGridView.ClearSelection();
+                //matchesDataGridView.Rows[selectedIndex + 1].Selected = true;
+                //matchesDataGridView.Rows[selectedIndex + 1].Cells[0].Selected = true;
             }
-                
         }
 
-        private void matchesListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void matchesDataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            if (matchesListBox.SelectedIndex >= 0)
-            {
-                Console.WriteLine("matchesListBox_SelectedIndexChanged");
-                inspectingDuplicate = duplicates[matchesListBox.SelectedIndex];
+            Console.WriteLine($"matchesDataGridView_SelectedIndexChanged, MatchesGridViewSelectedRow: {MatchesGridViewSelectedRow}");
 
-                LoadFile(Side.Left, inspectingDuplicate.File1);
-                LoadFile(Side.Right, inspectingDuplicate.File2);
+            int index = (selectedIndexOverride != -1) ? selectedIndexOverride : MatchesGridViewSelectedRow;
+
+            if (selectedIndexOverride != -1)
+                selectedIndexOverride = -1;
+
+            if (index >= 0)
+            {
+                inspectingDuplicate = duplicates[index];
+
+                LoadFile(Side.Left, inspectingDuplicate.File1Path);
+                LoadFile(Side.Right, inspectingDuplicate.File2Path);
             }
             else
             {
                 inspectingDuplicate = null;
             }
         }
+
+        /*private void matchesDataGridView_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            Console.WriteLine($"matchesDataGridView_RowStateChanged, " +
+                $"MatchesGridViewSelectedRow: {MatchesGridViewSelectedRow}, " +
+                $"e.StateChanged: {e.StateChanged.ToString()}");
+
+            if (e.StateChanged == DataGridViewElementStates.Selected)
+            {
+                if (MatchesGridViewSelectedRow >= 0)
+                {
+                    inspectingDuplicate = duplicates[MatchesGridViewSelectedRow];
+
+                    LoadFile(Side.Left, inspectingDuplicate.File1Path);
+                    LoadFile(Side.Right, inspectingDuplicate.File2Path);
+                }
+                else
+                {
+                    inspectingDuplicate = null;
+                }
+            }
+        }*/
 
         private void OpenDirectoryButton_Click(object sender, EventArgs e)
         {
@@ -636,18 +708,16 @@ namespace SorterExpress.Forms
         {
             if (CheckDeletingFilesOkay())
             {
-                int selectedIndex = matchesListBox.SelectedIndex;
-
                 // Can't do DeleteFile(inspectingDuplicate.fileX) because the duplicate object will be deleted after the first operation.
-                string file1 = inspectingDuplicate.File1, file2 = inspectingDuplicate.File2;
+                string file1 = inspectingDuplicate.File1Path, file2 = inspectingDuplicate.File2Path;
 
                 DeleteFile(file1);
                 DeleteFile(file2);
 
-                if (matchesListBox.Items.Count > selectedIndex)
+                /*if (matchesListBox.Items.Count > selectedIndex)
                     matchesListBox.SelectedIndex = selectedIndex;
                 else if (matchesListBox.Items.Count != 0)
-                    matchesListBox.SelectedIndex = matchesListBox.Items.Count - 1;
+                    matchesListBox.SelectedIndex = matchesListBox.Items.Count - 1;*/
             }
         }
 

@@ -105,7 +105,7 @@ namespace SorterExpress
                         }
                         else
                         {
-                            vlcControl.Parent.Controls.Remove(vlcControl);
+                            //vlcControl.Parent.Controls.Remove(vlcControl);
                             vlcControl.Dispose();
                         }
                     }
@@ -339,6 +339,15 @@ namespace SorterExpress
             for (int i = 0; i < removeThese.Length; i++)
                 ret = ret.Replace(removeThese[i].ToString(), "");
             return ret;
+        }
+
+        /// <summary>
+        /// Get the amount of folders in a path 
+        /// "C:\\test\\ayylmao//foldername//59172569127.jpg" returns 4.
+        /// </summary>
+        public static int GetFolderCountInPath(string path)
+        {
+            return path.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries).Count() - 1;
         }
     }
 

@@ -4,12 +4,30 @@ using System.IO;
 
 public class FilePrint
 {
+    const int THUMB_SIZE = 60;
+
     public static FFMPEG ffmpeg = null;
     public static FFProbe ffprobe = null;
     public string file;
     public Size size;
     public float average;
     public string print;
+
+    string thumbPath = null;
+
+    /// <summary>
+    /// The path to the fileprint's thumbnail, if the fileprint is for an image
+    /// then the path is just to the raw image (full sized). if the fileprint is
+    /// for a video then the path is the the small jpg extracted by ffmpeg.
+    /// </summary>
+    public string ThumbPath { get {
+            /*if (Utilities.FileIsImage(file))
+                return file;
+            else
+                return thumbPath;*/
+            return thumbPath;
+        } 
+    }
 
     public FilePrint(string filePath)
     {
@@ -21,6 +39,11 @@ public class FilePrint
             img = new Bitmap(filePath);
             this.size = img.Size;
             CalculatePicturePrint(img);
+
+            thumbPath = Program.THUMBS_PATH + "\\" + Utilities.MD5(Path.GetFileName(filePath)) + ".jpg";
+            if (!File.Exists(thumbPath))
+                Utilities.Resize(new Bitmap(filePath), THUMB_SIZE, THUMB_SIZE).Save(thumbPath);
+
             img.Dispose();
         }
         else if (Utilities.FileIsVideo(filePath))
@@ -31,14 +54,14 @@ public class FilePrint
             if (ffprobe == null)
                 ffprobe = new FFProbe();
 
-            string output = Program.VIDEO_THUMBS_PATH + "\\" + Utilities.MD5(Path.GetFileName(filePath)) + ".jpg";
-            if (!File.Exists(output))
-                ffmpeg.GetThumbnailWait(filePath, output, 60);
+            thumbPath = Program.THUMBS_PATH + "\\" + Utilities.MD5(Path.GetFileName(filePath)) + ".jpg";
+            if (!File.Exists(thumbPath))
+                ffmpeg.GetThumbnailWait(filePath, thumbPath, THUMB_SIZE);
 
             this.size = new Size(0, 0);
 
             // Should put a try catch around this, if file is corrupted or anything it leads to issues.
-            img = new Bitmap(output);
+            img = new Bitmap(thumbPath);
 
             CalculatePicturePrint(img);
 
