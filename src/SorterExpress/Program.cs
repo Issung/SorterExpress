@@ -79,9 +79,7 @@ namespace SorterExpress
         {
             try
             {
-
                 Log(true, $"Application_ThreadException - {e.Exception.Message}", e.Exception.StackTrace);
-
             }
             catch (Exception eX)
             {

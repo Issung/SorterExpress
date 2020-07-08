@@ -10,6 +10,8 @@ namespace SorterExpress.Forms
             InitializeComponent();
         }
 
+
+
         private void sortButton_Click(object sender, EventArgs e)
         {
             var di = Utilities.OpenDirectory();
@@ -17,7 +19,7 @@ namespace SorterExpress.Forms
             if (di != null)
             {
                 SortForm mainForm = new SortForm(di);
-                mainForm.FormClosed += (s, args) => this.Close();
+                mainForm.FormClosed += (s, args) => this.Show();
                 mainForm.Show();
                 this.Hide();
             }
@@ -30,7 +32,7 @@ namespace SorterExpress.Forms
             if (di != null)
             {
                 MassTagForm mtf = new MassTagForm(di);
-                mtf.FormClosed += (s, args) => this.Close();
+                mtf.FormClosed += (s, args) => this.Show();
                 mtf.Show();
                 this.Hide();
             }
@@ -39,7 +41,9 @@ namespace SorterExpress.Forms
         private void renameTagButton_Click(object sender, EventArgs e)
         {
             var rtf = new RenameTagForm();
+            rtf.FormClosed += (s, args) => this.Show();
             rtf.Show();
+            this.Hide();
         }
 
         private void viewFormButton_Click(object sender, EventArgs e)
@@ -49,27 +53,32 @@ namespace SorterExpress.Forms
             if (di != null)
             {
                 ViewForm viewForm = new ViewForm(di);
-                viewForm.FormClosed += (s, args) => this.Close();
+                viewForm.FormClosed += (s, args) => this.Show();
                 viewForm.Show();
+                this.Hide();
             }
         }
 
         private void DuplicatesButton_Click(object sender, EventArgs e)
         {
             DuplicatesForm df = new DuplicatesForm(null);
+            df.FormClosed += (s, args) => this.Show();
             df.Show();
+            this.Hide();
         }
 
         private void AllInOneButton_Click(object sender, EventArgs e)
         {
             var allinone = new AllInOneForm();
+            allinone.FormClosed += (s, args) => this.Show();
             allinone.Show();
+            this.Hide();
         }
 
         private void settingsButton_Click(object sender, EventArgs e)
         {
             SettingsForm settingsForm = new SettingsForm(null);
-            settingsForm.Show();
+            settingsForm.ShowDialog();
         }
 
         private void exitButton_Click(object sender, EventArgs e)
