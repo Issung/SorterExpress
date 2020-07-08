@@ -118,12 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="infoLabel.Text" xml:space="preserve">
-    <value>This program supports sorting image and video files. For video playback support we use the VLC library.
+    <value>This program supports sorting of both image and video files. For video playback support SorterExpress uses the VLC library.
 
-This requires VLC to be installed. We have attempted to find it in the default installation locations and have failed. Please direct us to the install location. If you choose not to video functionality will not be supported. You can always change this later.
+This requires VLC to be installed. SorterExpress has attempted to find it in the default installation locations but failed. Please locate the install location. 
 
-Please locate libvlc.dll in your VLC install directory.
+You may choose to ignore video functionality. You can always change this later in the settings.
 
+Please locate libvlc.dll in your VLC install directory:
 
 </value>
   </data>

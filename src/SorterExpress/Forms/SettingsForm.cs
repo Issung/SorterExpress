@@ -115,6 +115,26 @@ namespace SorterExpress.Forms
             moveSortedFilesCheckbox.Checked = Settings.Default.MoveSortedFiles;
 
             fastResizingCheckbox.Checked = Settings.Default.FastResizing;
+
+            LoadVLCLocation();
+        }
+
+        string currentVlcLocationText(string path) => $"Current VLC Location: {path}";
+
+        private void LoadVLCLocation()
+        {
+            string location = Settings.Default.VlcLocation;
+
+            if (String.IsNullOrWhiteSpace(location))
+            {
+                currentVlcLocationLabel.Text = currentVlcLocationText("Unknown");
+                locateVlcButton.Text = "Locate";
+            }
+            else
+            {
+                currentVlcLocationLabel.Text = currentVlcLocationText(location);
+                locateVlcButton.Text = "Change";
+            }
         }
 
         private void saveSettingsButton_Click(object sender, System.EventArgs e)
@@ -292,6 +312,32 @@ namespace SorterExpress.Forms
         private void thumbnailsDeleteWorker_Complete(object sender, RunWorkerCompletedEventArgs e)
         {
             thumbsStorageSizeLabel.Text = thumbSizeLabelText(0);
+        }
+
+        private void locateVlcButton_Click(object sender, EventArgs e)
+        {
+            if (locateVlcButton.Text == "Locate")
+            {
+                Utilities.FindVlcLibDirectory();
+            }
+            else // locateVlcButton.Text == "Change"
+            {
+                using (LocateVLCForm locateForm = new LocateVLCForm())
+                {
+                    if (locateForm.ShowDialog() == DialogResult.OK)
+                    {
+                        Settings.Default.VlcLocation = Path.GetDirectoryName(locateForm.vlcPath);
+                        Settings.Default.Save();
+                    }
+                    else //DialogResult.Ignore
+                    {
+                        Settings.Default.VlcLocation = null;
+                        Settings.Default.Save();
+                    }
+                }
+            }
+
+            LoadVLCLocation();
         }
     }
 }

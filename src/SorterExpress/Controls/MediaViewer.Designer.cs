@@ -215,8 +215,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.vlcPlayerTableLayoutPanel);
             this.Controls.Add(this.errorMessageTextBox);
+            this.Controls.Add(this.vlcPlayerTableLayoutPanel);
             this.Controls.Add(this.pictureBox);
             this.Name = "MediaViewer";
             this.Size = new System.Drawing.Size(400, 400);

@@ -103,7 +103,7 @@ namespace SorterExpress
                         }
                         else //DialogResult.Ignore
                         {
-                            return null;
+                            return Ret(null);
                         }
                     }
                 }
@@ -129,8 +129,15 @@ namespace SorterExpress
 
             DirectoryInfo Ret(string vlcPath)
             {
-                var di = new DirectoryInfo(vlcPath);
+                DirectoryInfo di;
+
+                if (vlcPath != null)
+                    di = new DirectoryInfo(vlcPath);
+                else
+                    di = null;
+
                 Settings.Default.VlcLocation = vlcPath;
+                Settings.Default.Save();
                 return di;
             }
         }

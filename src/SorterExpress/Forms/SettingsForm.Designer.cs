@@ -55,6 +55,10 @@
             this.thumbsStorageSizeLabel = new System.Windows.Forms.Label();
             this.thumbsStorageInfoButton = new System.Windows.Forms.Button();
             this.thumbsStorageEmptyButton = new System.Windows.Forms.Button();
+            this.vlcControlsGroupBox = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.currentVlcLocationLabel = new System.Windows.Forms.Label();
+            this.locateVlcButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tagSearchNumeric)).BeginInit();
             this.tagControlsGroupBox.SuspendLayout();
             this.tagControlsFlowLayoutPanel.SuspendLayout();
@@ -65,6 +69,8 @@
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
+            this.vlcControlsGroupBox.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // fastResizingCheckbox
@@ -76,8 +82,8 @@
             this.fastResizingCheckbox.Size = new System.Drawing.Size(84, 17);
             this.fastResizingCheckbox.TabIndex = 7;
             this.fastResizingCheckbox.Text = "Fast resizing";
-            this.toolTip.SetToolTip(this.fastResizingCheckbox, "Make the program resize faster by not redrawing all elements until the resizing i" +
-        "s finished.");
+            this.toolTip.SetToolTip(this.fastResizingCheckbox, "Allows the program to lag less and resize faster by not redrawing all elements un" +
+        "til the resizing is finished.");
             this.fastResizingCheckbox.UseVisualStyleBackColor = true;
             // 
             // tagSearchNumeric
@@ -159,9 +165,9 @@
             this.autoResetTagSearchCheckBox.Location = new System.Drawing.Point(6, 149);
             this.autoResetTagSearchCheckBox.Name = "autoResetTagSearchCheckBox";
             this.autoResetTagSearchCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.autoResetTagSearchCheckBox.Size = new System.Drawing.Size(330, 17);
+            this.autoResetTagSearchCheckBox.Size = new System.Drawing.Size(338, 17);
             this.autoResetTagSearchCheckBox.TabIndex = 0;
-            this.autoResetTagSearchCheckBox.Text = "Automatically empty tag search box when toggling a tag on or off";
+            this.autoResetTagSearchCheckBox.Text = "Automatically empty tag search box when a tag is toggled on or off";
             this.autoResetTagSearchCheckBox.UseVisualStyleBackColor = true;
             // 
             // moveSortedFilesCheckbox
@@ -170,9 +176,10 @@
             this.moveSortedFilesCheckbox.Location = new System.Drawing.Point(3, 3);
             this.moveSortedFilesCheckbox.Name = "moveSortedFilesCheckbox";
             this.moveSortedFilesCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.moveSortedFilesCheckbox.Size = new System.Drawing.Size(183, 17);
+            this.moveSortedFilesCheckbox.Size = new System.Drawing.Size(266, 17);
             this.moveSortedFilesCheckbox.TabIndex = 0;
-            this.moveSortedFilesCheckbox.Text = "Move sorted files to \'sorted\' folder";
+            this.moveSortedFilesCheckbox.Text = "Move sorted files to \'Sorted\' folder in open directory";
+            this.toolTip.SetToolTip(this.moveSortedFilesCheckbox, resources.GetString("moveSortedFilesCheckbox.ToolTip"));
             this.moveSortedFilesCheckbox.UseVisualStyleBackColor = true;
             // 
             // saveSettingsButton
@@ -180,7 +187,7 @@
             this.saveSettingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.saveSettingsButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.saveSettingsButton.Location = new System.Drawing.Point(10, 373);
+            this.saveSettingsButton.Location = new System.Drawing.Point(10, 446);
             this.saveSettingsButton.Name = "saveSettingsButton";
             this.saveSettingsButton.Size = new System.Drawing.Size(416, 23);
             this.saveSettingsButton.TabIndex = 1;
@@ -208,7 +215,7 @@
             this.tagControlsGroupBox.Size = new System.Drawing.Size(408, 191);
             this.tagControlsGroupBox.TabIndex = 10;
             this.tagControlsGroupBox.TabStop = false;
-            this.tagControlsGroupBox.Text = "Tags";
+            this.tagControlsGroupBox.Text = "Tags ❓";
             this.toolTip.SetToolTip(this.tagControlsGroupBox, "Options related to the in built tag collection.");
             // 
             // tagControlsFlowLayoutPanel
@@ -241,7 +248,7 @@
             // 
             this.miscControlsGroupBox.Controls.Add(this.miscControlsFlowLayoutPanel);
             this.miscControlsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.miscControlsGroupBox.Location = new System.Drawing.Point(3, 261);
+            this.miscControlsGroupBox.Location = new System.Drawing.Point(3, 333);
             this.miscControlsGroupBox.Name = "miscControlsGroupBox";
             this.miscControlsGroupBox.Size = new System.Drawing.Size(408, 66);
             this.miscControlsGroupBox.TabIndex = 11;
@@ -281,7 +288,7 @@
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel.Controls.Add(this.viewLogsButton, 1, 0);
             this.tableLayoutPanel.Controls.Add(this.websiteButton, 0, 0);
-            this.tableLayoutPanel.Location = new System.Drawing.Point(10, 347);
+            this.tableLayoutPanel.Location = new System.Drawing.Point(10, 420);
             this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
@@ -296,11 +303,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.Controls.Add(this.tagControlsGroupBox);
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
+            this.flowLayoutPanel1.Controls.Add(this.vlcControlsGroupBox);
             this.flowLayoutPanel1.Controls.Add(this.miscControlsGroupBox);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(10, 11);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(416, 332);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(416, 405);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
             // groupBox1
@@ -312,7 +320,8 @@
             this.groupBox1.Size = new System.Drawing.Size(408, 55);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Cache";
+            this.groupBox1.Text = "Thumbnail Cache ❓";
+            this.toolTip.SetToolTip(this.groupBox1, resources.GetString("groupBox1.ToolTip"));
             // 
             // flowLayoutPanel2
             // 
@@ -357,11 +366,55 @@
             this.thumbsStorageEmptyButton.UseVisualStyleBackColor = true;
             this.thumbsStorageEmptyButton.Click += new System.EventHandler(this.thumbsStorageEmptyButton_Click);
             // 
+            // vlcControlsGroupBox
+            // 
+            this.vlcControlsGroupBox.Controls.Add(this.flowLayoutPanel3);
+            this.vlcControlsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vlcControlsGroupBox.Location = new System.Drawing.Point(3, 261);
+            this.vlcControlsGroupBox.Name = "vlcControlsGroupBox";
+            this.vlcControlsGroupBox.Size = new System.Drawing.Size(408, 66);
+            this.vlcControlsGroupBox.TabIndex = 13;
+            this.vlcControlsGroupBox.TabStop = false;
+            this.vlcControlsGroupBox.Text = "VLC Location ❓";
+            this.toolTip.SetToolTip(this.vlcControlsGroupBox, "SorterExpress relies on VLC libraries in order to support video playback. \r\nOptio" +
+        "ns in this section allow you to manage this.");
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.currentVlcLocationLabel);
+            this.flowLayoutPanel3.Controls.Add(this.locateVlcButton);
+            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(402, 47);
+            this.flowLayoutPanel3.TabIndex = 0;
+            // 
+            // currentVlcLocationLabel
+            // 
+            this.currentVlcLocationLabel.AutoSize = true;
+            this.currentVlcLocationLabel.Location = new System.Drawing.Point(3, 3);
+            this.currentVlcLocationLabel.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.currentVlcLocationLabel.Name = "currentVlcLocationLabel";
+            this.currentVlcLocationLabel.Size = new System.Drawing.Size(111, 13);
+            this.currentVlcLocationLabel.TabIndex = 0;
+            this.currentVlcLocationLabel.Text = "Current VLC Location:";
+            // 
+            // locateVlcButton
+            // 
+            this.locateVlcButton.Location = new System.Drawing.Point(3, 19);
+            this.locateVlcButton.Name = "locateVlcButton";
+            this.locateVlcButton.Size = new System.Drawing.Size(111, 23);
+            this.locateVlcButton.TabIndex = 2;
+            this.locateVlcButton.Text = "Locate";
+            this.locateVlcButton.UseVisualStyleBackColor = true;
+            this.locateVlcButton.Click += new System.EventHandler(this.locateVlcButton_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 404);
+            this.ClientSize = new System.Drawing.Size(434, 477);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.saveSettingsButton);
@@ -385,6 +438,9 @@
             this.groupBox1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
+            this.vlcControlsGroupBox.ResumeLayout(false);
+            this.flowLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -415,5 +471,9 @@
         private System.Windows.Forms.Label thumbsStorageSizeLabel;
         private System.Windows.Forms.Button thumbsStorageInfoButton;
         private System.Windows.Forms.Button thumbsStorageEmptyButton;
+        private System.Windows.Forms.GroupBox vlcControlsGroupBox;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.Label currentVlcLocationLabel;
+        private System.Windows.Forms.Button locateVlcButton;
     }
 }

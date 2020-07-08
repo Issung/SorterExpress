@@ -44,9 +44,9 @@
             // 
             this.infoLabel.AutoSize = true;
             this.infoLabel.Location = new System.Drawing.Point(13, 13);
-            this.infoLabel.MaximumSize = new System.Drawing.Size(420, 110);
+            this.infoLabel.MaximumSize = new System.Drawing.Size(420, 130);
             this.infoLabel.Name = "infoLabel";
-            this.infoLabel.Size = new System.Drawing.Size(418, 110);
+            this.infoLabel.Size = new System.Drawing.Size(420, 130);
             this.infoLabel.TabIndex = 0;
             this.infoLabel.Text = resources.GetString("infoLabel.Text");
             // 
@@ -58,7 +58,7 @@
             this.ignoreButton.Name = "ignoreButton";
             this.ignoreButton.Size = new System.Drawing.Size(206, 23);
             this.ignoreButton.TabIndex = 1;
-            this.ignoreButton.Text = "Ignore [WIP]";
+            this.ignoreButton.Text = "Ignore";
             this.ignoreButton.UseVisualStyleBackColor = true;
             this.ignoreButton.Click += new System.EventHandler(this.IgnoreButton_Click);
             // 
@@ -84,7 +84,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.ignoreButton, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.confirmButton, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 171);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 182);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -100,7 +100,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel2.Controls.Add(this.locateButton, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.pathLabel, 1, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(12, 137);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(12, 152);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -135,7 +135,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 206);
+            this.ClientSize = new System.Drawing.Size(444, 217);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);

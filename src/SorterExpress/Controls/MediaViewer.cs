@@ -107,7 +107,8 @@ namespace SorterExpress.Controls
             // Don't attempt to load the same media that is already loaded, but put the media back to the start.
             if (path == CurrentMedia)
             {
-                vlcControl.Position = 0f;
+                if (vlcControl != null)
+                    vlcControl.Position = 0f;
                 return;
             }
 
@@ -211,7 +212,9 @@ namespace SorterExpress.Controls
             if (pictureBox.Image != null)
                 pictureBox.Image.Dispose();
             pictureBox.Image = null;
-            vlcControl.Stop();
+
+            if (vlcControl != null)
+                vlcControl.Stop();
         }
 
         public void Hide(bool unloadMedia)
@@ -226,19 +229,23 @@ namespace SorterExpress.Controls
 
         private void videoPlayButton_Click(object sender, EventArgs e)
         {
-            if (!vlcControl.IsPlaying)
-            {
-                if (vlcControl.Position == 1f)
-                    vlcControl.Position = 0f;
+            if (vlcControl != null)
+            { 
+                if (!vlcControl.IsPlaying)
+                {
+                    if (vlcControl.Position == 1f)
+                        vlcControl.Position = 0f;
 
-                vlcControl.Play();
+                    vlcControl.Play();
+                }
             }
         }
 
         private void videoPauseButton_Click(object sender, EventArgs e)
         {
-            if (vlcControl.IsPlaying)
-                vlcControl.Pause();
+            if (vlcControl != null)
+                if (vlcControl.IsPlaying)
+                    vlcControl.Pause();
         }
 
         private void muteButton_Click(object sender, EventArgs e)
