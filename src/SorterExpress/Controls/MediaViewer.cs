@@ -30,7 +30,8 @@ namespace SorterExpress.Controls
         /// Get the volume level of the vlc player. If mute is true then returns 0.
         /// </summary>
         public int VolumeLevel { 
-            get {
+            get 
+            {
                 if (Mute)
                     return 0;
                 else
@@ -39,8 +40,18 @@ namespace SorterExpress.Controls
         }
 
         public float VideoPosition { 
-            get { return vlcControl.Position; } 
-            set { vlcControl.Position += value; } 
+            get 
+            {
+                if (vlcControl != null)
+                    return vlcControl.Position;
+                else
+                    return -1;
+            } 
+            set 
+            {
+                if (vlcControl != null)
+                    vlcControl.Position += value;
+            } 
         }
 
         public MediaViewer()
@@ -48,16 +59,21 @@ namespace SorterExpress.Controls
             InitializeComponent();
 
             if (!DesignMode)
-            { 
-                vlcControl = new VlcControl();
-                vlcControl.BeginInit();
-                vlcControl.Margin = new Padding(0, 0, 0, 3);
-                vlcControl.Dock = DockStyle.Fill;
-                vlcControl.VlcLibDirectoryNeeded += Utilities.VlcLibDirectoryNeeded;
-                vlcControl.EndInit();
-                vlcPlayerTableLayoutPanel.Controls.Add(vlcControl, 0, 0);
-                vlcPlayerTableLayoutPanel.SetColumnSpan(vlcControl, 3);
-                vlcPlayerTableLayoutPanel.Controls.Add(vlcControl);
+            {
+                DirectoryInfo dirInfo = Utilities.FindVlcLibDirectory();
+
+                if (dirInfo != null)
+                {
+                    vlcControl = new VlcControl();
+                    vlcControl.BeginInit();
+                    vlcControl.Margin = new Padding(0, 0, 0, 3);
+                    vlcControl.Dock = DockStyle.Fill;
+                    vlcControl.VlcLibDirectory = dirInfo;
+                    vlcControl.EndInit();
+                    vlcPlayerTableLayoutPanel.Controls.Add(vlcControl, 0, 0);
+                    vlcPlayerTableLayoutPanel.SetColumnSpan(vlcControl, 3);
+                    vlcPlayerTableLayoutPanel.Controls.Add(vlcControl);
+                }
             }
         }
 
@@ -72,14 +88,16 @@ namespace SorterExpress.Controls
                 if (mute)
                 {
                     lastVolume = volumeTrackbar.Value;
-                    vlcControl.Audio.Volume = 0;
                     volumeTrackbar.Value = 0;
                     muteButton.Text = MUTED_ICON;
+                    if (vlcControl != null)
+                        vlcControl.Audio.Volume = 0;
                 }
                 else
                 {
                     muteButton.Text = UNMUTED_ICON;
-                    vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
+                    if (vlcControl != null)
+                        vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
                 }
             }
         }
@@ -131,10 +149,19 @@ namespace SorterExpress.Controls
 
                 try
                 {
-                    FileInfo fi = new FileInfo(path);
-                    vlcControl.SetMedia(fi, (repeat) ? "input-repeat=4000" : "input-repeat=0");
-                    vlcControl.Play();
-                    vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
+                    if (vlcControl != null)
+                    {
+                        FileInfo fi = new FileInfo(path);
+                        vlcControl.SetMedia(fi, (repeat) ? "input-repeat=4000" : "input-repeat=0");
+                        vlcControl.Play();
+                        vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
+                    }
+                    else
+                    {
+                        vlcPlayerTableLayoutPanel.Hide();
+                        errorMessageTextBox.Show();
+                        errorMessageTextBox.Text = "VLC must be located by this program in order to support video playback. This can be configured in the settings.";
+                    }
                 }
                 catch (Exception e)
                 {

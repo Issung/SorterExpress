@@ -16,6 +16,7 @@ namespace SorterExpress
 
         public static string THUMBS_PATH { get; } = PROGRAMDATA_PATH + "\\Thumbs\\";
 
+        public const string NAME = "SorterExpress";
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

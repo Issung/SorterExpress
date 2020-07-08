@@ -18,7 +18,7 @@ namespace SorterExpress
 
     class Utilities
     {
-        //public static MD5 md5 = null;
+        private static MD5 md5 = null;
         public static readonly string[] videoFileExtensions = { ".webm", ".avi", ".mp4", ".flv" };
         public static readonly string[] imageFileExtensions = { ".jpg", ".jpeg", ".jpg_large", ".png", ".bmp", ".gif" };
 
@@ -69,19 +69,83 @@ namespace SorterExpress
                 }).OrderBy(x => x.Extension);
 
             foreach (var t in fileTypeCounts)
-                Console.WriteLine("{0} {1}", t.Extension, t.Count);
+                Console.WriteLine($"{t.Extension} {t.Count}");
 
-            Console.WriteLine("Total: " + files.Count());
+            Console.WriteLine($"Total: {files.Count()}");
         }
 
-        public static void VlcLibDirectoryNeeded(object sender, VlcLibDirectoryNeededEventArgs e)
+        public static DirectoryInfo FindVlcLibDirectory()
+        {
+            if (String.IsNullOrWhiteSpace(Settings.Default.VlcLocation))
+            {
+                string programFilesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VideoLAN", "VLC");
+                string x86programFilesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VideoLAN", "VLC");
+                
+                if (File.Exists(programFilesDirectory + "\\libvlc.dll"))
+                {
+                    Logs.Log(true, "Found libvlc.dll in Program Files so loading from there.");
+                    return Ret(programFilesDirectory);
+                }
+                else if (File.Exists(x86programFilesDirectory + "\\libvlc.dll"))
+                {
+                    Logs.Log(true, "Found libvlc.dll in Program Files (x86) so loading from there.");
+                    return Ret(x86programFilesDirectory);
+                }
+                else
+                {
+                    Logs.Log(true, "Cannot find VLC install in ProgramFiles or Programfiles(x86).");
+
+                    using (LocateVLCForm locateForm = new LocateVLCForm())
+                    {
+                        if (locateForm.ShowDialog() == DialogResult.OK)
+                        {
+                            return Ret(Path.GetDirectoryName(locateForm.vlcPath));
+                        }
+                        else //DialogResult.Ignore
+                        {
+                            return null;
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                if (File.Exists(Settings.Default.VlcLocation + "\\libvlc.dll"))
+                {
+                    Logs.Log(true, $"Loaded VLC from directory set by the user in a previous session. ({Settings.Default.VlcLocation})");
+                    return Ret(Settings.Default.VlcLocation);
+                }
+                else
+                {
+                    // Remove pref and try to load VLC again, this will result in either:
+                    //  VLC being loaded from a default install location.
+                    //  Asking the user to locate the install locations.
+                    Settings.Default.VlcLocation = null;
+                    Logs.Log(true, "Could not load VLC from directory given by user in a previous session, directory in prefs has been removed.");
+                    return FindVlcLibDirectory();
+                }
+            }
+
+            DirectoryInfo Ret(string vlcPath)
+            {
+                var di = new DirectoryInfo(vlcPath);
+                Settings.Default.VlcLocation = vlcPath;
+                return di;
+            }
+        }
+
+        /*public static void VlcLibDirectoryNeeded(object sender, VlcLibDirectoryNeededEventArgs e)
         {
             var vlcControl = (VlcControl)sender;
+
+            //FoundPath("libvlc/" + (Environment.Is64BitOperatingSystem ? "win-x64" : "win-x86"));
+            //FoundPath("libvlc/win-x86");
 
             if (String.IsNullOrWhiteSpace(Settings.Default.VlcLocation))
             {
                 string programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + "\\VideoLAN\\VLC";
-                string x86programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86) + "\\VideoLAN\\VLC";
+                string x86programFilesDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) + "\\VideoLAN\\VLC";
 
                 if (File.Exists(programFilesDirectory + "\\libvlc.dll"))
                 {
@@ -138,7 +202,7 @@ namespace SorterExpress
                 Settings.Default.VlcLocation = vlcPath;
                 return;
             }
-        }
+        }*/
 
         public static string[] GetTags(string filename)
         {
@@ -196,8 +260,8 @@ namespace SorterExpress
         public static string MD5(string input)
         {
             // Step 1, calculate MD5 hash from input
-            //if (md5 == null)
-            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            if (md5 == null)
+                md5 = System.Security.Cryptography.MD5.Create();
 
             byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
             byte[] hashBytes = md5.ComputeHash(inputBytes);
@@ -348,6 +412,46 @@ namespace SorterExpress
         public static int GetFolderCountInPath(string path)
         {
             return path.Split(new char[] { '/', '\\' }, StringSplitOptions.RemoveEmptyEntries).Count() - 1;
+        }
+
+        /// <summary>
+        /// Credit: https://www.dotnetperls.com/directory-size
+        /// Returns the size of a directory in bytes.
+        /// Divide by 1000000 to get megabyte size.
+        /// </summary>
+        public static long GetDirectorySizeBytes(string path)
+        {
+            // 1.
+            // Get array of all file names.
+            string[] files = Directory.GetFiles(path, "*.*");
+
+            // 2.
+            // Calculate total bytes of all files in a loop.
+            long b = 0;
+            foreach (string name in files)
+            {
+                // 3.
+                // Use FileInfo to get length of each file.
+                FileInfo info = new FileInfo(name);
+                b += info.Length;
+            }
+            // 4.
+            // Return total size
+            return b;
+        }
+
+        public static void DeleteAllInDirectory(string path)
+        {
+            DirectoryInfo di = new DirectoryInfo(path);
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
         }
     }
 

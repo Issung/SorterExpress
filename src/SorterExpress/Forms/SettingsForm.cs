@@ -6,6 +6,11 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.Linq;
 using SorterExpress.Properties;
+using System.Diagnostics;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Security.Cryptography;
 
 namespace SorterExpress.Forms
 {
@@ -20,6 +25,11 @@ namespace SorterExpress.Forms
         Action<List<string>> setTagsAction = null;
         Func<List<string>> getTagsFunc = null;
         bool seperateWindow;
+
+        BackgroundWorker thumbsSizeWorker;
+        CancellationTokenSource thumbsSizeWorkerCancelToken;
+        long thumbSizeTotalBytes = 0;
+        string thumbSizeLabelText(int size) => $"Thumbs Storage Size: {size} Mb";
 
         /// <summary>
         /// TODO: Implement the callbacks and funcs everywhere that the SettingsForm constructor is used.
@@ -40,9 +50,59 @@ namespace SorterExpress.Forms
 
             this.seperateWindow = seperateWindow;
 
-            LoadSettings();
-
             this.FormClosing += FormIsClosing;
+        }
+
+        private void SettingsForm_Shown(object sender, EventArgs e)
+        {
+            LoadSettings();
+            StartThumbsSizeDisplay();
+        }
+
+        private void StartThumbsSizeDisplay()
+        {
+            thumbsSizeWorker = new BackgroundWorker
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
+            thumbsSizeWorker.DoWork += ThumbsSizeWorker_DoWork;
+            thumbsSizeWorker.ProgressChanged += ThumbsSizeWorker_ProgressChanged;
+            thumbsSizeWorker.RunWorkerAsync();
+        }
+
+        private void ThumbsSizeWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var worker = sender as BackgroundWorker;
+
+            string[] files = Directory.GetFiles(Program.THUMBS_PATH, "*.*");
+
+            thumbSizeTotalBytes = 0;
+            List<int> sizes = new List<int>();
+
+            thumbsSizeWorkerCancelToken = new CancellationTokenSource();
+            
+            var options = new ParallelOptions {
+                MaxDegreeOfParallelism = Environment.ProcessorCount,
+                CancellationToken = thumbsSizeWorkerCancelToken.Token
+            };
+
+            Parallel.ForEach(files, options, (filename, state) => 
+            {
+                if (options.CancellationToken.IsCancellationRequested)
+                    state.Stop();
+                else
+                { 
+                    FileInfo info = new FileInfo(filename);
+                    Interlocked.Add(ref thumbSizeTotalBytes, info.Length);
+                    worker.ReportProgress((int)(thumbSizeTotalBytes / 1000000));
+                }
+            });
+        }
+
+        private void ThumbsSizeWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            thumbsStorageSizeLabel.Text = thumbSizeLabelText(e.ProgressPercentage);
         }
 
         public void LoadSettings()
@@ -76,7 +136,7 @@ namespace SorterExpress.Forms
 
         private void websiteButton_Click(object sender, EventArgs e)
         {
-            //open website
+            Process.Start("https://github.com/Issung/SorterExpress");
         }
 
         private void ClearTagsButton_Click(object sender, EventArgs e)
@@ -133,7 +193,7 @@ namespace SorterExpress.Forms
 
         private void ViewLogsButton_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(Directory.GetCurrentDirectory() + "/" + Logs.LOGS_FILE_PATH);
+            Process.Start(Directory.GetCurrentDirectory() + "/" + Logs.LOGS_FILE_PATH);
         }
 
         private void TagSearchNumeric_ValueChanged(object sender, EventArgs e)
@@ -151,10 +211,87 @@ namespace SorterExpress.Forms
         {
             if (seperateWindow)
             {
-                var window = MessageBox.Show("Do you really want to close settings without saving?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                DialogResult result = MessageBox.Show("Do you really want to close settings without saving?", 
+                    "Are you sure?", 
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Exclamation);
 
-                e.Cancel = window == DialogResult.No;
+                if (result == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    thumbsSizeWorkerCancelToken.Cancel();
+                    e.Cancel = false;
+                }
             }
+        }
+
+        private void thumbsStorageInfoButton_Click(object sender, EventArgs e)
+        {
+            string thumbsStorageMoreInfoMessage = $"When using the duplicate searcher feature of {Program.NAME} the program while searching stores small " +
+                $"thumbnails of images in order to use them to compare to other images to check similarity." +
+                $"\r\r" +
+                $"These thumbnails are stored for later use which greatly increases duplicate searching speed in future searches." +
+                $"\r\r" +
+                $"The number to the left shows how large your thumbnail storage is in Megabytes." +
+                $"\r\r" +
+                $"The \"Empty\" button to the right allows you to delete all of these if you wish, but be aware that if you use duplicate image searching again images " +
+                $"will be generated again.";
+
+            MessageBox.Show(thumbsStorageMoreInfoMessage, "Thumbs Storage Info", MessageBoxButtons.OK, MessageBoxIcon.Question);
+        }
+
+        BackgroundWorker thumbnailsDeleteWorker;
+
+        private void thumbsStorageEmptyButton_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to delete cached thumbnails?\rBe sure to read the \"What's This?\" information to be informed.",
+                "Are you sure?", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.OK)
+            {
+                Utilities.DeleteAllInDirectory(Program.THUMBS_PATH);
+
+                thumbnailsDeleteWorker = new BackgroundWorker { 
+                    WorkerReportsProgress = true
+                };
+                thumbnailsDeleteWorker.DoWork += thumbnailsDeleteWorker_DoWork;
+                thumbnailsDeleteWorker.ProgressChanged += thumbnailsDeleteWorker_ProgressChanged;
+                thumbnailsDeleteWorker.RunWorkerCompleted += thumbnailsDeleteWorker_Complete;
+                thumbnailsDeleteWorker.RunWorkerAsync();
+            }
+        }
+
+        private void thumbnailsDeleteWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+            thumbsSizeWorkerCancelToken.Cancel();
+
+            string[] files = Directory.GetFiles(Program.THUMBS_PATH);
+
+            ParallelOptions PO = new ParallelOptions {
+                MaxDegreeOfParallelism = Environment.ProcessorCount
+            };
+
+            Parallel.ForEach(files, PO, (filename) =>
+            {
+                FileInfo fi = new FileInfo(filename);
+                File.Delete(filename);
+                Interlocked.Add(ref thumbSizeTotalBytes, -fi.Length);
+                worker.ReportProgress((int)(thumbSizeTotalBytes / 1000000));
+            });
+        }
+
+        private void thumbnailsDeleteWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            thumbsStorageSizeLabel.Text = thumbSizeLabelText(e.ProgressPercentage);
+        }
+
+        private void thumbnailsDeleteWorker_Complete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            thumbsStorageSizeLabel.Text = thumbSizeLabelText(0);
         }
     }
 }
