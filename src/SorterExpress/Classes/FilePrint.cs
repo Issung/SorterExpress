@@ -1,4 +1,6 @@
 ﻿using SorterExpress;
+using SorterExpress.Properties;
+using System;
 using System.Drawing;
 using System.IO;
 
@@ -69,8 +71,72 @@ public class FilePrint
         }
     }
 
+    static readonly float minColor = Color.FromArgb(18, 18, 18).GetBrightness();
+
     public void CalculatePicturePrint(Bitmap img)
     {
+        int leftBorder = 0,
+            rightBorder = 0,
+            topBorder = 0,
+            bottomBorder = 0;
+
+        if (Settings.Default.DuplicatesCropLeftRightSides)
+        {
+            //Get Left Border
+            for (int i = 0; i < img.Size.Width; i++)
+            {
+                if (img.GetPixel(i, img.Size.Height / 2).GetBrightness() > minColor)
+                {
+                    leftBorder = i;
+                    break;
+                }
+            }
+
+            //Get Right Border
+            for (int i = img.Size.Width - 1; i >= 0; i--)
+            {
+                if (img.GetPixel(i, img.Size.Height / 2).GetBrightness() > minColor)
+                {
+                    rightBorder = i;
+                    break;
+                }
+            }
+
+            //Console.WriteLine($"leftBorder: {leftBorder}, rightBorder: {rightBorder}");
+        }
+
+        if (Settings.Default.DuplicatesCropTopBottomSides)
+        {
+            //Get Top Border
+            for (int i = 0; i < img.Size.Height; i++)
+            {
+                if (img.GetPixel(img.Size.Width / 2, i).GetBrightness() > minColor)
+                {
+                    topBorder = i;
+                    break;
+                }
+            }
+
+            //Get Bottom Border
+            for (int i = img.Size.Height - 1; i >= 0; i--)
+            {
+                if (img.GetPixel(img.Size.Width / 2, i).GetBrightness() > minColor)
+                {
+                    bottomBorder = i;
+                    break;
+                }
+            }
+
+            //Console.WriteLine($"topBorder: {topBorder}, bottomBorder: {bottomBorder}");
+        }
+
+        if (Settings.Default.DuplicatesCropLeftRightSides || Settings.Default.DuplicatesCropTopBottomSides)
+        {
+            int width = (leftBorder == rightBorder) ? THUMB_SIZE : (rightBorder - leftBorder);
+            int height = (topBorder == bottomBorder) ? THUMB_SIZE : (bottomBorder - topBorder);
+            img = img.Clone(new Rectangle(leftBorder, topBorder, width, height), img.PixelFormat);
+        }
+
         img = Utilities.Resize(img, 8, 8);
         img = Utilities.MakeGrayscale(img);
 

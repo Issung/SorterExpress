@@ -235,5 +235,29 @@ namespace SorterExpress.Properties {
                 this["DuplicatesOnlyKeepTagsInLibrary"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DuplicatesCropLeftRightSides {
+            get {
+                return ((bool)(this["DuplicatesCropLeftRightSides"]));
+            }
+            set {
+                this["DuplicatesCropLeftRightSides"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DuplicatesCropTopBottomSides {
+            get {
+                return ((bool)(this["DuplicatesCropTopBottomSides"]));
+            }
+            set {
+                this["DuplicatesCropTopBottomSides"] = value;
+            }
+        }
     }
 }

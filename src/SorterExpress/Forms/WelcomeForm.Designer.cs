@@ -44,9 +44,11 @@
             // 
             // sortButton
             // 
+            this.sortButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.sortButton.Location = new System.Drawing.Point(12, 53);
             this.sortButton.Name = "sortButton";
-            this.sortButton.Size = new System.Drawing.Size(277, 23);
+            this.sortButton.Size = new System.Drawing.Size(301, 23);
             this.sortButton.TabIndex = 0;
             this.sortButton.Text = "Sort Collection";
             this.toolTip.SetToolTip(this.sortButton, "Organise your collection by adding tags and notes to filenames or just moving the" +
@@ -56,9 +58,11 @@
             // 
             // settingsButton
             // 
+            this.settingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.settingsButton.Location = new System.Drawing.Point(11, 238);
             this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(277, 23);
+            this.settingsButton.Size = new System.Drawing.Size(301, 23);
             this.settingsButton.TabIndex = 4;
             this.settingsButton.Text = "Settings";
             this.toolTip.SetToolTip(this.settingsButton, "Change settings for the application.");
@@ -67,9 +71,11 @@
             // 
             // exitButton
             // 
+            this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.exitButton.Location = new System.Drawing.Point(11, 267);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(277, 23);
+            this.exitButton.Size = new System.Drawing.Size(301, 23);
             this.exitButton.TabIndex = 5;
             this.exitButton.Text = "Exit";
             this.toolTip.SetToolTip(this.exitButton, "Exit SorterExpress, bye!");
@@ -78,9 +84,11 @@
             // 
             // viewFormButton
             // 
+            this.viewFormButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.viewFormButton.Location = new System.Drawing.Point(12, 111);
             this.viewFormButton.Name = "viewFormButton";
-            this.viewFormButton.Size = new System.Drawing.Size(277, 23);
+            this.viewFormButton.Size = new System.Drawing.Size(301, 23);
             this.viewFormButton.TabIndex = 1;
             this.viewFormButton.Text = "View Collection";
             this.toolTip.SetToolTip(this.viewFormButton, "View your collection by specifying a search criteria of tags featuring AND, OR & " +
@@ -90,9 +98,11 @@
             // 
             // renameTagButton
             // 
+            this.renameTagButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.renameTagButton.Location = new System.Drawing.Point(12, 140);
             this.renameTagButton.Name = "renameTagButton";
-            this.renameTagButton.Size = new System.Drawing.Size(277, 23);
+            this.renameTagButton.Size = new System.Drawing.Size(301, 23);
             this.renameTagButton.TabIndex = 2;
             this.renameTagButton.Text = "Rename Tag in Collection";
             this.toolTip.SetToolTip(this.renameTagButton, resources.GetString("renameTagButton.ToolTip"));
@@ -101,9 +111,11 @@
             // 
             // duplicatesButton
             // 
+            this.duplicatesButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.duplicatesButton.Location = new System.Drawing.Point(12, 169);
             this.duplicatesButton.Name = "duplicatesButton";
-            this.duplicatesButton.Size = new System.Drawing.Size(277, 23);
+            this.duplicatesButton.Size = new System.Drawing.Size(301, 23);
             this.duplicatesButton.TabIndex = 3;
             this.duplicatesButton.Text = "Find Duplicates in Collection";
             this.toolTip.SetToolTip(this.duplicatesButton, "Search your collection for duplicates. Features recursive directory searching, su" +
@@ -113,9 +125,11 @@
             // 
             // allInOneButton
             // 
+            this.allInOneButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.allInOneButton.Location = new System.Drawing.Point(12, 198);
             this.allInOneButton.Name = "allInOneButton";
-            this.allInOneButton.Size = new System.Drawing.Size(277, 23);
+            this.allInOneButton.Size = new System.Drawing.Size(301, 23);
             this.allInOneButton.TabIndex = 6;
             this.allInOneButton.Text = "All In One [WIP, Slow]";
             this.toolTip.SetToolTip(this.allInOneButton, "Opens a tabbed form that features all options (sort, mass tag, view, rename tag, " +
@@ -125,9 +139,11 @@
             // 
             // massTagButton
             // 
+            this.massTagButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.massTagButton.Location = new System.Drawing.Point(12, 82);
             this.massTagButton.Name = "massTagButton";
-            this.massTagButton.Size = new System.Drawing.Size(277, 23);
+            this.massTagButton.Size = new System.Drawing.Size(301, 23);
             this.massTagButton.TabIndex = 7;
             this.massTagButton.Text = "Mass Tag Collection";
             this.toolTip.SetToolTip(this.massTagButton, "Add tags en masse to your collection. This option allows you to open a directory " +
@@ -138,7 +154,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(35, 20);
+            this.label1.Location = new System.Drawing.Point(46, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(232, 13);
             this.label1.TabIndex = 8;
@@ -148,7 +164,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 301);
+            this.ClientSize = new System.Drawing.Size(324, 301);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.massTagButton);
             this.Controls.Add(this.allInOneButton);
@@ -158,9 +174,8 @@
             this.Controls.Add(this.renameTagButton);
             this.Controls.Add(this.settingsButton);
             this.Controls.Add(this.sortButton);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(318, 340);
-            this.MinimumSize = new System.Drawing.Size(316, 340);
             this.Name = "WelcomeForm";
             this.Text = "Sorter Express - Welcome";
             this.TransparencyKey = System.Drawing.Color.White;

@@ -112,8 +112,10 @@ namespace SorterExpress.Forms
             autoResetTagSearchCheckBox.Checked = Settings.Default.AutoResetTagSearchBox;
             displayAllTagsCheckbox.Checked = Settings.Default.DisplayAllTags;
 
-            moveSortedFilesCheckbox.Checked = Settings.Default.MoveSortedFiles;
+            //cropFilesLeftRightCheckBox.Checked = Settings.Default.DuplicatesCropLeftRightSides;
+            //cropFilesTopBottomCheckBox.Checked = Settings.Default.DuplicatesCropTopBottomSides;
 
+            moveSortedFilesCheckbox.Checked = Settings.Default.MoveSortedFiles;
             fastResizingCheckbox.Checked = Settings.Default.FastResizing;
 
             LoadVLCLocation();
@@ -142,6 +144,10 @@ namespace SorterExpress.Forms
             Settings.Default.TagSearchStart = (int)tagSearchNumeric.Value;
             Settings.Default.AutoResetTagSearchBox = autoResetTagSearchCheckBox.Checked;
             Settings.Default.DisplayAllTags = displayAllTagsCheckbox.Checked;
+
+            //Settings.Default.DuplicatesCropLeftRightSides = cropFilesLeftRightCheckBox.Checked;
+            //Settings.Default.DuplicatesCropTopBottomSides = cropFilesTopBottomCheckBox.Checked;
+
             Settings.Default.MoveSortedFiles = moveSortedFilesCheckbox.Checked;
             Settings.Default.FastResizing = fastResizingCheckbox.Checked;
 

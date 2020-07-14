@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using Vlc.DotNet.Forms;
 
@@ -264,23 +265,27 @@ namespace SorterExpress
             return ret;
         }
 
+        static object md5Lock = new object();
+
+        /// <summary>
+        /// https://stackoverflow.com/questions/11454004/calculate-a-md5-hash-from-a-string
+        /// </summary>
         public static string MD5(string input)
         {
-            // Step 1, calculate MD5 hash from input
-            if (md5 == null)
-                md5 = System.Security.Cryptography.MD5.Create();
-
-            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-            byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-            // Step 2, convert byte array to hex string
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hashBytes.Length; i++)
+            // Use input string to calculate MD5 hash
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
             {
-                sb.Append(hashBytes[i].ToString("X2"));
-            }
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
 
-            return sb.ToString();
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
         }
 
         public static int IndexOfNth(string str, string value, int nth = 1)

@@ -81,9 +81,11 @@ namespace SorterExpress.Forms
             printsWorker.ProgressChanged += Worker_ProgressChanged;
             printsWorker.RunWorkerCompleted += Worker_Completed;
 
-            similarityNumeric.Value = Settings.Default.DuplicatesSearchSimilarityPercentage;
             imagesCheckBox.Checked = Settings.Default.DuplicatesSearchImages;
             videosCheckBox.Checked = Settings.Default.DuplicatesSearchVideos;
+            cropLeftRightCheckBox.Checked = Settings.Default.DuplicatesCropLeftRightSides;
+            cropTopBottomCheckBox.Checked = Settings.Default.DuplicatesCropTopBottomSides;
+            similarityNumeric.Value = Settings.Default.DuplicatesSearchSimilarityPercentage;
 
             mergeFileTagsCheckBox.Checked = Settings.Default.DuplicatesMergeFileTags;
             onlyKeepLibraryTagsCheckBox.Checked = Settings.Default.DuplicatesOnlyKeepTagsInLibrary;
@@ -135,6 +137,8 @@ namespace SorterExpress.Forms
             similarityNumeric.Enabled = true;
             imagesCheckBox.Enabled = true;
             videosCheckBox.Enabled = true;
+            cropLeftRightCheckBox.Enabled = true;
+            cropTopBottomCheckBox.Enabled = true;
             threadCountNumeric.Enabled = true;
             searchButton.Enabled = true;
         }
@@ -185,6 +189,8 @@ namespace SorterExpress.Forms
             similarityNumeric.Enabled = true;
             imagesCheckBox.Enabled = true;
             videosCheckBox.Enabled = true;
+            cropLeftRightCheckBox.Enabled = true;
+            cropTopBottomCheckBox.Enabled = true;
             threadCountNumeric.Enabled = true;
             searchButton.Enabled = true;
             cancelButton.Enabled = false;
@@ -224,29 +230,32 @@ namespace SorterExpress.Forms
                     (filename, state) =>
                     {
                         if (options.CancellationToken.IsCancellationRequested)
-                            state.Stop();
+                        { 
+                            state.Break();
+                        }
                         else
                         {
                             FilePrint print = null;
 
-                            try
-                            {
+                            //try
+                            //{
                                 if (!prints.Exists(t => t.file.Replace(directory, "") == filename))
                                 {
-                                    print = new FilePrint(directory + "\\" + filename);
+                                    print = new FilePrint(Path.Combine(directory, filename));
                                     prints.Add(print);
                                 }
                                 else
                                 {
                                     //This should never get hit...
+                                    Console.WriteLine("The thing that should never get hit got hit.");
                                     print = prints.Find(t => t.file.Replace(directory, "") == filename);
                                 }
-                            }
+                            /*}
                             catch //Exceptions can occur from accessing files.
                             {
-                                Console.WriteLine($"Error occured while generating print for file {directory}\\{filename}.");
+                                Console.WriteLine($"Error occured while generating print for file {Path.Combine(directory, filename)}.");
                                 print = null;
-                            }
+                            }*/
 
                             if (print != null)
                             {
@@ -256,18 +265,19 @@ namespace SorterExpress.Forms
                                     try
                                     {
                                         // Don't match with self
-                                        if (print.file != prints[i].file)
+                                        //if (print.file != prints[i].file)
+                                        if (print != prints[i])
                                         {
                                             // If similarity is above threshold
                                             if (FilePrint.GetSimilarityPercentage(print, prints[i]) >= similarityNumeric.Value)
                                             {
                                                 try
                                                 {
-                                                    // If the duplicate hasnt already been found or found in reverse (x is like y |or| y is like x)
-                                                    //if (!duplicates.Exists(t => t.File2Path == print.file && t.File1Path == prints[i].file))
+                                                    // If the duplicate hasn't already been found or found in reverse (x is like y |or| y is like x)
                                                     if (!duplicates.Any(t => t.File2Path == print.file && t.File1Path == prints[i].file))
                                                     {
-                                                        Invoke((MethodInvoker)delegate () { 
+                                                        Invoke((MethodInvoker)delegate()
+                                                        {
                                                             duplicates.Add(new Duplicate(print, prints[i]));
                                                         });
                                                     }
@@ -335,6 +345,7 @@ namespace SorterExpress.Forms
             }
 
             filenameBox.Text = filePath.Replace(directory, "");
+            filenameBox.Text += $"\n\nThumbnail: {(side == Side.Left ? inspectingDuplicate.File1ThumbPath : inspectingDuplicate.File2ThumbPath)}";
             infoBox.Text = "";
 
             if (Utilities.FileIsImage(filePath))
@@ -445,6 +456,10 @@ namespace SorterExpress.Forms
             threadCountNumeric.Enabled = false;
             imagesCheckBox.Enabled = false;
             videosCheckBox.Enabled = false;
+            Settings.Default.DuplicatesCropLeftRightSides = cropLeftRightCheckBox.Checked;
+            cropLeftRightCheckBox.Enabled = false;
+            Settings.Default.DuplicatesCropTopBottomSides = cropTopBottomCheckBox.Checked;
+            cropTopBottomCheckBox.Enabled = false;
 
             printsWorker.RunWorkerAsync();
         }
@@ -500,7 +515,6 @@ namespace SorterExpress.Forms
                 }
                 else
                 {
-
                     return false;
                 }
             }
@@ -511,6 +525,8 @@ namespace SorterExpress.Forms
         /// </summary>
         void DeleteFile(string filePath)
         {
+            //const bool DELETE_THUMB = true;
+
             mediaViewerLeft.UnloadMedia();
             mediaViewerRight.UnloadMedia();
 
@@ -537,6 +553,15 @@ namespace SorterExpress.Forms
                     i--;
                 }
             }
+
+            matchesDataGridView.Refresh();
+            matchesDataGridView.Update();
+
+            //Disabled because it currently has errors with the file being in use. Probably by the duplicates grid view?
+            /*if (DELETE_THUMB)
+            {
+               File.Delete(Path.Combine(Program.THUMBS_PATH, Utilities.MD5(Path.GetFileName(filePath)) + ".jpg"));
+            }*/
         }
 
         private void KeepSide(Side side)
@@ -564,21 +589,12 @@ namespace SorterExpress.Forms
 
                     string fileToKeepNewName = string.Join(" ", mergedTags) + Path.GetExtension(fileToKeep).ToLower();
 
-                    Utilities.MoveFile(
-                        fileToKeep, $"{Path.GetDirectoryName(fileToKeep)}\\{fileToKeepNewName}");
+                    Utilities.MoveFile(fileToKeep, Path.Combine(Path.GetDirectoryName(fileToKeep), fileToKeepNewName));
 
-                    Console.WriteLine($"Renamed");
-                    Console.WriteLine(Path.GetFileName(fileToKeep));
-                    Console.WriteLine("to");
-                    Console.WriteLine(fileToKeepNewName);
+                    Console.WriteLine($"Renamed {fileToKeep.Replace(directory, "")} to {fileToKeepNewName}");
                 }
 
                 DeleteFile(fileToDelete);
-
-                /*if (matchesListBox.Items.Count > selectedIndex)
-                    matchesListBox.SelectedIndex = selectedIndex;
-                else if (matchesListBox.Items.Count != 0)
-                    matchesListBox.SelectedIndex = matchesListBox.Items.Count - 1;*/
             }
         }
 
@@ -599,14 +615,8 @@ namespace SorterExpress.Forms
             int selectedIndex = MatchesGridViewSelectedRow;
             if (selectedIndex < duplicates.Count - 1)
             {
-                //matchesListBox.SelectedIndex++;
-                //matchesDataGridView.ClearSelection();
-                //matchesDataGridView.Rows[selectedIndex + 1].Selected = true;
                 selectedIndexOverride = selectedIndex + 1;
                 matchesDataGridView.CurrentCell = matchesDataGridView.Rows[selectedIndex + 1].Cells[0];
-                //matchesDataGridView.ClearSelection();
-                //matchesDataGridView.Rows[selectedIndex + 1].Selected = true;
-                //matchesDataGridView.Rows[selectedIndex + 1].Cells[0].Selected = true;
             }
         }
 
@@ -631,28 +641,6 @@ namespace SorterExpress.Forms
                 inspectingDuplicate = null;
             }
         }
-
-        /*private void matchesDataGridView_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {
-            Console.WriteLine($"matchesDataGridView_RowStateChanged, " +
-                $"MatchesGridViewSelectedRow: {MatchesGridViewSelectedRow}, " +
-                $"e.StateChanged: {e.StateChanged.ToString()}");
-
-            if (e.StateChanged == DataGridViewElementStates.Selected)
-            {
-                if (MatchesGridViewSelectedRow >= 0)
-                {
-                    inspectingDuplicate = duplicates[MatchesGridViewSelectedRow];
-
-                    LoadFile(Side.Left, inspectingDuplicate.File1Path);
-                    LoadFile(Side.Right, inspectingDuplicate.File2Path);
-                }
-                else
-                {
-                    inspectingDuplicate = null;
-                }
-            }
-        }*/
 
         private void OpenDirectoryButton_Click(object sender, EventArgs e)
         {
@@ -709,15 +697,11 @@ namespace SorterExpress.Forms
             if (CheckDeletingFilesOkay())
             {
                 // Can't do DeleteFile(inspectingDuplicate.fileX) because the duplicate object will be deleted after the first operation.
-                string file1 = inspectingDuplicate.File1Path, file2 = inspectingDuplicate.File2Path;
+                string file1 = inspectingDuplicate.File1Path;
+                string file2 = inspectingDuplicate.File2Path;
 
                 DeleteFile(file1);
                 DeleteFile(file2);
-
-                /*if (matchesListBox.Items.Count > selectedIndex)
-                    matchesListBox.SelectedIndex = selectedIndex;
-                else if (matchesListBox.Items.Count != 0)
-                    matchesListBox.SelectedIndex = matchesListBox.Items.Count - 1;*/
             }
         }
 
@@ -733,6 +717,8 @@ namespace SorterExpress.Forms
             Settings.Default.DuplicatesSearchSimilarityPercentage = (int)similarityNumeric.Value;
             Settings.Default.DuplicatesSearchImages = imagesCheckBox.Checked;
             Settings.Default.DuplicatesSearchVideos = videosCheckBox.Checked;
+            Settings.Default.DuplicatesCropLeftRightSides = cropLeftRightCheckBox.Checked;
+            Settings.Default.DuplicatesCropTopBottomSides = cropTopBottomCheckBox.Checked;
             Settings.Default.DuplicatesSearchThreadCount = (int)threadCountNumeric.Value;
             Settings.Default.DuplicatesMergeFileTags = MergeFileTags;
             Settings.Default.DuplicatesOnlyKeepTagsInLibrary = OnlyKeepLibraryTags;
