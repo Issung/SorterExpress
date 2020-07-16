@@ -498,6 +498,7 @@ namespace SorterExpress.Forms
             this.MinimumSize = new System.Drawing.Size(756, 360);
             this.Name = "SortForm";
             this.Text = "Sorter Express - Sort";
+            this.Load += new System.EventHandler(this.SortForm_Load);
             this.openFileTableLayoutPanel.ResumeLayout(false);
             this.openFileTableLayoutPanel.PerformLayout();
             this.fileIndexTableLayoutPanel.ResumeLayout(false);

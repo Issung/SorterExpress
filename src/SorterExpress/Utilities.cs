@@ -3,6 +3,7 @@ using SorterExpress.Forms;
 using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -81,20 +82,22 @@ namespace SorterExpress
             {
                 string programFilesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VideoLAN", "VLC");
                 string x86programFilesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VideoLAN", "VLC");
-                
-                if (File.Exists(programFilesDirectory + "\\libvlc.dll"))
+
+                Logs.Log(true, $"programFilesDirectory: {programFilesDirectory}", $"x86programFilesDirectory: {x86programFilesDirectory}");
+
+                if (Directory.Exists(programFilesDirectory))
                 {
-                    Logs.Log(true, "Found libvlc.dll in Program Files so loading from there.");
+                    Logs.Log(true, $"Directory {programFilesDirectory} exists, loading VLC from there.");
                     return Ret(programFilesDirectory);
                 }
-                else if (File.Exists(x86programFilesDirectory + "\\libvlc.dll"))
+                else if (Directory.Exists(x86programFilesDirectory))
                 {
-                    Logs.Log(true, "Found libvlc.dll in Program Files (x86) so loading from there.");
+                    Logs.Log(true, $"Directory {x86programFilesDirectory} exists, loading VLC from there.");
                     return Ret(x86programFilesDirectory);
                 }
                 else
                 {
-                    Logs.Log(true, "Cannot find VLC install in ProgramFiles or Programfiles(x86).");
+                    Logs.Log(true, $"Cannot find VLC install in ProgramFiles or ProgramFiles(x86).");
 
                     using (LocateVLCForm locateForm = new LocateVLCForm())
                     {
@@ -112,7 +115,7 @@ namespace SorterExpress
             }
             else
             {
-                if (File.Exists(Settings.Default.VlcLocation + "\\libvlc.dll"))
+                if (Directory.Exists(Settings.Default.VlcLocation))
                 {
                     Logs.Log(true, $"Loaded VLC from directory set by the user in a previous session. ({Settings.Default.VlcLocation})");
                     return Ret(Settings.Default.VlcLocation);
@@ -123,7 +126,7 @@ namespace SorterExpress
                     //  VLC being loaded from a default install location.
                     //  Asking the user to locate the install locations.
                     Settings.Default.VlcLocation = null;
-                    Logs.Log(true, "Could not load VLC from directory given by user in a previous session, directory in prefs has been removed.");
+                    Logs.Log(true, "Could not load VLC from directory given by user in a previous session, directory in prefs has been removed. Trying again.");
                     return FindVlcLibDirectory();
                 }
             }
@@ -287,6 +290,27 @@ namespace SorterExpress
                 return sb.ToString();
             }
         }
+
+        //Failed idea to MD5 off of file data rather than filename. Could be fixed eventually but might be slow.
+        /*public static string MD5FileData(string filePath)
+        {
+            // Use input string to calculate MD5 hash
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                const int BYTES = 10;
+                byte[] inputBytes = new byte[BYTES];
+                new FileStream(filePath, FileMode.Open).S.Read(inputBytes, 0, BYTES);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
+        }*/
 
         public static int IndexOfNth(string str, string value, int nth = 1)
         {

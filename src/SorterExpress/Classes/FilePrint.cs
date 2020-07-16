@@ -42,7 +42,8 @@ public class FilePrint
             this.size = img.Size;
             CalculatePicturePrint(img);
 
-            thumbPath = Program.THUMBS_PATH + "\\" + Utilities.MD5(Path.GetFileName(filePath)) + ".jpg";
+            //thumbPath = Program.THUMBS_PATH + "\\" + Utilities.MD5(Path.GetFileName(filePath)) + ".jpg";
+            thumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
             if (!File.Exists(thumbPath))
                 Utilities.Resize(new Bitmap(filePath), THUMB_SIZE, THUMB_SIZE).Save(thumbPath);
 
@@ -56,7 +57,8 @@ public class FilePrint
             if (ffprobe == null)
                 ffprobe = new FFProbe();
 
-            thumbPath = Program.THUMBS_PATH + "\\" + Utilities.MD5(Path.GetFileName(filePath)) + ".jpg";
+            //thumbPath = Program.THUMBS_PATH + "\\" + Utilities.MD5(Path.GetFileName(filePath)) + ".jpg";
+            thumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
             if (!File.Exists(thumbPath))
                 ffmpeg.GetThumbnailWait(filePath, thumbPath, THUMB_SIZE);
 

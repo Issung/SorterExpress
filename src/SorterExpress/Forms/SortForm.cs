@@ -23,8 +23,6 @@ namespace SorterExpress.Forms
 
         List<SubfolderInfo> customSubfolders; 
 
-        List<Button> subfolderButtons;
-
         public List<string> previousTags;
         public List<string> tags;
         List<string> enabledTags;
@@ -35,9 +33,17 @@ namespace SorterExpress.Forms
         public readonly char[] noteForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.' };
         public readonly char[] tagForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.', ' ' };
 
+        DirectoryInfo dirInfo;
+
         public SortForm(DirectoryInfo dirInfo)
         {
             InitializeComponent();
+
+            this.dirInfo = dirInfo;
+        }
+
+        private void SortForm_Load(object sender, EventArgs e)
+        {
             SuspendLayout();
 
             ///Stuff that cant be done in the designer
@@ -46,7 +52,6 @@ namespace SorterExpress.Forms
 
             form = this;
 
-            subfolderButtons = new List<Button>();
             enabledTags = new List<string>();
 
             tags = Settings.Default.Tags ?? new List<string>();

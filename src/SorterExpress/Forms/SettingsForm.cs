@@ -11,6 +11,8 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Security.Cryptography;
+using Microsoft.Win32;
+using System.Security.Permissions;
 
 namespace SorterExpress.Forms
 {
@@ -119,6 +121,7 @@ namespace SorterExpress.Forms
             fastResizingCheckbox.Checked = Settings.Default.FastResizing;
 
             LoadVLCLocation();
+            UpdateContextMenuButton();
         }
 
         string currentVlcLocationText(string path) => $"Current VLC Location: {path}";
@@ -219,7 +222,7 @@ namespace SorterExpress.Forms
 
         private void ViewLogsButton_Click(object sender, EventArgs e)
         {
-            Process.Start(Directory.GetCurrentDirectory() + "/" + Logs.LOGS_FILE_PATH);
+            Process.Start(Logs.LOGS_FILE_PATH);
         }
 
         private void TagSearchNumeric_ValueChanged(object sender, EventArgs e)
@@ -344,6 +347,98 @@ namespace SorterExpress.Forms
             }
 
             LoadVLCLocation();
+        }
+
+        bool isContextMenuSetup = false;
+
+        private void UpdateContextMenuButton()
+        {
+            string keyName = @"Directory\Background\shell\SorterExpress";
+            using (RegistryKey key = Registry.ClassesRoot.OpenSubKey(keyName, false))
+            {
+                if (key == null)
+                { 
+                    isContextMenuSetup = false;
+                    toggleContextMenuOptionsButton.Text = "Add Context Menu Options To Windows";
+                }
+                else
+                { 
+                    isContextMenuSetup = true;
+                    toggleContextMenuOptionsButton.Text = "Remove Context Menu Options From Windows";
+                }
+            }
+
+        }
+
+        private void toggleContextMenuOptionsButton_Click(object sender, EventArgs e)
+        {
+            if (isContextMenuSetup)
+                RemoveContextMenuOptions();
+            else
+                SetupContextMenuOptions();
+
+            UpdateContextMenuButton();
+        }
+
+        private void SetupContextMenuOptions()
+        {
+            const string TEMPLATE_FILENAME = "SetupContextMenuOptionsTemplate.reg";     //The name of the template registry file.
+            const string TEMPLATE_REPLACE_TOKEN = "PROGRAM_PATH";                       //The reoccuring string in the template file to be replaced with the program path.
+            const string OUTPUT_FILENAME = "ContextMenuUpdated.reg";                    //The output registry file with updated paths, to be run.
+
+            string regFileContents = File.ReadAllText(TEMPLATE_FILENAME);
+            string currentAppPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, AppDomain.CurrentDomain.FriendlyName).Replace("\\", "\\\\") + "\\";
+
+            regFileContents = regFileContents.Replace(TEMPLATE_REPLACE_TOKEN, currentAppPath);
+
+            File.Delete(OUTPUT_FILENAME);
+            File.WriteAllText(OUTPUT_FILENAME, regFileContents);
+
+            Process regeditProcess = Process.Start("regedit.exe", $"/s \"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, OUTPUT_FILENAME)}\"");
+            regeditProcess.WaitForExit();
+
+            if (regeditProcess.ExitCode == 0)
+                MessageBox.Show($"{Program.NAME} Context Menu options succesfully added to windows.", "Success", MessageBoxButtons.OK, MessageBoxIcon.None);
+            else
+                MessageBox.Show($"An error occured while adding context menu options. Exit Code: {regeditProcess.ExitCode}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void RemoveContextMenuOptions()
+        {
+            /*string keyName = @"Directory\Background\shell";
+            using (RegistryKey key = Registry.ClassesRoot.OpenSubKey(keyName, true))
+            {
+                if (key.GetSubKeyNames().Contains("SorterExpress"))
+                {
+                    //key.DeleteSubKey("SorterExpress");
+                    key.DeleteSubKeyTree("SorterExpress");
+                }
+            }*/
+
+            const string REMOVE_REGEDIT_SCRIPT = "RemoveContextMenuOptions.reg";
+
+            Process regeditProcess = Process.Start("regedit.exe", $"/s \"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, REMOVE_REGEDIT_SCRIPT)}\"");
+            regeditProcess.WaitForExit();
+
+            if (regeditProcess.ExitCode == 0)
+                MessageBox.Show($"{Program.NAME} Context Menu options succesfully removed.", "Success", MessageBoxButtons.OK, MessageBoxIcon.None);
+            else
+                MessageBox.Show($"An error occured while removing context menu options. Exit Code: {regeditProcess.ExitCode}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void toggleContextMenuOptionsInfoButton_Click(object sender, EventArgs e)
+        {
+            string thumbsStorageMoreInfoMessage = $"By adding context menu options to Windows you will be able to right click in a folder in windows explorer " +
+                $"and be able to quickly launch different {Program.NAME} functionalities in that folder.\r\r" +
+                $"Once added context menu options can be removed if desired through these settings, and added back again if desired too.\r\r" +
+                $"The registry files used can be viewed at {AppDomain.CurrentDomain.BaseDirectory}";
+
+            MessageBox.Show(thumbsStorageMoreInfoMessage, "Thumbs Storage Info", MessageBoxButtons.OK, MessageBoxIcon.Question);
+        }
+
+        private void thumbsStorageViewButton_Click(object sender, EventArgs e)
+        {
+            Process.Start(Program.THUMBS_PATH);
         }
     }
 }

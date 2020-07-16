@@ -7,9 +7,15 @@
 	
 	Sorter:
 		Seems like there is a problem when doing an undo then saving the image again the fileindex appears to 'go backwards 1'.
+		Actions rework:
+			Create "Action" class/interface.
+				Extend for moves, renames, deletes.
+				Implement methods for performing these, 
+			Use a Stack<Action> to handle undos and redoes.
+			Basically needs a whole MVC rework?
 	
 	Viewer:
-		Stop grid horizontal scroll bar appearing.
+		Stop images grid horizontal scroll bar appearing.
 
 	Rename Tag:
 		Update constructor to take an argument and open a folder instantly.
@@ -23,6 +29,18 @@
 			Keep file with most tags?
 
 Done
+	Duplicate Finder
+		Fixed lots of issues with duplicate finder.
+			Thumbnails are now an MD5 of the entire path (c:\temp\temp\filename.jpg) instead of just the filename (filename.jpg).
+		Added cropping of borders to duplicate finder.
+	Settings Form
+		Reworked settings form to use panel with docking and autoscroll.
+		Added "view" button for thumbs location.
+		Fixed view logs button.
+		Added toggling of windows context menu options using registry.
+	MediaViewer
+		Moved finding vlc to Load event, works better with designer.
+
 	Added mass-tag argument to automatically open that window.
 	Changed design of duplicate list in duplicate finder, addeing image previews, using databinding.
 	Hash images and save small thumbs like with video thumbs done.

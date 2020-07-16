@@ -60,14 +60,33 @@ namespace SorterExpress.Forms
 
             FormClosing += Application_Exit;
 
-            tabControl.Selected += TabControl_Selected;
+            //tabControl.Selected += TabControl_Selected;
             var newMinSize = (tabControl.SelectedTab.Controls[0] as Form).MinimumSize;
             newMinSize.Width += 25;
             newMinSize.Height += 60;
             MinimumSize = newMinSize;
         }
 
-        private void TabControl_Selected(object sender, TabControlEventArgs e)
+        private void tabControl_TabIndexChanged(object sender, EventArgs e)
+        {
+            var newMinSize = (tabControl.TabPages[tabControl.SelectedIndex].Controls[0] as Form).MinimumSize;
+            newMinSize.Width += 25;
+            newMinSize.Height += 60;
+            Console.WriteLine("Current Size: " + Size.ToString());
+            Console.WriteLine("New Min Size: " + newMinSize.ToString());
+            this.MinimumSize = newMinSize;
+
+            // Doesnt seem to improve anything, neither does Show/Hide. It's probably already done by TabControl itself.
+            /*for (int i = 0; i < tabControl.TabPages.Count; i++)
+            {
+                if (i == tabControl.SelectedIndex)
+                    tabControl.TabPages[i].ResumeLayout(true);
+                else
+                    tabControl.TabPages[i].SuspendLayout();
+            }*/
+        }
+
+        /*private void TabControl_Selected(object sender, TabControlEventArgs e)
         {
             var newMinSize = (e.TabPage.Controls[0] as Form).MinimumSize;
             newMinSize.Width += 25;
@@ -77,14 +96,14 @@ namespace SorterExpress.Forms
             this.MinimumSize = newMinSize;
 
             // Doesnt seem to improve anything, neither does Show/Hide.
-            /*for (int i = 0; i < forms.Count; i++)
+            for (int i = 0; i < tabControl.TabPages.Count; i++)
             {
                 if (i == tabControl.SelectedIndex)
-                    forms[i].ResumeLayout();
+                    tabControl.TabPages[i].ResumeLayout(true);
                 else
-                    forms[i].SuspendLayout();
-            }*/
-        }
+                    tabControl.TabPages[i].SuspendLayout();
+            } 
+        }*/
 
         public static void PrepareForm(Form form)
         {

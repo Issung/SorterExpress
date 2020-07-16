@@ -60,27 +60,16 @@ namespace SorterExpress.Controls
 
             if (!DesignMode)
             {
-                DirectoryInfo dirInfo = Utilities.FindVlcLibDirectory();
-
-                if (dirInfo != null)
-                {
-                    vlcControl = new VlcControl();
-                    vlcControl.BeginInit();
-                    vlcControl.Margin = new Padding(0, 0, 0, 3);
-                    vlcControl.Dock = DockStyle.Fill;
-                    vlcControl.VlcLibDirectory = dirInfo;
-                    vlcControl.EndInit();
-                    vlcPlayerTableLayoutPanel.Controls.Add(vlcControl, 0, 0);
-                    vlcPlayerTableLayoutPanel.SetColumnSpan(vlcControl, 3);
-                    vlcPlayerTableLayoutPanel.Controls.Add(vlcControl);
-                }
+                
             }
         }
 
         private void MediaViewer_Load(object sender, EventArgs e)
         {
             if (!DesignMode)
-            { 
+            {
+                FindVlcLocation();
+
                 videoPositionTrackBar.SetVlcControl(vlcControl);
 
                 mute = Properties.Settings.Default.VideoMute;
@@ -99,6 +88,24 @@ namespace SorterExpress.Controls
                     if (vlcControl != null)
                         vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
                 }
+            }
+        }
+
+        private void FindVlcLocation()
+        {
+            DirectoryInfo dirInfo = Utilities.FindVlcLibDirectory();
+
+            if (dirInfo != null)
+            {
+                vlcControl = new VlcControl();
+                vlcControl.BeginInit();
+                vlcControl.Margin = new Padding(0, 0, 0, 3);
+                vlcControl.Dock = DockStyle.Fill;
+                vlcControl.VlcLibDirectory = dirInfo;
+                vlcControl.EndInit();
+                vlcPlayerTableLayoutPanel.Controls.Add(vlcControl, 0, 0);
+                vlcPlayerTableLayoutPanel.SetColumnSpan(vlcControl, 3);
+                vlcPlayerTableLayoutPanel.Controls.Add(vlcControl);
             }
         }
 

@@ -1,0 +1,33 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\SorterExpress]
+"MUIVerb"="Sorter Express"
+"Icon"="\"PROGRAM_PATH",0"
+"SubCommands"=""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\SorterExpress\shell]
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\SorterExpress\shell\Find Duplicates]
+"Icon"="\"PROGRAM_PATH",0"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\SorterExpress\shell\Find Duplicates\command]
+@="\"PROGRAM_PATH" duplicates \"%V\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\SorterExpress\shell\Mass Tag]
+"Icon"="\"PROGRAM_PATH",0"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\SorterExpress\shell\Mass Tag\command]
+@="\"PROGRAM_PATH" masstag \"%V\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\SorterExpress\shell\Sort Files]
+"Icon"="\"PROGRAM_PATH",0"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\SorterExpress\shell\Sort Files\command]
+@="\"PROGRAM_PATH" sort \"%V\""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\SorterExpress\shell\View Files]
+"Icon"="\"PROGRAM_PATH",0"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\SorterExpress\shell\View Files\command]
+@="\"PROGRAM_PATH" view \"%V\""
+

@@ -464,34 +464,6 @@ namespace SorterExpress.Forms
             printsWorker.RunWorkerAsync();
         }
 
-        private void FindDuplicates()
-        {
-            var options = new ParallelOptions();
-            options.MaxDegreeOfParallelism = (int)threadCountNumeric.Value;
-            options.CancellationToken = cancelTokenSource.Token;
-
-            duplicates.Clear();
-
-            for (int i = 0; i < prints.Count; i++)
-            {
-                for (int j = 0; j < prints.Count; j++)
-                {
-                    if (i != j)
-                    {
-                        if (FilePrint.GetSimilarityPercentage(prints[i], prints[j]) >= similarityNumeric.Value)
-                        {
-                            if (duplicates.Where(t => t.File2Path == prints[i].file && t.File1Path == prints[i].file).Count() == 0)
-                            {
-                                Duplicate duplicate = new Duplicate(prints[i], prints[j]);
-                                duplicates.Add(duplicate);
-                                //matchesListBox.Items.Add($"{matchesListBox.Items.Count + 1}. Chance: {duplicate.Chance * 100}%");
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         private bool CheckDeletingFilesOkay()
         {
             if (deletingOK)
@@ -522,13 +494,15 @@ namespace SorterExpress.Forms
 
         /// <summary>
         /// Delete a file and remove and duplicates that contain that file.
+        /// UNLOAD REQUIRED MEDIA BEFORE CALLING THIS METHOD.
         /// </summary>
         void DeleteFile(string filePath)
         {
             //const bool DELETE_THUMB = true;
 
-            mediaViewerLeft.UnloadMedia();
-            mediaViewerRight.UnloadMedia();
+            //UNLOAD REQUIRED MEDIA BEFORE CALLING THIS METHOD.
+            //mediaViewerLeft.UnloadMedia();
+            //mediaViewerRight.UnloadMedia();
 
             FileSystem.DeleteFile(filePath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin, UICancelOption.ThrowException);
 
@@ -554,8 +528,8 @@ namespace SorterExpress.Forms
                 }
             }
 
-            matchesDataGridView.Refresh();
-            matchesDataGridView.Update();
+            //matchesDataGridView.Refresh();
+            //matchesDataGridView.Update();
 
             //Disabled because it currently has errors with the file being in use. Probably by the duplicates grid view?
             /*if (DELETE_THUMB)
@@ -568,8 +542,10 @@ namespace SorterExpress.Forms
         {
             if (CheckDeletingFilesOkay())
             {
-                mediaViewerLeft.UnloadMedia();
-                mediaViewerRight.UnloadMedia();
+                if (side == Side.Left)
+                    mediaViewerRight.UnloadMedia();
+                else
+                    mediaViewerLeft.UnloadMedia();
 
                 string fileToKeep = (side == Side.Left) ? inspectingDuplicate.File1Path : inspectingDuplicate.File2Path;
                 string fileToDelete = (side == Side.Left) ? inspectingDuplicate.File2Path : inspectingDuplicate.File1Path;
@@ -632,6 +608,12 @@ namespace SorterExpress.Forms
             if (index >= 0)
             {
                 inspectingDuplicate = duplicates[index];
+
+                if (mediaViewerLeft.CurrentMedia == inspectingDuplicate.File2Path)
+                    mediaViewerLeft.UnloadMedia();
+
+                if (mediaViewerRight.CurrentMedia == inspectingDuplicate.File1Path)
+                    mediaViewerRight.UnloadMedia();
 
                 LoadFile(Side.Left, inspectingDuplicate.File1Path);
                 LoadFile(Side.Right, inspectingDuplicate.File2Path);
@@ -696,6 +678,9 @@ namespace SorterExpress.Forms
         {
             if (CheckDeletingFilesOkay())
             {
+                mediaViewerLeft.UnloadMedia();
+                mediaViewerRight.UnloadMedia();
+
                 // Can't do DeleteFile(inspectingDuplicate.fileX) because the duplicate object will be deleted after the first operation.
                 string file1 = inspectingDuplicate.File1Path;
                 string file2 = inspectingDuplicate.File2Path;

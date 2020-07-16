@@ -64,6 +64,9 @@ namespace SorterExpress.Forms
 
         private string[] GenerateFileNamesAfter()
         {
+            if (files == null)
+                return null;
+
             const bool REMOVE_CERTAIN_TAGS = true;
             Action action = (Action)actionComboBox.SelectedIndex;
 

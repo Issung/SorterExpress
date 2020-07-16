@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AllInOneForm));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.sort = new System.Windows.Forms.TabPage();
+            this.massTag = new System.Windows.Forms.TabPage();
             this.view = new System.Windows.Forms.TabPage();
             this.duplicates = new System.Windows.Forms.TabPage();
             this.renameTag = new System.Windows.Forms.TabPage();
             this.settings = new System.Windows.Forms.TabPage();
-            this.massTag = new System.Windows.Forms.TabPage();
             this.tabControl.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +53,7 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(800, 450);
             this.tabControl.TabIndex = 0;
+            this.tabControl.TabIndexChanged += new System.EventHandler(this.tabControl_TabIndexChanged);
             // 
             // sort
             // 
@@ -63,6 +64,16 @@
             this.sort.TabIndex = 0;
             this.sort.Text = "Sort";
             this.sort.UseVisualStyleBackColor = true;
+            // 
+            // massTag
+            // 
+            this.massTag.Location = new System.Drawing.Point(4, 22);
+            this.massTag.Name = "massTag";
+            this.massTag.Padding = new System.Windows.Forms.Padding(3);
+            this.massTag.Size = new System.Drawing.Size(792, 424);
+            this.massTag.TabIndex = 5;
+            this.massTag.Text = "Mass Tag";
+            this.massTag.UseVisualStyleBackColor = true;
             // 
             // view
             // 
@@ -100,16 +111,6 @@
             this.settings.TabIndex = 4;
             this.settings.Text = "Settings";
             this.settings.UseVisualStyleBackColor = true;
-            // 
-            // massTag
-            // 
-            this.massTag.Location = new System.Drawing.Point(4, 22);
-            this.massTag.Name = "massTag";
-            this.massTag.Padding = new System.Windows.Forms.Padding(3);
-            this.massTag.Size = new System.Drawing.Size(792, 424);
-            this.massTag.TabIndex = 5;
-            this.massTag.Text = "Mass Tag";
-            this.massTag.UseVisualStyleBackColor = true;
             // 
             // AllInOneForm
             // 
