@@ -16,9 +16,11 @@ This project has a range of abilities at this point in time, including:
 To find out more about the project and it's features check [the wiki](https://github.com/Issung/SorterExpress/wiki).
 
 Here you can see the main sorting window. It features your tag collection on the left which is searchable, folder collection in the middle and image preview on the right with some extra controls to skip through your libarary. This will be where you spend most of your time if you wish to sort your library. Read more about the sorter feature [on the wiki](https://github.com/Issung/SorterExpress/wiki/Sorter).
+
 ![Main sorting window](https://i.imgur.com/ieyN2iC.png)
 
 Here is the duplicate search window, it searches for duplicate images in your collection, it works well for certain types of images (lewd in particular). It supports videos by taking the first frame of the video as an image. Can search recursively through all folders in a directory and is multithreaded to greatly speed up the searching process. Read more about the duplicate search feature [on the wiki](https://github.com/Issung/SorterExpress/wiki/Duplicate-Searcher).
+
 ![Duplicate searching window](https://i.imgur.com/aZGtKIR.png)
 
 ## Prerequisites
