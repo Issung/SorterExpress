@@ -1,4 +1,6 @@
-# SorterExpress
+# SorterExpress <img align="right" width="100" height="100" src="https://puu.sh/GHeDb.ico">
+[![Release](https://img.shields.io/github/v/release/issung/SorterExpress?include_prereleases&style=for-the-badge)](https://github.com/Issung/GChan/releases)
+[![Downloads](https://img.shields.io/github/downloads/issung/SorterExpress/total?style=for-the-badge)](https://github.com/Issung/GChan/releases)
 
 Program to aid with the manual sorting of a large collection of images/videos. You can choose to sort your library by adding individual tags to files or using a unique note for each, and you may also move the file you are inspecting to a specific folder, folders in the directory you are working in are included automatically but you may also include custom directories.
 Tags and notes are saved in a file's filename.
@@ -26,18 +28,14 @@ This project also uses [FFMPEG](https://www.ffmpeg.org/) to obtain video thumbna
 
 ## Authors
 
-* **[Joel](https://github.com/Issung)**
+* **[Issung](https://github.com/Issung)**
 
 ## Built With
 * .NET 4.7
 * Winforms
+* VLC
+* FFMPEG
 
 ## License
 
 The license of this project is currently undecided.
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* VLC
-* FFMPEG
