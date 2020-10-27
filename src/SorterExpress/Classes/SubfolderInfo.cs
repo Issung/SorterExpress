@@ -19,5 +19,10 @@
             this.directory = directory;
             this.custom = custom;
         }
+
+        public override string ToString()
+        {
+            return $"{{SubfolderInfo: Name: {name}, Directory: {directory}, Custom: {custom}}}";
+        }
     }
 }

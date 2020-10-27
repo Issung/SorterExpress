@@ -1,17 +1,24 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using Vlc.DotNet.Forms;
 
 namespace SorterExpress.Controls
 {
-    public partial class MediaViewer : UserControl
+    public partial class MediaViewer : UserControl, INotifyPropertyChanged
     {
         VlcControl vlcControl;
 
         public string CurrentMedia { get; private set; }
+
+        /// <summary>
+        /// Specifies whether buttons such as the media controls (Play, Pause, Trackbars, Etc) should be enabled.
+        /// </summary>
+        public bool EnableButtons => CurrentMedia != null;
 
         bool repeat = true;
         private bool mute;
@@ -50,8 +57,18 @@ namespace SorterExpress.Controls
             set 
             {
                 if (vlcControl != null)
-                    vlcControl.Position += value;
+                    vlcControl.Position = value;
             } 
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         public MediaViewer()
@@ -60,7 +77,7 @@ namespace SorterExpress.Controls
 
             if (!DesignMode)
             {
-                
+                mediaViewerBindingSource.DataSource = this;
             }
         }
 
@@ -79,6 +96,7 @@ namespace SorterExpress.Controls
                     lastVolume = volumeTrackbar.Value;
                     volumeTrackbar.Value = 0;
                     muteButton.Text = MUTED_ICON;
+
                     if (vlcControl != null)
                         vlcControl.Audio.Volume = 0;
                 }
@@ -86,7 +104,11 @@ namespace SorterExpress.Controls
                 {
                     muteButton.Text = UNMUTED_ICON;
                     if (vlcControl != null)
+                    { 
                         vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
+                        if (vlcControl.Audio.Volume == 0)
+                            muteButton.Text = MUTED_ICON;
+                    }
                 }
             }
         }
@@ -126,8 +148,6 @@ namespace SorterExpress.Controls
             {
                 errorMessageTextBox.Hide();
                 vlcPlayerTableLayoutPanel.Hide();
-                pictureBox.Show();
-                pictureBox.Enabled = true;
 
                 try
                 {
@@ -142,18 +162,22 @@ namespace SorterExpress.Controls
                             pictureBox.Image.Dispose();
                         img = Image.FromStream(ms);
                         pictureBox.Image = img;
+
+                        pictureBox.Show();
+                        pictureBox.Enabled = true;
                     }
                 }
                 catch (Exception e)
                 {
                     ShowErrorMessageBox(e);
+                    if (pictureBox.Image != null)
+                        pictureBox.Image.Dispose();
                 }
             }
             else if (fileType == FileType.Video)
             {
                 pictureBox.Hide();
                 errorMessageTextBox.Hide();
-                vlcPlayerTableLayoutPanel.Show();
 
                 try
                 {
@@ -163,12 +187,11 @@ namespace SorterExpress.Controls
                         vlcControl.SetMedia(fi, (repeat) ? "input-repeat=4000" : "input-repeat=0");
                         vlcControl.Play();
                         vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
+                        vlcPlayerTableLayoutPanel.Show();
                     }
                     else
                     {
-                        vlcPlayerTableLayoutPanel.Hide();
-                        errorMessageTextBox.Show();
-                        errorMessageTextBox.Text = "VLC must be located by this program in order to support video playback. This can be configured in the settings.";
+                        ShowErrorMessageBox("VLC must be located by this program in order to support video playback. This can be configured in the settings.");
                     }
                 }
                 catch (Exception e)
@@ -178,12 +201,28 @@ namespace SorterExpress.Controls
             }
             else
             {
-                ShowErrorMessageBox(
-                    $"File format '{Path.GetExtension(path).ToLower()}' not supported."
-                );
+                ShowErrorMessageBox($"File format '{Path.GetExtension(path).ToLower()}' not supported.");
             }
 
             CurrentMedia = path;
+            NotifyPropertyChanged();
+        }
+
+        public void UnloadMedia()
+        {
+            Console.WriteLine($"Unloading Media");
+
+            if (pictureBox.Image != null)
+                pictureBox.Image.Dispose();
+
+            pictureBox.Image = null;
+
+            CurrentMedia = null;
+
+            if (vlcControl != null)
+                vlcControl.Stop();
+
+            NotifyPropertyChanged();
         }
 
         private void ShowErrorMessageBox(Exception e)
@@ -191,7 +230,7 @@ namespace SorterExpress.Controls
             pictureBox.Hide();
             vlcPlayerTableLayoutPanel.Hide();
 
-            errorMessageTextBox.Text = $"An error occured attempting to load this file.\n";
+            errorMessageTextBox.Text = $"An error occured attempting to load this file.\n\n";
             errorMessageTextBox.Text += $"Error Type: \n{e.GetType().Name}\n";
             errorMessageTextBox.Text += $"Error Message: \n{e.Message}\n";
             errorMessageTextBox.Text += $"Stack Trace: \n{e.StackTrace}\n\n";
@@ -211,17 +250,6 @@ namespace SorterExpress.Controls
                 errorMessageTextBox.Text = line + "\n";
 
             errorMessageTextBox.Show();
-        }
-
-        public void UnloadMedia()
-        {
-            Console.WriteLine($"Unloading Media");
-            if (pictureBox.Image != null)
-                pictureBox.Image.Dispose();
-            pictureBox.Image = null;
-
-            if (vlcControl != null)
-                vlcControl.Stop();
         }
 
         public void Hide(bool unloadMedia)

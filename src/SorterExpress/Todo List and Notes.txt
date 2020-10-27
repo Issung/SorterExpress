@@ -3,17 +3,12 @@
 		Mute button is kind of glitched, muting and setting the volume trackbar to 0 fires the event and sets unmuted volume to 0.
 		It is possible that an image or video won't able to be read for some various reasons (already open, corrupted). Need to account for this using try/catch statements.
 		Account for the possibility of 0 files or 0 folders.
-		Undo button for deleting a file, is doable because file is moved to recycle bin but a bit tricky.
 	
 	Sorter:
-		Seems like there is a problem when doing an undo then saving the image again the fileindex appears to 'go backwards 1'.
-		Actions rework:
-			Create "Action" class/interface.
-				Extend for moves, renames, deletes.
-				Implement methods for performing these, 
-			Use a Stack<Action> to handle undos and redoes.
-			Basically needs a whole MVC rework?
-	
+		Add search box to subfolder move area with quick-enter functionality.
+			Requires thoughts about what to set focus to after moving file (tagBearchBox, noteBox, subfolderSearchBox, etc).
+		Undo/Redo window (e.g. Photoshop).
+
 	Viewer:
 		Stop images grid horizontal scroll bar appearing.
 
@@ -21,6 +16,9 @@
 		Update constructor to take an argument and open a folder instantly.
 
 	Duplicate Finder:
+		When potential duplicate match is skipped then remove it from the list.
+		Add "mass operation" option, performing the same operation on all potential duplicate items in the list. (Allows users to skip through the previews removing non dupes, and then perform the operation they desire on the remaining dupes).
+		Option to only compare images to images and videos to videos (stop comparing images to videos and vice versa). To do this add a "file type" enum field to FilePrint or something.
 		Chance that when searching for duplicates that the loading gets stuck a few away from max and never finishes.
 		Option to only search for duplicates between current directory and subdirectories instead of searching for duplicates between subdirectories?
 		Add sortable list to duplicate searcher so user can search by most likely to be duplicate.
@@ -29,10 +27,21 @@
 			Keep file with most tags?
 
 Done
+	Changed SortForm to entirely new MVC rewrite.
+		Uses public properties and data bindings.
+		New TagsPanel and SubfoldersPanel user controls to manage button controls.
+		New keyboard shortcuts handling using dictionary (also program wide now).
+		New action framework making undo and redo stacks available.
+			New undelete file from recycle bin ability with undo.
+		New "RBindingList" class extends bindinglist and has delete event to notify of deleted object and a reference to it.
+	Add Directory form now loads chosen folder as default name if nothing already in text box.
+	Lots of controls in SortForm now become enabled/disabled according to if they should be available thanks to data binding.
+	New [ALT + Digit] shortcut to move current file to a subfolder in the list (1 for top to 0 for 10th entry).
+
 	Duplicate Finder
 		Fixed lots of issues with duplicate finder.
-			Thumbnails are now an MD5 of the entire path (c:\temp\temp\filename.jpg) instead of just the filename (filename.jpg).
-		Added cropping of borders to duplicate finder.
+		Thumbnails are now an MD5 of the entire path (c:\temp\temp\filename.jpg) instead of just the filename (filename.jpg).
+		Added cropping of borders in thumbnails.
 	Settings Form
 		Reworked settings form to use panel with docking and autoscroll.
 		Added "view" button for thumbs location.

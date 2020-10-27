@@ -3,16 +3,13 @@ using SorterExpress.Forms;
 using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
-using Vlc.DotNet.Forms;
 
 namespace SorterExpress
 {
@@ -23,6 +20,9 @@ namespace SorterExpress
         private static MD5 md5 = null;
         public static readonly string[] videoFileExtensions = { ".webm", ".avi", ".mp4", ".flv" };
         public static readonly string[] imageFileExtensions = { ".jpg", ".jpeg", ".jpg_large", ".png", ".bmp", ".gif" };
+
+        public static readonly char[] NoteForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.' };
+        public static readonly char[] TagForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.', ' ' };
 
         public static FileType GetFileType(string filepath)
         {
@@ -60,6 +60,31 @@ namespace SorterExpress
             }
 
             return null;
+        }
+
+        public static string GenerateFilename(string currentFilename, IEnumerable<string> tags, string note, bool addExtension)
+        {
+            if ((tags == null && note == null) || (tags.Count() == 0 && String.IsNullOrWhiteSpace(note)))
+            {
+                return addExtension ? currentFilename : Path.GetFileNameWithoutExtension(currentFilename);
+            }
+            else
+            {
+                string newName = "";
+
+                if (tags.Count() > 0)
+                {
+                    newName += String.Join(" ", tags);
+                }
+
+                if (!String.IsNullOrWhiteSpace(note))
+                    if (tags.Count() == 0)
+                        newName += note;
+                    else
+                        newName += " (" + note + ")";
+
+                return addExtension ? newName + Path.GetExtension(currentFilename) : newName;
+            }
         }
 
         public static void PrintExtensionCounts(IEnumerable<string> files)

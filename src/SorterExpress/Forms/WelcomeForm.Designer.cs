@@ -40,12 +40,17 @@
             this.massTagButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.sortContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.startOldSortFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startNewMVCSortFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // sortButton
             // 
             this.sortButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.sortButton.ContextMenuStrip = this.sortContextMenuStrip;
             this.sortButton.Location = new System.Drawing.Point(12, 53);
             this.sortButton.Name = "sortButton";
             this.sortButton.Size = new System.Drawing.Size(301, 23);
@@ -160,6 +165,28 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Hover over an option to read about it\'s function.";
             // 
+            // sortContextMenuStrip
+            // 
+            this.sortContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startOldSortFormToolStripMenuItem,
+            this.startNewMVCSortFormToolStripMenuItem});
+            this.sortContextMenuStrip.Name = "sortContextMenuStrip";
+            this.sortContextMenuStrip.Size = new System.Drawing.Size(205, 70);
+            // 
+            // startOldSortFormToolStripMenuItem
+            // 
+            this.startOldSortFormToolStripMenuItem.Name = "startOldSortFormToolStripMenuItem";
+            this.startOldSortFormToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.startOldSortFormToolStripMenuItem.Text = "Start old SortForm";
+            this.startOldSortFormToolStripMenuItem.Click += new System.EventHandler(this.startOldSortFormToolStripMenuItem_Click);
+            // 
+            // startNewMVCSortFormToolStripMenuItem
+            // 
+            this.startNewMVCSortFormToolStripMenuItem.Name = "startNewMVCSortFormToolStripMenuItem";
+            this.startNewMVCSortFormToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.startNewMVCSortFormToolStripMenuItem.Text = "Start new MVC SortForm";
+            this.startNewMVCSortFormToolStripMenuItem.Click += new System.EventHandler(this.startNewMVCSortFormToolStripMenuItem_Click);
+            // 
             // WelcomeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -179,6 +206,7 @@
             this.Name = "WelcomeForm";
             this.Text = "Sorter Express - Welcome";
             this.TransparencyKey = System.Drawing.Color.White;
+            this.sortContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -196,5 +224,8 @@
         private System.Windows.Forms.Button massTagButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.ContextMenuStrip sortContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem startOldSortFormToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startNewMVCSortFormToolStripMenuItem;
     }
 }

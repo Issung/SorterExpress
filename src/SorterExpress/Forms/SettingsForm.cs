@@ -10,9 +10,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Security.Cryptography;
 using Microsoft.Win32;
-using System.Security.Permissions;
 
 namespace SorterExpress.Forms
 {
@@ -21,7 +19,7 @@ namespace SorterExpress.Forms
         /// <summary>
         /// Contains the dot (.).
         /// </summary>
-        public const string TAGS_FILE_EXTENSION = ".tgs";
+        public const string TAGS_FILE_EXTENSION = "tgs";
 
         Action<bool> setDisplayAllTagsAction = null;
         Action<List<string>> setTagsAction = null;
@@ -36,7 +34,6 @@ namespace SorterExpress.Forms
         /// <summary>
         /// TODO: Implement the callbacks and funcs everywhere that the SettingsForm constructor is used.
         /// </summary>
-        /// <param name="mainForm"></param>
         /// <param name="seperateWindow">Open the settings in a seperate window, this should always be true except in the case
         /// of the AllInOneForm.</param>
         public SettingsForm(

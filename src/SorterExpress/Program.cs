@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Threading;
 using SorterExpress.Forms;
+using SorterExpress.Classes.Actions.SortActions;
 
 namespace SorterExpress
 {
@@ -43,6 +44,12 @@ namespace SorterExpress
             }
 
             MessageBox.Show("Args: \n" + str, "Args", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
+
+            //Testing area
+
+            
+
+            //Testing area
 
             if (args.Length == 0)
             {

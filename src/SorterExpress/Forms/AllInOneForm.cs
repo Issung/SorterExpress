@@ -7,7 +7,7 @@ namespace SorterExpress.Forms
 {
     public partial class AllInOneForm : Form
     {
-        public SortForm sortForm;
+        public SortFormOld sortForm;
         public MassTagForm massTagForm;
         public ViewForm viewForm;
         public DuplicatesForm duplicatesForm;
@@ -20,7 +20,7 @@ namespace SorterExpress.Forms
         {
             InitializeComponent();
 
-            sortForm = new SortForm(null);
+            sortForm = new SortFormOld(null);
             PrepareForm(sortForm);
             tabControl.TabPages[0].Controls.Add(sortForm);
             sortForm.Show();

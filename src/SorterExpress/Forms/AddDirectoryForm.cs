@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace SorterExpress.Forms
@@ -40,6 +41,9 @@ namespace SorterExpress.Forms
             {
                 this.directory = dialog.FileName;
                 selectDirectoryButton.Text = dialog.FileName;
+
+                if (string.IsNullOrWhiteSpace(nameTextBox.Text))
+                    nameTextBox.Text = Path.GetFileName(directory);
             }
         }
 

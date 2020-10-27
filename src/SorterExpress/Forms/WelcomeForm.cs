@@ -14,6 +14,34 @@ namespace SorterExpress.Forms
 
         private void sortButton_Click(object sender, EventArgs e)
         {
+            StartNewSortForm();
+        }
+
+        private void startOldSortFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StartOldSortForm();
+        }
+
+        private void StartOldSortForm()
+        {
+            var di = Utilities.OpenDirectory();
+
+            if (di != null)
+            {
+                SortFormOld mainForm = new SortFormOld(di);
+                mainForm.FormClosed += (s, args) => this.Show();
+                mainForm.Show();
+                this.Hide();
+            }
+        }
+
+        private void startNewMVCSortFormToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StartNewSortForm();
+        }
+
+        private void StartNewSortForm()
+        {
             var di = Utilities.OpenDirectory();
 
             if (di != null)
