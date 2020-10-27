@@ -123,7 +123,7 @@
   <metadata name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>33, 15</value>
   </metadata>
-  <data name="tagSearchTextbox.ToolTip" xml:space="preserve">
+  <data name="tagSearchTextBox.ToolTip" xml:space="preserve">
     <value>Search for a specific tag.
 The length that the search begins can be changed in the settings.
 

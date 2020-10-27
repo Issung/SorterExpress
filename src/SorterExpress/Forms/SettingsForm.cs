@@ -109,6 +109,7 @@ namespace SorterExpress.Forms
             tagSearchNumeric.Value = Settings.Default.TagSearchStart;
             tagSearchStartLabel.Text = $"Begin tag searching at {tagSearchNumeric.Value} amount of characters";
             autoResetTagSearchCheckBox.Checked = Settings.Default.AutoResetTagSearchBox;
+            autoResetSubfolderSearchCheckBox.Checked = Settings.Default.AutoResetSubfolderSearchBox;
             displayAllTagsCheckbox.Checked = Settings.Default.DisplayAllTags;
 
             //cropFilesLeftRightCheckBox.Checked = Settings.Default.DuplicatesCropLeftRightSides;
@@ -143,6 +144,7 @@ namespace SorterExpress.Forms
         {
             Settings.Default.TagSearchStart = (int)tagSearchNumeric.Value;
             Settings.Default.AutoResetTagSearchBox = autoResetTagSearchCheckBox.Checked;
+            Settings.Default.AutoResetSubfolderSearchBox = autoResetSubfolderSearchCheckBox.Checked;
             Settings.Default.DisplayAllTags = displayAllTagsCheckbox.Checked;
 
             //Settings.Default.DuplicatesCropLeftRightSides = cropFilesLeftRightCheckBox.Checked;

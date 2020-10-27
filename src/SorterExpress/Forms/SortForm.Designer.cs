@@ -42,11 +42,11 @@ namespace SorterExpress.Forms
             this.openFileInExplorerButton = new System.Windows.Forms.Button();
             this.subfoldersLabel = new System.Windows.Forms.Label();
             this.fileExtensionTextbox = new System.Windows.Forms.TextBox();
-            this.tagCreationTextbox = new System.Windows.Forms.TextBox();
+            this.tagCreationTextBox = new System.Windows.Forms.TextBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.settingsButton = new System.Windows.Forms.Button();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.tagSearchTextbox = new System.Windows.Forms.TextBox();
+            this.tagSearchTextBox = new System.Windows.Forms.TextBox();
             this.notesTextBox = new System.Windows.Forms.TextBox();
             this.newFileNameTextBox = new System.Windows.Forms.TextBox();
             this.undoButton = new System.Windows.Forms.Button();
@@ -56,6 +56,7 @@ namespace SorterExpress.Forms
             this.nextFileButton = new System.Windows.Forms.Button();
             this.lastFileButton = new System.Windows.Forms.Button();
             this.redoButton = new System.Windows.Forms.Button();
+            this.subfolderSearchTextBox = new System.Windows.Forms.TextBox();
             this.tagSearchLabel = new System.Windows.Forms.Label();
             this.noteLabel = new System.Windows.Forms.Label();
             this.deleteButton = new System.Windows.Forms.Button();
@@ -179,16 +180,16 @@ namespace SorterExpress.Forms
             this.fileExtensionTextbox.TabStop = false;
             this.tooltip.SetToolTip(this.fileExtensionTextbox, "File extension of currently loaded file.");
             // 
-            // tagCreationTextbox
+            // tagCreationTextBox
             // 
-            this.tagCreationTextbox.Location = new System.Drawing.Point(60, 111);
-            this.tagCreationTextbox.Name = "tagCreationTextbox";
-            this.tagCreationTextbox.Size = new System.Drawing.Size(178, 20);
-            this.tagCreationTextbox.TabIndex = 10;
-            this.tooltip.SetToolTip(this.tagCreationTextbox, "You can add a tag to the tags database here.\r\nThis will *not* automatically enabl" +
+            this.tagCreationTextBox.Location = new System.Drawing.Point(60, 111);
+            this.tagCreationTextBox.Name = "tagCreationTextBox";
+            this.tagCreationTextBox.Size = new System.Drawing.Size(178, 20);
+            this.tagCreationTextBox.TabIndex = 10;
+            this.tooltip.SetToolTip(this.tagCreationTextBox, "You can add a tag to the tags database here.\r\nThis will *not* automatically enabl" +
         "e the tag.\r\nYou can press ENTER instead of pressing the + button if desired.");
-            this.tagCreationTextbox.TextChanged += new System.EventHandler(this.tagCreationTextbox_TextChanged);
-            this.tagCreationTextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tagCreationTextbox_KeyDown);
+            this.tagCreationTextBox.TextChanged += new System.EventHandler(this.tagCreationTextbox_TextChanged);
+            this.tagCreationTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tagCreationTextbox_KeyDown);
             // 
             // saveButton
             // 
@@ -212,14 +213,14 @@ namespace SorterExpress.Forms
             this.settingsButton.UseVisualStyleBackColor = true;
             this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
             // 
-            // tagSearchTextbox
+            // tagSearchTextBox
             // 
-            this.tagSearchTextbox.Location = new System.Drawing.Point(60, 135);
-            this.tagSearchTextbox.Name = "tagSearchTextbox";
-            this.tagSearchTextbox.Size = new System.Drawing.Size(202, 20);
-            this.tagSearchTextbox.TabIndex = 11;
-            this.tooltip.SetToolTip(this.tagSearchTextbox, resources.GetString("tagSearchTextbox.ToolTip"));
-            this.tagSearchTextbox.TextChanged += new System.EventHandler(this.tagSearchTextbox_TextChanged);
+            this.tagSearchTextBox.Location = new System.Drawing.Point(60, 135);
+            this.tagSearchTextBox.Name = "tagSearchTextBox";
+            this.tagSearchTextBox.Size = new System.Drawing.Size(202, 20);
+            this.tagSearchTextBox.TabIndex = 11;
+            this.tooltip.SetToolTip(this.tagSearchTextBox, resources.GetString("tagSearchTextBox.ToolTip"));
+            this.tagSearchTextBox.TextChanged += new System.EventHandler(this.tagSearchTextbox_TextChanged);
             // 
             // notesTextBox
             // 
@@ -348,6 +349,15 @@ namespace SorterExpress.Forms
             this.tooltip.SetToolTip(this.redoButton, "Redo the last undone action.");
             this.redoButton.UseVisualStyleBackColor = true;
             this.redoButton.Click += new System.EventHandler(this.redoButton_Click);
+            // 
+            // subfolderSearchTextBox
+            // 
+            this.subfolderSearchTextBox.Location = new System.Drawing.Point(271, 65);
+            this.subfolderSearchTextBox.Name = "subfolderSearchTextBox";
+            this.subfolderSearchTextBox.Size = new System.Drawing.Size(213, 20);
+            this.subfolderSearchTextBox.TabIndex = 58;
+            this.tooltip.SetToolTip(this.subfolderSearchTextBox, "Search for a subfolder. Press enter to move the current file to the top result.");
+            this.subfolderSearchTextBox.TextChanged += new System.EventHandler(this.subfolderSearchBox_TextChanged);
             // 
             // tagSearchLabel
             // 
@@ -478,7 +488,7 @@ namespace SorterExpress.Forms
             this.loadingPanel.Controls.Add(this.loadingTitleTextBox);
             this.loadingPanel.Controls.Add(this.loadingDescriptionRichTextBox);
             this.loadingPanel.Controls.Add(this.loadingProgressBar);
-            this.loadingPanel.Location = new System.Drawing.Point(190, 45);
+            this.loadingPanel.Location = new System.Drawing.Point(38, 234);
             this.loadingPanel.MaximumSize = new System.Drawing.Size(600, 350);
             this.loadingPanel.MinimumSize = new System.Drawing.Size(360, 170);
             this.loadingPanel.Name = "loadingPanel";
@@ -529,9 +539,10 @@ namespace SorterExpress.Forms
             | System.Windows.Forms.AnchorStyles.Left)));
             this.subfolderPanel.DataBindings.Add(new System.Windows.Forms.Binding("Subfolders", this.sortControllerBindingSource, "Subfolders", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.subfolderPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnabledFileInteractionButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.subfolderPanel.Location = new System.Drawing.Point(271, 67);
+            this.subfolderPanel.Filter = "";
+            this.subfolderPanel.Location = new System.Drawing.Point(271, 91);
             this.subfolderPanel.Name = "subfolderPanel";
-            this.subfolderPanel.Size = new System.Drawing.Size(213, 215);
+            this.subfolderPanel.Size = new System.Drawing.Size(213, 191);
             this.subfolderPanel.Subfolders = null;
             this.subfolderPanel.TabIndex = 14;
             this.subfolderPanel.SubfolderButtonClicked += new System.EventHandler<SorterExpress.Controls.SubfolderButtonClickedEventArgs>(this.subfolderPanel_SubfolderButtonClicked);
@@ -567,6 +578,7 @@ namespace SorterExpress.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(747, 294);
+            this.Controls.Add(this.subfolderSearchTextBox);
             this.Controls.Add(this.loadingPanel);
             this.Controls.Add(this.subfolderPanel);
             this.Controls.Add(this.tagPanel);
@@ -580,10 +592,10 @@ namespace SorterExpress.Forms
             this.Controls.Add(this.notesTextBox);
             this.Controls.Add(this.noteLabel);
             this.Controls.Add(this.tagSearchLabel);
-            this.Controls.Add(this.tagSearchTextbox);
+            this.Controls.Add(this.tagSearchTextBox);
             this.Controls.Add(this.settingsButton);
             this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.tagCreationTextbox);
+            this.Controls.Add(this.tagCreationTextBox);
             this.Controls.Add(this.fileExtensionTextbox);
             this.Controls.Add(this.subfoldersLabel);
             this.Controls.Add(this.openDirectoryButton);
@@ -644,16 +656,17 @@ namespace SorterExpress.Forms
         private System.Windows.Forms.BindingSource sortControllerBindingSource;
         internal System.Windows.Forms.Button undoButton;
         internal System.Windows.Forms.Button redoButton;
-        internal System.Windows.Forms.TextBox tagSearchTextbox;
+        internal System.Windows.Forms.TextBox tagSearchTextBox;
         public Controls.SubfolderPanel subfolderPanel;
         public System.Windows.Forms.Panel loadingPanel;
         public System.Windows.Forms.TextBox loadingTitleTextBox;
         public System.Windows.Forms.RichTextBox loadingDescriptionRichTextBox;
         public System.Windows.Forms.ProgressBar loadingProgressBar;
         internal Controls.TagPanel tagPanel;
-        public System.Windows.Forms.TextBox tagCreationTextbox;
+        public System.Windows.Forms.TextBox tagCreationTextBox;
         internal System.Windows.Forms.Button addTagButton;
         public System.Windows.Forms.Button saveButton;
+        public System.Windows.Forms.TextBox subfolderSearchTextBox;
     }
 }
 

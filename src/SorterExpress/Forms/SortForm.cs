@@ -28,7 +28,7 @@ namespace SorterExpress.Forms
 
             //These are here because the designer likes to delete them from the designer file all the time.
             this.KeyPreview = true;
-            this.ActiveControl = tagSearchTextbox;
+            this.ActiveControl = tagSearchTextBox;
 
             //this.dirInfo = dirInfo;
 
@@ -119,13 +119,13 @@ namespace SorterExpress.Forms
 
         private void addTagButton_Click(object sender, EventArgs e)
         {
-            controller.AddTag(tagCreationTextbox.Text);
-            tagCreationTextbox.Text = String.Empty;
+            controller.AddTag(tagCreationTextBox.Text);
+            tagCreationTextBox.Text = String.Empty;
         }
 
         private void tagCreationTextbox_TextChanged(object sender, EventArgs e)
         {
-            tagCreationTextbox.Text = Utilities.Remove(tagCreationTextbox.Text, Utilities.TagForbiddenCharacters);
+            tagCreationTextBox.Text = Utilities.Remove(tagCreationTextBox.Text, Utilities.TagForbiddenCharacters);
         }
 
         private void tagCreationTextbox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -145,7 +145,7 @@ namespace SorterExpress.Forms
 
         private void tagSearchTextbox_TextChanged(object sender, EventArgs e)
         {
-            tagPanel.UpdateFilter(tagSearchTextbox.Text);
+            tagPanel.UpdateFilter(tagSearchTextBox.Text);
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -213,6 +213,12 @@ namespace SorterExpress.Forms
         private void tagPanel_TagButtonClicked(object sender, TagButtonClickedEventArgs e)
         {
             controller.TagButtonClicked(e);
+        }
+
+        //TODO: Use databinding to do this rather than this method?
+        private void subfolderSearchBox_TextChanged(object sender, EventArgs e)
+        {
+            subfolderPanel.Filter = subfolderSearchTextBox.Text;
         }
     }
 }

@@ -65,6 +65,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.toggleContextMenuOptionsButton = new System.Windows.Forms.Button();
             this.toggleContextMenuOptionsInfoButton = new System.Windows.Forms.Button();
+            this.autoResetSubfolderSearchCheckBox = new System.Windows.Forms.CheckBox();
             this.miscControlsGroupBox.SuspendLayout();
             this.miscControlsFlowLayoutPanel.SuspendLayout();
             this.vlcControlsGroupBox.SuspendLayout();
@@ -87,7 +88,7 @@
             this.saveSettingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.saveSettingsButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.saveSettingsButton.Location = new System.Drawing.Point(10, 475);
+            this.saveSettingsButton.Location = new System.Drawing.Point(10, 500);
             this.saveSettingsButton.Name = "saveSettingsButton";
             this.saveSettingsButton.Size = new System.Drawing.Size(404, 23);
             this.saveSettingsButton.TabIndex = 1;
@@ -111,7 +112,7 @@
             // 
             this.miscControlsGroupBox.Controls.Add(this.miscControlsFlowLayoutPanel);
             this.miscControlsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.miscControlsGroupBox.Location = new System.Drawing.Point(1, 318);
+            this.miscControlsGroupBox.Location = new System.Drawing.Point(1, 341);
             this.miscControlsGroupBox.Name = "miscControlsGroupBox";
             this.miscControlsGroupBox.Size = new System.Drawing.Size(400, 65);
             this.miscControlsGroupBox.TabIndex = 11;
@@ -159,7 +160,7 @@
             // 
             this.vlcControlsGroupBox.Controls.Add(this.flowLayoutPanel3);
             this.vlcControlsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.vlcControlsGroupBox.Location = new System.Drawing.Point(1, 250);
+            this.vlcControlsGroupBox.Location = new System.Drawing.Point(1, 273);
             this.vlcControlsGroupBox.Name = "vlcControlsGroupBox";
             this.vlcControlsGroupBox.Size = new System.Drawing.Size(400, 68);
             this.vlcControlsGroupBox.TabIndex = 13;
@@ -203,7 +204,7 @@
             // 
             this.duplicateSearchingAndThumbnailCacheGroupBox.Controls.Add(this.flowLayoutPanel2);
             this.duplicateSearchingAndThumbnailCacheGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.duplicateSearchingAndThumbnailCacheGroupBox.Location = new System.Drawing.Point(1, 192);
+            this.duplicateSearchingAndThumbnailCacheGroupBox.Location = new System.Drawing.Point(1, 215);
             this.duplicateSearchingAndThumbnailCacheGroupBox.Name = "duplicateSearchingAndThumbnailCacheGroupBox";
             this.duplicateSearchingAndThumbnailCacheGroupBox.Size = new System.Drawing.Size(400, 58);
             this.duplicateSearchingAndThumbnailCacheGroupBox.TabIndex = 12;
@@ -281,7 +282,7 @@
             this.tagControlsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.tagControlsGroupBox.Location = new System.Drawing.Point(1, 1);
             this.tagControlsGroupBox.Name = "tagControlsGroupBox";
-            this.tagControlsGroupBox.Size = new System.Drawing.Size(400, 191);
+            this.tagControlsGroupBox.Size = new System.Drawing.Size(400, 214);
             this.tagControlsGroupBox.TabIndex = 10;
             this.tagControlsGroupBox.TabStop = false;
             this.tagControlsGroupBox.Text = "Tags ❓";
@@ -295,12 +296,13 @@
             this.tagControlsFlowLayoutPanel.Controls.Add(this.tagSearchStartFlowLayoutPanel);
             this.tagControlsFlowLayoutPanel.Controls.Add(this.displayAllTagsCheckbox);
             this.tagControlsFlowLayoutPanel.Controls.Add(this.autoResetTagSearchCheckBox);
+            this.tagControlsFlowLayoutPanel.Controls.Add(this.autoResetSubfolderSearchCheckBox);
             this.tagControlsFlowLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tagControlsFlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.tagControlsFlowLayoutPanel.Location = new System.Drawing.Point(3, 16);
             this.tagControlsFlowLayoutPanel.Name = "tagControlsFlowLayoutPanel";
             this.tagControlsFlowLayoutPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.tagControlsFlowLayoutPanel.Size = new System.Drawing.Size(394, 172);
+            this.tagControlsFlowLayoutPanel.Size = new System.Drawing.Size(394, 195);
             this.tagControlsFlowLayoutPanel.TabIndex = 4;
             // 
             // clearTagsButton
@@ -430,7 +432,7 @@
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel.Controls.Add(this.viewLogsButton, 1, 0);
             this.tableLayoutPanel.Controls.Add(this.websiteButton, 0, 0);
-            this.tableLayoutPanel.Location = new System.Drawing.Point(10, 449);
+            this.tableLayoutPanel.Location = new System.Drawing.Point(10, 474);
             this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 1;
@@ -452,14 +454,14 @@
             this.panel1.Location = new System.Drawing.Point(10, 12);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(1, 1, 3, 0);
-            this.panel1.Size = new System.Drawing.Size(404, 434);
+            this.panel1.Size = new System.Drawing.Size(404, 459);
             this.panel1.TabIndex = 7;
             // 
             // contextMenuGroupBox
             // 
             this.contextMenuGroupBox.Controls.Add(this.flowLayoutPanel1);
             this.contextMenuGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.contextMenuGroupBox.Location = new System.Drawing.Point(1, 383);
+            this.contextMenuGroupBox.Location = new System.Drawing.Point(1, 406);
             this.contextMenuGroupBox.Name = "contextMenuGroupBox";
             this.contextMenuGroupBox.Size = new System.Drawing.Size(400, 50);
             this.contextMenuGroupBox.TabIndex = 14;
@@ -498,11 +500,24 @@
             this.toggleContextMenuOptionsInfoButton.UseVisualStyleBackColor = true;
             this.toggleContextMenuOptionsInfoButton.Click += new System.EventHandler(this.toggleContextMenuOptionsInfoButton_Click);
             // 
+            // autoResetSubfolderSearchCheckBox
+            // 
+            this.autoResetSubfolderSearchCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.autoResetSubfolderSearchCheckBox.AutoSize = true;
+            this.autoResetSubfolderSearchCheckBox.Location = new System.Drawing.Point(6, 172);
+            this.autoResetSubfolderSearchCheckBox.Name = "autoResetSubfolderSearchCheckBox";
+            this.autoResetSubfolderSearchCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.autoResetSubfolderSearchCheckBox.Size = new System.Drawing.Size(365, 17);
+            this.autoResetSubfolderSearchCheckBox.TabIndex = 9;
+            this.autoResetSubfolderSearchCheckBox.Text = "Automatically empty tag search box when a tag is toggled on or off";
+            this.autoResetSubfolderSearchCheckBox.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(422, 506);
+            this.ClientSize = new System.Drawing.Size(422, 531);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.saveSettingsButton);
@@ -571,5 +586,6 @@
         private System.Windows.Forms.Button toggleContextMenuOptionsButton;
         private System.Windows.Forms.Button toggleContextMenuOptionsInfoButton;
         private System.Windows.Forms.Button thumbsStorageViewButton;
+        private System.Windows.Forms.CheckBox autoResetSubfolderSearchCheckBox;
     }
 }

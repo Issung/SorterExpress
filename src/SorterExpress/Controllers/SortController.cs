@@ -175,8 +175,8 @@ namespace SorterExpress.Controllers
             if (shortcuts == null)
             {
                 shortcuts = new Dictionary<Shortcut, Action>() {
-                    { new Shortcut(key: Keys.Left), () => { if (form.tagSearchTextbox.Focused && form.tagSearchTextbox.Text.Length == 0) DecrementFileIndex(); }},
-                    { new Shortcut(key: Keys.Right), () => { if (form.tagSearchTextbox.Focused && form.tagSearchTextbox.Text.Length == 0) IncrementFileIndex(); } },
+                    { new Shortcut(key: Keys.Left), () => { if (form.tagSearchTextBox.Focused && form.tagSearchTextBox.Text.Length == 0) DecrementFileIndex(); }},
+                    { new Shortcut(key: Keys.Right), () => { if (form.tagSearchTextBox.Focused && form.tagSearchTextBox.Text.Length == 0) IncrementFileIndex(); } },
                     { new Shortcut(key: Keys.Enter), EnterPressed },
                     //{ new Shortcut(key: Keys.Up), () => { form.SelectNextControl(form.ActiveControl, false, false, false, false); }},
                     //{ new Shortcut(key: Keys.Down), () => { form.SelectNextControl(form.ActiveControl, true, false, false, false); }},
@@ -215,40 +215,52 @@ namespace SorterExpress.Controllers
 
             void MoveFolderShortcut(int index)
             {
-                SubfolderButton button = form.subfolderPanel.Controls[0].Controls.OfType<SubfolderButton>().OrderBy(t => t.Location.Y).ElementAt(index);
+                /*SubfolderButton button = form.subfolderPanel.Controls[0].Controls.OfType<SubfolderButton>().OrderBy(t => t.Location.Y).ElementAt(index);
 
                 if (button != null)
                 {
                     form.subfolderPanel.subfolderButton_MouseUp(button, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
-                }
+                }*/
+
+                form.subfolderPanel.PerformClickOnButton(index);
             }
 
             /// Handle an enter key press (different depending on what control is focused).
             void EnterPressed()
             {
-                if (form.tagSearchTextbox.Focused)
+                if (form.tagSearchTextBox.Focused)
                 {
-                    if (form.tagSearchTextbox.Text.Length == 0)
+                    if (form.tagSearchTextBox.Text.Length == 0)
                     {
                         form.saveButton.PerformClick();
                     }
-                    else if (form.tagSearchTextbox.Text.Length >= Settings.Default.TagSearchStart)
+                    else if (form.tagSearchTextBox.Text.Length >= Settings.Default.TagSearchStart)
                     {
-                        form.tagPanel.ToggleFirst(form.tagSearchTextbox.Text);
+                        form.tagPanel.ToggleFirst(form.tagSearchTextBox.Text);
 
                         if (Settings.Default.AutoResetTagSearchBox)
                         {
-                            form.tagSearchTextbox.Text = "";
+                            form.tagSearchTextBox.Text = "";
                         }
                     }
                 }
-                else if (form.tagCreationTextbox.Focused)
+                else if (form.tagCreationTextBox.Focused)
                 {
                     form.addTagButton.PerformClick();
                 }
                 else if (form.notesTextBox.Focused)
                 {
                     form.saveButton.PerformClick();
+                }
+                else if (form.subfolderSearchTextBox.Focused)
+                {
+                    bool success = form.subfolderPanel.PerformClickOnButton(0);
+
+                    if (success)
+                        if (Settings.Default.AutoResetSubfolderSearchBox)
+                            form.subfolderSearchTextBox.Text = String.Empty;
+                        else
+                            e.Handled = false;  //Error ding
                 }
             }
         }
@@ -530,7 +542,9 @@ namespace SorterExpress.Controllers
                 if (Directory.Exists(e.SubfolderInfo.directory))
                 {
                     Move(e.SubfolderInfo.directory);
-                    form.tagSearchTextbox.Focus();
+
+                    //TODO: What to do about moving focus between controls when moving files?
+                    //form.tagSearchTextBox.Focus();
                 }
                 else
                 {

@@ -17,6 +17,10 @@ namespace SorterExpress.Controls
 
         public event EventHandler<SubfolderButtonClickedEventArgs> SubfolderButtonClicked;
 
+        private string _filter;
+
+        public string Filter { get { return _filter == null ? String.Empty : _filter; } set { _filter = value; FilterChanged(); } }
+
         public SubfolderPanel()
         {
             InitializeComponent();
@@ -66,6 +70,45 @@ namespace SorterExpress.Controls
             ReorderSubfolderButtons();
         }
 
+        private void FilterChanged()
+        {
+            this.SuspendLayout();
+
+            if (Filter.Length == 0)
+            {
+                foreach (SubfolderButton button in scrollPanel.Controls.OfType<SubfolderButton>())
+                    button.Visible = true;
+            }
+            else
+            {
+                foreach (SubfolderButton button in scrollPanel.Controls.OfType<SubfolderButton>())
+                    button.Visible = button.subfolderInfo.name.ToLower().Contains(Filter.ToLower()) ? true : false;
+            }
+
+            ReorderSubfolderButtons();
+
+            this.ResumeLayout();
+        }
+
+        /// <summary>
+        /// PerformClick on a button in the subfolder list. Index starts from the top with 0 with only visible buttons (Filter compliance).
+        /// Returns true if a visible button existed at the given index and was clicked, false if other wise (index out of visible buttons range).
+        /// </summary>
+        public bool PerformClickOnButton(int indexFromTop)
+        {
+            SubfolderButton button = scrollPanel.Controls.OfType<SubfolderButton>().Where(t => t.Visible).OrderBy(t => t.Location.Y).ElementAt(indexFromTop);
+
+            if (button != null)
+            {
+                subfolderButton_MouseUp(button, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         Label divider = null;
 
         /// <summary>
@@ -73,6 +116,11 @@ namespace SorterExpress.Controls
         /// </summary>
         public void ReorderSubfolderButtons()
         {
+            if (Subfolders == null)
+                return;
+            
+            this.SuspendLayout();
+
             //Do this so that we dont remove the VScrollBar
 
             int position = -1 + scrollPanel.AutoScrollPosition.Y;
@@ -80,52 +128,79 @@ namespace SorterExpress.Controls
 
             int tabIndex = 0;
 
-            var customSubfolders = Subfolders.Where(t => t.custom).ToArray();
-            var customSubfoldersButtons = scrollPanel.Controls.OfType<SubfolderButton>().Where(t => t.subfolderInfo.custom);
-            var folders = Subfolders.Where(t => !t.custom).ToArray();
-            var foldersButtons = scrollPanel.Controls.OfType<SubfolderButton>().Where(t => !t.subfolderInfo.custom);
-
-            for (int i = 0; i < customSubfoldersButtons.Count(); i++)
-            {
-                var button = customSubfoldersButtons.ElementAt(i);
-                button.Location = new Point(0, position);
-                position += positionAdd;
-                button.TabIndex = tabIndex;
-                tabIndex++;
-            }
-
-            if (customSubfolders.Length > 0 && folders.Length > 0)
-            {
-                if (divider == null)
-                { 
-                    divider = new Label();
-                    divider.Text = "";
-                    divider.BorderStyle = BorderStyle.Fixed3D;
-                    divider.AutoSize = false;
-                    divider.Height = 2;
-                    divider.Width = 189 - 2 - 20;
-                    scrollPanel.Controls.Add(divider);
-                }
-
-                divider.Location = new Point(0 + 10, position);
-                divider.BringToFront();
-                divider.Show();
-                position += 5;
-            }
-            else
+            // If there is a filter stop seperating buttons by custom/noncustom and just order them all by StartsWith and then alphabetically by name.
+            if (Filter.Length > 0)
             {
                 if (divider != null)
                     divider.Hide();
-            }
 
-            for (int i = 0; i < foldersButtons.Count(); i++)
-            {
-                SubfolderButton button = foldersButtons.ElementAt(i);
-                button.Location = new Point(0, position);
-                position += positionAdd;
-                button.TabIndex = tabIndex;
-                tabIndex++;
+                var subfolderButtons = scrollPanel.Controls.OfType<SubfolderButton>()
+                    .Where(t => t.Visible)
+                    .OrderByDescending(t => t.subfolderInfo.name.ToLower().StartsWith(Filter.ToLower()))
+                    .ThenBy(t => t.subfolderInfo.name);
+
+                for (int i = 0; i < subfolderButtons.Count(); i++)
+                {
+                    var button = subfolderButtons.ElementAt(i);
+                    button.Location = new Point(0, position);
+                    position += positionAdd;
+                    button.TabIndex = tabIndex;
+                    tabIndex++;
+                }
             }
+            else    // If there is no filter than seperate buttons by custom/noncustom and order alphabetically by name.
+            {
+                var customSubfolders = Subfolders.Where(t => t.custom).ToArray();
+                var customSubfoldersButtons = scrollPanel.Controls.OfType<SubfolderButton>().Where(t => t.Visible && t.subfolderInfo.custom);
+                var folders = Subfolders.Where(t => !t.custom).ToArray();
+                var foldersButtons = scrollPanel.Controls.OfType<SubfolderButton>().Where(t => t.Visible && !t.subfolderInfo.custom);
+
+                for (int i = 0; i < customSubfoldersButtons.Count(); i++)
+                {
+                    var button = customSubfoldersButtons.ElementAt(i);
+                    button.Location = new Point(0, position);
+                    position += positionAdd;
+                    button.TabIndex = tabIndex;
+                    tabIndex++;
+                }
+
+                if (customSubfolders.Length > 0 && folders.Length > 0)
+                {
+                    if (divider == null)
+                    {
+                        divider = new Label();
+                        divider.Text = "";
+                        divider.BorderStyle = BorderStyle.Fixed3D;
+                        divider.AutoSize = false;
+                        divider.Height = 2;
+                        divider.Width = 189 - 2 - 20;
+                        scrollPanel.Controls.Add(divider);
+                    }
+
+                    divider.Location = new Point(0 + 10, position);
+                    divider.BringToFront();
+                    divider.Show();
+                    position += 5;
+                }
+                else
+                {
+                    if (divider != null)
+                        divider.Hide();
+                }
+
+                for (int i = 0; i < foldersButtons.Count(); i++)
+                {
+                    SubfolderButton button = foldersButtons.ElementAt(i);
+                    button.Location = new Point(0, position);
+                    position += positionAdd;
+                    button.TabIndex = tabIndex;
+                    tabIndex++;
+                }
+            }
+            
+            
+
+            this.ResumeLayout();
         }
 
         /// <summary>
