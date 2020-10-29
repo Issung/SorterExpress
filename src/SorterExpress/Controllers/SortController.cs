@@ -18,7 +18,7 @@ namespace SorterExpress.Controllers
     {
         SortForm form;
 
-        Dictionary<Shortcut, Action> shortcuts = null;
+        Dictionary<Shortcut, Func<bool>> shortcuts = null;
 
         public string directory;
         public List<string> files;
@@ -174,33 +174,35 @@ namespace SorterExpress.Controllers
             // Create shortcuts dictionary if not initialised.
             if (shortcuts == null)
             {
-                shortcuts = new Dictionary<Shortcut, Action>() {
-                    { new Shortcut(key: Keys.Left), () => { if (form.tagSearchTextBox.Focused && form.tagSearchTextBox.Text.Length == 0) DecrementFileIndex(); }},
-                    { new Shortcut(key: Keys.Right), () => { if (form.tagSearchTextBox.Focused && form.tagSearchTextBox.Text.Length == 0) IncrementFileIndex(); } },
-                    { new Shortcut(key: Keys.Enter), EnterPressed },
+                shortcuts = new Dictionary<Shortcut, Func<bool>>() {
+                    /*{ new Shortcut(key: Keys.Left), () => { if (form.tagSearchTextBox.Focused && form.tagSearchTextBox.Text.Length == 0) DecrementFileIndex(); }},
+                    { new Shortcut(key: Keys.Right), () => { if (form.tagSearchTextBox.Focused && form.tagSearchTextBox.Text.Length == 0) IncrementFileIndex(); } },*/
+                    { new Shortcut(key: Keys.Left), () => { return LeftRightKeyShortcut(Keys.Left); }},
+                    { new Shortcut(key: Keys.Right), () => { return LeftRightKeyShortcut(Keys.Right); } },
+                    { new Shortcut(key: Keys.Enter), () => { return EnterPressed(); } },
                     //{ new Shortcut(key: Keys.Up), () => { form.SelectNextControl(form.ActiveControl, false, false, false, false); }},
                     //{ new Shortcut(key: Keys.Down), () => { form.SelectNextControl(form.ActiveControl, true, false, false, false); }},
-                    { new Shortcut(key: Keys.Up), () => { SendKeys.Send("+{TAB}"); }},
-                    { new Shortcut(key: Keys.Down), () => { SendKeys.Send("{TAB}"); }},
-                    { new Shortcut(alt: true, key: Keys.Left), () => { form.mediaViewer.VideoPosition -= 0.1f; } },
-                    { new Shortcut(alt: true, key: Keys.Right), () => { form.mediaViewer.VideoPosition += 0.1f; } },
-                    { new Shortcut(ctrl: true, key: Keys.D), Delete },
-                    { new Shortcut(ctrl: true, key: Keys.Z), Undo },
-                    { new Shortcut(ctrl: true, key: Keys.Y), Redo },
-                    { new Shortcut(ctrl: true, key: Keys.P), LoadPreviousTags },
-                    { new Shortcut(ctrl: true, key: Keys.S), () => { Move(null); } },   //Same as Enter but without checking focus or length of tagSearchTextbox.
+                    { new Shortcut(key: Keys.Up), () => { SendKeys.Send("+{TAB}"); return true; }},
+                    { new Shortcut(key: Keys.Down), () => { SendKeys.Send("{TAB}"); return true; }},
+                    { new Shortcut(alt: true, key: Keys.Left), () => { form.mediaViewer.VideoPosition -= 0.1f; return true; } },
+                    { new Shortcut(alt: true, key: Keys.Right), () => { form.mediaViewer.VideoPosition += 0.1f; return true; } },
+                    { new Shortcut(ctrl: true, key: Keys.D), () => { Delete(); return true; } },
+                    { new Shortcut(ctrl: true, key: Keys.Z), () => { return Undo(); } },
+                    { new Shortcut(ctrl: true, key: Keys.Y), () => { return Redo(); } },
+                    { new Shortcut(ctrl: true, key: Keys.P), () => { return LoadPreviousTags(); } },
+                    { new Shortcut(ctrl: true, key: Keys.S), () => { Move(null); return true; } },   //Same as Enter but without checking focus or length of tagSearchTextbox.
 
                     // Shortcuts to move current file to a subfolder in list (up to 10).
-                    { new Shortcut(alt: true, key: Keys.D1), () => { MoveFolderShortcut(0); } },
-                    { new Shortcut(alt: true, key: Keys.D2), () => { MoveFolderShortcut(1); } },
-                    { new Shortcut(alt: true, key: Keys.D3), () => { MoveFolderShortcut(2); } },
-                    { new Shortcut(alt: true, key: Keys.D4), () => { MoveFolderShortcut(3); } },
-                    { new Shortcut(alt: true, key: Keys.D5), () => { MoveFolderShortcut(4); } },
-                    { new Shortcut(alt: true, key: Keys.D6), () => { MoveFolderShortcut(5); } },
-                    { new Shortcut(alt: true, key: Keys.D7), () => { MoveFolderShortcut(6); } },
-                    { new Shortcut(alt: true, key: Keys.D8), () => { MoveFolderShortcut(7); } },
-                    { new Shortcut(alt: true, key: Keys.D9), () => { MoveFolderShortcut(8); } },
-                    { new Shortcut(alt: true, key: Keys.D0), () => { MoveFolderShortcut(9); } },
+                    { new Shortcut(alt: true, key: Keys.D1), () => { return MoveFolderShortcut(0); } },
+                    { new Shortcut(alt: true, key: Keys.D2), () => { return MoveFolderShortcut(1); } },
+                    { new Shortcut(alt: true, key: Keys.D3), () => { return MoveFolderShortcut(2); } },
+                    { new Shortcut(alt: true, key: Keys.D4), () => { return MoveFolderShortcut(3); } },
+                    { new Shortcut(alt: true, key: Keys.D5), () => { return MoveFolderShortcut(4); } },
+                    { new Shortcut(alt: true, key: Keys.D6), () => { return MoveFolderShortcut(5); } },
+                    { new Shortcut(alt: true, key: Keys.D7), () => { return MoveFolderShortcut(6); } },
+                    { new Shortcut(alt: true, key: Keys.D8), () => { return MoveFolderShortcut(7); } },
+                    { new Shortcut(alt: true, key: Keys.D9), () => { return MoveFolderShortcut(8); } },
+                    { new Shortcut(alt: true, key: Keys.D0), () => { return MoveFolderShortcut(9); } },
                 };
             }
 
@@ -208,12 +210,44 @@ namespace SorterExpress.Controllers
 
             if (shortcuts.ContainsKey(input))
             { 
-                shortcuts[input].Invoke();
-                e.Handled = true;
-                e.SuppressKeyPress = true;
+                bool ok = shortcuts[input].Invoke();
+
+                if (ok)
+                {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else
+                {
+                    System.Media.SystemSounds.Beep.Play();
+                }
             }
 
-            void MoveFolderShortcut(int index)
+            bool LeftRightKeyShortcut(Keys key)
+            {
+                if (key != Keys.Left && key != Keys.Right)
+                    throw new ArgumentException("Key must be Left or Right.");
+
+                TextBox focusedTextBox = new TextBox[] { form.notesTextBox, form.tagSearchTextBox, form.subfolderSearchTextBox }.Where(t => t.Focused).FirstOrDefault();
+
+                if (focusedTextBox != null && focusedTextBox.Text.Length == 0)
+                {
+                    if (key == Keys.Left)
+                    {
+                        return DecrementFileIndex();
+                    }
+                    else
+                    {
+                        return IncrementFileIndex();
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            bool MoveFolderShortcut(int index)
             {
                 /*SubfolderButton button = form.subfolderPanel.Controls[0].Controls.OfType<SubfolderButton>().OrderBy(t => t.Location.Y).ElementAt(index);
 
@@ -222,11 +256,11 @@ namespace SorterExpress.Controllers
                     form.subfolderPanel.subfolderButton_MouseUp(button, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
                 }*/
 
-                form.subfolderPanel.PerformClickOnButton(index);
+                return form.subfolderPanel.PerformClickOnButton(index);
             }
 
             /// Handle an enter key press (different depending on what control is focused).
-            void EnterPressed()
+            bool EnterPressed()
             {
                 if (form.tagSearchTextBox.Focused)
                 {
@@ -236,36 +270,49 @@ namespace SorterExpress.Controllers
                     }
                     else if (form.tagSearchTextBox.Text.Length >= Settings.Default.TagSearchStart)
                     {
-                        form.tagPanel.ToggleFirst(form.tagSearchTextBox.Text);
+                        bool aTagWasToggled = form.tagPanel.ToggleFirst(form.tagSearchTextBox.Text);
 
-                        if (Settings.Default.AutoResetTagSearchBox)
+                        if (aTagWasToggled && Settings.Default.AutoResetTagSearchBox)
                         {
                             form.tagSearchTextBox.Text = "";
                         }
+
+                        return aTagWasToggled;
                     }
                 }
                 else if (form.tagCreationTextBox.Focused)
                 {
                     form.addTagButton.PerformClick();
+                    return true;
                 }
                 else if (form.notesTextBox.Focused)
                 {
                     form.saveButton.PerformClick();
+                    return true;
                 }
                 else if (form.subfolderSearchTextBox.Focused)
                 {
                     bool success = form.subfolderPanel.PerformClickOnButton(0);
 
                     if (success)
+                    { 
                         if (Settings.Default.AutoResetSubfolderSearchBox)
+                        {
                             form.subfolderSearchTextBox.Text = String.Empty;
+                            return true;
+                        }
                         else
-                            e.Handled = false;  //Error ding
+                        { 
+                            return false;
+                        }
+                    }
                 }
+
+                return false;
             }
         }
 
-        private void LoadPreviousTags()
+        private bool LoadPreviousTags()
         {
             const bool EMPTY_CURRENT_TAGS = false;
 
@@ -284,18 +331,24 @@ namespace SorterExpress.Controllers
                     {
                         Tags.Add((action as Classes.Actions.SortActions.Move).tags[t]);
                     }
+
+                    // The most recent move action was found and the tags were loaded.
+                    return true;
                 }
             }
+
+            // No recent move action was found and no tags were loaded.
+            return false;
         }
 
-        public void DecrementFileIndex()
+        public bool DecrementFileIndex()
         {
-            UpdateFileIndex(fileIndex - 1);
+            return UpdateFileIndex(fileIndex - 1);
         }
 
-        public void IncrementFileIndex()
+        public bool IncrementFileIndex()
         {
-            UpdateFileIndex(fileIndex + 1);
+            return UpdateFileIndex(fileIndex + 1);
         }
 
         public void GotoFirstFileIndex()
@@ -376,8 +429,10 @@ namespace SorterExpress.Controllers
         /// Set the file index variable and perform all other behaviour such as loading file.
         /// </summary>
         /// <param name="newFileIndex"></param>
-        public void UpdateFileIndex(int newFileIndex)
+        public bool UpdateFileIndex(int newFileIndex)
         {
+            bool wasInRange = true;
+
             // Clamp value
             int clampedNewFileIndex;
 
@@ -391,6 +446,11 @@ namespace SorterExpress.Controllers
                 clampedNewFileIndex = (clampedNewFileIndex < 0) ? 0 : clampedNewFileIndex;
             }
 
+            if (newFileIndex != clampedNewFileIndex)
+            {
+                wasInRange = false;
+            }
+
             fileIndex = clampedNewFileIndex;
 
             // Update labels in view.
@@ -402,6 +462,8 @@ namespace SorterExpress.Controllers
 
             //TODO: Textboxes aren't updating when file index is changed. This is temporary (and slow) fix. Find out why.
             form.ValidateChildren();
+
+            return wasInRange;
         }
 
         #region Actions
@@ -415,26 +477,48 @@ namespace SorterExpress.Controllers
             form.ValidateChildren();
         }
 
-        public void Undo()
+        /// <summary>
+        /// Pop an action from the doneActions stack and exeucutes it. Returns false if there was no action on the stack to undo.
+        /// </summary>
+        public bool Undo()
         {
-            SortAction action = doneActions.Pop();
-            action.Undo();
+            if (doneActions.Count > 0)
+            { 
+                SortAction action = doneActions.Pop();
 
-            if (action.Successful)
-                undoneActions.Push(action);
+                action.Undo();
 
-            form.ValidateChildren();
+                if (action.Successful)
+                    undoneActions.Push(action);
+
+                form.ValidateChildren();
+
+                return true;
+            }
+
+            return false;
         }
 
-        public void Redo()
+        /// <summary>
+        /// Pop an action from the undoneActions stack and exeucutes it. Returns false if there was no action on the stack to redo.
+        /// </summary>
+        public bool Redo()
         {
-            SortAction action = undoneActions.Pop();
-            action.Do();
+            if (undoneActions.Count > 0)
+            { 
+                SortAction action = undoneActions.Pop();
 
-            if (action.Successful)
-                doneActions.Push(action);
+                action.Do();
 
-            form.ValidateChildren();
+                if (action.Successful)
+                    doneActions.Push(action);
+
+                form.ValidateChildren();
+
+                return true;
+            }
+
+            return false;
         }
 
         public void Delete()
