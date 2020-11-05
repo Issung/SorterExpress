@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows.Forms;
 using Vlc.DotNet.Forms;
 
@@ -133,6 +134,8 @@ namespace SorterExpress.Controls
 
         public void LoadMedia(string path)
         {
+            Console.WriteLine($"Loading media {path}");
+
             // Don't attempt to load the same media that is already loaded, but put the media back to the start.
             if (path == CurrentMedia)
             {
@@ -141,7 +144,6 @@ namespace SorterExpress.Controls
                 return;
             }
 
-            Console.WriteLine($"Loading media {path}");
             FileType fileType = Utilities.GetFileType(path);
 
             if (fileType == FileType.Image)
@@ -184,7 +186,16 @@ namespace SorterExpress.Controls
                     if (vlcControl != null)
                     {
                         FileInfo fi = new FileInfo(path);
+                        var oldMedia = vlcControl.GetCurrentMedia();
                         vlcControl.SetMedia(fi, (repeat) ? "input-repeat=4000" : "input-repeat=0");
+                        while (vlcControl.GetCurrentMedia() == oldMedia)
+                        {
+                            /*vlcControl.GetCurrentMedia().
+                            Console.WriteLine("MRL with replace: " + vlcControl.GetCurrentMedia().Mrl.Replace("file:///", "").Replace("%20", " "));
+                            //Wait for media to load.
+                            if (vlcControl.GetCurrentMedia().Mrl.Replace("file:///", "").Replace("%20", " ") == fi.FullName)
+                                break;*/
+                        }
                         vlcControl.Play();
                         vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
                         vlcPlayerTableLayoutPanel.Show();
@@ -220,7 +231,15 @@ namespace SorterExpress.Controls
             CurrentMedia = null;
 
             if (vlcControl != null)
+            { 
+                vlcControl.ResetMedia();
                 vlcControl.Stop();
+
+                while (vlcControl.GetCurrentMedia() != null)
+                { 
+                    //Wait for media to unload.
+                }
+            }
 
             NotifyPropertyChanged();
         }

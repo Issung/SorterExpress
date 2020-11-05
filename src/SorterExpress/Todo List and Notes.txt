@@ -4,6 +4,8 @@
 		It is possible that an image or video won't able to be read for some various reasons (already open, corrupted). Need to account for this using try/catch statements.
 		Account for the possibility of 0 files or 0 folders.
 		Placeholder text available in .NET 5, use it everywhere!
+		Use some damn FFMPEG/FFPROBE wrapper to get video data instead of starting applications and all that messy stuff.
+			https://github.com/AydinAdn/MediaToolkit/tree/master#get-started
 	
 	Sorter:
 		Undo/Redo window (e.g. Photoshop).
@@ -27,7 +29,25 @@
 			Keep largest?
 			Keep file with most tags?
 
+	MediaViewer
+		Now using while loops to wait for the VlcControl to load/unload it's media.
+			It fixes issues of loading/unloading media too many times too rapidly. But:
+			Potentially bad, could cause infinite loops if the media can't be loaded?
+			Use a multi-threaded approach?
+			Post the MediaViewer control on the vlc library github?
+
+
 Done
+	MVC Rewrite of DuplicatesForm.
+		Under & Redo added, with stacks. Working fine. (remove other duplicates with same file, take into account tag manipulation options, undo works too, etc).
+		Databindings everywhere, all controls enable/disable and update fields as needed.
+		FileCount label now displays the count of matches in the list also.
+	New DuplicatesForm MassOperation function.
+		Performs the same operation on all remaining duplicates.
+		Supports order of preference, current options are deepest directory, highest resolution, and most tags.
+		Adds actions to the undo stack.
+		Databinds to the same fields as the parent form for the tag manipulation options.
+
 	Added search box to subfolder list, hides, shows and orders the buttons via the input filter. ENTER key selects the top one.
 	Added setting to reset this search box on enter or not, like tag search box.
 

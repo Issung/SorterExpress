@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Vlc.DotNet.Forms;
 using EConTech.Windows.MACUI;
+using System.Threading;
 
 namespace SorterExpress.Controls
 {
@@ -34,7 +35,10 @@ namespace SorterExpress.Controls
         {
             if (vlcControl != null)
                 if (vlcControl.IsPlaying)
-                    Value = (int)(vlcControl.Position * 100);
+                {
+                    //Value = (int)(vlcControl.Position * 100);
+                    ThreadPool.QueueUserWorkItem(_ => { Value = (int)(vlcControl.Position * 100); });
+                }
         }
 
         private void TrackBar_MouseDown(object sender, MouseEventArgs e)

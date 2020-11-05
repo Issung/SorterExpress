@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SorterExpress.Classes.Actions
 {
-    abstract class Action
+    public abstract class Action
     {
         /// <summary>
         /// Was the last undo/redo successful. Set to false if something goes wrong in the undo/redo process.

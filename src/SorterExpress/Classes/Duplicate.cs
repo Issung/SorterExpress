@@ -5,8 +5,10 @@ namespace SorterExpress
 {
     public class Duplicate
     {
-        public string File1Path { get; private set; }
-        public string File1ThumbPath { get; private set; }
+        public FilePrint fileprint1, fileprint2;
+
+        public string File1Path { get { return fileprint1.filepath; } }
+        public string File1ThumbPath { get { return fileprint1.ThumbPath; } }
 
         private Image file1Thumb = null;
         public Image File1Thumb { 
@@ -19,8 +21,8 @@ namespace SorterExpress
             } 
         }
 
-        public string File2Path { get; private set; }
-        public string File2ThumbPath { get; private set; }
+        public string File2Path { get { return fileprint2.filepath; } }
+        public string File2ThumbPath { get { return fileprint2.ThumbPath; } }
 
         private Image file2Thumb;
         public Image File2Thumb
@@ -45,11 +47,13 @@ namespace SorterExpress
 
         public Duplicate(FilePrint fp1, FilePrint fp2)
         {
-            this.File1Path = fp1.file;
-            this.File1ThumbPath = fp1.ThumbPath;
+            fileprint1 = fp1;
+            //this.File1Path = fp1.filepath;
+            //this.File1ThumbPath = fp1.ThumbPath;
 
-            this.File2Path = fp2.file;
-            this.File2ThumbPath = fp2.ThumbPath;
+            fileprint2 = fp2;
+            //this.File2Path = fp2.filepath;
+            //this.File2ThumbPath = fp2.ThumbPath;
 
             DifferenceCount = 0;
 

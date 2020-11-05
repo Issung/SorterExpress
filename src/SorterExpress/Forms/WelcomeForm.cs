@@ -89,6 +89,10 @@ namespace SorterExpress.Forms
 
         private void DuplicatesButton_Click(object sender, EventArgs e)
         {
+            /*DuplicatesFormOld df = new DuplicatesFormOld(null);
+            df.FormClosed += (s, args) => this.Show();
+            df.Show();
+            this.Hide();*/
             DuplicatesForm df = new DuplicatesForm(null);
             df.FormClosed += (s, args) => this.Show();
             df.Show();

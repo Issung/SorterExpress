@@ -3,10 +3,12 @@ using SorterExpress.Forms;
 using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -15,6 +17,58 @@ namespace SorterExpress
 {
     public enum FileType { Image, Video, Other };
 
+    public class FileDetails
+    {
+        public string[] Tags;
+        public string Note;
+
+        /// <summary>
+        /// File extension including dot.
+        /// </summary>
+        public string FileExtension;
+        public FileType FileType;
+
+        /// <summary>
+        /// Merge the tags and note of another file details into these details.
+        /// Tags will remove duplicates and be ordered alphabetically once again.
+        /// Notes will be seperated by a hyphen and 2 spaces (" - ") if there is a note in both objects.
+        /// File extension and type of will remain from THIS object.
+        /// </summary>
+        public void Combine(FileDetails moreDetails)
+        {
+            Tags = Tags.Concat(moreDetails.Tags).Distinct().OrderBy(t => t).ToArray();
+
+            List<string> notes = new List<string>();
+            if (!string.IsNullOrWhiteSpace(Note))
+                notes.Add(Note);
+            if (!string.IsNullOrWhiteSpace(moreDetails.Note))
+                notes.Add(moreDetails.Note);
+
+            Note = string.Join(" - ", notes);
+        }
+
+        public string GenerateFilename()
+        {
+            string ret = "";
+
+            ret += string.Join(" ", Tags);
+
+            ret += !String.IsNullOrWhiteSpace(Note) ? $" ({Note})" : "";
+
+            ret += FileExtension;
+
+            return ret;
+        }
+
+        public int RemoveTagsNotInCollection(IEnumerable<string> collection)
+        {
+            var templist = Tags.ToList();
+            int removedCount = templist.RemoveAll(t => !collection.Contains(t));
+            Tags = templist.ToArray();
+            return removedCount;
+        }
+    }
+
     class Utilities
     {
         private static MD5 md5 = null;
@@ -22,7 +76,32 @@ namespace SorterExpress
         public static readonly string[] imageFileExtensions = { ".jpg", ".jpeg", ".jpg_large", ".png", ".bmp", ".gif" };
 
         public static readonly char[] NoteForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.' };
-        public static readonly char[] TagForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.', ' ' };
+        public static readonly char[] TagForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.', ' ', '(', ')' };
+
+        public static FileDetails GetFileDetails(string filepath)
+        {
+            FileDetails details = new FileDetails();
+
+            details.FileExtension = Path.GetExtension(filepath);
+            details.FileType = Utilities.GetFileType(filepath);
+
+            string strippedPath = Path.GetFileNameWithoutExtension(filepath);
+
+            int indexOfFirstOpeningBracket = strippedPath.IndexOf('(');
+            int indexOfLastClosingBracket = strippedPath.IndexOf(')');
+            if (indexOfFirstOpeningBracket != -1 && indexOfLastClosingBracket != -1 && indexOfLastClosingBracket > indexOfFirstOpeningBracket)
+            {
+                details.Note = strippedPath.Substring(indexOfFirstOpeningBracket + 1, indexOfLastClosingBracket - indexOfFirstOpeningBracket - 1);
+            }
+
+            //If there was a note, strip it out of the file name for more processing (finding tags).
+            if (!String.IsNullOrWhiteSpace(details.Note))
+                strippedPath = strippedPath.Substring(0, indexOfFirstOpeningBracket);
+
+            details.Tags = strippedPath.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            return details;
+        }
 
         public static FileType GetFileType(string filepath)
         {

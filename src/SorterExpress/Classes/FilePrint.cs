@@ -3,6 +3,7 @@ using SorterExpress.Properties;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 public class FilePrint
 {
@@ -10,30 +11,34 @@ public class FilePrint
 
     public static FFMPEG ffmpeg = null;
     public static FFProbe ffprobe = null;
-    public string file;
+    public string filepath;
     public Size size;
     public float average;
     public string print;
 
-    string thumbPath = null;
+    //string thumbPath = null;
 
     /// <summary>
     /// The path to the fileprint's thumbnail, if the fileprint is for an image
     /// then the path is just to the raw image (full sized). if the fileprint is
     /// for a video then the path is the the small jpg extracted by ffmpeg.
     /// </summary>
-    public string ThumbPath { get {
-            /*if (Utilities.FileIsImage(file))
-                return file;
-            else
-                return thumbPath;*/
+    /*public string ThumbPath { get {
+            //if (Utilities.FileIsImage(file))
+            //    return file;
+            //else
+            //    return thumbPath;
             return thumbPath;
-        } 
-    }
+        }
+
+        set;
+    }*/
+
+    public string ThumbPath { get; set; }
 
     public FilePrint(string filePath)
     {
-        this.file = filePath;
+        this.filepath = filePath;
         Bitmap img;
 
         if (Utilities.FileIsImage(filePath))
@@ -42,10 +47,9 @@ public class FilePrint
             this.size = img.Size;
             CalculatePicturePrint(img);
 
-            //thumbPath = Program.THUMBS_PATH + "\\" + Utilities.MD5(Path.GetFileName(filePath)) + ".jpg";
-            thumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
-            if (!File.Exists(thumbPath))
-                Utilities.Resize(new Bitmap(filePath), THUMB_SIZE, THUMB_SIZE).Save(thumbPath);
+            ThumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
+            if (!File.Exists(ThumbPath))
+                Utilities.Resize(new Bitmap(filePath), THUMB_SIZE, THUMB_SIZE).Save(ThumbPath);
 
             img.Dispose();
         }
@@ -57,15 +61,14 @@ public class FilePrint
             if (ffprobe == null)
                 ffprobe = new FFProbe();
 
-            //thumbPath = Program.THUMBS_PATH + "\\" + Utilities.MD5(Path.GetFileName(filePath)) + ".jpg";
-            thumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
-            if (!File.Exists(thumbPath))
-                ffmpeg.GetThumbnailWait(filePath, thumbPath, THUMB_SIZE);
-
-            this.size = new Size(0, 0);
+            ThumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
+            if (!File.Exists(ThumbPath))
+                ffmpeg.GetThumbnailWait(filePath, ThumbPath, THUMB_SIZE);
 
             // Should put a try catch around this, if file is corrupted or anything it leads to issues.
-            img = new Bitmap(thumbPath);
+            img = new Bitmap(ThumbPath);
+
+            this.size = ffprobe.GetSizeWait(filePath);
 
             CalculatePicturePrint(img);
 

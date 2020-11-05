@@ -4,6 +4,7 @@ using SorterExpress;
 
 //https://stackoverflow.com/questions/3575311/how-can-i-save-first-frame-of-a-video-as-image
 
+//TODO: Optimise this and make it a singleton?
 public class FFMPEG
 {
     List<FFMPEGProcess> processes;

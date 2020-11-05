@@ -10,7 +10,7 @@ namespace SorterExpress.Forms
         public SortFormOld sortForm;
         public MassTagForm massTagForm;
         public ViewForm viewForm;
-        public DuplicatesForm duplicatesForm;
+        public DuplicatesFormOld duplicatesForm;
         public RenameTagForm renameTagForm;
         public SettingsForm settingsForm;
 
@@ -35,7 +35,7 @@ namespace SorterExpress.Forms
             tabControl.TabPages[2].Controls.Add(viewForm);
             viewForm.Show();
 
-            duplicatesForm = new DuplicatesForm(null);
+            duplicatesForm = new DuplicatesFormOld(null);
             PrepareForm(duplicatesForm);
             tabControl.TabPages[3].Controls.Add(duplicatesForm);
             duplicatesForm.Show();
