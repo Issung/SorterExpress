@@ -19,8 +19,6 @@
 		Update constructor to take an argument and open a folder instantly.
 
 	Duplicate Finder:
-		When potential duplicate match is skipped then remove it from the list.
-		Add "mass operation" option, performing the same operation on all potential duplicate items in the list. (Allows users to skip through the previews removing non dupes, and then perform the operation they desire on the remaining dupes).
 		Option to only compare images to images and videos to videos (stop comparing images to videos and vice versa). To do this add a "file type" enum field to FilePrint or something.
 		Chance that when searching for duplicates that the loading gets stuck a few away from max and never finishes.
 		Option to only search for duplicates between current directory and subdirectories instead of searching for duplicates between subdirectories?
@@ -38,6 +36,14 @@
 
 
 Done
+	Added right click context menu to duplicates form matches list.
+		Allows for selection of keeping right/left, neither or both (skip).
+		Does not require the user to view that match.
+		Gets added to undo stack and is undoable.
+		Required small rework of controller methods to take option index parameter.
+		KeepSide and DeleteBothSides now check if the duplicate is being viewed before unloading media.
+		Fixed glitch of MergeTags and DuplicatesOnlyKeepTagsInLibrary not being saved on duplicates form exit.
+
 	MVC Rewrite of DuplicatesForm.
 		Under & Redo added, with stacks. Working fine. (remove other duplicates with same file, take into account tag manipulation options, undo works too, etc).
 		Databindings everywhere, all controls enable/disable and update fields as needed.

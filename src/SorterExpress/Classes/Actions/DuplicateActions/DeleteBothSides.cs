@@ -56,10 +56,12 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
                 }
             }
 
-            controller.form.mediaViewerLeft.UnloadMedia();
-            controller.form.mediaViewerRight.UnloadMedia();
-
-            //controller.IgnoreMatchSelectionChanged = allDuplicatesWithFile.Count;
+            // If this duplicate is the one currently being viewed unload media for both sides.
+            if (duplicate == controller.inspectingDuplicate)
+            { 
+                controller.form.mediaViewerLeft.UnloadMedia();
+                controller.form.mediaViewerRight.UnloadMedia();
+            }
 
             //Remove all duplicates from duplicates list (possibly raises issues).
             for (int i = 0; i < allDuplicatesWithFile.Count; i++)
@@ -120,7 +122,14 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
             {
                 //File should be recovered by this point.
                 //controller.ReloadMatch(Path.GetFileName(leftFilepath), duplicateIndex);
-                controller.model.Duplicates.Insert(duplicateIndex, duplicate);
+                //controller.model.Duplicates.Insert(duplicateIndex, duplicate);
+
+                //Reinsert all duplicate entries that had that the recovered files.
+                for (int i = 0; i < allDuplicatesWithFile.Count; i++)
+                {
+                    controller.model.Duplicates.Insert(allDuplicatesWithFile[i].Item1, allDuplicatesWithFile[i].Item2);
+                }
+
                 controller.form.matchesDataGridView.CurrentCell = controller.form.matchesDataGridView.Rows[duplicateIndex].Cells[0];
                 controller.MatchSelectionChanged();
                 Successful = true;

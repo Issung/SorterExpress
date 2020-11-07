@@ -176,7 +176,7 @@ namespace SorterExpress.Controllers
         /// </summary>
         private bool deletingOK = false;
 
-        Duplicate inspectingDuplicate;
+        public Duplicate inspectingDuplicate { get; private set; }
 
         public int MatchesGridViewSelectedRowIndex { get { return form.matchesDataGridView?.CurrentCell?.RowIndex ?? -1; } }
 
@@ -636,19 +636,28 @@ namespace SorterExpress.Controllers
 
         #region Actions
 
-        public void KeepSide(Side side)
+        public void KeepSide(Side side, int index = -1)
         {
-            Do(new KeepSide(this, inspectingDuplicate, MatchesGridViewSelectedRowIndex, side));
+            if (index >= 0)
+                Do(new KeepSide(this, model.Duplicates[index], index, side));
+            else
+                Do(new KeepSide(this, inspectingDuplicate, MatchesGridViewSelectedRowIndex, side));
         }
 
-        public void Skip()
+        public void Skip(int index = -1)
         {
-            Do(new Skip(this, inspectingDuplicate, MatchesGridViewSelectedRowIndex));
+            Duplicate dupe = index >= 0 ? model.Duplicates[index] : inspectingDuplicate;
+            int dupeIndex = index >= 0 ? index : MatchesGridViewSelectedRowIndex;
+
+            Do(new Skip(this, dupe, dupeIndex));
         }
 
-        public void KeepNeither()
+        public void KeepNeither(int index = -1)
         {
-            Do(new DeleteBothSides(this, inspectingDuplicate, MatchesGridViewSelectedRowIndex));
+            Duplicate dupe = index >= 0 ? model.Duplicates[index] : inspectingDuplicate;
+            int dupeIndex = index >= 0 ? index : MatchesGridViewSelectedRowIndex;
+
+            Do(new DeleteBothSides(this, dupe, dupeIndex));
         }
 
         #endregion
@@ -711,6 +720,8 @@ namespace SorterExpress.Controllers
             Settings.Default.DuplicatesCropTopBottomSides = model.CropTopAndBottom;
             Settings.Default.DuplicatesSearchThreadCount = model.ThreadCount;
             Settings.Default.DuplicatesSearchSimilarityPercentage = model.Similarity;
+            Settings.Default.DuplicatesMergeFileTags = model.MergeFileTags;
+            Settings.Default.DuplicatesOnlyKeepTagsInLibrary = model.OnlyKeepTagsThatAreInLibrary;
             Settings.Default.Save();
         }
     }

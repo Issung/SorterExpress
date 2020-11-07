@@ -134,7 +134,7 @@ namespace SorterExpress.Controls
 
         public void LoadMedia(string path)
         {
-            Console.WriteLine($"Loading media {path}");
+            Console.WriteLine($"{Name} Loading media {path}!");
 
             // Don't attempt to load the same media that is already loaded, but put the media back to the start.
             if (path == CurrentMedia)
@@ -221,7 +221,7 @@ namespace SorterExpress.Controls
 
         public void UnloadMedia()
         {
-            Console.WriteLine($"Unloading Media");
+            Console.WriteLine($"{Name} Unloading Media!");
 
             if (pictureBox.Image != null)
                 pictureBox.Image.Dispose();

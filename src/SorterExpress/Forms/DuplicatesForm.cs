@@ -130,6 +130,33 @@ namespace SorterExpress.Forms
             controller.OpenSettings();
         }
 
+        int contextMenuRowIndex = -1;
+
+        private void MatchesDataGridView_CellContextMenuStripNeeded(object sender, DataGridViewCellContextMenuStripNeededEventArgs e)
+        {
+            contextMenuRowIndex = e.RowIndex;
+        }
+
+        private void keepLeftToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.KeepSide(DuplicatesFormController.Side.Left, contextMenuRowIndex);
+        }
+
+        private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.KeepSide(DuplicatesFormController.Side.Right, contextMenuRowIndex);
+        }
+
+        private void skipToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.Skip(contextMenuRowIndex);
+        }
+
+        private void deleteBothToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.KeepNeither(contextMenuRowIndex);
+        }
+
         /*private bool CheckDeletingFilesOkay()
         {
             if (deletingOK)

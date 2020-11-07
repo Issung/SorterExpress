@@ -63,8 +63,9 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
                 }
             }
 
-            //Unload media for appropriate side
-            (keptSide == DuplicatesFormController.Side.Left ? controller.form.mediaViewerRight : controller.form.mediaViewerLeft).UnloadMedia();
+            //If this duplicate is the one currently being viewed unload media for appropriate side
+            if (duplicate == controller.inspectingDuplicate)
+                (keptSide == DuplicatesFormController.Side.Left ? controller.form.mediaViewerRight : controller.form.mediaViewerLeft).UnloadMedia();
 
             //Remove all duplicates from duplicates list (possibly raises issues).
             for (int i = 0; i < allDuplicatesWithFile.Count; i++)
