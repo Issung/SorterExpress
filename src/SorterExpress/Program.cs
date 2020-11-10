@@ -67,7 +67,7 @@ namespace SorterExpress
                 }
                 else if (args[0] == "duplicates")
                 {
-                    Application.Run(new DuplicatesFormOld(new DirectoryInfo(args.Last())));
+                    Application.Run(new DuplicatesForm(new DirectoryInfo(args.Last())));
                 }
                 else if (args[0] == "masstag")
                 {
