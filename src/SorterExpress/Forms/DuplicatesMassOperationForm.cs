@@ -1,4 +1,5 @@
 ﻿using GChan.Controls;
+using SorterExpress.Classes;
 using SorterExpress.Classes.Actions.DuplicateActions;
 using SorterExpress.Controllers;
 using System;
@@ -158,6 +159,22 @@ namespace SorterExpress.Forms
                         .OrderBy(t => Convert.ToInt32(t.Tag))
                         .Select(t => (string)t.Controls.OfType<ComboBox>().First().SelectedItem)
                         .ToArray();
+
+            // Find dimensions for all video files.
+            if (prefs.Contains(HIGHEST_RES))
+            {
+                var prints = Controller.prints.Where(t => duplicates.Any(d => d.fileprint1 == t || d.fileprint2 == t));
+
+                Size noSize = new Size(-1, -1);
+
+                Parallel.ForEach(prints, (print) =>
+                {
+                    if (print.size == noSize)
+                    {
+                        print.size = FFWorker.GetSizeWait(print.filepath);
+                    }
+                });
+            }
 
             // Set to only "Ignore". Alert user and return.
             if (prefs.Length < 2)

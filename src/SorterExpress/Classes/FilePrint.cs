@@ -1,9 +1,8 @@
 ﻿using SorterExpress;
+using SorterExpress.Classes;
 using SorterExpress.Properties;
-using System;
 using System.Drawing;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
 
 public class FilePrint
 {
@@ -12,7 +11,7 @@ public class FilePrint
     public static FFMPEG ffmpeg = null;
     public static FFProbe ffprobe = null;
     public string filepath;
-    public Size size;
+    public Size size = new Size(-1, -1);
     public float average;
     public string print;
 
@@ -55,20 +54,16 @@ public class FilePrint
         }
         else if (Utilities.FileIsVideo(filePath))
         {
-            if (ffmpeg == null)
-                ffmpeg = new FFMPEG();
-
-            if (ffprobe == null)
-                ffprobe = new FFProbe();
+            //FFWorker.GetSizeAsync(filePath, (Size s) => { this.size = s; });
 
             ThumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
             if (!File.Exists(ThumbPath))
-                ffmpeg.GetThumbnailWait(filePath, ThumbPath, THUMB_SIZE);
+            {
+                FFWorker.GetThumbnailWait(filePath, ThumbPath, THUMB_SIZE);
+            }
 
             // Should put a try catch around this, if file is corrupted or anything it leads to issues.
             img = new Bitmap(ThumbPath);
-
-            this.size = ffprobe.GetSizeWait(filePath);
 
             CalculatePicturePrint(img);
 

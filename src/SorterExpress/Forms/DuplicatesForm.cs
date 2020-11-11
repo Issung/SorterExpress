@@ -42,13 +42,19 @@ namespace SorterExpress.Forms
             ///Stuff designer can't do
         }
 
-        public List<string> GetSearchScope(List<string> files)
+        private void DuplicatesForm_Shown(object sender, EventArgs e)
+        {
+            mediaViewerLeft.VlcControl.Playing += controller.VlcControl_Playing;
+            mediaViewerRight.VlcControl.Playing += controller.VlcControl_Playing;
+        }
+
+        /*public List<string> GetSearchScope(List<string> files)
         {
             return files.Where(
                 t => (imagesCheckBox.Checked && Utilities.FileIsImage(t)) ||
                 (videosCheckBox.Checked && Utilities.FileIsVideo(t)))
                 .ToList();
-        }
+        }*/
 
         private void openDirectoryButton_Click(object sender, EventArgs e)
         {

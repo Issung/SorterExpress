@@ -19,6 +19,8 @@ using SorterExpress.Classes.Actions.SortActions;
 using System.Security.Policy;
 using SorterExpress.Classes.Actions.DuplicateActions;
 using System.Windows.Forms.VisualStyles;
+using Vlc.DotNet.Forms;
+using Vlc.DotNet.Core;
 
 namespace SorterExpress.Controllers
 {
@@ -201,6 +203,37 @@ namespace SorterExpress.Controllers
             if (dirInfo != null)
             {
                 LoadDirectory(dirInfo);
+            }
+        }
+
+        internal void VlcControl_Playing(object sender, Vlc.DotNet.Core.VlcMediaPlayerPlayingEventArgs e)
+        {
+            VlcControl control = (VlcControl)sender;
+
+            Size size = new Size(-1, -1);
+            Side side = (control == form.mediaViewerLeft.VlcControl) ? Side.Left : Side.Right;
+            RichTextBox infoBox = (side == Side.Left) ? form.infoRichTextBoxLeft : form.infoRichTextBoxRight;
+
+            VlcMedia media = control.GetCurrentMedia();
+
+            // Currently grabbing tracksinformation 0, could be wrong in some cases.
+            size.Width = media.TracksInformations.Length > 0 ? (int)media.TracksInformations[0].Video.Width : -1;
+            size.Height = media.TracksInformations.Length > 0 ? (int)media.TracksInformations[0].Video.Height : -1;
+
+            if (size != new Size(-1, -1))
+            {
+                // Update appropriate fileprint with the new found size, just incase it's needed later.
+                (side == Side.Left ? inspectingDuplicate.fileprint1 : inspectingDuplicate.fileprint2).size = size;
+
+                infoBox.Invoke(() =>
+                {
+                    if (!infoBox.Text.Contains("Width"))
+                    {
+                        infoBox.AppendText($"Duration: {media.Duration.Seconds}s\n");
+
+                        ShowFileInfo(side, size, false);
+                    }
+                });
             }
         }
 
@@ -588,49 +621,17 @@ namespace SorterExpress.Controllers
 
             filenameBox.Text = filePath.Replace(model.Directory, "");
             filenameBox.Text += $"\n\nThumbnail: {(side == Side.Left ? inspectingDuplicate.File1ThumbPath : inspectingDuplicate.File2ThumbPath)}";
-            infoBox.Text = "";
+            //infoBox.Text = "";
 
             if (Utilities.FileIsImage(filePath))
             {
-                //string location = (filePath.Contains("/") || filePath.Contains("\\") ? filePath : directory + "/" + filePath);
-                //mediaViewer.LoadMedia(location);
                 mediaViewer.LoadMedia(filePath);
                 ShowFileInfo(side, (side == Side.Left ? inspectingDuplicate.fileprint1 : inspectingDuplicate.fileprint2).size);
             }
             else if (Utilities.FileIsVideo(filePath))
             {
                 mediaViewer.LoadMedia(filePath);
-
-                //Size size = prints.Find(t => t.filepath == filePath)?.size ?? new Size(0, 0);
-                Size size = (side == Side.Left ? inspectingDuplicate.fileprint1 : inspectingDuplicate.fileprint2).size;
-
-                //Doing this stuff outside of the below VlcControl.Playing event is currently fine as the LoadMedia() method above is currently a blocking call.
-                var media = mediaViewer.VlcControl.GetCurrentMedia();
-                infoBox.AppendText($"Duration: {media.Duration.Seconds}s\n");
-                ShowFileInfo(side, size, false);
-
-                /*mediaViewer.VlcControl.Playing += (o, ea) =>
-                {
-                    //Console.WriteLine("Playing!");
-
-                    infoBox.Invoke(() => {
-                        if (!infoBox.Text.Contains("Width"))
-                        {
-                            var media = mediaViewer.VlcControl.GetCurrentMedia();
-
-                            //TODO: Size is now avaiable from fileprint data, change this to just update duration info.
-                            // Currently grabbing tracksinformation 0, could be wrong in some cases.
-                            string width = media.TracksInformations.Length > 0 ? media.TracksInformations[0].Video.Width.ToString() : "?";
-                            string height = media.TracksInformations.Length > 0 ? media.TracksInformations[0].Video.Height.ToString() : "?";
-
-                            infoBox.AppendText($"Width: {width}\n" +
-                                $"Height: {height}\n" +
-                                $"Duration: {media.Duration.Seconds}s\n");
-
-                            ShowFileInfo(side, size, false);
-                        }
-                    });
-                };*/
+                //ShowFileInfo will occur in the vlcControl.Playing event which also grabs the video's size.
             }
         }
 

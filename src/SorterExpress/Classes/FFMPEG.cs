@@ -22,8 +22,8 @@ public class FFMPEG
         FFMPEGProcess ffmp = new FFMPEGProcess();
 
         ffmp.StartInfo.UseShellExecute = false;
-        ffmp.StartInfo.RedirectStandardOutput = true;
-        ffmp.StartInfo.RedirectStandardError = true;
+        ffmp.StartInfo.RedirectStandardOutput = false;
+        ffmp.StartInfo.RedirectStandardError = false;
         ffmp.StartInfo.CreateNoWindow = true;
 
         ffmp.EnableRaisingEvents = true;

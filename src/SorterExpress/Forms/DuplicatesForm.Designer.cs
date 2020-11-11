@@ -34,6 +34,7 @@ namespace SorterExpress.Forms
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DuplicatesForm));
             this.keepRightButton = new System.Windows.Forms.Button();
+            this.duplicatesFormModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.keepLeftButton = new System.Windows.Forms.Button();
             this.keepBothButton = new System.Windows.Forms.Button();
             this.openDirectoryButton = new System.Windows.Forms.Button();
@@ -55,7 +56,9 @@ namespace SorterExpress.Forms
             this.filenameRichTextBoxRight = new System.Windows.Forms.RichTextBox();
             this.sidesLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.leftPanel = new System.Windows.Forms.Panel();
+            this.mediaViewerLeft = new SorterExpress.Controls.MediaViewer();
             this.rightPanel = new System.Windows.Forms.Panel();
+            this.mediaViewerRight = new SorterExpress.Controls.MediaViewer();
             this.keepButtonsLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.progressBar = new System.Windows.Forms.ProgressBar();
@@ -78,9 +81,7 @@ namespace SorterExpress.Forms
             this.undoButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.massOperationButton = new System.Windows.Forms.Button();
-            this.duplicatesFormModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.mediaViewerLeft = new SorterExpress.Controls.MediaViewer();
-            this.mediaViewerRight = new SorterExpress.Controls.MediaViewer();
+            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).BeginInit();
             this.sidesLayoutPanel.SuspendLayout();
@@ -90,7 +91,6 @@ namespace SorterExpress.Forms
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).BeginInit();
             this.matchesContextMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // keepRightButton
@@ -108,6 +108,10 @@ namespace SorterExpress.Forms
             this.keepRightButton.Text = "Keep This (Delete Left)";
             this.keepRightButton.UseVisualStyleBackColor = true;
             this.keepRightButton.Click += new System.EventHandler(this.keepRightButton_Click);
+            // 
+            // duplicatesFormModelBindingSource
+            // 
+            this.duplicatesFormModelBindingSource.DataSource = typeof(SorterExpress.Controllers.DuplicatesFormModel);
             // 
             // keepLeftButton
             // 
@@ -399,6 +403,15 @@ namespace SorterExpress.Forms
             this.leftPanel.Size = new System.Drawing.Size(343, 235);
             this.leftPanel.TabIndex = 5;
             // 
+            // mediaViewerLeft
+            // 
+            this.mediaViewerLeft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mediaViewerLeft.Location = new System.Drawing.Point(100, 0);
+            this.mediaViewerLeft.Name = "mediaViewerLeft";
+            this.mediaViewerLeft.Size = new System.Drawing.Size(243, 235);
+            this.mediaViewerLeft.TabIndex = 4;
+            this.mediaViewerLeft.VideoPosition = -1F;
+            // 
             // rightPanel
             // 
             this.rightPanel.Controls.Add(this.mediaViewerRight);
@@ -409,6 +422,17 @@ namespace SorterExpress.Forms
             this.rightPanel.Name = "rightPanel";
             this.rightPanel.Size = new System.Drawing.Size(343, 235);
             this.rightPanel.TabIndex = 4;
+            // 
+            // mediaViewerRight
+            // 
+            this.mediaViewerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mediaViewerRight.Location = new System.Drawing.Point(110, 0);
+            this.mediaViewerRight.Name = "mediaViewerRight";
+            this.mediaViewerRight.Size = new System.Drawing.Size(243, 235);
+            this.mediaViewerRight.TabIndex = 4;
+            this.mediaViewerRight.VideoPosition = -1F;
             // 
             // keepButtonsLayoutPanel
             // 
@@ -615,7 +639,6 @@ namespace SorterExpress.Forms
             // 
             // settingsButton
             // 
-            this.settingsButton.Enabled = false;
             this.settingsButton.Location = new System.Drawing.Point(12, 12);
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new System.Drawing.Size(62, 23);
@@ -659,30 +682,6 @@ namespace SorterExpress.Forms
             this.massOperationButton.UseVisualStyleBackColor = true;
             this.massOperationButton.Click += new System.EventHandler(this.massOperationButton_Click);
             // 
-            // duplicatesFormModelBindingSource
-            // 
-            this.duplicatesFormModelBindingSource.DataSource = typeof(SorterExpress.Controllers.DuplicatesFormModel);
-            // 
-            // mediaViewerLeft
-            // 
-            this.mediaViewerLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mediaViewerLeft.Location = new System.Drawing.Point(100, 0);
-            this.mediaViewerLeft.Name = "mediaViewerLeft";
-            this.mediaViewerLeft.Size = new System.Drawing.Size(243, 235);
-            this.mediaViewerLeft.TabIndex = 4;
-            this.mediaViewerLeft.VideoPosition = -1F;
-            // 
-            // mediaViewerRight
-            // 
-            this.mediaViewerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mediaViewerRight.Location = new System.Drawing.Point(110, 0);
-            this.mediaViewerRight.Name = "mediaViewerRight";
-            this.mediaViewerRight.Size = new System.Drawing.Size(243, 235);
-            this.mediaViewerRight.TabIndex = 4;
-            this.mediaViewerRight.VideoPosition = -1F;
-            // 
             // DuplicatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -721,6 +720,8 @@ namespace SorterExpress.Forms
             this.Name = "DuplicatesForm";
             this.Text = "Sorter Express - Duplicate Search";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DuplicatesForm_FormClosing);
+            this.Shown += new System.EventHandler(this.DuplicatesForm_Shown);
+            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).EndInit();
             this.sidesLayoutPanel.ResumeLayout(false);
@@ -730,7 +731,6 @@ namespace SorterExpress.Forms
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).EndInit();
             this.matchesContextMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

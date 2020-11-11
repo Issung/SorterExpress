@@ -152,6 +152,7 @@
     <Compile Include="Classes\Actions\SortActions\Move.cs" />
     <Compile Include="Classes\Actions\SortActions\SortAction.cs" />
     <Compile Include="Classes\Duplicate.cs" />
+    <Compile Include="Classes\FFWorker.cs" />
     <Compile Include="Classes\FFMPEGProcess.cs">
       <SubType>Component</SubType>
     </Compile>
