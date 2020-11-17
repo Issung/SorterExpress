@@ -35,8 +35,17 @@ namespace SorterExpress.Forms
             //matchesDataGridView.DataSource = duplicates; //TODO: Bind in designer.
             //duplicates.ListChanged += Duplicates_ListChanged;
 
+            // Add items to search scope combo box. DisplayMember and ValueMember are used with this anonymous class.
+            searchScopeComboBox.DataSource = Enum.GetValues(typeof(DuplicatesFormModel.SearchScope))
+                .Cast<DuplicatesFormModel.SearchScope>()
+                .Select(value => new
+                {
+                    EnumDescription = EnumHelper.GetEnumDescription(value),
+                    EnumValue = value
+                })
+                .ToList();
+
             controller = new DuplicatesFormController(this, dirInfo);
-            duplicatesFormModelBindingSource.DataSource = controller.model;
             //matchesDataGridView.DataSource = controller.model.Duplicates;
 
             ///Stuff designer can't do
@@ -44,17 +53,13 @@ namespace SorterExpress.Forms
 
         private void DuplicatesForm_Shown(object sender, EventArgs e)
         {
+            Console.WriteLine($"DuplicatesForm_Shown");
+
+            duplicatesFormModelBindingSource.DataSource = controller.model;
+
             mediaViewerLeft.VlcControl.Playing += controller.VlcControl_Playing;
             mediaViewerRight.VlcControl.Playing += controller.VlcControl_Playing;
         }
-
-        /*public List<string> GetSearchScope(List<string> files)
-        {
-            return files.Where(
-                t => (imagesCheckBox.Checked && Utilities.FileIsImage(t)) ||
-                (videosCheckBox.Checked && Utilities.FileIsVideo(t)))
-                .ToList();
-        }*/
 
         private void openDirectoryButton_Click(object sender, EventArgs e)
         {
@@ -74,11 +79,6 @@ namespace SorterExpress.Forms
         private void DuplicatesForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             controller.Closing();
-        }
-
-        private void searchCriteriaCheckBoxCheckChanged(object sender, EventArgs e)
-        {
-            controller.UpdateSearchFilesScope();
         }
 
         private void matchesDataGridView_SelectionChanged(object sender, EventArgs e)
@@ -163,33 +163,12 @@ namespace SorterExpress.Forms
             controller.KeepNeither(contextMenuRowIndex);
         }
 
-        /*private bool CheckDeletingFilesOkay()
+        private void searchScopeComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (deletingOK)
-            {
-                return true;
-            }
-            else
-            {
-                DialogResult result = MessageBox.Show(
-                    "This action will delete the other image that you do not want, is that okay?\n"
-                  + "The deleted files will be moved to the Recycle Bin, where they can be manually recovered if desired.",
-                    "Deletion Warning", 
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning
-                );
-
-                if (result == DialogResult.Yes)
-                {
-                    deletingOK = true;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }*/
-
+            searchScopeComboBox.DataBindings["SelectedValue"].WriteValue();
+            
+            if (controller != null)
+                controller.UpdateSearchFilesScope();
+        }
     }
 }

@@ -10,6 +10,7 @@ public class FilePrint
 
     public static FFMPEG ffmpeg = null;
     public static FFProbe ffprobe = null;
+    public string directory;
     public string filepath;
     public FileType fileType;
     public Size size = new Size(-1, -1);
@@ -39,6 +40,7 @@ public class FilePrint
     public FilePrint(string filePath)
     {
         this.filepath = filePath;
+        directory = Path.GetDirectoryName(filePath);
         Bitmap img;
         fileType = Utilities.GetFileType(filepath);
 

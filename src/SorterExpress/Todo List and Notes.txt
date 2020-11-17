@@ -19,7 +19,6 @@
 		Update constructor to take an argument and open a folder instantly.
 
 	Duplicate Finder:
-		Add sortable list to duplicate searcher so user can search by most likely to be duplicate.
 		Add more options?
 			Keep largest?
 			Keep file with most tags?
@@ -33,6 +32,10 @@
 
 
 Done
+	Removed "search subfolders" and "only match between immediate and subdirectories" and created a new ComboBox with both of these options and a new option
+	to only search subdirectories and not the immediate directory.
+	Wrapped duplicate search filters in a group box.
+
 	Made matches grid view columns non-resizable and made similarity column fill remaining width instead of taking up too much space.
 	Option to only compare images to images and videos to videos (stop comparing images to videos and vice versa).
 	Option to only search for duplicates between current directory and subdirectories instead of searching for duplicates between subdirectories

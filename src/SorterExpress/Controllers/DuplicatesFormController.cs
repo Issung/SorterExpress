@@ -83,10 +83,8 @@ namespace SorterExpress.Controllers
 
         public bool StateSorting { get { return State == FormState.Sorting; } }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private string directory;
-        public string Directory { get { return directory; } set { directory = value; NotifyPropertyChanged(); UpdateVisibiliyAndEnabledProperties(); } }
+        public string Directory { get { return directory; } set { directory = value; /*NotifyPropertyChanged();*/ UpdateVisibiliyAndEnabledProperties(); } }
 
         public Stack<DuplicateAction> DoneActions { get; set; } = new Stack<DuplicateAction>();
 
@@ -104,17 +102,26 @@ namespace SorterExpress.Controllers
 
         public SortableBindingList<Duplicate> Duplicates { get; set; } = new SortableBindingList<Duplicate>();
 
-        private bool searchSubfolders = false;
+        public enum SearchScope
+        {
+            [Description("Immediate Directory Only")] ImmediateOnly,
+            [Description("Subdirectories Only")] SubdirsOnly,
+            [Description("Between Immediate and Subdirectories")] BetweenImmediateAndSubdirs,
+            [Description("Search All Files")] All
+        }
+
+        private SearchScope searchScopeSelectedValue = SearchScope.ImmediateOnly;
         private bool searchImages = Settings.Default.DuplicatesSearchImages;
         private bool searchVideos = Settings.Default.DuplicatesSearchVideos;
         private bool onlyMatchSameFileTypes = Settings.Default.DuplicatesOnlyMatchSameFileTypes;
-        private bool matchBetweenSubfolders = Settings.Default.DuplicatesMatchBetweenSubfolders;
         private bool cropLeftAndRight = Settings.Default.DuplicatesCropLeftRightSides;
         private bool cropTopAndBottom = Settings.Default.DuplicatesCropTopBottomSides;
         private int threadCount = Settings.Default.DuplicatesSearchThreadCount == 0 ? Environment.ProcessorCount : Settings.Default.DuplicatesSearchThreadCount;
         private int similarity = Settings.Default.DuplicatesSearchSimilarityPercentage;
         private bool mergeFileTags = Settings.Default.DuplicatesMergeFileTags;
         private bool onlyKeepTagsThatAreInLibrary = Settings.Default.DuplicatesOnlyKeepTagsInLibrary;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
@@ -130,22 +137,21 @@ namespace SorterExpress.Controllers
 
         public bool EnableOnlyKeepTagsInLibraryButton => StateDirectoryOpenOrSorting && MergeFileTags;
 
-        public bool EnableMatchBetweenFoldersCheckBox => StateDirectoryOpenOrSorting && SearchSubfolders;
-
         #endregion
 
         //User options in form
-        public bool SearchSubfolders { get { return searchSubfolders; } set { searchSubfolders = value; NotifyPropertyChanged(); } }
+        public SearchScope SearchScopeSelectedValue { get { return searchScopeSelectedValue; } set { searchScopeSelectedValue = value; NotifyPropertyChanged(); } }
         public bool SearchImages { get { return searchImages; } set { searchImages = value; NotifyPropertyChanged(); } }
         public bool SearchVideos { get { return searchVideos; } set { searchVideos = value; NotifyPropertyChanged(); } }
         public bool OnlyMatchSameFileTypes { get { return onlyMatchSameFileTypes; } set { onlyMatchSameFileTypes = value; NotifyPropertyChanged(); } }
-        public bool MatchBetweenSubfolders { get { return matchBetweenSubfolders; } set { matchBetweenSubfolders = value; NotifyPropertyChanged(); } }
         public bool CropLeftAndRight { get { return cropLeftAndRight; } set { cropLeftAndRight = value; NotifyPropertyChanged(); } }
         public bool CropTopAndBottom { get { return cropTopAndBottom; } set { cropTopAndBottom = value; NotifyPropertyChanged(); } }
         public int ThreadCount { get { return threadCount; } set { threadCount = value; NotifyPropertyChanged(); } }
         public int Similarity { get { return similarity; } set { similarity = value; NotifyPropertyChanged(); } }
         public bool MergeFileTags { get { return mergeFileTags; } set { mergeFileTags = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(EnableOnlyKeepTagsInLibraryButton)); } }
         public bool OnlyKeepTagsThatAreInLibrary { get { return onlyKeepTagsThatAreInLibrary; } set { onlyKeepTagsThatAreInLibrary = value; NotifyPropertyChanged(); } }
+
+        //public SearchScope SearchScopeSelectedEnum => EnumHelper.GetEnumFromDescription<SearchScope>(SearchScopeSelectedValue);
 
         public DuplicatesFormModel()
         {
@@ -193,9 +199,9 @@ namespace SorterExpress.Controllers
         {
             form = duplicatesForm;
             model = new DuplicatesFormModel();
-            //model = (DuplicatesFormModel)form.duplicatesFormModelBindingSource.DataSource;
-
             model.Duplicates = new SortableBindingList<Duplicate>();
+            //form.duplicatesFormModelBindingSource.DataSource = model;
+            //form.searchScopeComboBox.DataSource = EnumHelper.GetEnumDescriptions(typeof(DuplicatesFormModel.SearchScope));
 
             printsWorker = new BackgroundWorker
             {
@@ -361,17 +367,26 @@ namespace SorterExpress.Controllers
 
         public void UpdateSearchFilesScope()
         {
-            if (model.SearchSubfolders)
-                model.Files = Utilities.RecursivelyGetFileNames(model.Directory);
-            else
+            Console.WriteLine($"UpdateSearchFilesScope! SearchScopeSelectedValue: {model.SearchScopeSelectedValue}");
+
+            if (model.SearchScopeSelectedValue == DuplicatesFormModel.SearchScope.ImmediateOnly)
+            {
                 model.Files = new DirectoryInfo(model.Directory).GetFileNamesList();
+            }
+            else if (model.SearchScopeSelectedValue == DuplicatesFormModel.SearchScope.SubdirsOnly)
+            {
+                model.Files = Utilities.RecursivelyGetFileNames(model.Directory);
+                var immediates = Directory.GetFiles(model.Directory);//new DirectoryInfo(model.Directory).GetFileNamesList();
+                model.Files.RemoveAll(t => immediates.Contains(t));
+            }
+            else //`BetweenImmediateAndSubs` & `All`
+            {
+                model.Files = Utilities.RecursivelyGetFileNames(model.Directory);
+            }
 
             model.Files.RemoveAll(t => !TypeOK(t));
 
             model.NotifyPropertyChanged(nameof(model.FileAndMatchesCountText));
-
-            //BindingManagerBase bindMgr = form.BindingContext[model.FileCount];
-            //bindMgr.CancelCurrentEdit();
 
             bool TypeOK(string t)
             {
@@ -398,7 +413,6 @@ namespace SorterExpress.Controllers
         {
             Console.WriteLine("Cancelling duplicate search worker!");
             cancelTokenSource.Cancel();
-            //model.Searching = false;
         }
 
         private List<string> GetSearchScope(List<string> files)
@@ -516,10 +530,16 @@ namespace SorterExpress.Controllers
                                                 // If the duplicate hasn't already been found or found in reverse (x is like y |or| y is like x)
                                                 if (!model.OnlyMatchSameFileTypes || (model.OnlyMatchSameFileTypes && print.fileType == prints[i].fileType)) 
                                                 {
-                                                    if (!model.SearchSubfolders || (model.SearchSubfolders && (model.MatchBetweenSubfolders
-                                                        || (!model.MatchBetweenSubfolders 
-                                                            && (Path.GetDirectoryName(print.filepath) == model.Directory
-                                                            || Path.GetDirectoryName(prints[i].filepath) == model.Directory)))))
+
+                                                    //Check for "between immediate and subdirectories" filter.
+                                                    bool ok = false;
+
+                                                    if (model.SearchScopeSelectedValue != DuplicatesFormModel.SearchScope.BetweenImmediateAndSubdirs)
+                                                        ok = true;
+                                                    else if (print.directory == model.Directory ^ prints[i].directory == model.Directory)
+                                                        ok = true;
+
+                                                    if (ok)
                                                     { 
                                                         if (!model.Duplicates.Any(t => t.File2Path == print.filepath && t.File1Path == prints[i].filepath))
                                                         { 
@@ -730,7 +750,6 @@ namespace SorterExpress.Controllers
             Settings.Default.DuplicatesSearchImages = model.SearchImages;
             Settings.Default.DuplicatesSearchVideos = model.SearchVideos;
             Settings.Default.DuplicatesOnlyMatchSameFileTypes = model.OnlyMatchSameFileTypes;
-            Settings.Default.DuplicatesMatchBetweenSubfolders = model.MatchBetweenSubfolders;
             Settings.Default.DuplicatesCropLeftRightSides = model.CropLeftAndRight;
             Settings.Default.DuplicatesCropTopBottomSides = model.CropTopAndBottom;
             Settings.Default.DuplicatesSearchThreadCount = model.ThreadCount;

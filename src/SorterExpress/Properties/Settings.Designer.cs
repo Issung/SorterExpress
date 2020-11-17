@@ -274,18 +274,6 @@ namespace SorterExpress.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool DuplicatesMatchBetweenSubfolders {
-            get {
-                return ((bool)(this["DuplicatesMatchBetweenSubfolders"]));
-            }
-            set {
-                this["DuplicatesMatchBetweenSubfolders"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool DuplicatesOnlyMatchSameFileTypes {
             get {
