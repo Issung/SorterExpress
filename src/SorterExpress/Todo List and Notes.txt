@@ -19,9 +19,6 @@
 		Update constructor to take an argument and open a folder instantly.
 
 	Duplicate Finder:
-		Option to only compare images to images and videos to videos (stop comparing images to videos and vice versa). To do this add a "file type" enum field to FilePrint or something.
-		Chance that when searching for duplicates that the loading gets stuck a few away from max and never finishes.
-		Option to only search for duplicates between current directory and subdirectories instead of searching for duplicates between subdirectories?
 		Add sortable list to duplicate searcher so user can search by most likely to be duplicate.
 		Add more options?
 			Keep largest?
@@ -36,6 +33,10 @@
 
 
 Done
+	Made matches grid view columns non-resizable and made similarity column fill remaining width instead of taking up too much space.
+	Option to only compare images to images and videos to videos (stop comparing images to videos and vice versa).
+	Option to only search for duplicates between current directory and subdirectories instead of searching for duplicates between subdirectories
+
 	Added right click context menu to duplicates form matches list.
 		Allows for selection of keeping right/left, neither or both (skip).
 		Does not require the user to view that match.

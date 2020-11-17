@@ -107,6 +107,8 @@ namespace SorterExpress.Controllers
         private bool searchSubfolders = false;
         private bool searchImages = Settings.Default.DuplicatesSearchImages;
         private bool searchVideos = Settings.Default.DuplicatesSearchVideos;
+        private bool onlyMatchSameFileTypes = Settings.Default.DuplicatesOnlyMatchSameFileTypes;
+        private bool matchBetweenSubfolders = Settings.Default.DuplicatesMatchBetweenSubfolders;
         private bool cropLeftAndRight = Settings.Default.DuplicatesCropLeftRightSides;
         private bool cropTopAndBottom = Settings.Default.DuplicatesCropTopBottomSides;
         private int threadCount = Settings.Default.DuplicatesSearchThreadCount == 0 ? Environment.ProcessorCount : Settings.Default.DuplicatesSearchThreadCount;
@@ -128,12 +130,16 @@ namespace SorterExpress.Controllers
 
         public bool EnableOnlyKeepTagsInLibraryButton => StateDirectoryOpenOrSorting && MergeFileTags;
 
+        public bool EnableMatchBetweenFoldersCheckBox => StateDirectoryOpenOrSorting && SearchSubfolders;
+
         #endregion
 
         //User options in form
         public bool SearchSubfolders { get { return searchSubfolders; } set { searchSubfolders = value; NotifyPropertyChanged(); } }
         public bool SearchImages { get { return searchImages; } set { searchImages = value; NotifyPropertyChanged(); } }
         public bool SearchVideos { get { return searchVideos; } set { searchVideos = value; NotifyPropertyChanged(); } }
+        public bool OnlyMatchSameFileTypes { get { return onlyMatchSameFileTypes; } set { onlyMatchSameFileTypes = value; NotifyPropertyChanged(); } }
+        public bool MatchBetweenSubfolders { get { return matchBetweenSubfolders; } set { matchBetweenSubfolders = value; NotifyPropertyChanged(); } }
         public bool CropLeftAndRight { get { return cropLeftAndRight; } set { cropLeftAndRight = value; NotifyPropertyChanged(); } }
         public bool CropTopAndBottom { get { return cropTopAndBottom; } set { cropTopAndBottom = value; NotifyPropertyChanged(); } }
         public int ThreadCount { get { return threadCount; } set { threadCount = value; NotifyPropertyChanged(); } }
@@ -173,6 +179,7 @@ namespace SorterExpress.Controllers
         System.Diagnostics.Stopwatch stopwatch;
         int scopeCount;
 
+        // TODO: Add DeletingOK checks to this new form. Add a "Don't ask me again" option.
         /// <summary>
         /// Indicates whether the user has agreed to deleting files or not.
         /// </summary>
@@ -501,29 +508,34 @@ namespace SorterExpress.Controllers
                                     try
                                     {
                                         // Don't match with self
-                                        //if (print.file != prints[i].file)
                                         if (print != prints[i])
                                         {
                                             // If similarity is above threshold
                                             if (FilePrint.GetSimilarityPercentage(print, prints[i]) >= model.Similarity)
                                             {
-                                                try
+                                                // If the duplicate hasn't already been found or found in reverse (x is like y |or| y is like x)
+                                                if (!model.OnlyMatchSameFileTypes || (model.OnlyMatchSameFileTypes && print.fileType == prints[i].fileType)) 
                                                 {
-                                                    // If the duplicate hasn't already been found or found in reverse (x is like y |or| y is like x)
-                                                    if (!model.Duplicates.Any(t => t.File2Path == print.filepath && t.File1Path == prints[i].filepath))
-                                                    {
-                                                        form.Invoke((MethodInvoker)delegate ()
-                                                        {
-                                                            model.Duplicates.Add(new Duplicate(print, prints[i]));
-                                                        });
+                                                    if (!model.SearchSubfolders || (model.SearchSubfolders && (model.MatchBetweenSubfolders
+                                                        || (!model.MatchBetweenSubfolders 
+                                                            && (Path.GetDirectoryName(print.filepath) == model.Directory
+                                                            || Path.GetDirectoryName(prints[i].filepath) == model.Directory)))))
+                                                    { 
+                                                        if (!model.Duplicates.Any(t => t.File2Path == print.filepath && t.File1Path == prints[i].filepath))
+                                                        { 
+                                                            form.Invoke((MethodInvoker)delegate()
+                                                            {
+                                                                model.Duplicates.Add(new Duplicate(print, prints[i]));
+                                                            });
+                                                        }
                                                     }
-                                                }
-                                                catch (InvalidOperationException ioe)
-                                                {
-                                                    Console.WriteLine($"Encountered InvalidOperationException while generating prints. {ioe.Message} - {ioe.StackTrace}");
                                                 }
                                             }
                                         }
+                                    }
+                                    catch (InvalidOperationException ioe)
+                                    {
+                                        Console.WriteLine($"Encountered InvalidOperationException while generating prints. {ioe.Message} - {ioe.StackTrace}");
                                     }
                                     catch (IndexOutOfRangeException ioore)
                                     {
@@ -717,6 +729,8 @@ namespace SorterExpress.Controllers
         {
             Settings.Default.DuplicatesSearchImages = model.SearchImages;
             Settings.Default.DuplicatesSearchVideos = model.SearchVideos;
+            Settings.Default.DuplicatesOnlyMatchSameFileTypes = model.OnlyMatchSameFileTypes;
+            Settings.Default.DuplicatesMatchBetweenSubfolders = model.MatchBetweenSubfolders;
             Settings.Default.DuplicatesCropLeftRightSides = model.CropLeftAndRight;
             Settings.Default.DuplicatesCropTopBottomSides = model.CropTopAndBottom;
             Settings.Default.DuplicatesSearchThreadCount = model.ThreadCount;

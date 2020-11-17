@@ -11,6 +11,7 @@ public class FilePrint
     public static FFMPEG ffmpeg = null;
     public static FFProbe ffprobe = null;
     public string filepath;
+    public FileType fileType;
     public Size size = new Size(-1, -1);
     public float average;
     public string print;
@@ -39,6 +40,7 @@ public class FilePrint
     {
         this.filepath = filePath;
         Bitmap img;
+        fileType = Utilities.GetFileType(filepath);
 
         if (Utilities.FileIsImage(filePath))
         {
