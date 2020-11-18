@@ -21,6 +21,7 @@ using SorterExpress.Classes.Actions.DuplicateActions;
 using System.Windows.Forms.VisualStyles;
 using Vlc.DotNet.Forms;
 using Vlc.DotNet.Core;
+using Shortcut = SorterExpress.Classes.Shortcut;
 
 namespace SorterExpress.Controllers
 {
@@ -164,7 +165,9 @@ namespace SorterExpress.Controllers
         public DuplicatesForm form;
 
         public DuplicatesFormModel model;
-        
+
+        Dictionary<Shortcut, Func<bool>> shortcuts = null;
+
         public List<FilePrint> prints;
 
         /// <summary>
@@ -216,6 +219,68 @@ namespace SorterExpress.Controllers
             if (dirInfo != null)
             {
                 LoadDirectory(dirInfo);
+            }
+        }
+
+        public void HandleShortcut(KeyEventArgs e)
+        {
+            // Create shortcuts dictionary if not initialised.
+            if (shortcuts == null)
+            {
+                shortcuts = new Dictionary<Shortcut, Func<bool>>() {
+                    //{ new Shortcut(key: Keys.Up), () => { return ChangeMatchesGridViewIndex(-1); }},
+                    //{ new Shortcut(key: Keys.Down), () => { return ChangeMatchesGridViewIndex(+1); }},
+                    { new Shortcut(key: Keys.L), () => { KeepSide(Side.Left); return true; }},
+                    { new Shortcut(key: Keys.R), () => { KeepSide(Side.Right); return true; }},
+                    { new Shortcut(key: Keys.B), () => { return KeepBoth(); }},
+                    { new Shortcut(key: Keys.N), () => { KeepNeither(); return true; }},
+                    { new Shortcut(ctrl: true, key: Keys.Z), () => { return Undo(); }},
+                    { new Shortcut(ctrl: true, key: Keys.Y), () => { return Redo(); }},
+                };
+            }
+
+            Shortcut input = new Shortcut(e.Control, e.Alt, e.KeyCode);
+
+            if (shortcuts.ContainsKey(input))
+            {
+                bool ok = shortcuts[input].Invoke();
+
+                if (ok)
+                {
+                    e.Handled = true;
+                    e.SuppressKeyPress = true;
+                }
+                else
+                {
+                    System.Media.SystemSounds.Beep.Play();
+                }
+            }
+
+            bool KeepBoth()
+            {
+                if (form.matchesDataGridView.Focused)
+                {
+                    this.Skip();
+                    return true;
+                }
+                else
+                    return false;
+            }
+
+            bool ChangeMatchesGridViewIndex(int changeAmount)
+            {
+                int newIndex = form.matchesDataGridView.CurrentCell.RowIndex;
+
+                if (newIndex >= 0 && newIndex < form.matchesDataGridView.RowCount)
+                {
+                    form.matchesDataGridView.CurrentCell = form.matchesDataGridView.Rows[newIndex].Cells[0];
+                    MatchSelectionChanged();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 

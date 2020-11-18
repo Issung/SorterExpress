@@ -34,7 +34,6 @@ namespace SorterExpress.Forms
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DuplicatesForm));
             this.keepRightButton = new System.Windows.Forms.Button();
-            this.duplicatesFormModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.keepLeftButton = new System.Windows.Forms.Button();
             this.keepBothButton = new System.Windows.Forms.Button();
             this.openDirectoryButton = new System.Windows.Forms.Button();
@@ -51,19 +50,20 @@ namespace SorterExpress.Forms
             this.mergeFileTagsCheckBox = new System.Windows.Forms.CheckBox();
             this.onlyKeepLibraryTagsCheckBox = new System.Windows.Forms.CheckBox();
             this.matchFileTypesCheckBox = new System.Windows.Forms.CheckBox();
+            this.fileCountLabel = new System.Windows.Forms.Label();
+            this.cropLeftRightCheckBox = new System.Windows.Forms.CheckBox();
+            this.cropTopBottomCheckBox = new System.Windows.Forms.CheckBox();
+            this.searchScopeComboBox = new System.Windows.Forms.ComboBox();
             this.loadingLabel = new System.Windows.Forms.Label();
             this.filenameRichTextBoxLeft = new System.Windows.Forms.RichTextBox();
             this.filenameRichTextBoxRight = new System.Windows.Forms.RichTextBox();
             this.sidesLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.leftPanel = new System.Windows.Forms.Panel();
-            this.mediaViewerLeft = new SorterExpress.Controls.MediaViewer();
             this.rightPanel = new System.Windows.Forms.Panel();
-            this.mediaViewerRight = new SorterExpress.Controls.MediaViewer();
             this.keepButtonsLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.threadsLabel = new System.Windows.Forms.Label();
-            this.fileCountLabel = new System.Windows.Forms.Label();
             this.keepNeitherButton = new System.Windows.Forms.Button();
             this.matchesDataGridView = new System.Windows.Forms.DataGridView();
             this.file1ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
@@ -74,16 +74,15 @@ namespace SorterExpress.Forms
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.skipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cropLeftRightCheckBox = new System.Windows.Forms.CheckBox();
-            this.cropTopBottomCheckBox = new System.Windows.Forms.CheckBox();
             this.percentageLabel = new System.Windows.Forms.Label();
             this.settingsButton = new System.Windows.Forms.Button();
             this.undoButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.massOperationButton = new System.Windows.Forms.Button();
-            this.searchScopeComboBox = new System.Windows.Forms.ComboBox();
             this.filtersGroupBox = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).BeginInit();
+            this.duplicatesFormModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.mediaViewerLeft = new SorterExpress.Controls.MediaViewer();
+            this.mediaViewerRight = new SorterExpress.Controls.MediaViewer();
             ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).BeginInit();
             this.sidesLayoutPanel.SuspendLayout();
@@ -94,6 +93,7 @@ namespace SorterExpress.Forms
             ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).BeginInit();
             this.matchesContextMenu.SuspendLayout();
             this.filtersGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // keepRightButton
@@ -111,10 +111,6 @@ namespace SorterExpress.Forms
             this.keepRightButton.Text = "Keep This (Delete Left)";
             this.keepRightButton.UseVisualStyleBackColor = true;
             this.keepRightButton.Click += new System.EventHandler(this.keepRightButton_Click);
-            // 
-            // duplicatesFormModelBindingSource
-            // 
-            this.duplicatesFormModelBindingSource.DataSource = typeof(SorterExpress.Controllers.DuplicatesFormModel);
             // 
             // keepLeftButton
             // 
@@ -141,7 +137,7 @@ namespace SorterExpress.Forms
             this.keepBothButton.Name = "keepBothButton";
             this.keepBothButton.Size = new System.Drawing.Size(686, 23);
             this.keepBothButton.TabIndex = 6;
-            this.keepBothButton.Text = "Keep Both (Skip)";
+            this.keepBothButton.Text = "Keep Both (Remove Match From List)";
             this.keepBothButton.UseVisualStyleBackColor = true;
             this.keepBothButton.Click += new System.EventHandler(this.keepBothButton_Click);
             // 
@@ -339,6 +335,64 @@ namespace SorterExpress.Forms
         " videos will only match videos.");
             this.matchFileTypesCheckBox.UseVisualStyleBackColor = true;
             // 
+            // fileCountLabel
+            // 
+            this.fileCountLabel.AutoSize = true;
+            this.fileCountLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.duplicatesFormModelBindingSource, "FileAndMatchesCountText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.fileCountLabel.Location = new System.Drawing.Point(12, 248);
+            this.fileCountLabel.Name = "fileCountLabel";
+            this.fileCountLabel.Size = new System.Drawing.Size(40, 13);
+            this.fileCountLabel.TabIndex = 25;
+            this.fileCountLabel.Text = "Files: 0";
+            this.toolTip.SetToolTip(this.fileCountLabel, "The amount of files that will be searched given the given search criteria, and;\r\n" +
+        "the number of potential duplicate matches that are currently displayed in the gr" +
+        "id view below.");
+            // 
+            // cropLeftRightCheckBox
+            // 
+            this.cropLeftRightCheckBox.AutoSize = true;
+            this.cropLeftRightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "CropLeftAndRight", true));
+            this.cropLeftRightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
+            this.cropLeftRightCheckBox.Enabled = false;
+            this.cropLeftRightCheckBox.Location = new System.Drawing.Point(6, 90);
+            this.cropLeftRightCheckBox.Name = "cropLeftRightCheckBox";
+            this.cropLeftRightCheckBox.Size = new System.Drawing.Size(106, 17);
+            this.cropLeftRightCheckBox.TabIndex = 31;
+            this.cropLeftRightCheckBox.Text = "Crop Left & Right";
+            this.toolTip.SetToolTip(this.cropLeftRightCheckBox, "Crop black borders on the left and right of files.");
+            this.cropLeftRightCheckBox.UseMnemonic = false;
+            this.cropLeftRightCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // cropTopBottomCheckBox
+            // 
+            this.cropTopBottomCheckBox.AutoSize = true;
+            this.cropTopBottomCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "CropTopAndBottom", true));
+            this.cropTopBottomCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
+            this.cropTopBottomCheckBox.Enabled = false;
+            this.cropTopBottomCheckBox.Location = new System.Drawing.Point(6, 112);
+            this.cropTopBottomCheckBox.Name = "cropTopBottomCheckBox";
+            this.cropTopBottomCheckBox.Size = new System.Drawing.Size(115, 17);
+            this.cropTopBottomCheckBox.TabIndex = 32;
+            this.cropTopBottomCheckBox.Text = "Crop Top & Bottom";
+            this.toolTip.SetToolTip(this.cropTopBottomCheckBox, "Crop black borders on the top and bottom of files.");
+            this.cropTopBottomCheckBox.UseMnemonic = false;
+            this.cropTopBottomCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // searchScopeComboBox
+            // 
+            this.searchScopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.searchScopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.duplicatesFormModelBindingSource, "SearchScopeSelectedValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.searchScopeComboBox.DisplayMember = "EnumDescription";
+            this.searchScopeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.searchScopeComboBox.DropDownWidth = 300;
+            this.searchScopeComboBox.Location = new System.Drawing.Point(6, 19);
+            this.searchScopeComboBox.Name = "searchScopeComboBox";
+            this.searchScopeComboBox.Size = new System.Drawing.Size(168, 21);
+            this.searchScopeComboBox.TabIndex = 38;
+            this.toolTip.SetToolTip(this.searchScopeComboBox, resources.GetString("searchScopeComboBox.ToolTip"));
+            this.searchScopeComboBox.ValueMember = "EnumValue";
+            this.searchScopeComboBox.SelectedValueChanged += new System.EventHandler(this.searchScopeComboBox_SelectedValueChanged);
+            // 
             // loadingLabel
             // 
             this.loadingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -405,15 +459,6 @@ namespace SorterExpress.Forms
             this.leftPanel.Size = new System.Drawing.Size(343, 235);
             this.leftPanel.TabIndex = 5;
             // 
-            // mediaViewerLeft
-            // 
-            this.mediaViewerLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mediaViewerLeft.Location = new System.Drawing.Point(100, 0);
-            this.mediaViewerLeft.Name = "mediaViewerLeft";
-            this.mediaViewerLeft.Size = new System.Drawing.Size(243, 235);
-            this.mediaViewerLeft.TabIndex = 4;
-            this.mediaViewerLeft.VideoPosition = -1F;
-            // 
             // rightPanel
             // 
             this.rightPanel.Controls.Add(this.mediaViewerRight);
@@ -424,17 +469,6 @@ namespace SorterExpress.Forms
             this.rightPanel.Name = "rightPanel";
             this.rightPanel.Size = new System.Drawing.Size(343, 235);
             this.rightPanel.TabIndex = 4;
-            // 
-            // mediaViewerRight
-            // 
-            this.mediaViewerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mediaViewerRight.Location = new System.Drawing.Point(110, 0);
-            this.mediaViewerRight.Name = "mediaViewerRight";
-            this.mediaViewerRight.Size = new System.Drawing.Size(243, 235);
-            this.mediaViewerRight.TabIndex = 4;
-            this.mediaViewerRight.VideoPosition = -1F;
             // 
             // keepButtonsLayoutPanel
             // 
@@ -487,19 +521,6 @@ namespace SorterExpress.Forms
             this.threadsLabel.TabIndex = 23;
             this.threadsLabel.Text = "Threads: ";
             // 
-            // fileCountLabel
-            // 
-            this.fileCountLabel.AutoSize = true;
-            this.fileCountLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.duplicatesFormModelBindingSource, "FileAndMatchesCountText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.fileCountLabel.Location = new System.Drawing.Point(12, 248);
-            this.fileCountLabel.Name = "fileCountLabel";
-            this.fileCountLabel.Size = new System.Drawing.Size(40, 13);
-            this.fileCountLabel.TabIndex = 25;
-            this.fileCountLabel.Text = "Files: 0";
-            this.toolTip.SetToolTip(this.fileCountLabel, "The amount of files that will be searched given the given search criteria, and;\r\n" +
-        "the number of potential duplicate matches that are currently displayed in the gr" +
-        "id view below.");
-            // 
             // keepNeitherButton
             // 
             this.keepNeitherButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -538,6 +559,7 @@ namespace SorterExpress.Forms
             this.matchesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.matchesDataGridView.Size = new System.Drawing.Size(181, 85);
             this.matchesDataGridView.TabIndex = 30;
+            this.toolTip.SetToolTip(this.matchesDataGridView, resources.GetString("matchesDataGridView.ToolTip"));
             this.matchesDataGridView.CellContextMenuStripNeeded += new System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventHandler(this.MatchesDataGridView_CellContextMenuStripNeeded);
             this.matchesDataGridView.SelectionChanged += new System.EventHandler(this.matchesDataGridView_SelectionChanged);
             // 
@@ -578,65 +600,35 @@ namespace SorterExpress.Forms
             this.skipToolStripMenuItem,
             this.deleteBothToolStripMenuItem});
             this.matchesContextMenu.Name = "matchesContextMenu";
-            this.matchesContextMenu.Size = new System.Drawing.Size(136, 92);
+            this.matchesContextMenu.Size = new System.Drawing.Size(272, 92);
             // 
             // keepLeftToolStripMenuItem
             // 
             this.keepLeftToolStripMenuItem.Name = "keepLeftToolStripMenuItem";
-            this.keepLeftToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.keepLeftToolStripMenuItem.Text = "Keep Left";
+            this.keepLeftToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.keepLeftToolStripMenuItem.Text = "Keep &Left (Delete Right)";
             this.keepLeftToolStripMenuItem.Click += new System.EventHandler(this.keepLeftToolStripMenuItem_Click);
             // 
             // removeToolStripMenuItem
             // 
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.removeToolStripMenuItem.Text = "Keep Right";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.removeToolStripMenuItem.Text = "Keep &Right (Delete Left)";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // skipToolStripMenuItem
             // 
             this.skipToolStripMenuItem.Name = "skipToolStripMenuItem";
-            this.skipToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.skipToolStripMenuItem.Text = "Skip";
+            this.skipToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.skipToolStripMenuItem.Text = "Keep &Both (Remove Match From List)";
             this.skipToolStripMenuItem.Click += new System.EventHandler(this.skipToolStripMenuItem_Click);
             // 
             // deleteBothToolStripMenuItem
             // 
             this.deleteBothToolStripMenuItem.Name = "deleteBothToolStripMenuItem";
-            this.deleteBothToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.deleteBothToolStripMenuItem.Text = "Delete Both";
+            this.deleteBothToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.deleteBothToolStripMenuItem.Text = "Keep &Neither (Delete Both)";
             this.deleteBothToolStripMenuItem.Click += new System.EventHandler(this.deleteBothToolStripMenuItem_Click);
-            // 
-            // cropLeftRightCheckBox
-            // 
-            this.cropLeftRightCheckBox.AutoSize = true;
-            this.cropLeftRightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "CropLeftAndRight", true));
-            this.cropLeftRightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
-            this.cropLeftRightCheckBox.Enabled = false;
-            this.cropLeftRightCheckBox.Location = new System.Drawing.Point(6, 90);
-            this.cropLeftRightCheckBox.Name = "cropLeftRightCheckBox";
-            this.cropLeftRightCheckBox.Size = new System.Drawing.Size(106, 17);
-            this.cropLeftRightCheckBox.TabIndex = 31;
-            this.cropLeftRightCheckBox.Text = "Crop Left & Right";
-            this.toolTip.SetToolTip(this.cropLeftRightCheckBox, "Crop black borders on the left and right of files.");
-            this.cropLeftRightCheckBox.UseMnemonic = false;
-            this.cropLeftRightCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // cropTopBottomCheckBox
-            // 
-            this.cropTopBottomCheckBox.AutoSize = true;
-            this.cropTopBottomCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "CropTopAndBottom", true));
-            this.cropTopBottomCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
-            this.cropTopBottomCheckBox.Enabled = false;
-            this.cropTopBottomCheckBox.Location = new System.Drawing.Point(6, 112);
-            this.cropTopBottomCheckBox.Name = "cropTopBottomCheckBox";
-            this.cropTopBottomCheckBox.Size = new System.Drawing.Size(115, 17);
-            this.cropTopBottomCheckBox.TabIndex = 32;
-            this.cropTopBottomCheckBox.Text = "Crop Top & Bottom";
-            this.toolTip.SetToolTip(this.cropTopBottomCheckBox, "Crop black borders on the top and bottom of files.");
-            this.cropTopBottomCheckBox.UseMnemonic = false;
-            this.cropTopBottomCheckBox.UseVisualStyleBackColor = true;
             // 
             // percentageLabel
             // 
@@ -665,6 +657,7 @@ namespace SorterExpress.Forms
             this.undoButton.Size = new System.Drawing.Size(55, 23);
             this.undoButton.TabIndex = 34;
             this.undoButton.Text = "Undo";
+            this.toolTip.SetToolTip(this.undoButton, "Undo last action (CTRL + Z)");
             this.undoButton.UseVisualStyleBackColor = true;
             this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
             // 
@@ -676,6 +669,7 @@ namespace SorterExpress.Forms
             this.button1.Size = new System.Drawing.Size(55, 23);
             this.button1.TabIndex = 35;
             this.button1.Text = "Redo";
+            this.toolTip.SetToolTip(this.button1, "Redo last undone action (CTRL + Y)");
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -691,21 +685,6 @@ namespace SorterExpress.Forms
             this.massOperationButton.Text = "Mass Operation";
             this.massOperationButton.UseVisualStyleBackColor = true;
             this.massOperationButton.Click += new System.EventHandler(this.massOperationButton_Click);
-            // 
-            // searchScopeComboBox
-            // 
-            this.searchScopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.searchScopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.duplicatesFormModelBindingSource, "SearchScopeSelectedValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.searchScopeComboBox.DisplayMember = "EnumDescription";
-            this.searchScopeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.searchScopeComboBox.DropDownWidth = 300;
-            this.searchScopeComboBox.Location = new System.Drawing.Point(6, 19);
-            this.searchScopeComboBox.Name = "searchScopeComboBox";
-            this.searchScopeComboBox.Size = new System.Drawing.Size(168, 21);
-            this.searchScopeComboBox.TabIndex = 38;
-            this.toolTip.SetToolTip(this.searchScopeComboBox, resources.GetString("searchScopeComboBox.ToolTip"));
-            this.searchScopeComboBox.ValueMember = "EnumValue";
-            this.searchScopeComboBox.SelectedValueChanged += new System.EventHandler(this.searchScopeComboBox_SelectedValueChanged);
             // 
             // filtersGroupBox
             // 
@@ -726,6 +705,30 @@ namespace SorterExpress.Forms
             this.filtersGroupBox.TabIndex = 39;
             this.filtersGroupBox.TabStop = false;
             this.filtersGroupBox.Text = "Search Filters";
+            // 
+            // duplicatesFormModelBindingSource
+            // 
+            this.duplicatesFormModelBindingSource.DataSource = typeof(SorterExpress.Controllers.DuplicatesFormModel);
+            // 
+            // mediaViewerLeft
+            // 
+            this.mediaViewerLeft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mediaViewerLeft.Location = new System.Drawing.Point(100, 0);
+            this.mediaViewerLeft.Name = "mediaViewerLeft";
+            this.mediaViewerLeft.Size = new System.Drawing.Size(243, 235);
+            this.mediaViewerLeft.TabIndex = 4;
+            this.mediaViewerLeft.VideoPosition = -1F;
+            // 
+            // mediaViewerRight
+            // 
+            this.mediaViewerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mediaViewerRight.Location = new System.Drawing.Point(110, 0);
+            this.mediaViewerRight.Name = "mediaViewerRight";
+            this.mediaViewerRight.Size = new System.Drawing.Size(243, 235);
+            this.mediaViewerRight.TabIndex = 4;
+            this.mediaViewerRight.VideoPosition = -1F;
             // 
             // DuplicatesForm
             // 
@@ -752,12 +755,13 @@ namespace SorterExpress.Forms
             this.Controls.Add(this.massOperationButton);
             this.Controls.Add(this.filtersGroupBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(909, 450);
             this.Name = "DuplicatesForm";
             this.Text = "Sorter Express - Duplicate Search";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DuplicatesForm_FormClosing);
             this.Shown += new System.EventHandler(this.DuplicatesForm_Shown);
-            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).EndInit();
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DuplicatesForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).EndInit();
             this.sidesLayoutPanel.ResumeLayout(false);
@@ -769,6 +773,7 @@ namespace SorterExpress.Forms
             this.matchesContextMenu.ResumeLayout(false);
             this.filtersGroupBox.ResumeLayout(false);
             this.filtersGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

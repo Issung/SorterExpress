@@ -59,8 +59,8 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
             // If this duplicate is the one currently being viewed unload media for both sides.
             if (duplicate == controller.inspectingDuplicate)
             { 
-                controller.form.mediaViewerLeft.UnloadMedia();
-                controller.form.mediaViewerRight.UnloadMedia();
+                controller.form.mediaViewerLeft.UnloadMedia(true);
+                controller.form.mediaViewerRight.UnloadMedia(true);
             }
 
             //Remove all duplicates from duplicates list (possibly raises issues).

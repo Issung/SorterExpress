@@ -32,6 +32,12 @@
 
 
 Done
+	Fixed MediaViewer to now load/unload media using thread pool. Not supposed to do these things from the main thread apparently (https://github.com/ZeBobo5/Vlc.DotNet/issues/542).
+		Unload media can be forcibly done in a blocking way by passing `true` to UnloadMedia (this method is used by delete actions as it is key to first unload them before deletion).
+	DuplicatesForm Added L, R, N, B shortcuts for keep left/right, neither, both.
+	DuplicatesForm Added CTRL + Z/Y Undo/Redo keyboard shortcuts.
+
+
 	Removed "search subfolders" and "only match between immediate and subdirectories" and created a new ComboBox with both of these options and a new option
 	to only search subdirectories and not the immediate directory.
 	Wrapped duplicate search filters in a group box.

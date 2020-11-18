@@ -186,18 +186,14 @@ namespace SorterExpress.Controls
                     if (vlcControl != null)
                     {
                         FileInfo fi = new FileInfo(path);
-                        var oldMedia = vlcControl.GetCurrentMedia();
-                        vlcControl.SetMedia(fi, (repeat) ? "input-repeat=4000" : "input-repeat=0");
-                        while (vlcControl.GetCurrentMedia() == oldMedia)
+
+                        ThreadPool.QueueUserWorkItem(_ => 
                         {
-                            /*vlcControl.GetCurrentMedia().
-                            Console.WriteLine("MRL with replace: " + vlcControl.GetCurrentMedia().Mrl.Replace("file:///", "").Replace("%20", " "));
-                            //Wait for media to load.
-                            if (vlcControl.GetCurrentMedia().Mrl.Replace("file:///", "").Replace("%20", " ") == fi.FullName)
-                                break;*/
-                        }
-                        vlcControl.Play();
-                        vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
+                            vlcControl.SetMedia(fi, (repeat) ? "input-repeat=4000" : "input-repeat=0");
+                            vlcControl.Play();
+                            vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
+                        });
+
                         vlcPlayerTableLayoutPanel.Show();
                     }
                     else
@@ -219,7 +215,7 @@ namespace SorterExpress.Controls
             NotifyPropertyChanged();
         }
 
-        public void UnloadMedia()
+        public void UnloadMedia(bool forceVideoWait = false)
         {
             Console.WriteLine($"{Name} Unloading Media!");
 
@@ -231,13 +227,24 @@ namespace SorterExpress.Controls
             CurrentMedia = null;
 
             if (vlcControl != null)
-            { 
-                vlcControl.ResetMedia();
-                vlcControl.Stop();
+            {
+                if (forceVideoWait)
+                {
+                    vlcControl.Stop();
+                    vlcControl.ResetMedia();
 
-                while (vlcControl.GetCurrentMedia() != null)
+                    while (vlcControl.GetCurrentMedia() != null)
+                    {
+                        //Block while waiting for media to unload.
+                    }
+                }
+                else
                 { 
-                    //Wait for media to unload.
+                    ThreadPool.QueueUserWorkItem(_ => 
+                    { 
+                        vlcControl.Stop(); 
+                        vlcControl.ResetMedia(); 
+                    });
                 }
             }
 

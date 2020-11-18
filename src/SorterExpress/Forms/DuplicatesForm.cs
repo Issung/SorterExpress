@@ -170,5 +170,10 @@ namespace SorterExpress.Forms
             if (controller != null)
                 controller.UpdateSearchFilesScope();
         }
+
+        private void DuplicatesForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            controller.HandleShortcut(e);
+        }
     }
 }
