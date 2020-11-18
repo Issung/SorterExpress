@@ -24,12 +24,6 @@
 			Keep file with most tags?
 
 	MediaViewer
-		Now using while loops to wait for the VlcControl to load/unload it's media.
-			It fixes issues of loading/unloading media too many times too rapidly. But:
-			Potentially bad, could cause infinite loops if the media can't be loaded?
-			Use a multi-threaded approach?
-			Post the MediaViewer control on the vlc library github?
-
 
 Done
 	Fixed MediaViewer to now load/unload media using thread pool. Not supposed to do these things from the main thread apparently (https://github.com/ZeBobo5/Vlc.DotNet/issues/542).
