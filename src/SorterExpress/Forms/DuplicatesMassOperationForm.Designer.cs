@@ -41,6 +41,8 @@
             this.row1Label = new System.Windows.Forms.Label();
             this.row1ComboBox = new System.Windows.Forms.ComboBox();
             this.performOperationButton = new System.Windows.Forms.Button();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.loadingPanel = new SorterExpress.Controls.LoadingPanel();
             this.groupBox.SuspendLayout();
             this.filenamePreferencesGroupBox.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -51,6 +53,8 @@
             // 
             // massOperationLabel
             // 
+            this.massOperationLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.massOperationLabel.Location = new System.Drawing.Point(5, 8);
             this.massOperationLabel.Name = "massOperationLabel";
             this.massOperationLabel.Size = new System.Drawing.Size(524, 124);
@@ -66,7 +70,7 @@
             this.groupBox.Controls.Add(this.keepFilePreferenceGroupBox);
             this.groupBox.Location = new System.Drawing.Point(5, 135);
             this.groupBox.Name = "groupBox";
-            this.groupBox.Size = new System.Drawing.Size(524, 239);
+            this.groupBox.Size = new System.Drawing.Size(524, 196);
             this.groupBox.TabIndex = 2;
             this.groupBox.TabStop = false;
             this.groupBox.Text = "Options";
@@ -79,7 +83,7 @@
             this.filenamePreferencesGroupBox.Controls.Add(this.flowLayoutPanel1);
             this.filenamePreferencesGroupBox.Location = new System.Drawing.Point(284, 20);
             this.filenamePreferencesGroupBox.Name = "filenamePreferencesGroupBox";
-            this.filenamePreferencesGroupBox.Size = new System.Drawing.Size(234, 214);
+            this.filenamePreferencesGroupBox.Size = new System.Drawing.Size(234, 171);
             this.filenamePreferencesGroupBox.TabIndex = 1;
             this.filenamePreferencesGroupBox.TabStop = false;
             this.filenamePreferencesGroupBox.Text = "Filename Preferences";
@@ -92,7 +96,7 @@
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(228, 195);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(228, 152);
             this.flowLayoutPanel1.TabIndex = 32;
             // 
             // mergeFileTagsCheckBox
@@ -124,7 +128,7 @@
             this.keepFilePreferenceGroupBox.Controls.Add(this.keepFilePreferenceFlowLayoutPanel);
             this.keepFilePreferenceGroupBox.Location = new System.Drawing.Point(3, 20);
             this.keepFilePreferenceGroupBox.Name = "keepFilePreferenceGroupBox";
-            this.keepFilePreferenceGroupBox.Size = new System.Drawing.Size(275, 214);
+            this.keepFilePreferenceGroupBox.Size = new System.Drawing.Size(275, 171);
             this.keepFilePreferenceGroupBox.TabIndex = 0;
             this.keepFilePreferenceGroupBox.TabStop = false;
             this.keepFilePreferenceGroupBox.Text = "Keep File Preferences";
@@ -137,7 +141,7 @@
             this.keepFilePreferenceFlowLayoutPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.keepFilePreferenceFlowLayoutPanel.Location = new System.Drawing.Point(3, 16);
             this.keepFilePreferenceFlowLayoutPanel.Name = "keepFilePreferenceFlowLayoutPanel";
-            this.keepFilePreferenceFlowLayoutPanel.Size = new System.Drawing.Size(269, 195);
+            this.keepFilePreferenceFlowLayoutPanel.Size = new System.Drawing.Size(269, 152);
             this.keepFilePreferenceFlowLayoutPanel.TabIndex = 0;
             this.keepFilePreferenceFlowLayoutPanel.WrapContents = false;
             // 
@@ -184,7 +188,7 @@
             // 
             this.performOperationButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.performOperationButton.Location = new System.Drawing.Point(4, 377);
+            this.performOperationButton.Location = new System.Drawing.Point(4, 334);
             this.performOperationButton.Name = "performOperationButton";
             this.performOperationButton.Size = new System.Drawing.Size(526, 23);
             this.performOperationButton.TabIndex = 3;
@@ -192,15 +196,44 @@
             this.performOperationButton.UseVisualStyleBackColor = true;
             this.performOperationButton.Click += new System.EventHandler(this.performOperationButton_Click);
             // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.WorkerReportsProgress = true;
+            this.backgroundWorker.WorkerSupportsCancellation = true;
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
+            // 
+            // loadingPanel
+            // 
+            this.loadingPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.loadingPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.loadingPanel.BottomText = "";
+            this.loadingPanel.HideInDesigner = false;
+            this.loadingPanel.Location = new System.Drawing.Point(42, 70);
+            this.loadingPanel.MaximumSize = new System.Drawing.Size(600, 350);
+            this.loadingPanel.MinimumSize = new System.Drawing.Size(360, 170);
+            this.loadingPanel.Name = "loadingPanel";
+            this.loadingPanel.ProgressBarStyle = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.loadingPanel.ProgressValue = 0;
+            this.loadingPanel.Size = new System.Drawing.Size(446, 192);
+            this.loadingPanel.TabIndex = 4;
+            this.loadingPanel.TopText = "Loading...";
+            this.loadingPanel.Visible = false;
+            // 
             // DuplicatesMassOperationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 404);
+            this.ClientSize = new System.Drawing.Size(534, 361);
+            this.Controls.Add(this.loadingPanel);
             this.Controls.Add(this.performOperationButton);
             this.Controls.Add(this.groupBox);
             this.Controls.Add(this.massOperationLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(550, 400);
             this.Name = "DuplicatesMassOperationForm";
             this.Text = "Duplicates Search - Mass Operation";
             this.groupBox.ResumeLayout(false);
@@ -229,5 +262,7 @@
         private System.Windows.Forms.CheckBox mergeFileTagsCheckBox;
         private System.Windows.Forms.CheckBox onlyKeepLibraryTagsCheckBox;
         private System.Windows.Forms.Button performOperationButton;
+        private Controls.LoadingPanel loadingPanel;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
     }
 }

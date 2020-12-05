@@ -14,33 +14,10 @@ namespace SorterExpress.Forms
 
         private void sortButton_Click(object sender, EventArgs e)
         {
-            StartNewSortForm();
+            StartSortForm();
         }
 
-        private void startOldSortFormToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            StartOldSortForm();
-        }
-
-        private void StartOldSortForm()
-        {
-            var di = Utilities.OpenDirectory();
-
-            if (di != null)
-            {
-                SortFormOld mainForm = new SortFormOld(di);
-                mainForm.FormClosed += (s, args) => this.Show();
-                mainForm.Show();
-                this.Hide();
-            }
-        }
-
-        private void startNewMVCSortFormToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            StartNewSortForm();
-        }
-
-        private void StartNewSortForm()
+        private void StartSortForm()
         {
             var di = Utilities.OpenDirectory();
 
@@ -89,10 +66,6 @@ namespace SorterExpress.Forms
 
         private void DuplicatesButton_Click(object sender, EventArgs e)
         {
-            /*DuplicatesFormOld df = new DuplicatesFormOld(null);
-            df.FormClosed += (s, args) => this.Show();
-            df.Show();
-            this.Hide();*/
             DuplicatesForm df = new DuplicatesForm(null);
             df.FormClosed += (s, args) => this.Show();
             df.Show();

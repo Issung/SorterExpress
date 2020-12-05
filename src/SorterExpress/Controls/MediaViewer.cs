@@ -84,7 +84,7 @@ namespace SorterExpress.Controls
 
         private void MediaViewer_Load(object sender, EventArgs e)
         {
-            if (!DesignMode)
+            if (!DesignMode && Enabled)
             {
                 FindVlcLocation();
 
@@ -166,7 +166,7 @@ namespace SorterExpress.Controls
                         pictureBox.Image = img;
 
                         pictureBox.Show();
-                        pictureBox.Enabled = true;
+                        pictureBox.Enabled = true; 
                     }
                 }
                 catch (Exception e)
@@ -212,43 +212,48 @@ namespace SorterExpress.Controls
             }
 
             CurrentMedia = path;
-            NotifyPropertyChanged();
+            //Invoke((MethodInvoker)delegate { NotifyPropertyChanged(nameof(EnableButtons)); });
+            NotifyPropertyChanged(nameof(EnableButtons));
         }
 
         public void UnloadMedia(bool forceVideoWait = false)
         {
-            Console.WriteLine($"{Name} Unloading Media!");
-
-            if (pictureBox.Image != null)
-                pictureBox.Image.Dispose();
-
-            pictureBox.Image = null;
-
-            CurrentMedia = null;
-
-            if (vlcControl != null)
+            if (Enabled)
             {
-                if (forceVideoWait)
-                {
-                    vlcControl.Stop();
-                    vlcControl.ResetMedia();
+                Console.WriteLine($"{Name} Unloading Media!");
 
-                    while (vlcControl.GetCurrentMedia() != null)
+                if (pictureBox.Image != null)
+                    pictureBox.Image.Dispose();
+
+                pictureBox.Image = null;
+
+                CurrentMedia = null;
+
+                if (vlcControl != null)
+                {
+                    if (forceVideoWait)
                     {
-                        //Block while waiting for media to unload.
+                        vlcControl.Stop();
+                        vlcControl.ResetMedia();
+
+                        while (vlcControl.GetCurrentMedia() != null)
+                        {
+                            //Block while waiting for media to unload.
+                        }
+                    }
+                    else
+                    {
+                        ThreadPool.QueueUserWorkItem(_ =>
+                        {
+                            vlcControl.Stop();
+                            vlcControl.ResetMedia();
+                        });
                     }
                 }
-                else
-                { 
-                    ThreadPool.QueueUserWorkItem(_ => 
-                    { 
-                        vlcControl.Stop(); 
-                        vlcControl.ResetMedia(); 
-                    });
-                }
-            }
 
-            NotifyPropertyChanged();
+                //Invoke((MethodInvoker)delegate { NotifyPropertyChanged(nameof(EnableButtons)); });
+                NotifyPropertyChanged(nameof(EnableButtons));
+            }
         }
 
         private void ShowErrorMessageBox(Exception e)

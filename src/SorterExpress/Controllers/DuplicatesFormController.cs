@@ -43,7 +43,7 @@ namespace SorterExpress.Controllers
 
             if (searching)
             {
-                Console.WriteLine("FindState returns Searching.");
+                //Console.WriteLine("FindState returns Searching.");
                 return FormState.Searching;
             }
             
@@ -57,7 +57,7 @@ namespace SorterExpress.Controllers
             return FormState.DirectoryOpen;
         }
 
-        private void UpdateVisibiliyAndEnabledProperties()
+        private void UpdateVisibilityAndEnabledProperties()
         {
             string[] propertyNames = {
                 nameof(StateDirectoryOpen),
@@ -85,7 +85,7 @@ namespace SorterExpress.Controllers
         public bool StateSorting { get { return State == FormState.Sorting; } }
 
         private string directory;
-        public string Directory { get { return directory; } set { directory = value; /*NotifyPropertyChanged();*/ UpdateVisibiliyAndEnabledProperties(); } }
+        public string Directory { get { return directory; } set { directory = value; /*NotifyPropertyChanged();*/ UpdateVisibilityAndEnabledProperties(); } }
 
         public Stack<DuplicateAction> DoneActions { get; set; } = new Stack<DuplicateAction>();
 
@@ -97,7 +97,7 @@ namespace SorterExpress.Controllers
 
         private bool searching = false;
 
-        public bool Searching { get { return searching; } set { searching = value; NotifyPropertyChanged(); UpdateVisibiliyAndEnabledProperties(); } }
+        public bool Searching { get { return searching; } set { searching = value; NotifyPropertyChanged(); UpdateVisibilityAndEnabledProperties(); } }
 
         public List<string> Files = new List<string>();
 
@@ -137,6 +137,8 @@ namespace SorterExpress.Controllers
         public string FileAndMatchesCountText => $"Files: {(Files == null ? 0 : Files.Count)} Matches: {(Duplicates == null ? 0 : Duplicates.Count)}";
 
         public bool EnableOnlyKeepTagsInLibraryButton => StateDirectoryOpenOrSorting && MergeFileTags;
+
+        public bool EnableMatchFileTypesCheckBox => StateDirectoryOpenOrSorting && SearchVideos && SearchImages;
 
         #endregion
 
@@ -534,6 +536,8 @@ namespace SorterExpress.Controllers
                 return null;
             }
 
+            bool fileTypesNeedMatch = model.SearchImages && model.SearchVideos && model.OnlyMatchSameFileTypes;
+
             finishedThreads = 0;
 
             cancelTokenSource = new CancellationTokenSource();
@@ -593,7 +597,7 @@ namespace SorterExpress.Controllers
                                             if (FilePrint.GetSimilarityPercentage(print, prints[i]) >= model.Similarity)
                                             {
                                                 // If the duplicate hasn't already been found or found in reverse (x is like y |or| y is like x)
-                                                if (!model.OnlyMatchSameFileTypes || (model.OnlyMatchSameFileTypes && print.fileType == prints[i].fileType)) 
+                                                if (!fileTypesNeedMatch || (fileTypesNeedMatch && print.fileType == prints[i].fileType)) 
                                                 {
 
                                                     //Check for "between immediate and subdirectories" filter.

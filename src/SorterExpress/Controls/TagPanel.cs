@@ -6,7 +6,6 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using SorterExpress.Properties;
-using SorterExpress.Classes.Actions.SortActions;
 
 namespace SorterExpress.Controls
 {
@@ -64,7 +63,7 @@ namespace SorterExpress.Controls
             {
                 AddTagButton(Tags[e.NewIndex], false);
             }
-
+            
             //Reorder even catches removed tags.
             ReorderTagButtons();
         }
@@ -77,6 +76,14 @@ namespace SorterExpress.Controls
 
         private void EnabledTagsChanged(object sender, ListChangedEventArgs e)
         {
+            if (e.ListChangedType == ListChangedType.ItemAdded)
+            {
+                foreach (CheckBox cb in scrollPanel.Controls.OfType<CheckBox>().Where(t => (string)t.Tag == EnabledTags[e.NewIndex]))
+                {
+                    cb.Checked = true;
+                }
+            }
+
             ReorderTagButtons();
         }
 

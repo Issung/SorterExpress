@@ -11,6 +11,7 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
@@ -151,19 +152,55 @@ namespace SorterExpress.Forms
 
         enum Result { KeepLeft1, KeepRight2, Equal };
 
+        string[] prefs;
+
         private void performOperationButton_Click(object sender, EventArgs e)
         {
+            if (!backgroundWorker.IsBusy)
+            {
+                this.ControlBox = false;
+                performOperationButton.Enabled = false;
+                loadingPanel.ProgressBarStyle = ProgressBarStyle.Continuous;
+                loadingPanel.ProgressValue = 0;
+                loadingPanel.BottomText = "Loading...";
+                loadingPanel.Show();
+
+                prefs = keepFilePreferenceFlowLayoutPanel.Controls.OfType<TableLayoutPanel>()
+                    .OrderBy(t => Convert.ToInt32(t.Tag))
+                    .Select(t => (string)t.Controls.OfType<ComboBox>().First().SelectedItem)
+                    .ToArray();
+
+                backgroundWorker.RunWorkerAsync();
+            }
+        }
+
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Console.WriteLine("backgroundWorker_DoWork");
+
             SortableBindingList<Duplicate> duplicates = Controller.model.Duplicates;
 
-            string[] prefs = keepFilePreferenceFlowLayoutPanel.Controls.OfType<TableLayoutPanel>()
+            /*string[] prefs = keepFilePreferenceFlowLayoutPanel.Controls.OfType<TableLayoutPanel>()
                         .OrderBy(t => Convert.ToInt32(t.Tag))
                         .Select(t => (string)t.Controls.OfType<ComboBox>().First().SelectedItem)
-                        .ToArray();
+                        .ToArray();*/
+
+            // Set to only "Ignore". Alert user and return.
+            if (prefs == null || prefs.Length < 2)
+            {
+                const string MESSAGE_TEXT = "You must set atleast 1 keep file preference filter.";
+                MessageBox.Show(MESSAGE_TEXT, "Invalid Parameters", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             // Find dimensions for all video files.
             if (prefs.Contains(HIGHEST_RES))
             {
+                Invoke((MethodInvoker)delegate { loadingPanel.BottomText = "Retrieving video dimensions..."; });
                 var prints = Controller.prints.Where(t => duplicates.Any(d => d.fileprint1 == t || d.fileprint2 == t));
+
+                int sizesRetrieved = 0;
+                int printsCount = prints.Count();
 
                 Size noSize = new Size(-1, -1);
 
@@ -173,16 +210,14 @@ namespace SorterExpress.Forms
                     {
                         print.size = FFWorker.GetSizeWait(print.filepath);
                     }
+
+                    sizesRetrieved += 1;
+
+                    backgroundWorker.ReportProgress((int)(((float)sizesRetrieved / printsCount) * 100) / 2);
                 });
             }
 
-            // Set to only "Ignore". Alert user and return.
-            if (prefs.Length < 2)
-            {
-                const string MESSAGE_TEXT = "You must set atleast 1 keep file preference filter.";
-                MessageBox.Show(MESSAGE_TEXT, "Invalid Parameters", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            Invoke((MethodInvoker)delegate { loadingPanel.BottomText = "Performing filtering and removing files..."; });
 
             for (int i = 0; i < duplicates.Count(); i++)
             {
@@ -238,22 +273,44 @@ namespace SorterExpress.Forms
                     DuplicatesFormController.Side side = (result == Result.KeepLeft1) ? DuplicatesFormController.Side.Left : DuplicatesFormController.Side.Right;
 
                     KeepSide action = new KeepSide(Controller, duplicates[i], i, side);
-                    action.Do();
-                    Controller.model.UndoneActions.Clear();
-                    Controller.model.DoneActions.Push(action);
+                    Invoke((MethodInvoker)delegate { 
+                        action.Do();
 
-                    Controller.model.NotifyPropertyChanged(nameof(Controller.model.EnableRedoButton));
-                    Controller.model.NotifyPropertyChanged(nameof(Controller.model.EnableUndoButton));
+                        Controller.model.UndoneActions.Clear();
+                        Controller.model.DoneActions.Push(action);
+
+                        Controller.model.NotifyPropertyChanged(nameof(Controller.model.EnableRedoButton));
+                        Controller.model.NotifyPropertyChanged(nameof(Controller.model.EnableUndoButton));
+                    });
 
                     //Decrement index because the action just removed the current duplicate from the list.
                     i--;
                 }
+
+                backgroundWorker.ReportProgress((int)((((float)i / duplicates.Count) * 100) / 2) + 50);
             }
 
             int GetDirectoryDepth(string path)
             {
                 return path.Count(t => t == Path.DirectorySeparatorChar);
             }
+        }
+
+        private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            Console.WriteLine($"backgroundWorker_ProgressChanged. progress: {e.ProgressPercentage}");
+            loadingPanel.ProgressValue = e.ProgressPercentage;
+            //loadingPanel.loadingProgressBar.Value = e.ProgressPercentage;
+            //loadingPanel.Update();
+            //loadingPanel.loadingProgressBar.Update();
+        }
+
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Console.WriteLine($"backgroundWorker_RunWorkerCompleted");
+            loadingPanel.Hide();
+            performOperationButton.Enabled = true;
+            this.ControlBox = true;
         }
     }
 }

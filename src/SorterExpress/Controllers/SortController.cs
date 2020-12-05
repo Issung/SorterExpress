@@ -16,7 +16,7 @@ namespace SorterExpress.Controllers
 {
     public class SortController
     {
-        SortForm form;
+        internal SortForm form;
 
         Dictionary<Shortcut, Func<bool>> shortcuts = null;
 
@@ -88,23 +88,25 @@ namespace SorterExpress.Controllers
 
             form.SuspendLayout();
 
-            // Empty Tags and load them from settings.
-            /*Tags.Clear();
-
-            if (Settings.Default.Tags != null)
-                Tags.AddRange(Settings.Default.Tags);*/
-
             var loadedTags = (Settings.Default.Tags != null) ? Settings.Default.Tags : new List<string>();
 
             // Remove all tags that aren't included in the loaded tags.
             Tags.RemoveRange(Tags.Where(t => !loadedTags.Contains(t)));
 
             // Add all tags that are in loaded tags but not in current tags.
-            Tags.AddRange(loadedTags.Where(t => !Tags.Contains(t)));
+            //Tags.AddRange(loadedTags.Where(t => !Tags.Contains(t)).ToList());
+            for (int i = 0; i < loadedTags.Count; i++)
+            {
+                if (!Tags.Contains(loadedTags[i]))
+                {
+                    Tags.Add(loadedTags[i]);
+                }
+            }
 
             // Empty all Subfolders and load custom ones from settings.
-            while (Subfolders.Count > 0)
-                Subfolders.RemoveAt(0);
+            //while (Subfolders.Count > 0)
+                //Subfolders.RemoveAt(0);
+            Subfolders.Clear();
 
             var sfnames = Settings.Default.SubfolderNames ?? new List<string>();
             var sfdirectories = Settings.Default.SubfolderDirectories ?? new List<string>();
@@ -321,16 +323,18 @@ namespace SorterExpress.Controllers
                 SortAction action = doneActions.ElementAt(i);
 
                 //Search through doneActions for the most recent "Move" action that will have the previously used tags in it.
-                if (action.GetType() == typeof(SorterExpress.Classes.Actions.SortActions.Move))
+                if (action.GetType() == typeof(Move))
                 {
                     if (EMPTY_CURRENT_TAGS)
                         while (EnabledTags.Count > 0)
                             EnabledTags.Clear();
 
-                    for (int t = 0; t < (action as Classes.Actions.SortActions.Move).tags.Length; t++)
+                    /*for (int t = 0; t < (action as Move).tags.Length; t++)
                     {
-                        Tags.Add((action as Classes.Actions.SortActions.Move).tags[t]);
-                    }
+                        EnabledTags.Add((action as Move).tags[t]);
+                    }*/
+
+                    EnabledTags.AddRange((action as Move).tags);
 
                     // The most recent move action was found and the tags were loaded.
                     return true;
@@ -523,8 +527,6 @@ namespace SorterExpress.Controllers
 
         public void Delete()
         {
-            form.mediaViewer.UnloadMedia();
-
             Delete action = new Delete(this, Path.Combine(directory, files[fileIndex]), fileIndex);
             action.Do();
             doneActions.Push(action);
@@ -539,8 +541,6 @@ namespace SorterExpress.Controllers
         /// </summary>
         public void Move(string toDirectory)
         {
-            form.mediaViewer.UnloadMedia();
-
             if (toDirectory == null)
                 toDirectory = directory;
 
@@ -568,12 +568,14 @@ namespace SorterExpress.Controllers
         public void RemoveFile(int fileIndex)
         {
             if (fileIndex == this.fileIndex)
-                form.mediaViewer.UnloadMedia();
+                form.mediaViewer.UnloadMedia(true);
 
             files.RemoveAt(fileIndex);
 
-            while(EnabledTags.Count > 0)
-                EnabledTags.RemoveAt(0);
+            //while (EnabledTags.Count > 0)
+                //EnabledTags.RemoveAt(0);
+
+            EnabledTags.Clear();
 
             note = String.Empty;
 

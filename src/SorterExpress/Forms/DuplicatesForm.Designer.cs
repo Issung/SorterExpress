@@ -54,6 +54,17 @@ namespace SorterExpress.Forms
             this.cropLeftRightCheckBox = new System.Windows.Forms.CheckBox();
             this.cropTopBottomCheckBox = new System.Windows.Forms.CheckBox();
             this.searchScopeComboBox = new System.Windows.Forms.ComboBox();
+            this.matchesDataGridView = new System.Windows.Forms.DataGridView();
+            this.file1ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.file2ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            this.similarityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matchesContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.keepLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.skipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.loadingLabel = new System.Windows.Forms.Label();
             this.filenameRichTextBoxLeft = new System.Windows.Forms.RichTextBox();
             this.filenameRichTextBoxRight = new System.Windows.Forms.RichTextBox();
@@ -65,19 +76,8 @@ namespace SorterExpress.Forms
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.threadsLabel = new System.Windows.Forms.Label();
             this.keepNeitherButton = new System.Windows.Forms.Button();
-            this.matchesDataGridView = new System.Windows.Forms.DataGridView();
-            this.file1ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.file2ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.similarityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matchesContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.keepLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.skipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.percentageLabel = new System.Windows.Forms.Label();
             this.settingsButton = new System.Windows.Forms.Button();
-            this.undoButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.massOperationButton = new System.Windows.Forms.Button();
             this.filtersGroupBox = new System.Windows.Forms.GroupBox();
             this.duplicatesFormModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -85,13 +85,13 @@ namespace SorterExpress.Forms
             this.mediaViewerRight = new SorterExpress.Controls.MediaViewer();
             ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).BeginInit();
+            this.matchesContextMenu.SuspendLayout();
             this.sidesLayoutPanel.SuspendLayout();
             this.leftPanel.SuspendLayout();
             this.rightPanel.SuspendLayout();
             this.keepButtonsLayoutPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).BeginInit();
-            this.matchesContextMenu.SuspendLayout();
             this.filtersGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -108,7 +108,7 @@ namespace SorterExpress.Forms
             this.keepRightButton.Name = "keepRightButton";
             this.keepRightButton.Size = new System.Drawing.Size(341, 23);
             this.keepRightButton.TabIndex = 4;
-            this.keepRightButton.Text = "Keep This (Delete Left)";
+            this.keepRightButton.Text = "Keep &Right (Delete Left)";
             this.keepRightButton.UseVisualStyleBackColor = true;
             this.keepRightButton.Click += new System.EventHandler(this.keepRightButton_Click);
             // 
@@ -124,7 +124,7 @@ namespace SorterExpress.Forms
             this.keepLeftButton.Name = "keepLeftButton";
             this.keepLeftButton.Size = new System.Drawing.Size(341, 23);
             this.keepLeftButton.TabIndex = 5;
-            this.keepLeftButton.Text = "Keep This (Delete Right)";
+            this.keepLeftButton.Text = "Keep &Left (Delete Right)";
             this.keepLeftButton.UseVisualStyleBackColor = true;
             this.keepLeftButton.Click += new System.EventHandler(this.keepLeftButton_Click);
             // 
@@ -137,7 +137,7 @@ namespace SorterExpress.Forms
             this.keepBothButton.Name = "keepBothButton";
             this.keepBothButton.Size = new System.Drawing.Size(686, 23);
             this.keepBothButton.TabIndex = 6;
-            this.keepBothButton.Text = "Keep Both (Remove Match From List)";
+            this.keepBothButton.Text = "Keep &Both (Remove Match From List)";
             this.keepBothButton.UseVisualStyleBackColor = true;
             this.keepBothButton.Click += new System.EventHandler(this.keepBothButton_Click);
             // 
@@ -153,7 +153,7 @@ namespace SorterExpress.Forms
             // 
             // similarityNumeric
             // 
-            this.similarityNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.duplicatesFormModelBindingSource, "Similarity", true));
+            this.similarityNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.duplicatesFormModelBindingSource, "Similarity", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.similarityNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
             this.similarityNumeric.DecimalPlaces = 1;
             this.similarityNumeric.Enabled = false;
@@ -325,7 +325,7 @@ namespace SorterExpress.Forms
             // 
             this.matchFileTypesCheckBox.AutoSize = true;
             this.matchFileTypesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "OnlyMatchSameFileTypes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.matchFileTypesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.matchFileTypesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableMatchFileTypesCheckBox", true));
             this.matchFileTypesCheckBox.Location = new System.Drawing.Point(6, 68);
             this.matchFileTypesCheckBox.Name = "matchFileTypesCheckBox";
             this.matchFileTypesCheckBox.Size = new System.Drawing.Size(173, 17);
@@ -392,6 +392,126 @@ namespace SorterExpress.Forms
             this.toolTip.SetToolTip(this.searchScopeComboBox, resources.GetString("searchScopeComboBox.ToolTip"));
             this.searchScopeComboBox.ValueMember = "EnumValue";
             this.searchScopeComboBox.SelectedValueChanged += new System.EventHandler(this.searchScopeComboBox_SelectedValueChanged);
+            // 
+            // matchesDataGridView
+            // 
+            this.matchesDataGridView.AllowUserToAddRows = false;
+            this.matchesDataGridView.AllowUserToDeleteRows = false;
+            this.matchesDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.matchesDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.matchesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.matchesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.file1ImageColumn,
+            this.file2ImageColumn,
+            this.similarityColumn});
+            this.matchesDataGridView.ContextMenuStrip = this.matchesContextMenu;
+            this.matchesDataGridView.DataBindings.Add(new System.Windows.Forms.Binding("DataSource", this.duplicatesFormModelBindingSource, "Duplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.matchesDataGridView.Location = new System.Drawing.Point(11, 290);
+            this.matchesDataGridView.MultiSelect = false;
+            this.matchesDataGridView.Name = "matchesDataGridView";
+            this.matchesDataGridView.ReadOnly = true;
+            this.matchesDataGridView.RowHeadersVisible = false;
+            this.matchesDataGridView.RowTemplate.Height = 50;
+            this.matchesDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.matchesDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.matchesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.matchesDataGridView.Size = new System.Drawing.Size(181, 85);
+            this.matchesDataGridView.TabIndex = 30;
+            this.toolTip.SetToolTip(this.matchesDataGridView, resources.GetString("matchesDataGridView.ToolTip"));
+            this.matchesDataGridView.CellContextMenuStripNeeded += new System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventHandler(this.MatchesDataGridView_CellContextMenuStripNeeded);
+            this.matchesDataGridView.SelectionChanged += new System.EventHandler(this.matchesDataGridView_SelectionChanged);
+            // 
+            // file1ImageColumn
+            // 
+            this.file1ImageColumn.DataPropertyName = "File1Thumb";
+            this.file1ImageColumn.HeaderText = "File 1";
+            this.file1ImageColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.file1ImageColumn.Name = "file1ImageColumn";
+            this.file1ImageColumn.ReadOnly = true;
+            this.file1ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.file1ImageColumn.Width = 50;
+            // 
+            // file2ImageColumn
+            // 
+            this.file2ImageColumn.DataPropertyName = "File2Thumb";
+            this.file2ImageColumn.HeaderText = "File 2";
+            this.file2ImageColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.file2ImageColumn.Name = "file2ImageColumn";
+            this.file2ImageColumn.ReadOnly = true;
+            this.file2ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.file2ImageColumn.Width = 50;
+            // 
+            // similarityColumn
+            // 
+            this.similarityColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.similarityColumn.DataPropertyName = "ChancePercentageText";
+            this.similarityColumn.HeaderText = "Similarity";
+            this.similarityColumn.Name = "similarityColumn";
+            this.similarityColumn.ReadOnly = true;
+            this.similarityColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // matchesContextMenu
+            // 
+            this.matchesContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.keepLeftToolStripMenuItem,
+            this.removeToolStripMenuItem,
+            this.skipToolStripMenuItem,
+            this.deleteBothToolStripMenuItem});
+            this.matchesContextMenu.Name = "matchesContextMenu";
+            this.matchesContextMenu.Size = new System.Drawing.Size(272, 92);
+            // 
+            // keepLeftToolStripMenuItem
+            // 
+            this.keepLeftToolStripMenuItem.Name = "keepLeftToolStripMenuItem";
+            this.keepLeftToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.keepLeftToolStripMenuItem.Text = "Keep &Left (Delete Right)";
+            this.keepLeftToolStripMenuItem.Click += new System.EventHandler(this.keepLeftToolStripMenuItem_Click);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.removeToolStripMenuItem.Text = "Keep &Right (Delete Left)";
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            // 
+            // skipToolStripMenuItem
+            // 
+            this.skipToolStripMenuItem.Name = "skipToolStripMenuItem";
+            this.skipToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.skipToolStripMenuItem.Text = "Keep &Both (Remove Match From List)";
+            this.skipToolStripMenuItem.Click += new System.EventHandler(this.skipToolStripMenuItem_Click);
+            // 
+            // deleteBothToolStripMenuItem
+            // 
+            this.deleteBothToolStripMenuItem.Name = "deleteBothToolStripMenuItem";
+            this.deleteBothToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            this.deleteBothToolStripMenuItem.Text = "Keep &Neither (Delete Both)";
+            this.deleteBothToolStripMenuItem.Click += new System.EventHandler(this.deleteBothToolStripMenuItem_Click);
+            // 
+            // undoButton
+            // 
+            this.undoButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableUndoButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.undoButton.Location = new System.Drawing.Point(78, 12);
+            this.undoButton.Name = "undoButton";
+            this.undoButton.Size = new System.Drawing.Size(55, 23);
+            this.undoButton.TabIndex = 34;
+            this.undoButton.Text = "Undo";
+            this.toolTip.SetToolTip(this.undoButton, "Undo last action (CTRL + Z)");
+            this.undoButton.UseVisualStyleBackColor = true;
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
+            // 
+            // button1
+            // 
+            this.button1.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableRedoButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.button1.Location = new System.Drawing.Point(137, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(55, 23);
+            this.button1.TabIndex = 35;
+            this.button1.Text = "Redo";
+            this.toolTip.SetToolTip(this.button1, "Redo last undone action (CTRL + Y)");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // loadingLabel
             // 
@@ -530,105 +650,9 @@ namespace SorterExpress.Forms
             this.keepNeitherButton.Name = "keepNeitherButton";
             this.keepNeitherButton.Size = new System.Drawing.Size(686, 23);
             this.keepNeitherButton.TabIndex = 27;
-            this.keepNeitherButton.Text = "Keep Neither (Delete Both)";
+            this.keepNeitherButton.Text = "Keep &Neither (Delete Both)";
             this.keepNeitherButton.UseVisualStyleBackColor = true;
             this.keepNeitherButton.Click += new System.EventHandler(this.keepNeitherButton_Click);
-            // 
-            // matchesDataGridView
-            // 
-            this.matchesDataGridView.AllowUserToAddRows = false;
-            this.matchesDataGridView.AllowUserToDeleteRows = false;
-            this.matchesDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.matchesDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.matchesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.matchesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.file1ImageColumn,
-            this.file2ImageColumn,
-            this.similarityColumn});
-            this.matchesDataGridView.ContextMenuStrip = this.matchesContextMenu;
-            this.matchesDataGridView.DataBindings.Add(new System.Windows.Forms.Binding("DataSource", this.duplicatesFormModelBindingSource, "Duplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.matchesDataGridView.Location = new System.Drawing.Point(11, 290);
-            this.matchesDataGridView.MultiSelect = false;
-            this.matchesDataGridView.Name = "matchesDataGridView";
-            this.matchesDataGridView.ReadOnly = true;
-            this.matchesDataGridView.RowHeadersVisible = false;
-            this.matchesDataGridView.RowTemplate.Height = 50;
-            this.matchesDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.matchesDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.matchesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.matchesDataGridView.Size = new System.Drawing.Size(181, 85);
-            this.matchesDataGridView.TabIndex = 30;
-            this.toolTip.SetToolTip(this.matchesDataGridView, resources.GetString("matchesDataGridView.ToolTip"));
-            this.matchesDataGridView.CellContextMenuStripNeeded += new System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventHandler(this.MatchesDataGridView_CellContextMenuStripNeeded);
-            this.matchesDataGridView.SelectionChanged += new System.EventHandler(this.matchesDataGridView_SelectionChanged);
-            // 
-            // file1ImageColumn
-            // 
-            this.file1ImageColumn.DataPropertyName = "File1Thumb";
-            this.file1ImageColumn.HeaderText = "File 1";
-            this.file1ImageColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.file1ImageColumn.Name = "file1ImageColumn";
-            this.file1ImageColumn.ReadOnly = true;
-            this.file1ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.file1ImageColumn.Width = 50;
-            // 
-            // file2ImageColumn
-            // 
-            this.file2ImageColumn.DataPropertyName = "File2Thumb";
-            this.file2ImageColumn.HeaderText = "File 2";
-            this.file2ImageColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.file2ImageColumn.Name = "file2ImageColumn";
-            this.file2ImageColumn.ReadOnly = true;
-            this.file2ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.file2ImageColumn.Width = 50;
-            // 
-            // similarityColumn
-            // 
-            this.similarityColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.similarityColumn.DataPropertyName = "ChancePercentageText";
-            this.similarityColumn.HeaderText = "Similarity";
-            this.similarityColumn.Name = "similarityColumn";
-            this.similarityColumn.ReadOnly = true;
-            this.similarityColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // matchesContextMenu
-            // 
-            this.matchesContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.keepLeftToolStripMenuItem,
-            this.removeToolStripMenuItem,
-            this.skipToolStripMenuItem,
-            this.deleteBothToolStripMenuItem});
-            this.matchesContextMenu.Name = "matchesContextMenu";
-            this.matchesContextMenu.Size = new System.Drawing.Size(272, 92);
-            // 
-            // keepLeftToolStripMenuItem
-            // 
-            this.keepLeftToolStripMenuItem.Name = "keepLeftToolStripMenuItem";
-            this.keepLeftToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
-            this.keepLeftToolStripMenuItem.Text = "Keep &Left (Delete Right)";
-            this.keepLeftToolStripMenuItem.Click += new System.EventHandler(this.keepLeftToolStripMenuItem_Click);
-            // 
-            // removeToolStripMenuItem
-            // 
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
-            this.removeToolStripMenuItem.Text = "Keep &Right (Delete Left)";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
-            // 
-            // skipToolStripMenuItem
-            // 
-            this.skipToolStripMenuItem.Name = "skipToolStripMenuItem";
-            this.skipToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
-            this.skipToolStripMenuItem.Text = "Keep &Both (Remove Match From List)";
-            this.skipToolStripMenuItem.Click += new System.EventHandler(this.skipToolStripMenuItem_Click);
-            // 
-            // deleteBothToolStripMenuItem
-            // 
-            this.deleteBothToolStripMenuItem.Name = "deleteBothToolStripMenuItem";
-            this.deleteBothToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
-            this.deleteBothToolStripMenuItem.Text = "Keep &Neither (Delete Both)";
-            this.deleteBothToolStripMenuItem.Click += new System.EventHandler(this.deleteBothToolStripMenuItem_Click);
             // 
             // percentageLabel
             // 
@@ -648,30 +672,6 @@ namespace SorterExpress.Forms
             this.settingsButton.Text = "Settings";
             this.settingsButton.UseVisualStyleBackColor = true;
             this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
-            // 
-            // undoButton
-            // 
-            this.undoButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableUndoButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.undoButton.Location = new System.Drawing.Point(78, 12);
-            this.undoButton.Name = "undoButton";
-            this.undoButton.Size = new System.Drawing.Size(55, 23);
-            this.undoButton.TabIndex = 34;
-            this.undoButton.Text = "Undo";
-            this.toolTip.SetToolTip(this.undoButton, "Undo last action (CTRL + Z)");
-            this.undoButton.UseVisualStyleBackColor = true;
-            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
-            // 
-            // button1
-            // 
-            this.button1.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableRedoButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.button1.Location = new System.Drawing.Point(137, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(55, 23);
-            this.button1.TabIndex = 35;
-            this.button1.Text = "Redo";
-            this.toolTip.SetToolTip(this.button1, "Redo last undone action (CTRL + Y)");
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // massOperationButton
             // 
@@ -726,7 +726,7 @@ namespace SorterExpress.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mediaViewerRight.Location = new System.Drawing.Point(110, 0);
             this.mediaViewerRight.Name = "mediaViewerRight";
-            this.mediaViewerRight.Size = new System.Drawing.Size(243, 235);
+            this.mediaViewerRight.Size = new System.Drawing.Size(234, 235);
             this.mediaViewerRight.TabIndex = 4;
             this.mediaViewerRight.VideoPosition = -1F;
             // 
@@ -764,13 +764,13 @@ namespace SorterExpress.Forms
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DuplicatesForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).EndInit();
+            this.matchesContextMenu.ResumeLayout(false);
             this.sidesLayoutPanel.ResumeLayout(false);
             this.leftPanel.ResumeLayout(false);
             this.rightPanel.ResumeLayout(false);
             this.keepButtonsLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).EndInit();
-            this.matchesContextMenu.ResumeLayout(false);
             this.filtersGroupBox.ResumeLayout(false);
             this.filtersGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).EndInit();

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System;
 using System.Drawing;
 using SorterExpress.Properties;
+using SorterExpress.Classes;
 
 namespace SorterExpress.Forms
 {
@@ -18,8 +19,6 @@ namespace SorterExpress.Forms
         public List<string> tags;
         public Dictionary<string, int> tagCounts;
         public List<CheckBox> tagButtons;
-
-        FFMPEG ffmpeg;
 
         List<string> andTags, orTags, notTags;
 
@@ -133,10 +132,7 @@ namespace SorterExpress.Forms
 
                 if (!File.Exists(thumbnailFilename))
                 {
-                    if (ffmpeg == null)
-                        ffmpeg = new FFMPEG();
-
-                    ffmpeg.GetThumbnail(directory + "\\" + filename, thumbnailFilename, 60, (s) =>
+                    FFWorker.GetThumbnailAsync(directory + "\\" + filename, thumbnailFilename, 60, (s) =>
                     {
                         try
                         {

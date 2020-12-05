@@ -1,6 +1,7 @@
 ﻿using SorterExpress;
 using SorterExpress.Classes;
 using SorterExpress.Properties;
+using System;
 using System.Drawing;
 using System.IO;
 
@@ -8,8 +9,6 @@ public class FilePrint
 {
     const int THUMB_SIZE = 60;
 
-    public static FFMPEG ffmpeg = null;
-    public static FFProbe ffprobe = null;
     public string directory;
     public string filepath;
     public FileType fileType;
@@ -44,9 +43,11 @@ public class FilePrint
         Bitmap img;
         fileType = Utilities.GetFileType(filepath);
 
+        ThumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
+
         if (Utilities.FileIsImage(filePath))
         {
-            img = new Bitmap(filePath);
+            /*img = new Bitmap(filePath);
             this.size = img.Size;
             CalculatePicturePrint(img);
 
@@ -54,13 +55,33 @@ public class FilePrint
             if (!File.Exists(ThumbPath))
                 Utilities.Resize(new Bitmap(filePath), THUMB_SIZE, THUMB_SIZE).Save(ThumbPath);
 
+            img.Dispose();*/
+
+            if (File.Exists(ThumbPath))
+            {
+                img = new Bitmap(filePath);
+                size = img.Size;
+                img.Dispose();
+                img = new Bitmap(ThumbPath);
+                CalculatePicturePrint(img);
+            }
+            else
+            {
+                img = new Bitmap(filePath);
+                size = img.Size;
+                Utilities.Resize(img, THUMB_SIZE, THUMB_SIZE).Save(ThumbPath);
+                img.Dispose();
+
+                img = new Bitmap(ThumbPath);
+                CalculatePicturePrint(img);
+            }
+
             img.Dispose();
         }
         else if (Utilities.FileIsVideo(filePath))
         {
             //FFWorker.GetSizeAsync(filePath, (Size s) => { this.size = s; });
 
-            ThumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
             if (!File.Exists(ThumbPath))
             {
                 FFWorker.GetThumbnailWait(filePath, ThumbPath, THUMB_SIZE);
@@ -197,14 +218,21 @@ public class FilePrint
     {
         int differenceCount = 0;
 
-        for (int i = 0; i < fp1.print.Length; i++)
+        try
         {
-            if (fp1.print[i] != fp2.print[i])
+            for (int i = 0; i < fp1.print.Length; i++)
             {
-                differenceCount++;
+                if (fp1.print[i] != fp2.print[i])
+                {
+                    differenceCount++;
+                }
             }
-        }
 
-        return (1 - ((decimal)differenceCount / (decimal)64)) * 100;
+            return (1 - ((decimal)differenceCount / (decimal)64)) * 100;
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
     }
 }

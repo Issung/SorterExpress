@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -10,16 +11,34 @@ namespace SorterExpress.Controls
     /// </summary>
     public class RBindingList<T> : BindingList<T>
     {
+        public new void RemoveAt(int index)
+        {
+            if (index < 0 || index >= Count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            if (RaiseListChangedEvents)
+                BeforeRemove?.Invoke(new T[] { base[index] });
+
+            RemoveItem(index);
+        }
+
         public new void Remove(T item)
         {
-            BeforeRemove?.Invoke(new T[] { item });
+            if (RaiseListChangedEvents && this.Contains(item))
+                BeforeRemove?.Invoke(new T[] { item });
 
             base.Remove(item);
         }
 
+        /// <summary>
+        /// Clear the list raising the BeforeRemove event with a list of all items currently in the list (if RaiseListChangedEvents is true).
+        /// </summary>
         public new void Clear()
         {
-            BeforeRemove?.Invoke(this.ToArray());
+            if (RaiseListChangedEvents)
+                BeforeRemove?.Invoke(this);
 
             bool fireEvents = RaiseListChangedEvents;   //Remember whether or not to raise list change events.
 
@@ -47,7 +66,8 @@ namespace SorterExpress.Controls
                 if (this.Contains(item))
                     intersect.Add(item);
 
-            BeforeRemove?.Invoke(intersect);
+            if (RaiseListChangedEvents)
+                BeforeRemove?.Invoke(intersect);
 
             if (intersect.Count > 0)
                 RaiseListChangedEvents = false;
@@ -63,6 +83,9 @@ namespace SorterExpress.Controls
             }
         }
 
+        /// <summary>
+        /// Add a range of elements, raising the ListChanged event individually for each item.
+        /// </summary>
         public void AddRange(IEnumerable<T> items)
         {
             for (int i = 0; i < items.Count(); i++)

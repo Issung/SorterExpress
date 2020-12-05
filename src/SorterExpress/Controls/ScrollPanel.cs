@@ -33,7 +33,7 @@ namespace SorterExpress.Controls
             try
             {
                 if (Created && !IsDisposed && !FakeScroll.IsDisposed)
-                    this.Invoke(new Action(delegate ()
+                    Invoke(new Action(delegate ()
                     {
                         FakeScroll.Visible = !VerticalScroll.Visible;
                     }));

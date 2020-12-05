@@ -434,7 +434,7 @@ namespace SorterExpress
         public static Bitmap Resize(Bitmap image, int width, int height)
         {
             var ret = new Bitmap(image, width, height);
-            image.Dispose();
+            //image.Dispose();
             return ret;
         }
 

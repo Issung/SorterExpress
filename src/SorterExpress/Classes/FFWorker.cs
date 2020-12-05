@@ -43,6 +43,31 @@ namespace SorterExpress.Classes
             process.Dispose();
         }
 
+        public static void GetThumbnailAsync(string input, string output, int size, Action<string> callback)
+        {
+            FFMPEGProcess ffmpeg = CreateFFMPEGProcess();
+
+            ffmpeg.StartInfo.FileName = "ffmpeg.exe";
+            //ffmpeg.StartInfo.Arguments = "-y -i \"" + directory + "/" + filename + "\" -vframes: 1 -vf scale=" + size + ":" + size + " \"" + output + "\""; 
+            ffmpeg.StartInfo.Arguments = $"-y -i \"{input}\" -vframes: 1 -vf scale={size}:{size} \"{output}\"";
+            ffmpeg.callback = callback;
+            ffmpeg.input = input;
+            ffmpeg.output = output;
+            
+            ffmpeg.Exited += (sender, e) => {
+                var process = (FFMPEGProcess)sender;
+
+                if (process.callback != null)
+                {
+                    callback.Invoke(process.output);
+                }
+
+                process.Dispose();
+            };
+
+            ffmpeg.Start();
+        }
+
         private static FFProbeProcess CreateFFProbeProcess(bool raiseEvents)
         {
             FFProbeProcess process = new FFProbeProcess();

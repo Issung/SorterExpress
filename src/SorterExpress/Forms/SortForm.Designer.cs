@@ -73,6 +73,7 @@ namespace SorterExpress.Forms
             this.subfolderPanel = new SorterExpress.Controls.SubfolderPanel();
             this.tagPanel = new SorterExpress.Controls.TagPanel();
             this.mediaViewer = new SorterExpress.Controls.MediaViewer();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sortControllerBindingSource)).BeginInit();
             this.openFileTableLayoutPanel.SuspendLayout();
             this.fileIndexTableLayoutPanel.SuspendLayout();
@@ -352,9 +353,9 @@ namespace SorterExpress.Forms
             // 
             // subfolderSearchTextBox
             // 
-            this.subfolderSearchTextBox.Location = new System.Drawing.Point(271, 65);
+            this.subfolderSearchTextBox.Location = new System.Drawing.Point(315, 65);
             this.subfolderSearchTextBox.Name = "subfolderSearchTextBox";
-            this.subfolderSearchTextBox.Size = new System.Drawing.Size(213, 20);
+            this.subfolderSearchTextBox.Size = new System.Drawing.Size(169, 20);
             this.subfolderSearchTextBox.TabIndex = 58;
             this.tooltip.SetToolTip(this.subfolderSearchTextBox, "Search for a subfolder. Press enter to move the current file to the top result.");
             this.subfolderSearchTextBox.TextChanged += new System.EventHandler(this.subfolderSearchBox_TextChanged);
@@ -572,12 +573,22 @@ namespace SorterExpress.Forms
             this.mediaViewer.TabIndex = 54;
             this.mediaViewer.VideoPosition = -1F;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(268, 69);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 13);
+            this.label2.TabIndex = 59;
+            this.label2.Text = "Search";
+            // 
             // SortForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(747, 294);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.subfolderSearchTextBox);
             this.Controls.Add(this.loadingPanel);
             this.Controls.Add(this.subfolderPanel);
@@ -667,6 +678,7 @@ namespace SorterExpress.Forms
         internal System.Windows.Forms.Button addTagButton;
         public System.Windows.Forms.Button saveButton;
         public System.Windows.Forms.TextBox subfolderSearchTextBox;
+        private System.Windows.Forms.Label label2;
     }
 }
 
