@@ -393,7 +393,15 @@ namespace SorterExpress.Forms
             File.Delete(OUTPUT_FILENAME);
             File.WriteAllText(OUTPUT_FILENAME, regFileContents);
 
-            Process regeditProcess = Process.Start("regedit.exe", $"/s \"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, OUTPUT_FILENAME)}\"");
+            //Process regeditProcess = Process.Start("regedit.exe", $"\"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, OUTPUT_FILENAME)}\"");
+            //regeditProcess.WaitForExit();
+
+            Process regeditProcess = new Process();
+            regeditProcess.StartInfo.FileName = "regedit.exe";
+            regeditProcess.StartInfo.Arguments = $"\"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, OUTPUT_FILENAME)}\"";
+            regeditProcess.StartInfo.UseShellExecute = true;
+            regeditProcess.StartInfo.Verb = "runas";
+            regeditProcess.Start();
             regeditProcess.WaitForExit();
 
             if (regeditProcess.ExitCode == 0)

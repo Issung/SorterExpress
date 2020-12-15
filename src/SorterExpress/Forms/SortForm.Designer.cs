@@ -73,7 +73,7 @@ namespace SorterExpress.Forms
             this.subfolderPanel = new SorterExpress.Controls.SubfolderPanel();
             this.tagPanel = new SorterExpress.Controls.TagPanel();
             this.mediaViewer = new SorterExpress.Controls.MediaViewer();
-            this.label2 = new System.Windows.Forms.Label();
+            this.subfolderSearchLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sortControllerBindingSource)).BeginInit();
             this.openFileTableLayoutPanel.SuspendLayout();
             this.fileIndexTableLayoutPanel.SuspendLayout();
@@ -84,10 +84,11 @@ namespace SorterExpress.Forms
             // 
             this.filenameTextbox.BackColor = System.Drawing.SystemColors.Control;
             this.filenameTextbox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sortControllerBindingSource, "FilenameNoExtension", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.filenameTextbox.Location = new System.Drawing.Point(9, 40);
+            this.filenameTextbox.Location = new System.Drawing.Point(10, 46);
+            this.filenameTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.filenameTextbox.Name = "filenameTextbox";
             this.filenameTextbox.ReadOnly = true;
-            this.filenameTextbox.Size = new System.Drawing.Size(202, 20);
+            this.filenameTextbox.Size = new System.Drawing.Size(235, 23);
             this.filenameTextbox.TabIndex = 5;
             this.filenameTextbox.TabStop = false;
             this.tooltip.SetToolTip(this.filenameTextbox, "The current filename of the loaded file.");
@@ -100,17 +101,19 @@ namespace SorterExpress.Forms
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 114);
+            this.label1.Location = new System.Drawing.Point(8, 132);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.Size = new System.Drawing.Size(50, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "Add Tag";
             // 
             // addTagButton
             // 
-            this.addTagButton.Location = new System.Drawing.Point(241, 110);
+            this.addTagButton.Location = new System.Drawing.Point(281, 127);
+            this.addTagButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.addTagButton.Name = "addTagButton";
-            this.addTagButton.Size = new System.Drawing.Size(22, 22);
+            this.addTagButton.Size = new System.Drawing.Size(25, 25);
             this.addTagButton.TabIndex = 0;
             this.addTagButton.TabStop = false;
             this.addTagButton.Text = "+";
@@ -119,9 +122,10 @@ namespace SorterExpress.Forms
             // 
             // openDirectoryButton
             // 
-            this.openDirectoryButton.Location = new System.Drawing.Point(8, 7);
+            this.openDirectoryButton.Location = new System.Drawing.Point(9, 8);
+            this.openDirectoryButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.openDirectoryButton.Name = "openDirectoryButton";
-            this.openDirectoryButton.Size = new System.Drawing.Size(86, 23);
+            this.openDirectoryButton.Size = new System.Drawing.Size(100, 27);
             this.openDirectoryButton.TabIndex = 0;
             this.openDirectoryButton.Text = "Open Directory";
             this.openDirectoryButton.UseVisualStyleBackColor = true;
@@ -136,7 +140,7 @@ namespace SorterExpress.Forms
             this.openFileButton.Location = new System.Drawing.Point(0, 0);
             this.openFileButton.Margin = new System.Windows.Forms.Padding(0);
             this.openFileButton.Name = "openFileButton";
-            this.openFileButton.Size = new System.Drawing.Size(123, 23);
+            this.openFileButton.Size = new System.Drawing.Size(144, 27);
             this.openFileButton.TabIndex = 52;
             this.openFileButton.TabStop = false;
             this.openFileButton.Text = "Open File";
@@ -150,10 +154,10 @@ namespace SorterExpress.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.openFileInExplorerButton.AutoSize = true;
             this.openFileInExplorerButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnabledFileInteractionButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.openFileInExplorerButton.Location = new System.Drawing.Point(123, 0);
+            this.openFileInExplorerButton.Location = new System.Drawing.Point(144, 0);
             this.openFileInExplorerButton.Margin = new System.Windows.Forms.Padding(0);
             this.openFileInExplorerButton.Name = "openFileInExplorerButton";
-            this.openFileInExplorerButton.Size = new System.Drawing.Size(124, 23);
+            this.openFileInExplorerButton.Size = new System.Drawing.Size(144, 27);
             this.openFileInExplorerButton.TabIndex = 53;
             this.openFileInExplorerButton.TabStop = false;
             this.openFileInExplorerButton.Text = "Open File In Explorer";
@@ -163,9 +167,10 @@ namespace SorterExpress.Forms
             // subfoldersLabel
             // 
             this.subfoldersLabel.AutoSize = true;
-            this.subfoldersLabel.Location = new System.Drawing.Point(268, 44);
+            this.subfoldersLabel.Location = new System.Drawing.Point(313, 51);
+            this.subfoldersLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.subfoldersLabel.Name = "subfoldersLabel";
-            this.subfoldersLabel.Size = new System.Drawing.Size(94, 13);
+            this.subfoldersLabel.Size = new System.Drawing.Size(105, 15);
             this.subfoldersLabel.TabIndex = 12;
             this.subfoldersLabel.Text = "Move to Subfolder";
             // 
@@ -173,19 +178,21 @@ namespace SorterExpress.Forms
             // 
             this.fileExtensionTextbox.BackColor = System.Drawing.SystemColors.Control;
             this.fileExtensionTextbox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sortControllerBindingSource, "FileExtension", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.fileExtensionTextbox.Location = new System.Drawing.Point(214, 40);
+            this.fileExtensionTextbox.Location = new System.Drawing.Point(250, 46);
+            this.fileExtensionTextbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.fileExtensionTextbox.Name = "fileExtensionTextbox";
             this.fileExtensionTextbox.ReadOnly = true;
-            this.fileExtensionTextbox.Size = new System.Drawing.Size(48, 20);
+            this.fileExtensionTextbox.Size = new System.Drawing.Size(55, 23);
             this.fileExtensionTextbox.TabIndex = 6;
             this.fileExtensionTextbox.TabStop = false;
             this.tooltip.SetToolTip(this.fileExtensionTextbox, "File extension of currently loaded file.");
             // 
             // tagCreationTextBox
             // 
-            this.tagCreationTextBox.Location = new System.Drawing.Point(60, 111);
+            this.tagCreationTextBox.Location = new System.Drawing.Point(70, 128);
+            this.tagCreationTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tagCreationTextBox.Name = "tagCreationTextBox";
-            this.tagCreationTextBox.Size = new System.Drawing.Size(178, 20);
+            this.tagCreationTextBox.Size = new System.Drawing.Size(207, 23);
             this.tagCreationTextBox.TabIndex = 10;
             this.tooltip.SetToolTip(this.tagCreationTextBox, "You can add a tag to the tags database here.\r\nThis will *not* automatically enabl" +
         "e the tag.\r\nYou can press ENTER instead of pressing the + button if desired.");
@@ -195,9 +202,10 @@ namespace SorterExpress.Forms
             // saveButton
             // 
             this.saveButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnabledFileInteractionButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.saveButton.Location = new System.Drawing.Point(333, 7);
+            this.saveButton.Location = new System.Drawing.Point(388, 8);
+            this.saveButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(152, 23);
+            this.saveButton.Size = new System.Drawing.Size(177, 27);
             this.saveButton.TabIndex = 4;
             this.saveButton.TabStop = false;
             this.saveButton.Text = "Save";
@@ -206,9 +214,10 @@ namespace SorterExpress.Forms
             // 
             // settingsButton
             // 
-            this.settingsButton.Location = new System.Drawing.Point(100, 7);
+            this.settingsButton.Location = new System.Drawing.Point(117, 8);
+            this.settingsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(56, 23);
+            this.settingsButton.Size = new System.Drawing.Size(65, 27);
             this.settingsButton.TabIndex = 1;
             this.settingsButton.Text = "Settings";
             this.settingsButton.UseVisualStyleBackColor = true;
@@ -216,9 +225,10 @@ namespace SorterExpress.Forms
             // 
             // tagSearchTextBox
             // 
-            this.tagSearchTextBox.Location = new System.Drawing.Point(60, 135);
+            this.tagSearchTextBox.Location = new System.Drawing.Point(70, 156);
+            this.tagSearchTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tagSearchTextBox.Name = "tagSearchTextBox";
-            this.tagSearchTextBox.Size = new System.Drawing.Size(202, 20);
+            this.tagSearchTextBox.Size = new System.Drawing.Size(235, 23);
             this.tagSearchTextBox.TabIndex = 11;
             this.tooltip.SetToolTip(this.tagSearchTextBox, resources.GetString("tagSearchTextBox.ToolTip"));
             this.tagSearchTextBox.TextChanged += new System.EventHandler(this.tagSearchTextbox_TextChanged);
@@ -226,9 +236,10 @@ namespace SorterExpress.Forms
             // notesTextBox
             // 
             this.notesTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sortControllerBindingSource, "Note", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.notesTextBox.Location = new System.Drawing.Point(60, 87);
+            this.notesTextBox.Location = new System.Drawing.Point(70, 100);
+            this.notesTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.notesTextBox.Name = "notesTextBox";
-            this.notesTextBox.Size = new System.Drawing.Size(202, 20);
+            this.notesTextBox.Size = new System.Drawing.Size(235, 23);
             this.notesTextBox.TabIndex = 9;
             this.tooltip.SetToolTip(this.notesTextBox, "You can add a note to the file\'s new name here.\r\nThe note will be encased in (par" +
         "entheses) at the end of the filename before the file extension.");
@@ -237,10 +248,11 @@ namespace SorterExpress.Forms
             // 
             this.newFileNameTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.newFileNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sortControllerBindingSource, "NewFilename", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.newFileNameTextBox.Location = new System.Drawing.Point(9, 63);
+            this.newFileNameTextBox.Location = new System.Drawing.Point(10, 73);
+            this.newFileNameTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.newFileNameTextBox.Name = "newFileNameTextBox";
             this.newFileNameTextBox.ReadOnly = true;
-            this.newFileNameTextBox.Size = new System.Drawing.Size(253, 20);
+            this.newFileNameTextBox.Size = new System.Drawing.Size(294, 23);
             this.newFileNameTextBox.TabIndex = 8;
             this.newFileNameTextBox.TabStop = false;
             this.tooltip.SetToolTip(this.newFileNameTextBox, "This field previews what the currently loaded file will be renamed to if saved wi" +
@@ -249,9 +261,10 @@ namespace SorterExpress.Forms
             // undoButton
             // 
             this.undoButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnableUndo", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.undoButton.Location = new System.Drawing.Point(162, 7);
+            this.undoButton.Location = new System.Drawing.Point(189, 8);
+            this.undoButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.undoButton.Name = "undoButton";
-            this.undoButton.Size = new System.Drawing.Size(49, 23);
+            this.undoButton.Size = new System.Drawing.Size(57, 27);
             this.undoButton.TabIndex = 2;
             this.undoButton.Text = "Undo";
             this.tooltip.SetToolTip(this.undoButton, "Undo the last file save/move and reload it\'s tags.\r\nCannot yet undo deletes, but " +
@@ -266,9 +279,9 @@ namespace SorterExpress.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.firstFileButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnablePreviousButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.firstFileButton.Location = new System.Drawing.Point(0, 0);
-            this.firstFileButton.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.firstFileButton.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.firstFileButton.Name = "firstFileButton";
-            this.firstFileButton.Size = new System.Drawing.Size(31, 22);
+            this.firstFileButton.Size = new System.Drawing.Size(36, 25);
             this.firstFileButton.TabIndex = 54;
             this.firstFileButton.TabStop = false;
             this.firstFileButton.Text = "<<-";
@@ -282,10 +295,10 @@ namespace SorterExpress.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.prevFileButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnablePreviousButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.prevFileButton.Location = new System.Drawing.Point(34, 0);
-            this.prevFileButton.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.prevFileButton.Location = new System.Drawing.Point(40, 0);
+            this.prevFileButton.Margin = new System.Windows.Forms.Padding(0, 0, 4, 0);
             this.prevFileButton.Name = "prevFileButton";
-            this.prevFileButton.Size = new System.Drawing.Size(31, 22);
+            this.prevFileButton.Size = new System.Drawing.Size(36, 25);
             this.prevFileButton.TabIndex = 55;
             this.prevFileButton.TabStop = false;
             this.prevFileButton.Text = "<-";
@@ -300,11 +313,11 @@ namespace SorterExpress.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fileCountTextbox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sortControllerBindingSource, "FileCount", true));
             this.fileCountTextbox.Enabled = false;
-            this.fileCountTextbox.Location = new System.Drawing.Point(129, 1);
+            this.fileCountTextbox.Location = new System.Drawing.Point(152, 1);
             this.fileCountTextbox.Margin = new System.Windows.Forms.Padding(0, 1, 1, 0);
-            this.fileCountTextbox.MinimumSize = new System.Drawing.Size(48, 20);
+            this.fileCountTextbox.MinimumSize = new System.Drawing.Size(55, 20);
             this.fileCountTextbox.Name = "fileCountTextbox";
-            this.fileCountTextbox.Size = new System.Drawing.Size(48, 20);
+            this.fileCountTextbox.Size = new System.Drawing.Size(55, 23);
             this.fileCountTextbox.TabIndex = 57;
             this.fileCountTextbox.TabStop = false;
             this.tooltip.SetToolTip(this.fileCountTextbox, "File count");
@@ -313,10 +326,10 @@ namespace SorterExpress.Forms
             // 
             this.nextFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.nextFileButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnabledNextButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.nextFileButton.Location = new System.Drawing.Point(178, 0);
-            this.nextFileButton.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.nextFileButton.Location = new System.Drawing.Point(210, 0);
+            this.nextFileButton.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
             this.nextFileButton.Name = "nextFileButton";
-            this.nextFileButton.Size = new System.Drawing.Size(31, 22);
+            this.nextFileButton.Size = new System.Drawing.Size(36, 25);
             this.nextFileButton.TabIndex = 58;
             this.nextFileButton.TabStop = false;
             this.nextFileButton.Text = "->";
@@ -328,10 +341,10 @@ namespace SorterExpress.Forms
             // 
             this.lastFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lastFileButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnabledNextButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.lastFileButton.Location = new System.Drawing.Point(213, 0);
-            this.lastFileButton.Margin = new System.Windows.Forms.Padding(4, 0, 0, 0);
+            this.lastFileButton.Location = new System.Drawing.Point(251, 0);
+            this.lastFileButton.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.lastFileButton.Name = "lastFileButton";
-            this.lastFileButton.Size = new System.Drawing.Size(34, 22);
+            this.lastFileButton.Size = new System.Drawing.Size(37, 25);
             this.lastFileButton.TabIndex = 59;
             this.lastFileButton.TabStop = false;
             this.lastFileButton.Text = "->>";
@@ -342,9 +355,10 @@ namespace SorterExpress.Forms
             // redoButton
             // 
             this.redoButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnableRedo", true));
-            this.redoButton.Location = new System.Drawing.Point(214, 7);
+            this.redoButton.Location = new System.Drawing.Point(250, 8);
+            this.redoButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.redoButton.Name = "redoButton";
-            this.redoButton.Size = new System.Drawing.Size(49, 23);
+            this.redoButton.Size = new System.Drawing.Size(57, 27);
             this.redoButton.TabIndex = 53;
             this.redoButton.Text = "Redo";
             this.tooltip.SetToolTip(this.redoButton, "Redo the last undone action.");
@@ -353,9 +367,10 @@ namespace SorterExpress.Forms
             // 
             // subfolderSearchTextBox
             // 
-            this.subfolderSearchTextBox.Location = new System.Drawing.Point(315, 65);
+            this.subfolderSearchTextBox.Location = new System.Drawing.Point(368, 75);
+            this.subfolderSearchTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.subfolderSearchTextBox.Name = "subfolderSearchTextBox";
-            this.subfolderSearchTextBox.Size = new System.Drawing.Size(169, 20);
+            this.subfolderSearchTextBox.Size = new System.Drawing.Size(196, 23);
             this.subfolderSearchTextBox.TabIndex = 58;
             this.tooltip.SetToolTip(this.subfolderSearchTextBox, "Search for a subfolder. Press enter to move the current file to the top result.");
             this.subfolderSearchTextBox.TextChanged += new System.EventHandler(this.subfolderSearchBox_TextChanged);
@@ -363,42 +378,45 @@ namespace SorterExpress.Forms
             // tagSearchLabel
             // 
             this.tagSearchLabel.AutoSize = true;
-            this.tagSearchLabel.Location = new System.Drawing.Point(7, 139);
+            this.tagSearchLabel.Location = new System.Drawing.Point(8, 160);
+            this.tagSearchLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.tagSearchLabel.Name = "tagSearchLabel";
-            this.tagSearchLabel.Size = new System.Drawing.Size(41, 13);
+            this.tagSearchLabel.Size = new System.Drawing.Size(42, 15);
             this.tagSearchLabel.TabIndex = 36;
             this.tagSearchLabel.Text = "Search";
             // 
             // noteLabel
             // 
             this.noteLabel.AutoSize = true;
-            this.noteLabel.Location = new System.Drawing.Point(7, 90);
+            this.noteLabel.Location = new System.Drawing.Point(8, 104);
+            this.noteLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.noteLabel.Name = "noteLabel";
-            this.noteLabel.Size = new System.Drawing.Size(30, 13);
+            this.noteLabel.Size = new System.Drawing.Size(33, 15);
             this.noteLabel.TabIndex = 38;
             this.noteLabel.Text = "Note";
             // 
             // deleteButton
             // 
             this.deleteButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnabledFileInteractionButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.deleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deleteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.deleteButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.deleteButton.Location = new System.Drawing.Point(271, 7);
+            this.deleteButton.Location = new System.Drawing.Point(316, 8);
+            this.deleteButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(56, 23);
+            this.deleteButton.Size = new System.Drawing.Size(65, 27);
             this.deleteButton.TabIndex = 3;
             this.deleteButton.TabStop = false;
             this.deleteButton.Text = "Delete";
-            this.deleteButton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.deleteButton.UseMnemonic = false;
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // addDirectoryButton
             // 
-            this.addDirectoryButton.Location = new System.Drawing.Point(369, 39);
+            this.addDirectoryButton.Location = new System.Drawing.Point(430, 45);
+            this.addDirectoryButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.addDirectoryButton.Name = "addDirectoryButton";
-            this.addDirectoryButton.Size = new System.Drawing.Size(116, 22);
+            this.addDirectoryButton.Size = new System.Drawing.Size(135, 25);
             this.addDirectoryButton.TabIndex = 13;
             this.addDirectoryButton.Text = "Add Directory";
             this.addDirectoryButton.UseVisualStyleBackColor = true;
@@ -413,11 +431,12 @@ namespace SorterExpress.Forms
             this.openFileTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.openFileTableLayoutPanel.Controls.Add(this.openFileButton, 0, 0);
             this.openFileTableLayoutPanel.Controls.Add(this.openFileInExplorerButton, 1, 0);
-            this.openFileTableLayoutPanel.Location = new System.Drawing.Point(490, 234);
+            this.openFileTableLayoutPanel.Location = new System.Drawing.Point(572, 270);
+            this.openFileTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.openFileTableLayoutPanel.Name = "openFileTableLayoutPanel";
             this.openFileTableLayoutPanel.RowCount = 1;
             this.openFileTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.openFileTableLayoutPanel.Size = new System.Drawing.Size(247, 23);
+            this.openFileTableLayoutPanel.Size = new System.Drawing.Size(288, 27);
             this.openFileTableLayoutPanel.TabIndex = 42;
             // 
             // fileIndexTableLayoutPanel
@@ -428,7 +447,7 @@ namespace SorterExpress.Forms
             this.fileIndexTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.fileIndexTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.fileIndexTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.fileIndexTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 15F));
+            this.fileIndexTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 18F));
             this.fileIndexTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.fileIndexTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.fileIndexTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
@@ -439,11 +458,12 @@ namespace SorterExpress.Forms
             this.fileIndexTableLayoutPanel.Controls.Add(this.nextFileButton, 5, 0);
             this.fileIndexTableLayoutPanel.Controls.Add(this.lastFileButton, 6, 0);
             this.fileIndexTableLayoutPanel.Controls.Add(this.fileCountTextbox, 4, 0);
-            this.fileIndexTableLayoutPanel.Location = new System.Drawing.Point(490, 260);
+            this.fileIndexTableLayoutPanel.Location = new System.Drawing.Point(572, 300);
+            this.fileIndexTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.fileIndexTableLayoutPanel.Name = "fileIndexTableLayoutPanel";
             this.fileIndexTableLayoutPanel.RowCount = 1;
             this.fileIndexTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.fileIndexTableLayoutPanel.Size = new System.Drawing.Size(247, 22);
+            this.fileIndexTableLayoutPanel.Size = new System.Drawing.Size(288, 25);
             this.fileIndexTableLayoutPanel.TabIndex = 43;
             // 
             // fileIndexTextbox
@@ -452,11 +472,11 @@ namespace SorterExpress.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fileIndexTextbox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnabledFileInteractionButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.fileIndexTextbox.Location = new System.Drawing.Point(69, 1);
+            this.fileIndexTextbox.Location = new System.Drawing.Point(81, 1);
             this.fileIndexTextbox.Margin = new System.Windows.Forms.Padding(1, 1, 0, 0);
-            this.fileIndexTextbox.MinimumSize = new System.Drawing.Size(48, 20);
+            this.fileIndexTextbox.MinimumSize = new System.Drawing.Size(55, 20);
             this.fileIndexTextbox.Name = "fileIndexTextbox";
-            this.fileIndexTextbox.Size = new System.Drawing.Size(48, 20);
+            this.fileIndexTextbox.Size = new System.Drawing.Size(55, 23);
             this.fileIndexTextbox.TabIndex = 56;
             this.fileIndexTextbox.TabStop = false;
             this.fileIndexTextbox.TextChanged += new System.EventHandler(this.fileIndexTextbox_TextChanged);
@@ -465,19 +485,20 @@ namespace SorterExpress.Forms
             // 
             this.indexSlashLabel.AutoSize = true;
             this.indexSlashLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.indexSlashLabel.Location = new System.Drawing.Point(117, 4);
-            this.indexSlashLabel.Margin = new System.Windows.Forms.Padding(3, 4, 0, 0);
+            this.indexSlashLabel.Location = new System.Drawing.Point(138, 5);
+            this.indexSlashLabel.Margin = new System.Windows.Forms.Padding(4, 5, 0, 0);
             this.indexSlashLabel.Name = "indexSlashLabel";
-            this.indexSlashLabel.Size = new System.Drawing.Size(12, 18);
+            this.indexSlashLabel.Size = new System.Drawing.Size(14, 20);
             this.indexSlashLabel.TabIndex = 3;
             this.indexSlashLabel.Text = "/";
             // 
             // seperatorLabel
             // 
             this.seperatorLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.seperatorLabel.Location = new System.Drawing.Point(10, 34);
+            this.seperatorLabel.Location = new System.Drawing.Point(12, 39);
+            this.seperatorLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.seperatorLabel.Name = "seperatorLabel";
-            this.seperatorLabel.Size = new System.Drawing.Size(473, 1);
+            this.seperatorLabel.Size = new System.Drawing.Size(552, 1);
             this.seperatorLabel.TabIndex = 44;
             // 
             // loadingPanel
@@ -489,11 +510,12 @@ namespace SorterExpress.Forms
             this.loadingPanel.Controls.Add(this.loadingTitleTextBox);
             this.loadingPanel.Controls.Add(this.loadingDescriptionRichTextBox);
             this.loadingPanel.Controls.Add(this.loadingProgressBar);
-            this.loadingPanel.Location = new System.Drawing.Point(38, 234);
-            this.loadingPanel.MaximumSize = new System.Drawing.Size(600, 350);
-            this.loadingPanel.MinimumSize = new System.Drawing.Size(360, 170);
+            this.loadingPanel.Location = new System.Drawing.Point(44, 270);
+            this.loadingPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.loadingPanel.MaximumSize = new System.Drawing.Size(700, 404);
+            this.loadingPanel.MinimumSize = new System.Drawing.Size(420, 196);
             this.loadingPanel.Name = "loadingPanel";
-            this.loadingPanel.Size = new System.Drawing.Size(373, 203);
+            this.loadingPanel.Size = new System.Drawing.Size(435, 234);
             this.loadingPanel.TabIndex = 57;
             // 
             // loadingTitleTextBox
@@ -503,9 +525,10 @@ namespace SorterExpress.Forms
             this.loadingTitleTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.loadingTitleTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.loadingTitleTextBox.Enabled = false;
-            this.loadingTitleTextBox.Location = new System.Drawing.Point(3, 15);
+            this.loadingTitleTextBox.Location = new System.Drawing.Point(4, 17);
+            this.loadingTitleTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.loadingTitleTextBox.Name = "loadingTitleTextBox";
-            this.loadingTitleTextBox.Size = new System.Drawing.Size(365, 13);
+            this.loadingTitleTextBox.Size = new System.Drawing.Size(426, 16);
             this.loadingTitleTextBox.TabIndex = 1;
             this.loadingTitleTextBox.Text = "Loading...";
             this.loadingTitleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -518,9 +541,10 @@ namespace SorterExpress.Forms
             this.loadingDescriptionRichTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.loadingDescriptionRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.loadingDescriptionRichTextBox.Enabled = false;
-            this.loadingDescriptionRichTextBox.Location = new System.Drawing.Point(53, 46);
+            this.loadingDescriptionRichTextBox.Location = new System.Drawing.Point(62, 53);
+            this.loadingDescriptionRichTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.loadingDescriptionRichTextBox.Name = "loadingDescriptionRichTextBox";
-            this.loadingDescriptionRichTextBox.Size = new System.Drawing.Size(265, 105);
+            this.loadingDescriptionRichTextBox.Size = new System.Drawing.Size(309, 121);
             this.loadingDescriptionRichTextBox.TabIndex = 2;
             this.loadingDescriptionRichTextBox.Text = "Please Wait";
             // 
@@ -528,9 +552,10 @@ namespace SorterExpress.Forms
             // 
             this.loadingProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.loadingProgressBar.Location = new System.Drawing.Point(15, 162);
+            this.loadingProgressBar.Location = new System.Drawing.Point(18, 187);
+            this.loadingProgressBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.loadingProgressBar.Name = "loadingProgressBar";
-            this.loadingProgressBar.Size = new System.Drawing.Size(335, 23);
+            this.loadingProgressBar.Size = new System.Drawing.Size(391, 27);
             this.loadingProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.loadingProgressBar.TabIndex = 0;
             // 
@@ -541,9 +566,10 @@ namespace SorterExpress.Forms
             this.subfolderPanel.DataBindings.Add(new System.Windows.Forms.Binding("Subfolders", this.sortControllerBindingSource, "Subfolders", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.subfolderPanel.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sortControllerBindingSource, "EnabledFileInteractionButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.subfolderPanel.Filter = "";
-            this.subfolderPanel.Location = new System.Drawing.Point(271, 91);
+            this.subfolderPanel.Location = new System.Drawing.Point(316, 105);
+            this.subfolderPanel.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.subfolderPanel.Name = "subfolderPanel";
-            this.subfolderPanel.Size = new System.Drawing.Size(213, 191);
+            this.subfolderPanel.Size = new System.Drawing.Size(248, 220);
             this.subfolderPanel.Subfolders = null;
             this.subfolderPanel.TabIndex = 14;
             this.subfolderPanel.SubfolderButtonClicked += new System.EventHandler<SorterExpress.Controls.SubfolderButtonClickedEventArgs>(this.subfolderPanel_SubfolderButtonClicked);
@@ -555,9 +581,10 @@ namespace SorterExpress.Forms
             this.tagPanel.DataBindings.Add(new System.Windows.Forms.Binding("EnabledTags", this.sortControllerBindingSource, "EnabledTags", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.tagPanel.DataBindings.Add(new System.Windows.Forms.Binding("Tags", this.sortControllerBindingSource, "Tags", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.tagPanel.EnabledTags = null;
-            this.tagPanel.Location = new System.Drawing.Point(9, 161);
+            this.tagPanel.Location = new System.Drawing.Point(10, 186);
+            this.tagPanel.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.tagPanel.Name = "tagPanel";
-            this.tagPanel.Size = new System.Drawing.Size(253, 121);
+            this.tagPanel.Size = new System.Drawing.Size(295, 140);
             this.tagPanel.TabIndex = 12;
             this.tagPanel.Tags = null;
             this.tagPanel.TagButtonClicked += new System.EventHandler<SorterExpress.Controls.TagButtonClickedEventArgs>(this.tagPanel_TagButtonClicked);
@@ -567,28 +594,30 @@ namespace SorterExpress.Forms
             this.mediaViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.mediaViewer.Location = new System.Drawing.Point(490, 7);
+            this.mediaViewer.Location = new System.Drawing.Point(572, 8);
+            this.mediaViewer.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.mediaViewer.Name = "mediaViewer";
-            this.mediaViewer.Size = new System.Drawing.Size(247, 221);
+            this.mediaViewer.Size = new System.Drawing.Size(288, 255);
             this.mediaViewer.TabIndex = 54;
             this.mediaViewer.VideoPosition = -1F;
             // 
-            // label2
+            // subfolderSearchLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(268, 69);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 13);
-            this.label2.TabIndex = 59;
-            this.label2.Text = "Search";
+            this.subfolderSearchLabel.AutoSize = true;
+            this.subfolderSearchLabel.Location = new System.Drawing.Point(313, 80);
+            this.subfolderSearchLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.subfolderSearchLabel.Name = "subfolderSearchLabel";
+            this.subfolderSearchLabel.Size = new System.Drawing.Size(42, 15);
+            this.subfolderSearchLabel.TabIndex = 59;
+            this.subfolderSearchLabel.Text = "Search";
             // 
             // SortForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(747, 294);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(872, 339);
+            this.Controls.Add(this.subfolderSearchLabel);
             this.Controls.Add(this.subfolderSearchTextBox);
             this.Controls.Add(this.loadingPanel);
             this.Controls.Add(this.subfolderPanel);
@@ -617,7 +646,8 @@ namespace SorterExpress.Forms
             this.Controls.Add(this.fileIndexTableLayoutPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(750, 300);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MinimumSize = new System.Drawing.Size(872, 340);
             this.Name = "SortForm";
             this.Text = "Sorter Express - Sort";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SortForm_FormClosed);
@@ -678,7 +708,7 @@ namespace SorterExpress.Forms
         internal System.Windows.Forms.Button addTagButton;
         public System.Windows.Forms.Button saveButton;
         public System.Windows.Forms.TextBox subfolderSearchTextBox;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label subfolderSearchLabel;
     }
 }
 
