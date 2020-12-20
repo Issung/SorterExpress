@@ -372,6 +372,12 @@
     <EmbeddedResource Include="MACTrackBarLib.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ffprobe.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon2Blue.ico" />
     <Content Include="Icon3Blue.ico" />
     <Content Include="Todo List and Notes.txt" />
