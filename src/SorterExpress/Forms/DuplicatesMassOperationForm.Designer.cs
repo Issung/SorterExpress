@@ -194,7 +194,7 @@
             this.row1ComboBox.Location = new System.Drawing.Point(33, 3);
             this.row1ComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.row1ComboBox.Name = "row1ComboBox";
-            this.row1ComboBox.Size = new System.Drawing.Size(268, 23);
+            this.row1ComboBox.Size = new System.Drawing.Size(232, 23);
             this.row1ComboBox.TabIndex = 1;
             this.row1ComboBox.Tag = "0";
             this.row1ComboBox.SelectionChangeCommitted += new System.EventHandler(this.comboBox_SelectionChangeCommitted);

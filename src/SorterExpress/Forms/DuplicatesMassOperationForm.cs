@@ -54,7 +54,7 @@ namespace SorterExpress.Forms
 
         private void KeepFilePreferenceFlowLayoutPanel_Resize(object sender, EventArgs e)
         {
-            const int BIG_WIDTH = 305;
+            const int BIG_WIDTH = 263;
             const int SMALL_WIDTH = BIG_WIDTH - 20;
 
             if (keepFilePreferenceFlowLayoutPanel.VerticalScroll.Visible)
@@ -74,24 +74,24 @@ namespace SorterExpress.Forms
             // Row 
             TableLayoutPanel row = new TableLayoutPanel();
             row.ColumnCount = 2;
-            row.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 29F));
+            row.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 25F));
             row.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            row.Location = new Point(4, 3);
+            row.Location = new Point(3, 3);
             row.Name = $"row{index}";
             row.Tag = index;
             row.RowCount = 1;
             row.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            row.RowStyles.Add(new RowStyle(SizeType.Absolute, 32F));
-            row.Size = new Size(305, 32);
+            row.RowStyles.Add(new RowStyle(SizeType.Absolute, 28F));
+            row.Size = new Size(263, 28);
             row.TabIndex = 0;
 
             // Label 
             Label rowLabel = new Label();
             rowLabel.AutoSize = true;
             rowLabel.Dock = DockStyle.Fill;
-            rowLabel.Location = new Point(4, 0);
+            rowLabel.Location = new Point(3, 0);
             rowLabel.Name = $"row{index}Label";
-            rowLabel.Size = new Size(21, 32);
+            rowLabel.Size = new Size(19, 28);
             rowLabel.TabIndex = 0;
             rowLabel.Text = $"{index + 1}.";
             rowLabel.TextAlign = ContentAlignment.MiddleCenter;
@@ -102,10 +102,10 @@ namespace SorterExpress.Forms
             rowComboBox.Dock = DockStyle.Fill;
             rowComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             rowComboBox.FormattingEnabled = true;
-            rowComboBox.Location = new Point(33, 3);
+            rowComboBox.Location = new Point(28, 3);
             rowComboBox.Name = $"row{index}ComboBox";
-            rowComboBox.Size = new Size(268, 23);
-            rowComboBox.Margin = new Padding(5, 3, 3, 3);
+            rowComboBox.Size = new Size(232, 23);
+            //rowComboBox.Margin = new Padding(5, 3, 3, 3);
             rowComboBox.TabIndex = 1;
             rowComboBox.SelectionChangeCommitted += new EventHandler(comboBox_SelectionChangeCommitted);
 
