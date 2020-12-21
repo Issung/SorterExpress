@@ -242,7 +242,7 @@ namespace SorterExpress.Forms
 
     public class TagsListModel : INotifyPropertyChanged
     {
-        public BindingList<string> Tags { get; set; } = new BindingList<string>(Settings.Default.Tags.ToList() ?? new List<string>());
+        public BindingList<string> Tags { get; set; } = new BindingList<string>(Settings.Default.Tags?.ToList() ?? new List<string>());
 
         public string TagCount { get { return $"{Tags.Count} Tags"; } }
 
