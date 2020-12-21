@@ -31,6 +31,9 @@ namespace SorterExpress.Forms
         long thumbSizeTotalBytes = 0;
         string thumbSizeLabelText(int size) => $"Thumbs Storage Size: {size} Mb";
 
+        public delegate void TagsSavedEvent(IEnumerable<string> currentTags);
+        public event TagsSavedEvent TagsSaved;
+
         /// <summary>
         /// TODO: Implement the callbacks and funcs everywhere that the SettingsForm constructor is used.
         /// </summary>
@@ -167,7 +170,17 @@ namespace SorterExpress.Forms
             Process.Start("https://github.com/Issung/SorterExpress");
         }
 
-        private void ClearTagsButton_Click(object sender, EventArgs e)
+        private void manageTagLibraryButton_Click(object sender, EventArgs e)
+        {
+            TagsListForm tagsListForm = new TagsListForm();
+            tagsListForm.TagsSaved += (newCurrentTags) =>
+            {
+                TagsSaved?.Invoke(newCurrentTags);
+            };
+            tagsListForm.ShowDialog();
+        }
+
+        /*private void ClearTagsButton_Click(object sender, EventArgs e)
         {
             var answer = MessageBox.Show("Really delete all tags? This is irreversible.", "Really delete all tags?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
 
@@ -178,7 +191,7 @@ namespace SorterExpress.Forms
                 if (setDisplayAllTagsAction != null)
                     setTagsAction.Invoke(new List<string>());
             }
-        }
+        }*/
 
         private void ExportTagsButton_Click(object sender, System.EventArgs e)
         {
@@ -250,7 +263,8 @@ namespace SorterExpress.Forms
                 }
                 else
                 {
-                    thumbsSizeWorkerCancelToken.Cancel();
+                    if (thumbsSizeWorkerCancelToken != null)
+                        thumbsSizeWorkerCancelToken.Cancel();
                     e.Cancel = false;
                 }
             }

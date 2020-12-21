@@ -34,6 +34,7 @@ namespace SorterExpress.Forms
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DuplicatesForm));
             this.keepRightButton = new System.Windows.Forms.Button();
+            this.duplicatesFormModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.keepLeftButton = new System.Windows.Forms.Button();
             this.keepBothButton = new System.Windows.Forms.Button();
             this.openDirectoryButton = new System.Windows.Forms.Button();
@@ -70,7 +71,9 @@ namespace SorterExpress.Forms
             this.filenameRichTextBoxRight = new System.Windows.Forms.RichTextBox();
             this.sidesLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.leftPanel = new System.Windows.Forms.Panel();
+            this.mediaViewerLeft = new SorterExpress.Controls.MediaViewer();
             this.rightPanel = new System.Windows.Forms.Panel();
+            this.mediaViewerRight = new SorterExpress.Controls.MediaViewer();
             this.keepButtonsLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.progressBar = new System.Windows.Forms.ProgressBar();
@@ -80,9 +83,7 @@ namespace SorterExpress.Forms
             this.settingsButton = new System.Windows.Forms.Button();
             this.massOperationButton = new System.Windows.Forms.Button();
             this.filtersGroupBox = new System.Windows.Forms.GroupBox();
-            this.duplicatesFormModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.mediaViewerLeft = new SorterExpress.Controls.MediaViewer();
-            this.mediaViewerRight = new SorterExpress.Controls.MediaViewer();
+            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).BeginInit();
@@ -93,7 +94,6 @@ namespace SorterExpress.Forms
             this.keepButtonsLayoutPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.filtersGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // keepRightButton
@@ -102,15 +102,19 @@ namespace SorterExpress.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.keepRightButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.keepRightButton.Location = new System.Drawing.Point(345, 0);
+            this.keepRightButton.Location = new System.Drawing.Point(402, 0);
             this.keepRightButton.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.keepRightButton.MaximumSize = new System.Drawing.Size(0, 23);
+            this.keepRightButton.MaximumSize = new System.Drawing.Size(0, 27);
             this.keepRightButton.Name = "keepRightButton";
-            this.keepRightButton.Size = new System.Drawing.Size(341, 23);
+            this.keepRightButton.Size = new System.Drawing.Size(398, 27);
             this.keepRightButton.TabIndex = 4;
             this.keepRightButton.Text = "Keep &Right (Delete Left)";
             this.keepRightButton.UseVisualStyleBackColor = true;
             this.keepRightButton.Click += new System.EventHandler(this.keepRightButton_Click);
+            // 
+            // duplicatesFormModelBindingSource
+            // 
+            this.duplicatesFormModelBindingSource.DataSource = typeof(SorterExpress.Controllers.DuplicatesFormModel);
             // 
             // keepLeftButton
             // 
@@ -120,9 +124,9 @@ namespace SorterExpress.Forms
             this.keepLeftButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.keepLeftButton.Location = new System.Drawing.Point(0, 0);
             this.keepLeftButton.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.keepLeftButton.MaximumSize = new System.Drawing.Size(0, 23);
+            this.keepLeftButton.MaximumSize = new System.Drawing.Size(0, 27);
             this.keepLeftButton.Name = "keepLeftButton";
-            this.keepLeftButton.Size = new System.Drawing.Size(341, 23);
+            this.keepLeftButton.Size = new System.Drawing.Size(398, 27);
             this.keepLeftButton.TabIndex = 5;
             this.keepLeftButton.Text = "Keep &Left (Delete Right)";
             this.keepLeftButton.UseVisualStyleBackColor = true;
@@ -133,9 +137,10 @@ namespace SorterExpress.Forms
             this.keepBothButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.keepBothButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.keepBothButton.Location = new System.Drawing.Point(198, 353);
+            this.keepBothButton.Location = new System.Drawing.Point(231, 407);
+            this.keepBothButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.keepBothButton.Name = "keepBothButton";
-            this.keepBothButton.Size = new System.Drawing.Size(686, 23);
+            this.keepBothButton.Size = new System.Drawing.Size(800, 27);
             this.keepBothButton.TabIndex = 6;
             this.keepBothButton.Text = "Keep &Both (Remove Match From List)";
             this.keepBothButton.UseVisualStyleBackColor = true;
@@ -143,9 +148,10 @@ namespace SorterExpress.Forms
             // 
             // openDirectoryButton
             // 
-            this.openDirectoryButton.Location = new System.Drawing.Point(12, 37);
+            this.openDirectoryButton.Location = new System.Drawing.Point(14, 43);
+            this.openDirectoryButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.openDirectoryButton.Name = "openDirectoryButton";
-            this.openDirectoryButton.Size = new System.Drawing.Size(180, 23);
+            this.openDirectoryButton.Size = new System.Drawing.Size(210, 27);
             this.openDirectoryButton.TabIndex = 0;
             this.openDirectoryButton.Text = "Open Directory";
             this.openDirectoryButton.UseVisualStyleBackColor = true;
@@ -157,9 +163,10 @@ namespace SorterExpress.Forms
             this.similarityNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
             this.similarityNumeric.DecimalPlaces = 1;
             this.similarityNumeric.Enabled = false;
-            this.similarityNumeric.Location = new System.Drawing.Point(54, 155);
+            this.similarityNumeric.Location = new System.Drawing.Point(63, 179);
+            this.similarityNumeric.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.similarityNumeric.Name = "similarityNumeric";
-            this.similarityNumeric.Size = new System.Drawing.Size(63, 20);
+            this.similarityNumeric.Size = new System.Drawing.Size(74, 23);
             this.similarityNumeric.TabIndex = 9;
             this.similarityNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip.SetToolTip(this.similarityNumeric, "Images searched must have a similarity chance of this or above to be considered a" +
@@ -173,9 +180,10 @@ namespace SorterExpress.Forms
             // similarityLabel
             // 
             this.similarityLabel.AutoSize = true;
-            this.similarityLabel.Location = new System.Drawing.Point(2, 158);
+            this.similarityLabel.Location = new System.Drawing.Point(2, 182);
+            this.similarityLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.similarityLabel.Name = "similarityLabel";
-            this.similarityLabel.Size = new System.Drawing.Size(53, 13);
+            this.similarityLabel.Size = new System.Drawing.Size(62, 15);
             this.similarityLabel.TabIndex = 10;
             this.similarityLabel.Text = "Similarity: ";
             // 
@@ -183,10 +191,10 @@ namespace SorterExpress.Forms
             // 
             this.infoRichTextBoxLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.infoRichTextBoxLeft.Location = new System.Drawing.Point(0, 0);
-            this.infoRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(10);
+            this.infoRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(12, 12, 12, 12);
             this.infoRichTextBoxLeft.Name = "infoRichTextBoxLeft";
             this.infoRichTextBoxLeft.ReadOnly = true;
-            this.infoRichTextBoxLeft.Size = new System.Drawing.Size(100, 235);
+            this.infoRichTextBoxLeft.Size = new System.Drawing.Size(116, 271);
             this.infoRichTextBoxLeft.TabIndex = 3;
             this.infoRichTextBoxLeft.Text = "";
             this.toolTip.SetToolTip(this.infoRichTextBoxLeft, resources.GetString("infoRichTextBoxLeft.ToolTip"));
@@ -196,11 +204,11 @@ namespace SorterExpress.Forms
             this.infoRichTextBoxRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.infoRichTextBoxRight.Location = new System.Drawing.Point(10, 0);
-            this.infoRichTextBoxRight.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.infoRichTextBoxRight.Location = new System.Drawing.Point(12, 0);
+            this.infoRichTextBoxRight.Margin = new System.Windows.Forms.Padding(12, 0, 12, 0);
             this.infoRichTextBoxRight.Name = "infoRichTextBoxRight";
             this.infoRichTextBoxRight.ReadOnly = true;
-            this.infoRichTextBoxRight.Size = new System.Drawing.Size(100, 235);
+            this.infoRichTextBoxRight.Size = new System.Drawing.Size(116, 271);
             this.infoRichTextBoxRight.TabIndex = 3;
             this.infoRichTextBoxRight.Text = "";
             this.toolTip.SetToolTip(this.infoRichTextBoxRight, resources.GetString("infoRichTextBoxRight.ToolTip"));
@@ -208,9 +216,10 @@ namespace SorterExpress.Forms
             // searchButton
             // 
             this.searchButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
-            this.searchButton.Location = new System.Drawing.Point(10, 264);
+            this.searchButton.Location = new System.Drawing.Point(12, 305);
+            this.searchButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(117, 23);
+            this.searchButton.Size = new System.Drawing.Size(136, 27);
             this.searchButton.TabIndex = 18;
             this.searchButton.Text = "Search";
             this.toolTip.SetToolTip(this.searchButton, "If you have changed the similarity threshold and wish to search the same director" +
@@ -224,9 +233,10 @@ namespace SorterExpress.Forms
             this.imagesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "SearchImages", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.imagesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
             this.imagesCheckBox.Enabled = false;
-            this.imagesCheckBox.Location = new System.Drawing.Point(6, 47);
+            this.imagesCheckBox.Location = new System.Drawing.Point(7, 54);
+            this.imagesCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.imagesCheckBox.Name = "imagesCheckBox";
-            this.imagesCheckBox.Size = new System.Drawing.Size(60, 17);
+            this.imagesCheckBox.Size = new System.Drawing.Size(64, 19);
             this.imagesCheckBox.TabIndex = 20;
             this.imagesCheckBox.Text = "Images";
             this.toolTip.SetToolTip(this.imagesCheckBox, "Search image files for duplicates.");
@@ -239,9 +249,10 @@ namespace SorterExpress.Forms
             this.videosCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "SearchVideos", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.videosCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
             this.videosCheckBox.Enabled = false;
-            this.videosCheckBox.Location = new System.Drawing.Point(70, 47);
+            this.videosCheckBox.Location = new System.Drawing.Point(82, 54);
+            this.videosCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.videosCheckBox.Name = "videosCheckBox";
-            this.videosCheckBox.Size = new System.Drawing.Size(58, 17);
+            this.videosCheckBox.Size = new System.Drawing.Size(61, 19);
             this.videosCheckBox.TabIndex = 21;
             this.videosCheckBox.Text = "Videos";
             this.toolTip.SetToolTip(this.videosCheckBox, "Search video files for duplicates.\r\n");
@@ -253,7 +264,8 @@ namespace SorterExpress.Forms
             this.threadCountNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.duplicatesFormModelBindingSource, "ThreadCount", true));
             this.threadCountNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
             this.threadCountNumeric.Enabled = false;
-            this.threadCountNumeric.Location = new System.Drawing.Point(54, 132);
+            this.threadCountNumeric.Location = new System.Drawing.Point(63, 152);
+            this.threadCountNumeric.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.threadCountNumeric.Maximum = new decimal(new int[] {
             16,
             0,
@@ -265,7 +277,7 @@ namespace SorterExpress.Forms
             0,
             0});
             this.threadCountNumeric.Name = "threadCountNumeric";
-            this.threadCountNumeric.Size = new System.Drawing.Size(63, 20);
+            this.threadCountNumeric.Size = new System.Drawing.Size(74, 23);
             this.threadCountNumeric.TabIndex = 22;
             this.threadCountNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip.SetToolTip(this.threadCountNumeric, "Thread count for calculating file \'fingerprints\' used for finding similarities, t" +
@@ -281,9 +293,10 @@ namespace SorterExpress.Forms
             // 
             this.cancelButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSearching", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.cancelButton.Enabled = false;
-            this.cancelButton.Location = new System.Drawing.Point(132, 264);
+            this.cancelButton.Location = new System.Drawing.Point(154, 305);
+            this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(61, 23);
+            this.cancelButton.Size = new System.Drawing.Size(71, 27);
             this.cancelButton.TabIndex = 24;
             this.cancelButton.Text = "Cancel";
             this.toolTip.SetToolTip(this.cancelButton, "If you have changed the similarity threshold and wish to search the same director" +
@@ -297,9 +310,10 @@ namespace SorterExpress.Forms
             this.mergeFileTagsCheckBox.AutoSize = true;
             this.mergeFileTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "MergeFileTags", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.mergeFileTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.mergeFileTagsCheckBox.Location = new System.Drawing.Point(197, 306);
+            this.mergeFileTagsCheckBox.Location = new System.Drawing.Point(230, 354);
+            this.mergeFileTagsCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.mergeFileTagsCheckBox.Name = "mergeFileTagsCheckBox";
-            this.mergeFileTagsCheckBox.Size = new System.Drawing.Size(112, 17);
+            this.mergeFileTagsCheckBox.Size = new System.Drawing.Size(121, 19);
             this.mergeFileTagsCheckBox.TabIndex = 28;
             this.mergeFileTagsCheckBox.Text = "Merge File Tags �";
             this.toolTip.SetToolTip(this.mergeFileTagsCheckBox, "When selecting a file to keep (left or right), if this option is ticked, then Sor" +
@@ -313,9 +327,10 @@ namespace SorterExpress.Forms
             this.onlyKeepLibraryTagsCheckBox.AutoSize = true;
             this.onlyKeepLibraryTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "OnlyKeepTagsThatAreInLibrary", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.onlyKeepLibraryTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableOnlyKeepTagsInLibraryButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.onlyKeepLibraryTagsCheckBox.Location = new System.Drawing.Point(315, 306);
+            this.onlyKeepLibraryTagsCheckBox.Location = new System.Drawing.Point(368, 354);
+            this.onlyKeepLibraryTagsCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.onlyKeepLibraryTagsCheckBox.Name = "onlyKeepLibraryTagsCheckBox";
-            this.onlyKeepLibraryTagsCheckBox.Size = new System.Drawing.Size(205, 17);
+            this.onlyKeepLibraryTagsCheckBox.Size = new System.Drawing.Size(230, 19);
             this.onlyKeepLibraryTagsCheckBox.TabIndex = 29;
             this.onlyKeepLibraryTagsCheckBox.Text = "Only keep tags that are in tag library �";
             this.toolTip.SetToolTip(this.onlyKeepLibraryTagsCheckBox, resources.GetString("onlyKeepLibraryTagsCheckBox.ToolTip"));
@@ -326,9 +341,10 @@ namespace SorterExpress.Forms
             this.matchFileTypesCheckBox.AutoSize = true;
             this.matchFileTypesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "OnlyMatchSameFileTypes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.matchFileTypesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableMatchFileTypesCheckBox", true));
-            this.matchFileTypesCheckBox.Location = new System.Drawing.Point(6, 68);
+            this.matchFileTypesCheckBox.Location = new System.Drawing.Point(7, 78);
+            this.matchFileTypesCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.matchFileTypesCheckBox.Name = "matchFileTypesCheckBox";
-            this.matchFileTypesCheckBox.Size = new System.Drawing.Size(173, 17);
+            this.matchFileTypesCheckBox.Size = new System.Drawing.Size(187, 19);
             this.matchFileTypesCheckBox.TabIndex = 37;
             this.matchFileTypesCheckBox.Text = "Only Match Files of Same Type";
             this.toolTip.SetToolTip(this.matchFileTypesCheckBox, "Only match duplicates if the file types match.\r\nImages will only match images and" +
@@ -339,9 +355,10 @@ namespace SorterExpress.Forms
             // 
             this.fileCountLabel.AutoSize = true;
             this.fileCountLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.duplicatesFormModelBindingSource, "FileAndMatchesCountText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.fileCountLabel.Location = new System.Drawing.Point(12, 248);
+            this.fileCountLabel.Location = new System.Drawing.Point(14, 286);
+            this.fileCountLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.fileCountLabel.Name = "fileCountLabel";
-            this.fileCountLabel.Size = new System.Drawing.Size(40, 13);
+            this.fileCountLabel.Size = new System.Drawing.Size(42, 15);
             this.fileCountLabel.TabIndex = 25;
             this.fileCountLabel.Text = "Files: 0";
             this.toolTip.SetToolTip(this.fileCountLabel, "The amount of files that will be searched given the given search criteria, and;\r\n" +
@@ -354,9 +371,10 @@ namespace SorterExpress.Forms
             this.cropLeftRightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "CropLeftAndRight", true));
             this.cropLeftRightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
             this.cropLeftRightCheckBox.Enabled = false;
-            this.cropLeftRightCheckBox.Location = new System.Drawing.Point(6, 90);
+            this.cropLeftRightCheckBox.Location = new System.Drawing.Point(7, 104);
+            this.cropLeftRightCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cropLeftRightCheckBox.Name = "cropLeftRightCheckBox";
-            this.cropLeftRightCheckBox.Size = new System.Drawing.Size(106, 17);
+            this.cropLeftRightCheckBox.Size = new System.Drawing.Size(119, 19);
             this.cropLeftRightCheckBox.TabIndex = 31;
             this.cropLeftRightCheckBox.Text = "Crop Left & Right";
             this.toolTip.SetToolTip(this.cropLeftRightCheckBox, "Crop black borders on the left and right of files.");
@@ -369,9 +387,10 @@ namespace SorterExpress.Forms
             this.cropTopBottomCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "CropTopAndBottom", true));
             this.cropTopBottomCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
             this.cropTopBottomCheckBox.Enabled = false;
-            this.cropTopBottomCheckBox.Location = new System.Drawing.Point(6, 112);
+            this.cropTopBottomCheckBox.Location = new System.Drawing.Point(7, 129);
+            this.cropTopBottomCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cropTopBottomCheckBox.Name = "cropTopBottomCheckBox";
-            this.cropTopBottomCheckBox.Size = new System.Drawing.Size(115, 17);
+            this.cropTopBottomCheckBox.Size = new System.Drawing.Size(130, 19);
             this.cropTopBottomCheckBox.TabIndex = 32;
             this.cropTopBottomCheckBox.Text = "Crop Top & Bottom";
             this.toolTip.SetToolTip(this.cropTopBottomCheckBox, "Crop black borders on the top and bottom of files.");
@@ -385,9 +404,10 @@ namespace SorterExpress.Forms
             this.searchScopeComboBox.DisplayMember = "EnumDescription";
             this.searchScopeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.searchScopeComboBox.DropDownWidth = 300;
-            this.searchScopeComboBox.Location = new System.Drawing.Point(6, 19);
+            this.searchScopeComboBox.Location = new System.Drawing.Point(7, 22);
+            this.searchScopeComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.searchScopeComboBox.Name = "searchScopeComboBox";
-            this.searchScopeComboBox.Size = new System.Drawing.Size(168, 21);
+            this.searchScopeComboBox.Size = new System.Drawing.Size(195, 23);
             this.searchScopeComboBox.TabIndex = 38;
             this.toolTip.SetToolTip(this.searchScopeComboBox, resources.GetString("searchScopeComboBox.ToolTip"));
             this.searchScopeComboBox.ValueMember = "EnumValue";
@@ -407,7 +427,8 @@ namespace SorterExpress.Forms
             this.similarityColumn});
             this.matchesDataGridView.ContextMenuStrip = this.matchesContextMenu;
             this.matchesDataGridView.DataBindings.Add(new System.Windows.Forms.Binding("DataSource", this.duplicatesFormModelBindingSource, "Duplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.matchesDataGridView.Location = new System.Drawing.Point(11, 290);
+            this.matchesDataGridView.Location = new System.Drawing.Point(13, 335);
+            this.matchesDataGridView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.matchesDataGridView.MultiSelect = false;
             this.matchesDataGridView.Name = "matchesDataGridView";
             this.matchesDataGridView.ReadOnly = true;
@@ -416,7 +437,7 @@ namespace SorterExpress.Forms
             this.matchesDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.matchesDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.matchesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.matchesDataGridView.Size = new System.Drawing.Size(181, 85);
+            this.matchesDataGridView.Size = new System.Drawing.Size(211, 98);
             this.matchesDataGridView.TabIndex = 30;
             this.toolTip.SetToolTip(this.matchesDataGridView, resources.GetString("matchesDataGridView.ToolTip"));
             this.matchesDataGridView.CellContextMenuStripNeeded += new System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventHandler(this.MatchesDataGridView_CellContextMenuStripNeeded);
@@ -492,9 +513,10 @@ namespace SorterExpress.Forms
             // undoButton
             // 
             this.undoButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableUndoButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.undoButton.Location = new System.Drawing.Point(78, 12);
+            this.undoButton.Location = new System.Drawing.Point(91, 14);
+            this.undoButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.undoButton.Name = "undoButton";
-            this.undoButton.Size = new System.Drawing.Size(55, 23);
+            this.undoButton.Size = new System.Drawing.Size(64, 27);
             this.undoButton.TabIndex = 34;
             this.undoButton.Text = "Undo";
             this.toolTip.SetToolTip(this.undoButton, "Undo last action (CTRL + Z)");
@@ -504,9 +526,10 @@ namespace SorterExpress.Forms
             // button1
             // 
             this.button1.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableRedoButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.button1.Location = new System.Drawing.Point(137, 12);
+            this.button1.Location = new System.Drawing.Point(160, 14);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(55, 23);
+            this.button1.Size = new System.Drawing.Size(64, 27);
             this.button1.TabIndex = 35;
             this.button1.Text = "Redo";
             this.toolTip.SetToolTip(this.button1, "Redo last undone action (CTRL + Y)");
@@ -519,9 +542,10 @@ namespace SorterExpress.Forms
             this.loadingLabel.AutoSize = true;
             this.loadingLabel.BackColor = System.Drawing.Color.Transparent;
             this.loadingLabel.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.duplicatesFormModelBindingSource, "StateSearching", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.loadingLabel.Location = new System.Drawing.Point(10, 376);
+            this.loadingLabel.Location = new System.Drawing.Point(12, 434);
+            this.loadingLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.loadingLabel.Name = "loadingLabel";
-            this.loadingLabel.Size = new System.Drawing.Size(64, 13);
+            this.loadingLabel.Size = new System.Drawing.Size(68, 15);
             this.loadingLabel.TabIndex = 12;
             this.loadingLabel.Text = "Searching...";
             // 
@@ -534,7 +558,7 @@ namespace SorterExpress.Forms
             this.filenameRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(0);
             this.filenameRichTextBoxLeft.Name = "filenameRichTextBoxLeft";
             this.filenameRichTextBoxLeft.ReadOnly = true;
-            this.filenameRichTextBoxLeft.Size = new System.Drawing.Size(343, 50);
+            this.filenameRichTextBoxLeft.Size = new System.Drawing.Size(401, 58);
             this.filenameRichTextBoxLeft.TabIndex = 13;
             this.filenameRichTextBoxLeft.Text = "";
             // 
@@ -543,11 +567,11 @@ namespace SorterExpress.Forms
             this.filenameRichTextBoxRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.filenameRichTextBoxRight.Location = new System.Drawing.Point(353, 0);
-            this.filenameRichTextBoxRight.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.filenameRichTextBoxRight.Location = new System.Drawing.Point(413, 0);
+            this.filenameRichTextBoxRight.Margin = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.filenameRichTextBoxRight.Name = "filenameRichTextBoxRight";
             this.filenameRichTextBoxRight.ReadOnly = true;
-            this.filenameRichTextBoxRight.Size = new System.Drawing.Size(334, 50);
+            this.filenameRichTextBoxRight.Size = new System.Drawing.Size(389, 58);
             this.filenameRichTextBoxRight.TabIndex = 14;
             this.filenameRichTextBoxRight.Text = "";
             // 
@@ -561,11 +585,12 @@ namespace SorterExpress.Forms
             this.sidesLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.sidesLayoutPanel.Controls.Add(this.leftPanel, 0, 0);
             this.sidesLayoutPanel.Controls.Add(this.rightPanel, 1, 0);
-            this.sidesLayoutPanel.Location = new System.Drawing.Point(197, 66);
+            this.sidesLayoutPanel.Location = new System.Drawing.Point(230, 76);
+            this.sidesLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.sidesLayoutPanel.Name = "sidesLayoutPanel";
             this.sidesLayoutPanel.RowCount = 1;
             this.sidesLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.sidesLayoutPanel.Size = new System.Drawing.Size(686, 235);
+            this.sidesLayoutPanel.Size = new System.Drawing.Size(800, 271);
             this.sidesLayoutPanel.TabIndex = 15;
             // 
             // leftPanel
@@ -576,19 +601,41 @@ namespace SorterExpress.Forms
             this.leftPanel.Location = new System.Drawing.Point(0, 0);
             this.leftPanel.Margin = new System.Windows.Forms.Padding(0);
             this.leftPanel.Name = "leftPanel";
-            this.leftPanel.Size = new System.Drawing.Size(343, 235);
+            this.leftPanel.Size = new System.Drawing.Size(400, 271);
             this.leftPanel.TabIndex = 5;
+            // 
+            // mediaViewerLeft
+            // 
+            this.mediaViewerLeft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mediaViewerLeft.Location = new System.Drawing.Point(116, 0);
+            this.mediaViewerLeft.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.mediaViewerLeft.Name = "mediaViewerLeft";
+            this.mediaViewerLeft.Size = new System.Drawing.Size(284, 271);
+            this.mediaViewerLeft.TabIndex = 4;
+            this.mediaViewerLeft.VideoPosition = -1F;
             // 
             // rightPanel
             // 
             this.rightPanel.Controls.Add(this.mediaViewerRight);
             this.rightPanel.Controls.Add(this.infoRichTextBoxRight);
             this.rightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightPanel.Location = new System.Drawing.Point(343, 0);
+            this.rightPanel.Location = new System.Drawing.Point(400, 0);
             this.rightPanel.Margin = new System.Windows.Forms.Padding(0);
             this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Size = new System.Drawing.Size(343, 235);
+            this.rightPanel.Size = new System.Drawing.Size(400, 271);
             this.rightPanel.TabIndex = 4;
+            // 
+            // mediaViewerRight
+            // 
+            this.mediaViewerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mediaViewerRight.Location = new System.Drawing.Point(128, 0);
+            this.mediaViewerRight.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.mediaViewerRight.Name = "mediaViewerRight";
+            this.mediaViewerRight.Size = new System.Drawing.Size(273, 271);
+            this.mediaViewerRight.TabIndex = 4;
+            this.mediaViewerRight.VideoPosition = -1F;
             // 
             // keepButtonsLayoutPanel
             // 
@@ -599,12 +646,12 @@ namespace SorterExpress.Forms
             this.keepButtonsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.keepButtonsLayoutPanel.Controls.Add(this.keepRightButton, 1, 0);
             this.keepButtonsLayoutPanel.Controls.Add(this.keepLeftButton, 0, 0);
-            this.keepButtonsLayoutPanel.Location = new System.Drawing.Point(198, 329);
+            this.keepButtonsLayoutPanel.Location = new System.Drawing.Point(231, 380);
             this.keepButtonsLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
             this.keepButtonsLayoutPanel.Name = "keepButtonsLayoutPanel";
             this.keepButtonsLayoutPanel.RowCount = 1;
             this.keepButtonsLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.keepButtonsLayoutPanel.Size = new System.Drawing.Size(686, 23);
+            this.keepButtonsLayoutPanel.Size = new System.Drawing.Size(800, 27);
             this.keepButtonsLayoutPanel.TabIndex = 16;
             // 
             // tableLayoutPanel2
@@ -616,28 +663,31 @@ namespace SorterExpress.Forms
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.filenameRichTextBoxLeft, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.filenameRichTextBoxRight, 1, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(197, 12);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(230, 14);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(687, 50);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(802, 58);
             this.tableLayoutPanel2.TabIndex = 17;
             // 
             // progressBar
             // 
             this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.progressBar.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.duplicatesFormModelBindingSource, "StateSearching", true));
-            this.progressBar.Location = new System.Drawing.Point(73, 378);
+            this.progressBar.Location = new System.Drawing.Point(85, 436);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(119, 21);
+            this.progressBar.Size = new System.Drawing.Size(139, 24);
             this.progressBar.TabIndex = 19;
             // 
             // threadsLabel
             // 
             this.threadsLabel.AutoSize = true;
-            this.threadsLabel.Location = new System.Drawing.Point(2, 134);
+            this.threadsLabel.Location = new System.Drawing.Point(2, 155);
+            this.threadsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.threadsLabel.Name = "threadsLabel";
-            this.threadsLabel.Size = new System.Drawing.Size(52, 13);
+            this.threadsLabel.Size = new System.Drawing.Size(54, 15);
             this.threadsLabel.TabIndex = 23;
             this.threadsLabel.Text = "Threads: ";
             // 
@@ -646,9 +696,10 @@ namespace SorterExpress.Forms
             this.keepNeitherButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.keepNeitherButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.keepNeitherButton.Location = new System.Drawing.Point(198, 377);
+            this.keepNeitherButton.Location = new System.Drawing.Point(231, 435);
+            this.keepNeitherButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.keepNeitherButton.Name = "keepNeitherButton";
-            this.keepNeitherButton.Size = new System.Drawing.Size(686, 23);
+            this.keepNeitherButton.Size = new System.Drawing.Size(800, 27);
             this.keepNeitherButton.TabIndex = 27;
             this.keepNeitherButton.Text = "Keep &Neither (Delete Both)";
             this.keepNeitherButton.UseVisualStyleBackColor = true;
@@ -657,17 +708,19 @@ namespace SorterExpress.Forms
             // percentageLabel
             // 
             this.percentageLabel.AutoSize = true;
-            this.percentageLabel.Location = new System.Drawing.Point(118, 158);
+            this.percentageLabel.Location = new System.Drawing.Point(138, 182);
+            this.percentageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.percentageLabel.Name = "percentageLabel";
-            this.percentageLabel.Size = new System.Drawing.Size(60, 13);
+            this.percentageLabel.Size = new System.Drawing.Size(66, 15);
             this.percentageLabel.TabIndex = 11;
             this.percentageLabel.Text = "% or above";
             // 
             // settingsButton
             // 
-            this.settingsButton.Location = new System.Drawing.Point(12, 12);
+            this.settingsButton.Location = new System.Drawing.Point(14, 14);
+            this.settingsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(62, 23);
+            this.settingsButton.Size = new System.Drawing.Size(72, 27);
             this.settingsButton.TabIndex = 33;
             this.settingsButton.Text = "Settings";
             this.settingsButton.UseVisualStyleBackColor = true;
@@ -678,9 +731,10 @@ namespace SorterExpress.Forms
             this.massOperationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.massOperationButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.massOperationButton.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.duplicatesFormModelBindingSource, "StateNotSearching", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.massOperationButton.Location = new System.Drawing.Point(10, 377);
+            this.massOperationButton.Location = new System.Drawing.Point(12, 435);
+            this.massOperationButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.massOperationButton.Name = "massOperationButton";
-            this.massOperationButton.Size = new System.Drawing.Size(183, 23);
+            this.massOperationButton.Size = new System.Drawing.Size(214, 27);
             this.massOperationButton.TabIndex = 36;
             this.massOperationButton.Text = "Mass Operation";
             this.massOperationButton.UseVisualStyleBackColor = true;
@@ -699,42 +753,20 @@ namespace SorterExpress.Forms
             this.filtersGroupBox.Controls.Add(this.threadCountNumeric);
             this.filtersGroupBox.Controls.Add(this.cropLeftRightCheckBox);
             this.filtersGroupBox.Controls.Add(this.cropTopBottomCheckBox);
-            this.filtersGroupBox.Location = new System.Drawing.Point(12, 63);
+            this.filtersGroupBox.Location = new System.Drawing.Point(14, 73);
+            this.filtersGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.filtersGroupBox.Name = "filtersGroupBox";
-            this.filtersGroupBox.Size = new System.Drawing.Size(180, 182);
+            this.filtersGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.filtersGroupBox.Size = new System.Drawing.Size(210, 210);
             this.filtersGroupBox.TabIndex = 39;
             this.filtersGroupBox.TabStop = false;
             this.filtersGroupBox.Text = "Search Filters";
             // 
-            // duplicatesFormModelBindingSource
-            // 
-            this.duplicatesFormModelBindingSource.DataSource = typeof(SorterExpress.Controllers.DuplicatesFormModel);
-            // 
-            // mediaViewerLeft
-            // 
-            this.mediaViewerLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mediaViewerLeft.Location = new System.Drawing.Point(100, 0);
-            this.mediaViewerLeft.Name = "mediaViewerLeft";
-            this.mediaViewerLeft.Size = new System.Drawing.Size(243, 235);
-            this.mediaViewerLeft.TabIndex = 4;
-            this.mediaViewerLeft.VideoPosition = -1F;
-            // 
-            // mediaViewerRight
-            // 
-            this.mediaViewerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mediaViewerRight.Location = new System.Drawing.Point(110, 0);
-            this.mediaViewerRight.Name = "mediaViewerRight";
-            this.mediaViewerRight.Size = new System.Drawing.Size(234, 235);
-            this.mediaViewerRight.TabIndex = 4;
-            this.mediaViewerRight.VideoPosition = -1F;
-            // 
             // DuplicatesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(893, 411);
+            this.ClientSize = new System.Drawing.Size(1042, 474);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.undoButton);
             this.Controls.Add(this.settingsButton);
@@ -756,12 +788,14 @@ namespace SorterExpress.Forms
             this.Controls.Add(this.filtersGroupBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(909, 450);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MinimumSize = new System.Drawing.Size(1058, 513);
             this.Name = "DuplicatesForm";
             this.Text = "Sorter Express - Duplicate Search";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DuplicatesForm_FormClosing);
             this.Shown += new System.EventHandler(this.DuplicatesForm_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DuplicatesForm_KeyDown);
+            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).EndInit();
@@ -773,7 +807,6 @@ namespace SorterExpress.Forms
             this.tableLayoutPanel2.ResumeLayout(false);
             this.filtersGroupBox.ResumeLayout(false);
             this.filtersGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

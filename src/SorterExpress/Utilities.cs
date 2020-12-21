@@ -71,6 +71,8 @@ namespace SorterExpress
 
     class Utilities
     {
+        public const string TAGS_FILE_EXTENSION = "tgs";
+
         private static MD5 md5 = null;
         public static readonly string[] videoFileExtensions = { ".webm", ".avi", ".mp4", ".flv" };
         public static readonly string[] imageFileExtensions = { ".jpg", ".jpeg", ".jpg_large", ".png", ".bmp", ".gif" };

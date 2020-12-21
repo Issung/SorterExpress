@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace SorterExpress.Forms
@@ -89,6 +90,25 @@ namespace SorterExpress.Forms
         private void exitButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void updateView_UpdateStarted(object sender, EventArgs e)
+        {
+            var controls = new Control[] { 
+                sortButton, 
+                massTagButton, 
+                viewFormButton, 
+                renameTagButton, 
+                duplicatesButton, 
+                allInOneButton, 
+                settingsButton, 
+                exitButton 
+            };
+
+            foreach (Control control in controls)
+            {
+                control.Enabled = false;
+            }
         }
     }
 }

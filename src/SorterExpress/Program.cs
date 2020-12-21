@@ -20,7 +20,8 @@ namespace SorterExpress
         /// <summary>
         /// The name of the program.
         /// </summary>
-        public const string NAME = "SorterExpress";
+        public static readonly string NAME = "SorterExpress";
+        public static readonly string GITHUB_REPOSITORY_OWNER = "Issung";
 
         [STAThread]
         static void Main(string[] args)

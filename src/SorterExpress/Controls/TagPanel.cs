@@ -21,6 +21,8 @@ namespace SorterExpress.Controls
 
         public event EventHandler<TagButtonClickedEventArgs> TagButtonClicked;
 
+        public bool ReorderButtons = true;
+
         public TagPanel()
         {
             InitializeComponent();
@@ -140,6 +142,9 @@ namespace SorterExpress.Controls
         /// </summary>
         public void ReorderTagButtons()
         {
+            if (!ReorderButtons)
+                return;
+
             int scrollY = scrollPanel.AutoScrollPosition.Y;
 
             CheckBox[] scope;

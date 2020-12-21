@@ -39,24 +39,25 @@
             // 
             // promptLabel
             // 
-            this.promptLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.promptLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.promptLabel.AutoSize = true;
-            this.promptLabel.Location = new System.Drawing.Point(82, 9);
+            this.promptLabel.Location = new System.Drawing.Point(19, 13);
+            this.promptLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.promptLabel.Name = "promptLabel";
-            this.promptLabel.Size = new System.Drawing.Size(262, 13);
+            this.promptLabel.Size = new System.Drawing.Size(455, 15);
             this.promptLabel.TabIndex = 0;
             this.promptLabel.Text = "Please enter a string. Some characters are disallowed.";
             this.promptLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // entryTextBox
             // 
-            this.entryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.entryTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.entryTextBox.Location = new System.Drawing.Point(16, 40);
+            this.entryTextBox.Location = new System.Drawing.Point(19, 46);
+            this.entryTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.entryTextBox.Name = "entryTextBox";
-            this.entryTextBox.Size = new System.Drawing.Size(391, 20);
+            this.entryTextBox.Size = new System.Drawing.Size(455, 23);
             this.entryTextBox.TabIndex = 1;
             this.entryTextBox.TextChanged += new System.EventHandler(this.entryTextBox_TextChanged);
             this.entryTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.entryTextBox_KeyPress);
@@ -67,7 +68,7 @@
             this.okButton.Location = new System.Drawing.Point(0, 0);
             this.okButton.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(193, 23);
+            this.okButton.Size = new System.Drawing.Size(226, 27);
             this.okButton.TabIndex = 2;
             this.okButton.Text = "OK";
             this.okButton.UseVisualStyleBackColor = true;
@@ -76,10 +77,10 @@
             // cancelButton
             // 
             this.cancelButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cancelButton.Location = new System.Drawing.Point(197, 0);
+            this.cancelButton.Location = new System.Drawing.Point(230, 0);
             this.cancelButton.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(194, 23);
+            this.cancelButton.Size = new System.Drawing.Size(226, 27);
             this.cancelButton.TabIndex = 3;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
@@ -87,33 +88,38 @@
             // 
             // buttonTableLayoutPanel
             // 
-            this.buttonTableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.buttonTableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonTableLayoutPanel.ColumnCount = 2;
             this.buttonTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.buttonTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.buttonTableLayoutPanel.Controls.Add(this.cancelButton, 1, 0);
             this.buttonTableLayoutPanel.Controls.Add(this.okButton, 0, 0);
-            this.buttonTableLayoutPanel.Location = new System.Drawing.Point(16, 66);
+            this.buttonTableLayoutPanel.Location = new System.Drawing.Point(19, 76);
+            this.buttonTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonTableLayoutPanel.Name = "buttonTableLayoutPanel";
             this.buttonTableLayoutPanel.RowCount = 1;
             this.buttonTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.buttonTableLayoutPanel.Size = new System.Drawing.Size(391, 23);
+            this.buttonTableLayoutPanel.Size = new System.Drawing.Size(456, 27);
             this.buttonTableLayoutPanel.TabIndex = 4;
             // 
             // GetStringMessageBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(419, 101);
+            this.ClientSize = new System.Drawing.Size(489, 117);
             this.Controls.Add(this.buttonTableLayoutPanel);
             this.Controls.Add(this.entryTextBox);
             this.Controls.Add(this.promptLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(435, 140);
-            this.MinimumSize = new System.Drawing.Size(435, 140);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(505, 156);
+            this.MinimumSize = new System.Drawing.Size(505, 156);
             this.Name = "GetStringMessageBox";
-            this.Text = "GetStringMessageBox";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "String Input";
             this.buttonTableLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

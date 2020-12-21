@@ -10,6 +10,10 @@ namespace SorterExpress.Forms
         /// </summary>
         public string UserEntry => entryTextBox.Text;
 
+        public string Prompt { get { return promptLabel.Text; } set { promptLabel.Text = value; } }
+
+        public char[] IllegalCharacters { get; set; } = Utilities.TagForbiddenCharacters;
+
         public GetStringMessageBox(string prepopulatedText = "")
         {
             InitializeComponent();
@@ -40,11 +44,30 @@ namespace SorterExpress.Forms
             }
         }
 
+        int ignoreTextChanged = 0;
         private void entryTextBox_TextChanged(object sender, EventArgs e)
         {
-            char[] disallowedCharacters = "_/\\!@#$%^&*()[]{};':\"?".ToCharArray();
+            if (ignoreTextChanged > 0)
+            {
+                ignoreTextChanged--;
+                return;
+            }
 
-            entryTextBox.Text = Utilities.RemoveCharactersFromString(entryTextBox.Text, disallowedCharacters);
+            if (IllegalCharacters != null)
+            {
+                int oldLength = entryTextBox.Text.Length;
+                int oldCursorPosition = entryTextBox.SelectionStart;
+                int oldCursorLength = entryTextBox.SelectionLength;
+                ignoreTextChanged = 1;
+                entryTextBox.Text = Utilities.RemoveCharactersFromString(entryTextBox.Text, IllegalCharacters);
+                int newLength = entryTextBox.Text.Length;
+
+                if (newLength < oldLength)
+                {
+                    entryTextBox.SelectionStart = oldCursorPosition - 1;
+                    entryTextBox.SelectionLength = oldCursorLength;
+                }
+            }
         }
     }
 }

@@ -90,6 +90,8 @@ namespace SorterExpress.Controllers
 
             var loadedTags = (Settings.Default.Tags != null) ? Settings.Default.Tags : new List<string>();
 
+            form.tagPanel.ReorderButtons = false;
+
             // Remove all tags that aren't included in the loaded tags.
             Tags.RemoveRange(Tags.Where(t => !loadedTags.Contains(t)));
 
@@ -103,9 +105,12 @@ namespace SorterExpress.Controllers
                 }
             }
 
+            form.tagPanel.ReorderButtons = true;
+            form.tagPanel.ReorderTagButtons();
+
             // Empty all Subfolders and load custom ones from settings.
             //while (Subfolders.Count > 0)
-                //Subfolders.RemoveAt(0);
+            //Subfolders.RemoveAt(0);
             Subfolders.Clear();
 
             var sfnames = Settings.Default.SubfolderNames ?? new List<string>();
@@ -653,6 +658,32 @@ namespace SorterExpress.Controllers
         }
 
         #region Meta Application Interactions - (ApplicationResized, ApplicationExit, etc..)
+
+        public void OpenSettings()
+        {
+            SaveSettings();
+            SettingsForm settingsForm = new SettingsForm();
+            settingsForm.TagsSaved += (newTagLibrary) =>
+            {
+                //Stop reordering of buttons for each one added/removed for optimisation.
+                form.tagPanel.ReorderButtons = false;
+
+                // Remove all current tags that aren't in the new library.
+                Tags.RemoveRange(Tags.Where(t => !newTagLibrary.Contains(t)));
+
+                // Add tags that are not in current tags.
+                foreach (string tag in newTagLibrary)
+                {
+                    if (!Tags.Contains(tag))
+                        Tags.Add(tag);
+                }
+
+                // Resume reordering and force a reorder.
+                form.tagPanel.ReorderButtons = false;
+                form.tagPanel.ReorderTagButtons();
+            };
+            settingsForm.ShowDialog();
+        }
 
         public void SaveSettings()
         {
