@@ -105,7 +105,7 @@ namespace SorterExpress.Controls
 
                 if (result == DialogResult.Yes)
                 {
-                    UpdateStarted(this, EventArgs.Empty);
+                    UpdateStarted?.Invoke(this, EventArgs.Empty);
 
                     label.Text = LABEL_UPDATING;
                     button.Hide();

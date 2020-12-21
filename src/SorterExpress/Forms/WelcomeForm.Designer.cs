@@ -188,6 +188,7 @@
             this.updateView1.Name = "updateView1";
             this.updateView1.Size = new System.Drawing.Size(339, 58);
             this.updateView1.TabIndex = 0;
+            this.updateView1.UpdateStarted += new SorterExpress.Controls.UpdateView.UpdateStartedEvent(this.updateView_UpdateStarted);
             // 
             // optionsGroupBox
             // 
