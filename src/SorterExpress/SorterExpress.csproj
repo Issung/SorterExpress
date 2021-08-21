@@ -283,6 +283,7 @@
     <Compile Include="Forms\TagsListForm.Designer.cs">
       <DependentUpon>TagsListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\DuplicatesFormModel.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Forms\LocateVLCForm.cs">
       <SubType>Form</SubType>

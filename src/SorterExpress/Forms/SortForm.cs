@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
 using System.Text.RegularExpressions;
-using SorterExpress.Properties;
 using SorterExpress.Controls;
 using SorterExpress.Controllers;
 

@@ -11,14 +11,12 @@ namespace GChan.Controls
         private ListSortDirection listSortDirection;
         private PropertyDescriptor propertyDescriptor;
 
-        public SortableBindingList()
-            : base(new List<T>())
+        public SortableBindingList() : base(new List<T>())
         {
             this.comparers = new Dictionary<Type, PropertyComparer<T>>();
         }
 
-        public SortableBindingList(IEnumerable<T> enumeration)
-            : base(new List<T>(enumeration))
+        public SortableBindingList(IEnumerable<T> enumeration) : base(new List<T>(enumeration))
         {
             this.comparers = new Dictionary<Type, PropertyComparer<T>>();
         }

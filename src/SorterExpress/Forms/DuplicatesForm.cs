@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using GChan.Controls;
-using Microsoft.VisualBasic.FileIO;
 using SorterExpress.Controllers;
-using SorterExpress.Controls;
-using SorterExpress.Properties;
+using SorterExpress.Models;
 
 namespace SorterExpress.Forms
 {

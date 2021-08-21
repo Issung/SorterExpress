@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Threading;
 using SorterExpress.Forms;
-using SorterExpress.Classes.Actions.SortActions;
 
 namespace SorterExpress
 {

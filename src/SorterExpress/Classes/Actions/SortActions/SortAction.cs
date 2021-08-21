@@ -1,6 +1,4 @@
-﻿using SorterExpress.Forms;
-using SorterExpress.Controllers;
-using System.Security.RightsManagement;
+﻿using SorterExpress.Controllers;
 
 namespace SorterExpress.Classes.Actions.SortActions
 {

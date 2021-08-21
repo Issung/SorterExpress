@@ -8,9 +8,6 @@ using SorterExpress.Controls;
 using SorterExpress.Forms;
 using SorterExpress.Classes.Actions.SortActions;
 using Shortcut = SorterExpress.Classes.Shortcut;
-using System.Drawing.Text;
-using Microsoft.WindowsAPICodePack.Shell;
-using System.Reflection;
 
 namespace SorterExpress.Controllers
 {
@@ -679,7 +676,7 @@ namespace SorterExpress.Controllers
                 }
 
                 // Resume reordering and force a reorder.
-                form.tagPanel.ReorderButtons = false;
+                form.tagPanel.ReorderButtons = true;
                 form.tagPanel.ReorderTagButtons();
             };
             settingsForm.ShowDialog();

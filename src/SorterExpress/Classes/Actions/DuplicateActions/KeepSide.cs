@@ -1,16 +1,12 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using Shell32;
-using SorterExpress.Classes.Actions.SortActions;
 using SorterExpress.Controllers;
-using SorterExpress.Forms;
 using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 
 namespace SorterExpress.Classes.Actions.DuplicateActions

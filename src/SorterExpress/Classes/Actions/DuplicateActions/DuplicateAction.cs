@@ -1,6 +1,6 @@
 ﻿using SorterExpress.Controllers;
 
-namespace SorterExpress.Classes.Actions.SortActions
+namespace SorterExpress.Classes.Actions.DuplicateActions
 {
     public class DuplicateAction : Action
     {

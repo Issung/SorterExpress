@@ -194,7 +194,8 @@ namespace SorterExpress.Forms
         {
             Console.WriteLine("backgroundWorker_DoWork");
 
-            SortableBindingList<Duplicate> duplicates = Controller.model.Duplicates;
+            //SortableBindingList<Duplicate> duplicates = Controller.model.Duplicates;
+            BindingList<Duplicate> duplicates = Controller.model.Duplicates;
 
             // Set to only "Ignore". Alert user and return. 
             if (prefs == null || prefs.Length < 2)

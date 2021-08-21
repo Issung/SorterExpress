@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Data;
@@ -10,158 +9,17 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using GChan.Controls;
-using Microsoft.VisualBasic.FileIO;
 using SorterExpress.Controls;
 using SorterExpress.Properties;
 using SorterExpress.Forms;
-using System.Runtime.CompilerServices;
-using SorterExpress.Classes.Actions.SortActions;
-using System.Security.Policy;
 using SorterExpress.Classes.Actions.DuplicateActions;
-using System.Windows.Forms.VisualStyles;
+using SorterExpress.Models;
 using Vlc.DotNet.Forms;
 using Vlc.DotNet.Core;
 using Shortcut = SorterExpress.Classes.Shortcut;
 
 namespace SorterExpress.Controllers
 {
-    public class DuplicatesFormModel : INotifyPropertyChanged
-    {
-        public enum FormState { NoDirectoryOpen, DirectoryOpen, Searching, Sorting };
-
-        public FormState State { get { return FindState(); } }
-
-        private FormState FindState()
-        {
-            if (String.IsNullOrWhiteSpace(directory))
-            {
-                //Console.WriteLine("FindState returns NoDirectoryOpen.");
-                return FormState.NoDirectoryOpen;
-            }
-
-            // A directory is open from this point down.
-
-            if (searching)
-            {
-                //Console.WriteLine("FindState returns Searching.");
-                return FormState.Searching;
-            }
-            
-            if (Duplicates.Count > 0)
-            {
-                //Console.WriteLine("FindState returns Sorting.");
-                return FormState.Sorting;
-            }
-
-            //Console.WriteLine("FindState returns DirectoryOpen.");
-            return FormState.DirectoryOpen;
-        }
-
-        private void UpdateVisibilityAndEnabledProperties()
-        {
-            string[] propertyNames = {
-                nameof(StateDirectoryOpen),
-                nameof(StateSearching),
-                nameof(StateNotSearching),
-                nameof(StateSorting),
-                nameof(StateDirectoryOpenOrSorting),
-                nameof(EnableOnlyKeepTagsInLibraryButton)
-            };
-
-            for (int i = 0; i < propertyNames.Length; i++)
-            {
-                NotifyPropertyChanged(propertyNames[i]);
-            }
-        }
-
-        public bool StateDirectoryOpen { get { return State == FormState.DirectoryOpen; } }
-
-        public bool StateDirectoryOpenOrSorting { get { return State == FormState.DirectoryOpen || State == FormState.Sorting; } }
-
-        public bool StateSearching { get { return State == FormState.Searching; } }
-
-        public bool StateNotSearching { get { return State != FormState.Searching; } }
-
-        public bool StateSorting { get { return State == FormState.Sorting; } }
-
-        private string directory;
-        public string Directory { get { return directory; } set { directory = value; /*NotifyPropertyChanged();*/ UpdateVisibilityAndEnabledProperties(); } }
-
-        public Stack<DuplicateAction> DoneActions { get; set; } = new Stack<DuplicateAction>();
-
-        public bool EnableUndoButton { get { return DoneActions.Count > 0; } }//{ get { return DoneActions != null ? DoneActions.Count > 0 : false; } }
-
-        public Stack<DuplicateAction> UndoneActions { get; set; } = new Stack<DuplicateAction>();
-
-        public bool EnableRedoButton { get { return UndoneActions.Count > 0; } }//{ get { return UndoneActions != null ? UndoneActions.Count > 0 : false; } }
-
-        private bool searching = false;
-
-        public bool Searching { get { return searching; } set { searching = value; NotifyPropertyChanged(); UpdateVisibilityAndEnabledProperties(); } }
-
-        public List<string> Files = new List<string>();
-
-        public SortableBindingList<Duplicate> Duplicates { get; set; } = new SortableBindingList<Duplicate>();
-
-        public enum SearchScope
-        {
-            [Description("Immediate Directory Only")] ImmediateOnly,
-            [Description("Subdirectories Only")] SubdirsOnly,
-            [Description("Between Immediate and Subdirectories")] BetweenImmediateAndSubdirs,
-            [Description("Search All Files")] All
-        }
-
-        private SearchScope searchScopeSelectedValue = SearchScope.ImmediateOnly;
-        private bool searchImages = Settings.Default.DuplicatesSearchImages;
-        private bool searchVideos = Settings.Default.DuplicatesSearchVideos;
-        private bool onlyMatchSameFileTypes = Settings.Default.DuplicatesOnlyMatchSameFileTypes;
-        private bool cropLeftAndRight = Settings.Default.DuplicatesCropLeftRightSides;
-        private bool cropTopAndBottom = Settings.Default.DuplicatesCropTopBottomSides;
-        private int threadCount = Settings.Default.DuplicatesSearchThreadCount == 0 ? Environment.ProcessorCount : Settings.Default.DuplicatesSearchThreadCount;
-        private int similarity = Settings.Default.DuplicatesSearchSimilarityPercentage;
-        private bool mergeFileTags = Settings.Default.DuplicatesMergeFileTags;
-        private bool onlyKeepTagsThatAreInLibrary = Settings.Default.DuplicatesOnlyKeepTagsInLibrary;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            Console.WriteLine($"NotifyPropertyChanged! propertyName: {propertyName}");
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        #region View Variables
-
-        public int FileCount => Files == null ? 0 : Files.Count;
-
-        public string FileAndMatchesCountText => $"Files: {(Files == null ? 0 : Files.Count)} Matches: {(Duplicates == null ? 0 : Duplicates.Count)}";
-
-        public bool EnableOnlyKeepTagsInLibraryButton => StateDirectoryOpenOrSorting && MergeFileTags;
-
-        public bool EnableMatchFileTypesCheckBox => StateDirectoryOpenOrSorting && SearchVideos && SearchImages;
-
-        #endregion
-
-        //User options in form
-        public SearchScope SearchScopeSelectedValue { get { return searchScopeSelectedValue; } set { searchScopeSelectedValue = value; NotifyPropertyChanged(); } }
-        public bool SearchImages { get { return searchImages; } set { searchImages = value; NotifyPropertyChanged(); } }
-        public bool SearchVideos { get { return searchVideos; } set { searchVideos = value; NotifyPropertyChanged(); } }
-        public bool OnlyMatchSameFileTypes { get { return onlyMatchSameFileTypes; } set { onlyMatchSameFileTypes = value; NotifyPropertyChanged(); } }
-        public bool CropLeftAndRight { get { return cropLeftAndRight; } set { cropLeftAndRight = value; NotifyPropertyChanged(); } }
-        public bool CropTopAndBottom { get { return cropTopAndBottom; } set { cropTopAndBottom = value; NotifyPropertyChanged(); } }
-        public int ThreadCount { get { return threadCount; } set { threadCount = value; NotifyPropertyChanged(); } }
-        public int Similarity { get { return similarity; } set { similarity = value; NotifyPropertyChanged(); } }
-        public bool MergeFileTags { get { return mergeFileTags; } set { mergeFileTags = value; NotifyPropertyChanged(); NotifyPropertyChanged(nameof(EnableOnlyKeepTagsInLibraryButton)); } }
-        public bool OnlyKeepTagsThatAreInLibrary { get { return onlyKeepTagsThatAreInLibrary; } set { onlyKeepTagsThatAreInLibrary = value; NotifyPropertyChanged(); } }
-
-        //public SearchScope SearchScopeSelectedEnum => EnumHelper.GetEnumFromDescription<SearchScope>(SearchScopeSelectedValue);
-
-        public DuplicatesFormModel()
-        {
-            Duplicates.ListChanged += (o, e) => { NotifyPropertyChanged(nameof(this.FileAndMatchesCountText)); };
-        }
-    }
-
     public class DuplicatesFormController
     {
         public DuplicatesForm form;
@@ -436,6 +294,9 @@ namespace SorterExpress.Controllers
         {
             Console.WriteLine($"UpdateSearchFilesScope! SearchScopeSelectedValue: {model.SearchScopeSelectedValue}");
 
+            if (string.IsNullOrWhiteSpace(model.Directory))
+                return;
+
             if (model.SearchScopeSelectedValue == DuplicatesFormModel.SearchScope.ImmediateOnly)
             {
                 model.Files = new DirectoryInfo(model.Directory).GetFileNamesList();
@@ -563,8 +424,6 @@ namespace SorterExpress.Controllers
                         {
                             FilePrint print = null;
 
-                            //try
-                            //{
                             if (!prints.Exists(t => t.filepath.Replace(model.Directory, "") == filename))
                             {
                                 print = new FilePrint(Path.Combine(model.Directory, filename));
@@ -576,83 +435,80 @@ namespace SorterExpress.Controllers
                                 Console.WriteLine("The thing that should never get hit got hit.");
                                 print = prints.Find(t => t.filepath.Replace(model.Directory, "") == filename);
                             }
-                            /*}
-                            catch //Exceptions can occur from accessing files.
-                            {
-                                Console.WriteLine($"Error occured while generating print for file {Path.Combine(directory, filename)}.");
-                                print = null;
-                            }*/
 
-                            if (print != null)
+                            // For each print that is currently generated
+                            for (int i = 0; i < prints.Count; i++)
                             {
-                                // For each print that is currently generated
-                                for (int i = 0; i < prints.Count; i++)
+                                try
                                 {
-                                    try
+                                    bool ok = IsMatch(print, prints[i]);
+
+                                    if (ok)
                                     {
-                                        // Don't match with self
-                                        if (print != prints[i])
+                                        form.Invoke((MethodInvoker)delegate ()
                                         {
-                                            // If similarity is above threshold
-                                            if (FilePrint.GetSimilarityPercentage(print, prints[i]) >= model.Similarity)
-                                            {
-                                                // If the duplicate hasn't already been found or found in reverse (x is like y |or| y is like x)
-                                                if (!fileTypesNeedMatch || (fileTypesNeedMatch && print.fileType == prints[i].fileType)) 
-                                                {
-
-                                                    //Check for "between immediate and subdirectories" filter.
-                                                    bool ok = false;
-
-                                                    if (model.SearchScopeSelectedValue != DuplicatesFormModel.SearchScope.BetweenImmediateAndSubdirs)
-                                                        ok = true;
-                                                    else if (print.directory == model.Directory ^ prints[i].directory == model.Directory)
-                                                        ok = true;
-
-                                                    if (ok)
-                                                    { 
-                                                        if (!model.Duplicates.Any(t => t.File2Path == print.filepath && t.File1Path == prints[i].filepath))
-                                                        { 
-                                                            form.Invoke((MethodInvoker)delegate()
-                                                            {
-                                                                model.Duplicates.Add(new Duplicate(print, prints[i]));
-                                                            });
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    catch (InvalidOperationException ioe)
-                                    {
-                                        Console.WriteLine($"Encountered InvalidOperationException while generating prints. {ioe.Message} - {ioe.StackTrace}");
-                                    }
-                                    catch (IndexOutOfRangeException ioore)
-                                    {
-                                        Console.WriteLine($"Encountered IndexOutOfRangeException while generating prints. {ioore.Message} - {ioore.StackTrace}");
-                                        // Catching the if statement "if (print.file != prints[i].file)". Can occasionally get ahead of itself (2% chance).
-                                    }
-                                    catch (NullReferenceException nre)
-                                    {
-                                        Console.WriteLine($"Encountered NullReferenceException while generating prints. {nre.Message} - {nre.StackTrace}");
+                                            model.Duplicates.Add(new Duplicate(print, prints[i]));
+                                        });
                                     }
                                 }
-
-                                finishedThreads++;
-                                worker.ReportProgress(finishedThreads * 100 / files.Count);
+                                catch (Exception e)
+                                {
+                                    Console.WriteLine("Error occured in GeneratePrints");
+                                }
                             }
+
+                            finishedThreads++;
+                            worker.ReportProgress(finishedThreads * 100 / files.Count);
                         }
+
                     });
             }
-            catch (OperationCanceledException oce)
+            catch (Exception e)
             {
-                Console.WriteLine($"Encountered OperationCanceledException while generating prints, this is probably intentional. {oce.Message} - {oce.StackTrace}");
-            }
-            catch (NullReferenceException nre)
-            {
-                Console.WriteLine($"Encountered NullReferenceException while generating prints. {nre.Message} - {nre.StackTrace}");
+                Console.WriteLine($"Exception in GeneratingPrints: {e.Message} - {e.StackTrace}");
             }
 
             return prints;
+        }
+
+        private bool IsMatch(FilePrint print1, FilePrint print2)
+        {
+            bool fileTypesNeedMatch = model.SearchImages && model.SearchVideos && model.OnlyMatchSameFileTypes;
+
+            if (print1 != null)
+            {
+                // Don't compare against self.
+                if (print1 != print2)
+                {
+                    // If the duplicate hasn't already been found or found in reverse (x is like y |or| y is like x)
+                    if (!fileTypesNeedMatch || (fileTypesNeedMatch && print1.fileType == print2.fileType))
+                    {
+                        // Check for "between immediate and subdirectories" filter.
+                        // Other filters are taken care of before this method by only passing in the required files.
+                        bool dirOK = false;
+
+                        if (model.SearchScopeSelectedValue != DuplicatesFormModel.SearchScope.BetweenImmediateAndSubdirs)
+                            dirOK = true;
+                        else if (print1.directory == model.Directory ^ print2.directory == model.Directory)
+                            dirOK = true;
+
+                        if (dirOK)
+                        {
+                            // If there is no duplicate entry with the files reversed.
+                            if (!model.Duplicates.Any(t => t.File2Path == print1.filepath && t.File1Path == print2.filepath))
+                            {
+                                // If above similarity threshold set by user.
+                                if (FilePrint.GetSimilarityPercentage(print1, print2) >= model.Similarity)
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
 
         public int IgnoreMatchSelectionChanged = 0;
