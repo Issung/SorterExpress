@@ -258,7 +258,7 @@ namespace SorterExpress.Forms
 
                 //DisplayFilenamesBefore();
 
-                Logs.Log(true, "Opened '" + directory + "' and found " + files.Count + " files.");
+                Logs.Log("Opened '" + directory + "' and found " + files.Count + " files.");
             }
         }
 
