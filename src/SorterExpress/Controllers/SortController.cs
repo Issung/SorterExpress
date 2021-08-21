@@ -122,7 +122,7 @@ namespace SorterExpress.Controllers
 
             if (dirInfo == null)
             {
-                Logs.Log(true, "Directory open cancelled.");
+                Logs.Log("Directory open cancelled.");
                 this.files = new List<string>();
             }
             else
@@ -136,7 +136,7 @@ namespace SorterExpress.Controllers
 
                 fileIndex = 0;
 
-                Logs.Log(true, $"Opened '{directory}' and found {files.Count} files and {folders.Length} subdirectories.");
+                Logs.Log($"Opened '{directory}' and found {files.Count} files and {folders.Length} subdirectories.");
             }
 
             form.ResumeLayout();

@@ -9,7 +9,7 @@ namespace SorterExpress.Forms
         {
             InitializeComponent();
 
-            Logs.Log(true, $"{Program.NAME} opened. Is64BitProcess: {Environment.Is64BitProcess}. Is64BitOperatingSystem: {Environment.Is64BitOperatingSystem}.");
+            Logs.Log($"{Program.NAME} opened. Is64BitProcess: {Environment.Is64BitProcess}. Is64BitOperatingSystem: {Environment.Is64BitOperatingSystem}.");
         }
 
         private void sortButton_Click(object sender, EventArgs e)

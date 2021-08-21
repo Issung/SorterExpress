@@ -24,11 +24,15 @@ namespace SorterExpress.Forms
             HighestResolution,
             [Description("Most Tags")]
             MostTags,
+            [Description("Random")]
+            Random,
             [Description("Ignore")]
             Ignore,
         }
 
         public DuplicatesFormController Controller { get; private set; }
+
+        private Random random;
 
         public DuplicatesMassOperationForm(DuplicatesFormController controller)
         {
@@ -168,7 +172,7 @@ namespace SorterExpress.Forms
 
         enum Result { KeepLeft1, KeepRight2, Equal };
 
-        Preference[] prefs;
+        Preference[] preferences;
 
         private void performOperationButton_Click(object sender, EventArgs e)
         {
@@ -181,7 +185,7 @@ namespace SorterExpress.Forms
                 loadingPanel.BottomText = "Loading...";
                 loadingPanel.Show();
 
-                prefs = keepFilePreferenceFlowLayoutPanel.Controls.OfType<TableLayoutPanel>()
+                preferences = keepFilePreferenceFlowLayoutPanel.Controls.OfType<TableLayoutPanel>()
                     .OrderBy(t => Convert.ToInt32(t.Tag))
                     .Select(t => (Preference)t.Controls.OfType<ComboBox>().First().SelectedValue)
                     .ToArray();
@@ -198,7 +202,7 @@ namespace SorterExpress.Forms
             BindingList<Duplicate> duplicates = Controller.model.Duplicates;
 
             // Set to only "Ignore". Alert user and return. 
-            if (prefs == null || prefs.Length < 2)
+            if (preferences == null || preferences.Length < 2)
             {
                 const string MESSAGE_TEXT = "You must set atleast 1 keep file preference filter.";
                 MessageBox.Show(MESSAGE_TEXT, "Invalid Parameters", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -206,7 +210,7 @@ namespace SorterExpress.Forms
             }
 
             // Find dimensions for all video files. 
-            if (prefs.Contains(Preference.HighestResolution))
+            if (preferences.Contains(Preference.HighestResolution))
             {
                 Invoke((MethodInvoker)delegate { loadingPanel.BottomText = "Retrieving video dimensions..."; });
                 var prints = Controller.prints.Where(t => duplicates.Any(d => d.fileprint1 == t || d.fileprint2 == t));
@@ -233,51 +237,7 @@ namespace SorterExpress.Forms
 
             for (int i = 0; i < duplicates.Count(); i++)
             {
-                Result result = Result.Equal;
-
-                for (int p = 0; p < prefs.Length; p++)
-                {
-                    if (prefs[p] == Preference.Ignore)
-                    {
-                        break;
-                    }
-                    else if (prefs[p] == Preference.DeepestDirectory)
-                    {
-                        int comp = GetDirectoryDepth(duplicates[i].File1Path).CompareTo(GetDirectoryDepth(duplicates[i].File2Path));
-
-                        if (comp < 0)
-                            result = Result.KeepRight2;
-                        else if (comp > 0)
-                            result = Result.KeepLeft1;
-                    }
-                    else if (prefs[p] == Preference.HighestResolution)
-                    {
-                        int file1pixels = duplicates[i].fileprint1.size.Width * duplicates[i].fileprint1.size.Height;
-                        int file2pixels = duplicates[i].fileprint2.size.Width * duplicates[i].fileprint2.size.Height;
-
-                        int comp = file1pixels.CompareTo(file2pixels);
-
-                        if (comp < 0)
-                            result = Result.KeepRight2;
-                        else if (comp > 0)
-                            result = Result.KeepLeft1;
-                    }
-                    else if (prefs[p] == Preference.MostTags)
-                    {
-                        FileDetails file1Details = Utilities.GetFileDetails(duplicates[i].File1Path);
-                        FileDetails file2Details = Utilities.GetFileDetails(duplicates[i].File2Path);
-
-                        int comp = file1Details.Tags.Length.CompareTo(file2Details.Tags.Length);
-
-                        if (comp < 0)
-                            result = Result.KeepRight2;
-                        else if (comp > 0)
-                            result = Result.KeepLeft1;
-                    }
-
-                    if (result != Result.Equal)
-                        break;
-                }
+                Result result = GetPreferencesResult(duplicates[i]);
 
                 if (result != Result.Equal)
                 {
@@ -285,7 +245,8 @@ namespace SorterExpress.Forms
                     DuplicatesFormController.Side side = (result == Result.KeepLeft1) ? DuplicatesFormController.Side.Left : DuplicatesFormController.Side.Right;
 
                     KeepSide action = new KeepSide(Controller, duplicates[i], i, side);
-                    Invoke((MethodInvoker)delegate {
+                    Invoke((MethodInvoker)delegate
+                    {
                         action.Do();
 
                         Controller.model.UndoneActions.Clear();
@@ -301,11 +262,84 @@ namespace SorterExpress.Forms
 
                 backgroundWorker.ReportProgress((int)((((float)i / duplicates.Count) * 100) / 2) + 50);
             }
+        }
 
-            int GetDirectoryDepth(string path)
+        private Result GetPreferencesResult(Duplicate duplicate)
+        {
+            for (int i = 0; i < preferences.Length; i++)
             {
-                return path.Count(t => t == Path.DirectorySeparatorChar);
+                var result = GetPreferenceResult(preferences[i], duplicate);
+
+                // If a file has been decided on break this loop going through preferences.
+                if (result != Result.Equal)
+                    return result;
             }
+
+            return Result.Equal;
+        }
+
+        private Result GetPreferenceResult(Preference preference, Duplicate duplicate)
+        {
+            if (preference == Preference.Ignore)
+            {
+                return Result.Equal;
+            }
+            else if (preference == Preference.DeepestDirectory)
+            {
+                int comp = GetDirectoryDepth(duplicate.File1Path).CompareTo(GetDirectoryDepth(duplicate.File2Path));
+
+                if (comp < 0)
+                {
+                    return Result.KeepRight2;
+                }
+                else if (comp > 0)
+                { 
+                    return Result.KeepLeft1;
+                }
+            }
+            else if (preference == Preference.HighestResolution)
+            {
+                int file1pixels = duplicate.fileprint1.size.Width * duplicate.fileprint1.size.Height;
+                int file2pixels = duplicate.fileprint2.size.Width * duplicate.fileprint2.size.Height;
+
+                int comp = file1pixels.CompareTo(file2pixels);
+
+                if (comp < 0)
+                { 
+                    return Result.KeepRight2;
+                }
+                else if (comp > 0)
+                { 
+                    return Result.KeepLeft1;
+                }
+            }
+            else if (preference == Preference.MostTags)
+            {
+                FileDetails file1Details = Utilities.GetFileDetails(duplicate.File1Path);
+                FileDetails file2Details = Utilities.GetFileDetails(duplicate.File2Path);
+
+                int comp = file1Details.Tags.Length.CompareTo(file2Details.Tags.Length);
+
+                if (comp < 0)
+                { 
+                    return Result.KeepRight2;
+                }
+                else if (comp > 0)
+                { 
+                    return Result.KeepLeft1;
+                }
+            }
+            else if (preference == Preference.Random)
+            {
+                return random.Next(0, 2) == 0 ? Result.KeepLeft1 : Result.KeepRight2;
+            }
+
+            return Result.Equal;
+        }
+
+        private int GetDirectoryDepth(string path)
+        {
+            return path.Count(t => t == Path.DirectorySeparatorChar);
         }
 
         private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
