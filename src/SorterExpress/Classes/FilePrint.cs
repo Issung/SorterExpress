@@ -36,6 +36,11 @@ public class FilePrint
 
     public string ThumbPath { get; set; }
 
+    /// <summary>
+    /// Create a "file print" for a multi-media file. First this detects the file type (image or video) and then creates a small thumbnail for it and caches it in 
+    /// SorterExpress's thumbnail store.
+    /// </summary>
+    /// <exception cref="Exception">Can throw any manner of exceptions because of constantly manipulating files.</exception>
     public FilePrint(string filePath)
     {
         this.filepath = filePath;
@@ -47,16 +52,6 @@ public class FilePrint
 
         if (Utilities.FileIsImage(filePath))
         {
-            /*img = new Bitmap(filePath);
-            this.size = img.Size;
-            CalculatePicturePrint(img);
-
-            ThumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
-            if (!File.Exists(ThumbPath))
-                Utilities.Resize(new Bitmap(filePath), THUMB_SIZE, THUMB_SIZE).Save(ThumbPath);
-
-            img.Dispose();*/
-
             if (File.Exists(ThumbPath))
             {
                 img = new Bitmap(filePath);
@@ -80,8 +75,6 @@ public class FilePrint
         }
         else if (Utilities.FileIsVideo(filePath))
         {
-            //FFWorker.GetSizeAsync(filePath, (Size s) => { this.size = s; });
-
             if (!File.Exists(ThumbPath))
             {
                 FFWorker.GetThumbnailWait(filePath, ThumbPath, THUMB_SIZE);

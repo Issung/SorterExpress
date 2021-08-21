@@ -22,32 +22,38 @@ namespace SorterExpress
         /// Append "[DateTime.Now] - givenString \n" to log file.
         /// returns false if method failed.
         /// </summary>
-        public static void Log(bool timeStampFirstLine, params string[] lines)
+        public static void Log(params string[] lines)
         {
-            foreach(string line in lines)
+            // Timestamp first line of log.
+            if (lines.Length > 0)
+            {
+                lines[0] = $"[{DateTime.Now.ToString(DATE_FORMAT)}] - " + lines[0];
+
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    lines[i] = '\t' + lines[i];
+                }
+            }
+
+            foreach (string line in lines)
+            { 
                 Console.WriteLine(line);
+            }
 
             try
             {
                 if (streamWriter == null)
                     InitialiseStreamWriter();
 
-                if (timeStampFirstLine && lines.Length > 0)
-                    lines[0] = $"[{DateTime.Now.ToString(DATE_FORMAT)}] - " + lines[0];
-
                 foreach (string line in lines)
                     streamWriter.WriteLine(line);
 
                 streamWriter.Flush();
-
-                //File.AppendAllText(LOGS_FILENAME, "[" + System.DateTime.Now.ToString(DATE_FORMAT) + "] - " + log + "\n");
             }
             catch (System.Exception ex)
             {
-                //File.AppendAllText(LOGS_FILENAME, "[" + System.DateTime.Now.ToString(DATE_FORMAT) + "] - " + "Failed to log a given log." + "\n");
-                //return false;
+
             }
-            //return true;
         }
     }
 }

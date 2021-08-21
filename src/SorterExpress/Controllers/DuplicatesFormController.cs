@@ -185,7 +185,7 @@ namespace SorterExpress.Controllers
             var dirInfo = Utilities.OpenDirectory();
 
             if (dirInfo == null)
-                Logs.Log(true, "Directory open cancelled.");
+                Logs.Log("Directory open cancelled.");
             else
             {
                 LoadDirectory(dirInfo);
@@ -212,7 +212,7 @@ namespace SorterExpress.Controllers
 
             UpdateSearchFilesScope();
 
-            Logs.Log(true, $"Opened '{model.Directory}' and found { model.Files.Count} files.");
+            Logs.Log($"Opened '{model.Directory}' and found { model.Files.Count} files.");
 
             Utilities.PrintExtensionCounts(model.Files);
 
@@ -422,39 +422,11 @@ namespace SorterExpress.Controllers
                         }
                         else
                         {
-                            FilePrint print = null;
+                            FilePrint print = GetPrint(prints, filename);
 
-                            if (!prints.Exists(t => t.filepath.Replace(model.Directory, "") == filename))
-                            {
-                                print = new FilePrint(Path.Combine(model.Directory, filename));
-                                prints.Add(print);
-                            }
-                            else
-                            {
-                                //This should never get hit...
-                                Console.WriteLine("The thing that should never get hit got hit.");
-                                print = prints.Find(t => t.filepath.Replace(model.Directory, "") == filename);
-                            }
-
-                            // For each print that is currently generated
-                            for (int i = 0; i < prints.Count; i++)
-                            {
-                                try
-                                {
-                                    bool ok = IsMatch(print, prints[i]);
-
-                                    if (ok)
-                                    {
-                                        form.Invoke((MethodInvoker)delegate ()
-                                        {
-                                            model.Duplicates.Add(new Duplicate(print, prints[i]));
-                                        });
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine("Error occured in GeneratePrints");
-                                }
+                            if (print != null)
+                            { 
+                                CheckForMatches(print, prints);
                             }
 
                             finishedThreads++;
@@ -469,6 +441,57 @@ namespace SorterExpress.Controllers
             }
 
             return prints;
+        }
+
+        private FilePrint GetPrint(List<FilePrint> prints, string filename)
+        {
+            FilePrint print;
+
+            try
+            {
+                if (!prints.Exists(t => t.filepath.Replace(model.Directory, "") == filename))
+                {
+                    print = new FilePrint(Path.Combine(model.Directory, filename));
+                    prints.Add(print);
+                }
+                else
+                {
+                    //This should never get hit...
+                    Console.WriteLine("The thing that should never get hit got hit.");
+                    print = prints.Find(t => t.filepath.Replace(model.Directory, "") == filename);
+                }
+            }
+            catch (Exception e)
+            {
+                Logs.Log($"Error occured getting print for {filename}", e.GetType().Name, e.Message, e.StackTrace);
+                print = null;
+            }
+
+            return print;
+        }
+
+        private void CheckForMatches(FilePrint print, List<FilePrint> prints)
+        {
+            // For each print that is currently generated
+            for (int i = 0; i < prints.Count; i++)
+            {
+                try
+                {
+                    bool isMatch = IsMatch(print, prints[i]);
+
+                    if (isMatch)
+                    {
+                        form.Invoke((MethodInvoker)delegate ()
+                        {
+                            model.Duplicates.Add(new Duplicate(print, prints[i]));
+                        });
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error occured in GeneratePrints");
+                }
+            }
         }
 
         private bool IsMatch(FilePrint print1, FilePrint print2)

@@ -187,21 +187,21 @@ namespace SorterExpress
                 string programFilesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VideoLAN", "VLC");
                 string x86programFilesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VideoLAN", "VLC");
 
-                Logs.Log(true, $"programFilesDirectory: {programFilesDirectory}", $"x86programFilesDirectory: {x86programFilesDirectory}");
+                Logs.Log($"programFilesDirectory: {programFilesDirectory}", $"x86programFilesDirectory: {x86programFilesDirectory}");
 
                 if (Directory.Exists(programFilesDirectory))
                 {
-                    Logs.Log(true, $"Directory {programFilesDirectory} exists, loading VLC from there.");
+                    Logs.Log($"Directory {programFilesDirectory} exists, loading VLC from there.");
                     return Ret(programFilesDirectory);
                 }
                 else if (Directory.Exists(x86programFilesDirectory))
                 {
-                    Logs.Log(true, $"Directory {x86programFilesDirectory} exists, loading VLC from there.");
+                    Logs.Log($"Directory {x86programFilesDirectory} exists, loading VLC from there.");
                     return Ret(x86programFilesDirectory);
                 }
                 else
                 {
-                    Logs.Log(true, $"Cannot find VLC install in ProgramFiles or ProgramFiles(x86).");
+                    Logs.Log($"Cannot find VLC install in ProgramFiles or ProgramFiles(x86).");
 
                     using (LocateVLCForm locateForm = new LocateVLCForm())
                     {
@@ -221,7 +221,7 @@ namespace SorterExpress
             {
                 if (Directory.Exists(Settings.Default.VlcLocation))
                 {
-                    Logs.Log(true, $"Loaded VLC from directory set by the user in a previous session. ({Settings.Default.VlcLocation})");
+                    Logs.Log($"Loaded VLC from directory set by the user in a previous session. ({Settings.Default.VlcLocation})");
                     return Ret(Settings.Default.VlcLocation);
                 }
                 else
@@ -230,7 +230,7 @@ namespace SorterExpress
                     //  VLC being loaded from a default install location.
                     //  Asking the user to locate the install locations.
                     Settings.Default.VlcLocation = null;
-                    Logs.Log(true, "Could not load VLC from directory given by user in a previous session, directory in prefs has been removed. Trying again.");
+                    Logs.Log("Could not load VLC from directory given by user in a previous session, directory in prefs has been removed. Trying again.");
                     return FindVlcLibDirectory();
                 }
             }
