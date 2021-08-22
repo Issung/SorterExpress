@@ -48,13 +48,6 @@
             this.thumbsStorageInfoButton = new System.Windows.Forms.Button();
             this.thumbsStorageEmptyButton = new System.Windows.Forms.Button();
             this.thumbsStorageViewButton = new System.Windows.Forms.Button();
-            this.viewLogsButton = new System.Windows.Forms.Button();
-            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.contextMenuGroupBox = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.toggleContextMenuOptionsButton = new System.Windows.Forms.Button();
-            this.toggleContextMenuOptionsInfoButton = new System.Windows.Forms.Button();
             this.tagControlsGroupBox = new System.Windows.Forms.GroupBox();
             this.tagControlsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.manageTagsLibraryButton = new System.Windows.Forms.Button();
@@ -64,6 +57,17 @@
             this.displayAllTagsCheckbox = new System.Windows.Forms.CheckBox();
             this.autoResetTagSearchCheckBox = new System.Windows.Forms.CheckBox();
             this.autoResetSubfolderSearchCheckBox = new System.Windows.Forms.CheckBox();
+            this.viewLogsButton = new System.Windows.Forms.Button();
+            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.contextMenuGroupBox = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.toggleContextMenuOptionsButton = new System.Windows.Forms.Button();
+            this.toggleContextMenuOptionsInfoButton = new System.Windows.Forms.Button();
+            this.ignoredFilesFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.ignoredFilesCountLabel = new System.Windows.Forms.Label();
+            this.ignoredFilesManageButton = new System.Windows.Forms.Button();
+            this.ignoredFilesInfoButton = new System.Windows.Forms.Button();
             this.miscControlsGroupBox.SuspendLayout();
             this.miscControlsFlowLayoutPanel.SuspendLayout();
             this.vlcControlsGroupBox.SuspendLayout();
@@ -71,14 +75,15 @@
             this.duplicateSearchingAndThumbnailCacheGroupBox.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.thumbsStorageFlowLayoutPanel.SuspendLayout();
-            this.tableLayoutPanel.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.contextMenuGroupBox.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
             this.tagControlsGroupBox.SuspendLayout();
             this.tagControlsFlowLayoutPanel.SuspendLayout();
             this.tagSearchStartFlowLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tagSearchNumeric)).BeginInit();
+            this.tableLayoutPanel.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.contextMenuGroupBox.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            this.ignoredFilesFlowLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // saveSettingsButton
@@ -86,7 +91,7 @@
             this.saveSettingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.saveSettingsButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.saveSettingsButton.Location = new System.Drawing.Point(10, 450);
+            this.saveSettingsButton.Location = new System.Drawing.Point(10, 543);
             this.saveSettingsButton.Name = "saveSettingsButton";
             this.saveSettingsButton.Size = new System.Drawing.Size(406, 23);
             this.saveSettingsButton.TabIndex = 1;
@@ -110,7 +115,7 @@
             // 
             this.miscControlsGroupBox.Controls.Add(this.miscControlsFlowLayoutPanel);
             this.miscControlsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.miscControlsGroupBox.Location = new System.Drawing.Point(1, 282);
+            this.miscControlsGroupBox.Location = new System.Drawing.Point(1, 364);
             this.miscControlsGroupBox.Name = "miscControlsGroupBox";
             this.miscControlsGroupBox.Size = new System.Drawing.Size(402, 65);
             this.miscControlsGroupBox.TabIndex = 11;
@@ -158,7 +163,7 @@
             // 
             this.vlcControlsGroupBox.Controls.Add(this.flowLayoutPanel3);
             this.vlcControlsGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.vlcControlsGroupBox.Location = new System.Drawing.Point(1, 214);
+            this.vlcControlsGroupBox.Location = new System.Drawing.Point(1, 296);
             this.vlcControlsGroupBox.Name = "vlcControlsGroupBox";
             this.vlcControlsGroupBox.Size = new System.Drawing.Size(402, 68);
             this.vlcControlsGroupBox.TabIndex = 13;
@@ -204,7 +209,7 @@
             this.duplicateSearchingAndThumbnailCacheGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.duplicateSearchingAndThumbnailCacheGroupBox.Location = new System.Drawing.Point(1, 156);
             this.duplicateSearchingAndThumbnailCacheGroupBox.Name = "duplicateSearchingAndThumbnailCacheGroupBox";
-            this.duplicateSearchingAndThumbnailCacheGroupBox.Size = new System.Drawing.Size(402, 58);
+            this.duplicateSearchingAndThumbnailCacheGroupBox.Size = new System.Drawing.Size(402, 140);
             this.duplicateSearchingAndThumbnailCacheGroupBox.TabIndex = 12;
             this.duplicateSearchingAndThumbnailCacheGroupBox.TabStop = false;
             this.duplicateSearchingAndThumbnailCacheGroupBox.Text = "Duplicate Searching / Thumbnail Cache ❓";
@@ -213,39 +218,40 @@
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.thumbsStorageFlowLayoutPanel);
+            this.flowLayoutPanel2.Controls.Add(this.ignoredFilesFlowLayoutPanel);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(396, 39);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(396, 121);
             this.flowLayoutPanel2.TabIndex = 3;
+            this.flowLayoutPanel2.WrapContents = false;
             // 
             // thumbsStorageFlowLayoutPanel
             // 
             this.thumbsStorageFlowLayoutPanel.Controls.Add(this.thumbsStorageSizeLabel);
-            this.thumbsStorageFlowLayoutPanel.Controls.Add(this.thumbsStorageInfoButton);
             this.thumbsStorageFlowLayoutPanel.Controls.Add(this.thumbsStorageEmptyButton);
             this.thumbsStorageFlowLayoutPanel.Controls.Add(this.thumbsStorageViewButton);
+            this.thumbsStorageFlowLayoutPanel.Controls.Add(this.thumbsStorageInfoButton);
             this.thumbsStorageFlowLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.thumbsStorageFlowLayoutPanel.Name = "thumbsStorageFlowLayoutPanel";
             this.thumbsStorageFlowLayoutPanel.Padding = new System.Windows.Forms.Padding(3, 2, 3, 3);
-            this.thumbsStorageFlowLayoutPanel.Size = new System.Drawing.Size(388, 33);
+            this.thumbsStorageFlowLayoutPanel.Size = new System.Drawing.Size(388, 54);
             this.thumbsStorageFlowLayoutPanel.TabIndex = 0;
             // 
             // thumbsStorageSizeLabel
             // 
-            this.thumbsStorageSizeLabel.AutoSize = true;
             this.thumbsStorageSizeLabel.Location = new System.Drawing.Point(6, 10);
-            this.thumbsStorageSizeLabel.Margin = new System.Windows.Forms.Padding(3, 8, 3, 0);
+            this.thumbsStorageSizeLabel.Margin = new System.Windows.Forms.Padding(3, 8, 10, 3);
             this.thumbsStorageSizeLabel.Name = "thumbsStorageSizeLabel";
-            this.thumbsStorageSizeLabel.Size = new System.Drawing.Size(141, 13);
+            this.thumbsStorageSizeLabel.Size = new System.Drawing.Size(377, 13);
             this.thumbsStorageSizeLabel.TabIndex = 0;
-            this.thumbsStorageSizeLabel.Text = "Thumbs Storage Size: 0 Mb ";
+            this.thumbsStorageSizeLabel.Text = "Thumbnails Cache Storage Size: 0 Mb ";
             // 
             // thumbsStorageInfoButton
             // 
             this.thumbsStorageInfoButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.thumbsStorageInfoButton.Location = new System.Drawing.Point(153, 5);
+            this.thumbsStorageInfoButton.Location = new System.Drawing.Point(135, 29);
             this.thumbsStorageInfoButton.Name = "thumbsStorageInfoButton";
             this.thumbsStorageInfoButton.Size = new System.Drawing.Size(90, 23);
             this.thumbsStorageInfoButton.TabIndex = 1;
@@ -255,7 +261,7 @@
             // 
             // thumbsStorageEmptyButton
             // 
-            this.thumbsStorageEmptyButton.Location = new System.Drawing.Point(249, 5);
+            this.thumbsStorageEmptyButton.Location = new System.Drawing.Point(6, 29);
             this.thumbsStorageEmptyButton.Name = "thumbsStorageEmptyButton";
             this.thumbsStorageEmptyButton.Size = new System.Drawing.Size(60, 23);
             this.thumbsStorageEmptyButton.TabIndex = 2;
@@ -265,102 +271,13 @@
             // 
             // thumbsStorageViewButton
             // 
-            this.thumbsStorageViewButton.Location = new System.Drawing.Point(315, 5);
+            this.thumbsStorageViewButton.Location = new System.Drawing.Point(72, 29);
             this.thumbsStorageViewButton.Name = "thumbsStorageViewButton";
             this.thumbsStorageViewButton.Size = new System.Drawing.Size(57, 23);
             this.thumbsStorageViewButton.TabIndex = 3;
             this.thumbsStorageViewButton.Text = "View";
             this.thumbsStorageViewButton.UseVisualStyleBackColor = true;
             this.thumbsStorageViewButton.Click += new System.EventHandler(this.thumbsStorageViewButton_Click);
-            // 
-            // viewLogsButton
-            // 
-            this.viewLogsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.viewLogsButton.Location = new System.Drawing.Point(205, 0);
-            this.viewLogsButton.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.viewLogsButton.Name = "viewLogsButton";
-            this.viewLogsButton.Size = new System.Drawing.Size(201, 23);
-            this.viewLogsButton.TabIndex = 3;
-            this.viewLogsButton.Text = "View Logs";
-            this.viewLogsButton.UseVisualStyleBackColor = true;
-            this.viewLogsButton.Click += new System.EventHandler(this.ViewLogsButton_Click);
-            // 
-            // tableLayoutPanel
-            // 
-            this.tableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel.ColumnCount = 2;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.Controls.Add(this.viewLogsButton, 1, 0);
-            this.tableLayoutPanel.Controls.Add(this.websiteButton, 0, 0);
-            this.tableLayoutPanel.Location = new System.Drawing.Point(10, 424);
-            this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.RowCount = 1;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(406, 23);
-            this.tableLayoutPanel.TabIndex = 4;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.contextMenuGroupBox);
-            this.panel1.Controls.Add(this.miscControlsGroupBox);
-            this.panel1.Controls.Add(this.vlcControlsGroupBox);
-            this.panel1.Controls.Add(this.duplicateSearchingAndThumbnailCacheGroupBox);
-            this.panel1.Controls.Add(this.tagControlsGroupBox);
-            this.panel1.Location = new System.Drawing.Point(10, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(1, 1, 3, 0);
-            this.panel1.Size = new System.Drawing.Size(406, 410);
-            this.panel1.TabIndex = 7;
-            // 
-            // contextMenuGroupBox
-            // 
-            this.contextMenuGroupBox.Controls.Add(this.flowLayoutPanel1);
-            this.contextMenuGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
-            this.contextMenuGroupBox.Location = new System.Drawing.Point(1, 347);
-            this.contextMenuGroupBox.Name = "contextMenuGroupBox";
-            this.contextMenuGroupBox.Size = new System.Drawing.Size(402, 50);
-            this.contextMenuGroupBox.TabIndex = 14;
-            this.contextMenuGroupBox.TabStop = false;
-            this.contextMenuGroupBox.Text = "Windows Context Menu Options";
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Controls.Add(this.toggleContextMenuOptionsButton);
-            this.flowLayoutPanel1.Controls.Add(this.toggleContextMenuOptionsInfoButton);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(1);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(396, 31);
-            this.flowLayoutPanel1.TabIndex = 9;
-            // 
-            // toggleContextMenuOptionsButton
-            // 
-            this.toggleContextMenuOptionsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.toggleContextMenuOptionsButton.Location = new System.Drawing.Point(4, 4);
-            this.toggleContextMenuOptionsButton.Name = "toggleContextMenuOptionsButton";
-            this.toggleContextMenuOptionsButton.Size = new System.Drawing.Size(245, 23);
-            this.toggleContextMenuOptionsButton.TabIndex = 1;
-            this.toggleContextMenuOptionsButton.Text = "Add Context Menu Options To Windows";
-            this.toggleContextMenuOptionsButton.UseVisualStyleBackColor = true;
-            this.toggleContextMenuOptionsButton.Click += new System.EventHandler(this.toggleContextMenuOptionsButton_Click);
-            // 
-            // toggleContextMenuOptionsInfoButton
-            // 
-            this.toggleContextMenuOptionsInfoButton.Location = new System.Drawing.Point(255, 4);
-            this.toggleContextMenuOptionsInfoButton.Name = "toggleContextMenuOptionsInfoButton";
-            this.toggleContextMenuOptionsInfoButton.Size = new System.Drawing.Size(81, 23);
-            this.toggleContextMenuOptionsInfoButton.TabIndex = 2;
-            this.toggleContextMenuOptionsInfoButton.Text = "What\'s This?";
-            this.toggleContextMenuOptionsInfoButton.UseVisualStyleBackColor = true;
-            this.toggleContextMenuOptionsInfoButton.Click += new System.EventHandler(this.toggleContextMenuOptionsInfoButton_Click);
             // 
             // tagControlsGroupBox
             // 
@@ -392,11 +309,9 @@
             // 
             // manageTagsLibraryButton
             // 
-            this.manageTagsLibraryButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.manageTagsLibraryButton.Location = new System.Drawing.Point(6, 6);
             this.manageTagsLibraryButton.Name = "manageTagsLibraryButton";
-            this.manageTagsLibraryButton.Size = new System.Drawing.Size(365, 25);
+            this.manageTagsLibraryButton.Size = new System.Drawing.Size(385, 25);
             this.manageTagsLibraryButton.TabIndex = 3;
             this.manageTagsLibraryButton.Text = "Manage Tag Library";
             this.manageTagsLibraryButton.UseVisualStyleBackColor = true;
@@ -411,7 +326,7 @@
             this.tagSearchStartFlowLayoutPanel.Location = new System.Drawing.Point(3, 34);
             this.tagSearchStartFlowLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
             this.tagSearchStartFlowLayoutPanel.Name = "tagSearchStartFlowLayoutPanel";
-            this.tagSearchStartFlowLayoutPanel.Size = new System.Drawing.Size(371, 27);
+            this.tagSearchStartFlowLayoutPanel.Size = new System.Drawing.Size(391, 27);
             this.tagSearchStartFlowLayoutPanel.TabIndex = 8;
             // 
             // tagSearchNumeric
@@ -452,7 +367,7 @@
             this.displayAllTagsCheckbox.Location = new System.Drawing.Point(6, 64);
             this.displayAllTagsCheckbox.Name = "displayAllTagsCheckbox";
             this.displayAllTagsCheckbox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.displayAllTagsCheckbox.Size = new System.Drawing.Size(365, 17);
+            this.displayAllTagsCheckbox.Size = new System.Drawing.Size(385, 17);
             this.displayAllTagsCheckbox.TabIndex = 0;
             this.displayAllTagsCheckbox.Text = "Display all tags when search box is empty (Can be slow with alot of tags)\r\n";
             this.displayAllTagsCheckbox.UseVisualStyleBackColor = true;
@@ -465,7 +380,7 @@
             this.autoResetTagSearchCheckBox.Location = new System.Drawing.Point(6, 87);
             this.autoResetTagSearchCheckBox.Name = "autoResetTagSearchCheckBox";
             this.autoResetTagSearchCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.autoResetTagSearchCheckBox.Size = new System.Drawing.Size(365, 17);
+            this.autoResetTagSearchCheckBox.Size = new System.Drawing.Size(385, 17);
             this.autoResetTagSearchCheckBox.TabIndex = 0;
             this.autoResetTagSearchCheckBox.Text = "Automatically empty tag search box when a tag is toggled on or off";
             this.autoResetTagSearchCheckBox.UseVisualStyleBackColor = true;
@@ -478,20 +393,150 @@
             this.autoResetSubfolderSearchCheckBox.Location = new System.Drawing.Point(6, 110);
             this.autoResetSubfolderSearchCheckBox.Name = "autoResetSubfolderSearchCheckBox";
             this.autoResetSubfolderSearchCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.autoResetSubfolderSearchCheckBox.Size = new System.Drawing.Size(365, 17);
+            this.autoResetSubfolderSearchCheckBox.Size = new System.Drawing.Size(385, 17);
             this.autoResetSubfolderSearchCheckBox.TabIndex = 9;
             this.autoResetSubfolderSearchCheckBox.Text = "Automatically empty subfolder search box when a subfolder is selected";
             this.autoResetSubfolderSearchCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // viewLogsButton
+            // 
+            this.viewLogsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.viewLogsButton.Location = new System.Drawing.Point(205, 0);
+            this.viewLogsButton.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.viewLogsButton.Name = "viewLogsButton";
+            this.viewLogsButton.Size = new System.Drawing.Size(201, 23);
+            this.viewLogsButton.TabIndex = 3;
+            this.viewLogsButton.Text = "View Logs";
+            this.viewLogsButton.UseVisualStyleBackColor = true;
+            this.viewLogsButton.Click += new System.EventHandler(this.ViewLogsButton_Click);
+            // 
+            // tableLayoutPanel
+            // 
+            this.tableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel.ColumnCount = 2;
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel.Controls.Add(this.viewLogsButton, 1, 0);
+            this.tableLayoutPanel.Controls.Add(this.websiteButton, 0, 0);
+            this.tableLayoutPanel.Location = new System.Drawing.Point(10, 517);
+            this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel.Name = "tableLayoutPanel";
+            this.tableLayoutPanel.RowCount = 1;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel.Size = new System.Drawing.Size(406, 23);
+            this.tableLayoutPanel.TabIndex = 4;
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.contextMenuGroupBox);
+            this.panel1.Controls.Add(this.miscControlsGroupBox);
+            this.panel1.Controls.Add(this.vlcControlsGroupBox);
+            this.panel1.Controls.Add(this.duplicateSearchingAndThumbnailCacheGroupBox);
+            this.panel1.Controls.Add(this.tagControlsGroupBox);
+            this.panel1.Location = new System.Drawing.Point(10, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(1, 1, 3, 0);
+            this.panel1.Size = new System.Drawing.Size(406, 503);
+            this.panel1.TabIndex = 7;
+            // 
+            // contextMenuGroupBox
+            // 
+            this.contextMenuGroupBox.Controls.Add(this.flowLayoutPanel1);
+            this.contextMenuGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.contextMenuGroupBox.Location = new System.Drawing.Point(1, 429);
+            this.contextMenuGroupBox.Name = "contextMenuGroupBox";
+            this.contextMenuGroupBox.Size = new System.Drawing.Size(402, 50);
+            this.contextMenuGroupBox.TabIndex = 14;
+            this.contextMenuGroupBox.TabStop = false;
+            this.contextMenuGroupBox.Text = "Windows Context Menu Options";
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.toggleContextMenuOptionsButton);
+            this.flowLayoutPanel1.Controls.Add(this.toggleContextMenuOptionsInfoButton);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(1);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(396, 31);
+            this.flowLayoutPanel1.TabIndex = 9;
+            // 
+            // toggleContextMenuOptionsButton
+            // 
+            this.toggleContextMenuOptionsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.toggleContextMenuOptionsButton.Location = new System.Drawing.Point(4, 4);
+            this.toggleContextMenuOptionsButton.Name = "toggleContextMenuOptionsButton";
+            this.toggleContextMenuOptionsButton.Size = new System.Drawing.Size(245, 23);
+            this.toggleContextMenuOptionsButton.TabIndex = 1;
+            this.toggleContextMenuOptionsButton.Text = "Add Context Menu Options To Windows";
+            this.toggleContextMenuOptionsButton.UseVisualStyleBackColor = true;
+            this.toggleContextMenuOptionsButton.Click += new System.EventHandler(this.toggleContextMenuOptionsButton_Click);
+            // 
+            // toggleContextMenuOptionsInfoButton
+            // 
+            this.toggleContextMenuOptionsInfoButton.Location = new System.Drawing.Point(255, 4);
+            this.toggleContextMenuOptionsInfoButton.Name = "toggleContextMenuOptionsInfoButton";
+            this.toggleContextMenuOptionsInfoButton.Size = new System.Drawing.Size(81, 23);
+            this.toggleContextMenuOptionsInfoButton.TabIndex = 2;
+            this.toggleContextMenuOptionsInfoButton.Text = "What\'s This?";
+            this.toggleContextMenuOptionsInfoButton.UseVisualStyleBackColor = true;
+            this.toggleContextMenuOptionsInfoButton.Click += new System.EventHandler(this.toggleContextMenuOptionsInfoButton_Click);
+            // 
+            // ignoredFilesFlowLayoutPanel
+            // 
+            this.ignoredFilesFlowLayoutPanel.Controls.Add(this.ignoredFilesCountLabel);
+            this.ignoredFilesFlowLayoutPanel.Controls.Add(this.ignoredFilesManageButton);
+            this.ignoredFilesFlowLayoutPanel.Controls.Add(this.ignoredFilesInfoButton);
+            this.ignoredFilesFlowLayoutPanel.Location = new System.Drawing.Point(3, 63);
+            this.ignoredFilesFlowLayoutPanel.Name = "ignoredFilesFlowLayoutPanel";
+            this.ignoredFilesFlowLayoutPanel.Padding = new System.Windows.Forms.Padding(3);
+            this.ignoredFilesFlowLayoutPanel.Size = new System.Drawing.Size(388, 55);
+            this.ignoredFilesFlowLayoutPanel.TabIndex = 1;
+            // 
+            // ignoredFilesCountLabel
+            // 
+            this.ignoredFilesCountLabel.Location = new System.Drawing.Point(6, 6);
+            this.ignoredFilesCountLabel.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
+            this.ignoredFilesCountLabel.Name = "ignoredFilesCountLabel";
+            this.ignoredFilesCountLabel.Size = new System.Drawing.Size(377, 14);
+            this.ignoredFilesCountLabel.TabIndex = 0;
+            this.ignoredFilesCountLabel.Text = "Ignored Directories: 0, Ignored Files: 0";
+            // 
+            // ignoredFilesManageButton
+            // 
+            this.ignoredFilesManageButton.Location = new System.Drawing.Point(6, 26);
+            this.ignoredFilesManageButton.Name = "ignoredFilesManageButton";
+            this.ignoredFilesManageButton.Size = new System.Drawing.Size(196, 23);
+            this.ignoredFilesManageButton.TabIndex = 1;
+            this.ignoredFilesManageButton.Text = "Manage Ignored Files And Directories";
+            this.ignoredFilesManageButton.UseVisualStyleBackColor = true;
+            this.ignoredFilesManageButton.Click += new System.EventHandler(this.ignoredFilesManageButton_Click);
+            // 
+            // ignoredFilesInfoButton
+            // 
+            this.ignoredFilesInfoButton.Location = new System.Drawing.Point(208, 26);
+            this.ignoredFilesInfoButton.Name = "ignoredFilesInfoButton";
+            this.ignoredFilesInfoButton.Size = new System.Drawing.Size(90, 23);
+            this.ignoredFilesInfoButton.TabIndex = 2;
+            this.ignoredFilesInfoButton.Text = "What\'s This?";
+            this.ignoredFilesInfoButton.UseVisualStyleBackColor = true;
+            this.ignoredFilesInfoButton.Click += new System.EventHandler(this.ignoredFilesInfoButton_Click);
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(424, 482);
+            this.ClientSize = new System.Drawing.Size(424, 575);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tableLayoutPanel);
             this.Controls.Add(this.saveSettingsButton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(440, 1080);
             this.MinimumSize = new System.Drawing.Size(422, 39);
             this.Name = "SettingsForm";
             this.Text = "Sorter Express - Settings";
@@ -505,17 +550,17 @@
             this.duplicateSearchingAndThumbnailCacheGroupBox.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.thumbsStorageFlowLayoutPanel.ResumeLayout(false);
-            this.thumbsStorageFlowLayoutPanel.PerformLayout();
-            this.tableLayoutPanel.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.contextMenuGroupBox.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
             this.tagControlsGroupBox.ResumeLayout(false);
             this.tagControlsFlowLayoutPanel.ResumeLayout(false);
             this.tagControlsFlowLayoutPanel.PerformLayout();
             this.tagSearchStartFlowLayoutPanel.ResumeLayout(false);
             this.tagSearchStartFlowLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tagSearchNumeric)).EndInit();
+            this.tableLayoutPanel.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.contextMenuGroupBox.ResumeLayout(false);
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.ignoredFilesFlowLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -555,5 +600,9 @@
         private System.Windows.Forms.CheckBox displayAllTagsCheckbox;
         private System.Windows.Forms.CheckBox autoResetTagSearchCheckBox;
         private System.Windows.Forms.CheckBox autoResetSubfolderSearchCheckBox;
+        private System.Windows.Forms.FlowLayoutPanel ignoredFilesFlowLayoutPanel;
+        private System.Windows.Forms.Label ignoredFilesCountLabel;
+        private System.Windows.Forms.Button ignoredFilesManageButton;
+        private System.Windows.Forms.Button ignoredFilesInfoButton;
     }
 }

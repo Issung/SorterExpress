@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -275,6 +275,12 @@
     <Compile Include="Forms\SortForm.Designer.cs">
       <DependentUpon>SortForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DuplicateSearchIgnoredForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DuplicateSearchIgnoredForm.Designer.cs">
+      <DependentUpon>DuplicateSearchIgnoredForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TagsListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -368,6 +374,9 @@
     <EmbeddedResource Include="Forms\SortForm.resx">
       <DependentUpon>SortForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DuplicateSearchIgnoredForm.resx">
+      <DependentUpon>DuplicateSearchIgnoredForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TagsListForm.resx">
       <DependentUpon>TagsListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -435,6 +444,8 @@
     <None Include="Icons\folder.png" />
     <None Include="Icons\question.png" />
     <None Include="Icons\world.png" />
+    <None Include="Resources\eye.bmp" />
+    <None Include="Icons\file.png" />
     <Content Include="Todo List and Notes.txt" />
   </ItemGroup>
   <ItemGroup>

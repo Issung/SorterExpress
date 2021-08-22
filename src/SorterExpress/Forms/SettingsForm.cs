@@ -115,14 +115,17 @@ namespace SorterExpress.Forms
             autoResetSubfolderSearchCheckBox.Checked = Settings.Default.AutoResetSubfolderSearchBox;
             displayAllTagsCheckbox.Checked = Settings.Default.DisplayAllTags;
 
-            //cropFilesLeftRightCheckBox.Checked = Settings.Default.DuplicatesCropLeftRightSides;
-            //cropFilesTopBottomCheckBox.Checked = Settings.Default.DuplicatesCropTopBottomSides;
-
             moveSortedFilesCheckbox.Checked = Settings.Default.MoveSortedFiles;
             fastResizingCheckbox.Checked = Settings.Default.FastResizing;
+            UpdateIgnoredDirectoriesAndFilesLabel();
 
             LoadVLCLocation();
             UpdateContextMenuButton();
+        }
+
+        private void UpdateIgnoredDirectoriesAndFilesLabel()
+        {
+            ignoredFilesCountLabel.Text = $"Ignored Directories: {Settings.Default.DuplicatesIgnoreDirectories?.Count ?? 0}, Ignored Files: {Settings.Default.DuplicatesIgnoreFiles?.Count ?? 0}";
         }
 
         string currentVlcLocationText(string path) => $"Current VLC Location: {path}";
@@ -179,19 +182,6 @@ namespace SorterExpress.Forms
             };
             tagsListForm.ShowDialog();
         }
-
-        /*private void ClearTagsButton_Click(object sender, EventArgs e)
-        {
-            var answer = MessageBox.Show("Really delete all tags? This is irreversible.", "Really delete all tags?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
-
-            if (answer == DialogResult.Yes)
-            {
-                Settings.Default.Tags = new List<string>();
-
-                if (setDisplayAllTagsAction != null)
-                    setTagsAction.Invoke(new List<string>());
-            }
-        }*/
 
         private void ExportTagsButton_Click(object sender, System.EventArgs e)
         {
@@ -452,6 +442,22 @@ namespace SorterExpress.Forms
         private void thumbsStorageViewButton_Click(object sender, EventArgs e)
         {
             Process.Start(Program.THUMBS_PATH);
+        }
+
+        private void ignoredFilesInfoButton_Click(object sender, EventArgs e)
+        {
+            string ignoredFilesInfoMessage = $"Files or directories that contain files with a high false-positive rates in the duplicates searcher can be manually ignored by the user.\r\r" +
+                $"These directories/files are ignored by their absolute filepath, so if they are moved or renamed then the ignoring will no longer work.\r\r" +
+                $"In the manage screen you can add or remove files and directories from being ignored.";
+
+            MessageBox.Show(ignoredFilesInfoMessage, "Duplicates Search Ignored Files Info", MessageBoxButtons.OK, MessageBoxIcon.Question);
+        }
+
+        private void ignoredFilesManageButton_Click(object sender, EventArgs e)
+        {
+            var form = new DuplicateSearchIgnoredForm();
+            form.ShowDialog();
+            UpdateIgnoredDirectoriesAndFilesLabel();
         }
     }
 }
