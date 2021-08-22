@@ -58,13 +58,15 @@ namespace SorterExpress.Controllers
 
         public int MatchesGridViewSelectedRowIndex { get { return form.matchesDataGridView?.CurrentCell?.RowIndex ?? -1; } }
 
+        private object duplicatesLock = new object();
+
+        private bool fileTypesMustMatch => model.SearchImages && model.SearchVideos && model.OnlyMatchSameFileTypes;
+
         public DuplicatesFormController(DuplicatesForm duplicatesForm, DirectoryInfo dirInfo)
         {
             form = duplicatesForm;
             model = new DuplicatesFormModel();
             model.Duplicates = new SortableBindingList<Duplicate>();
-            //form.duplicatesFormModelBindingSource.DataSource = model;
-            //form.searchScopeComboBox.DataSource = EnumHelper.GetEnumDescriptions(typeof(DuplicatesFormModel.SearchScope));
 
             printsWorker = new BackgroundWorker
             {
@@ -144,7 +146,7 @@ namespace SorterExpress.Controllers
             }
         }
 
-        internal void VlcControl_Playing(object sender, Vlc.DotNet.Core.VlcMediaPlayerPlayingEventArgs e)
+        internal void VlcControl_Playing(object sender, VlcMediaPlayerPlayingEventArgs e)
         {
             VlcControl control = (VlcControl)sender;
 
@@ -161,7 +163,7 @@ namespace SorterExpress.Controllers
             if (size != new Size(-1, -1))
             {
                 // Update appropriate fileprint with the new found size, just incase it's needed later.
-                (side == Side.Left ? inspectingDuplicate.fileprint1 : inspectingDuplicate.fileprint2).size = size;
+                (side == Side.Left ? inspectingDuplicate.fileprint1 : inspectingDuplicate.fileprint2).SetVideoSize(size);
 
                 infoBox.Invoke(() =>
                 {
@@ -363,7 +365,7 @@ namespace SorterExpress.Controllers
             form.Invoke((MethodInvoker)delegate () {
                 model.Duplicates.Clear();
             });
-            prints.RemoveAll(t => !scope.Contains(t.filepath.Replace(model.Directory, "")));
+            prints.RemoveAll(t => !scope.Contains(t.Filepath.Replace(model.Directory, "")));
 
             GeneratePrints(scope, prints, sender as BackgroundWorker, e);
 
@@ -422,17 +424,19 @@ namespace SorterExpress.Controllers
                         }
                         else
                         {
-                            FilePrint print = GetPrint(prints, filename);
+                            FilePrint print = CreatePrint(prints, filename);
 
                             if (print != null)
                             { 
                                 CheckForMatches(print, prints);
+
+                                // Add print to prints list *after* checking for matches, then don't have to worry about matching self, genius.
+                                prints.Add(print);
                             }
 
                             finishedThreads++;
                             worker.ReportProgress(finishedThreads * 100 / files.Count);
                         }
-
                     });
             }
             catch (Exception e)
@@ -443,23 +447,13 @@ namespace SorterExpress.Controllers
             return prints;
         }
 
-        private FilePrint GetPrint(List<FilePrint> prints, string filename)
+        private FilePrint CreatePrint(List<FilePrint> prints, string filename)
         {
             FilePrint print;
 
             try
             {
-                if (!prints.Exists(t => t.filepath.Replace(model.Directory, "") == filename))
-                {
-                    print = new FilePrint(Path.Combine(model.Directory, filename));
-                    prints.Add(print);
-                }
-                else
-                {
-                    //This should never get hit...
-                    Console.WriteLine("The thing that should never get hit got hit.");
-                    print = prints.Find(t => t.filepath.Replace(model.Directory, "") == filename);
-                }
+                print = new FilePrint(Path.Combine(model.Directory, filename));
             }
             catch (Exception e)
             {
@@ -477,13 +471,16 @@ namespace SorterExpress.Controllers
             {
                 try
                 {
-                    bool isMatch = IsMatch(print, prints[i]);
+                    bool isMatch = CheckPrintsAreMatch(print, prints[i]);
 
                     if (isMatch)
                     {
                         form.Invoke((MethodInvoker)delegate ()
                         {
-                            model.Duplicates.Add(new Duplicate(print, prints[i]));
+                            lock (duplicatesLock)
+                            { 
+                                model.Duplicates.Add(new Duplicate(print, prints[i]));
+                            }
                         });
                     }
                 }
@@ -494,44 +491,40 @@ namespace SorterExpress.Controllers
             }
         }
 
-        private bool IsMatch(FilePrint print1, FilePrint print2)
+        private bool CheckPrintsAreMatch(FilePrint print1, FilePrint print2)
         {
-            bool fileTypesNeedMatch = model.SearchImages && model.SearchVideos && model.OnlyMatchSameFileTypes;
-
-            if (print1 != null)
+            if (print1 != null && print2 != null)
             {
-                // Don't compare against self.
-                if (print1 != print2)
+                // If the duplicate hasn't already been found or found in reverse (x is like y |or| y is like x)
+                if (!fileTypesMustMatch || (fileTypesMustMatch && print1.FileType == print2.FileType))
                 {
-                    // If the duplicate hasn't already been found or found in reverse (x is like y |or| y is like x)
-                    if (!fileTypesNeedMatch || (fileTypesNeedMatch && print1.fileType == print2.fileType))
+                    bool dirOK = CheckDirectoriesOk(print1, print2);
+
+                    if (dirOK)
                     {
-                        // Check for "between immediate and subdirectories" filter.
-                        // Other filters are taken care of before this method by only passing in the required files.
-                        bool dirOK = false;
-
-                        if (model.SearchScopeSelectedValue != DuplicatesFormModel.SearchScope.BetweenImmediateAndSubdirs)
-                            dirOK = true;
-                        else if (print1.directory == model.Directory ^ print2.directory == model.Directory)
-                            dirOK = true;
-
-                        if (dirOK)
+                        // If above similarity threshold set by user.
+                        if (FilePrint.GetSimilarityPercentage(print1, print2) >= model.Similarity)
                         {
-                            // If there is no duplicate entry with the files reversed.
-                            if (!model.Duplicates.Any(t => t.File2Path == print1.filepath && t.File1Path == print2.filepath))
-                            {
-                                // If above similarity threshold set by user.
-                                if (FilePrint.GetSimilarityPercentage(print1, print2) >= model.Similarity)
-                                {
-                                    return true;
-                                }
-                            }
+                            return true;
                         }
                     }
                 }
             }
 
             return false;
+        }
+
+        private bool CheckDirectoriesOk(FilePrint print1, FilePrint print2)
+        {
+            // Check for "between immediate and subdirectories" filter.
+            // Other filters are taken care of before this method by only passing in the required files.
+
+            if (model.SearchScopeSelectedValue != DuplicatesFormModel.SearchScope.BetweenImmediateAndSubdirs)
+                return true;
+            else if (print1.Directory == model.Directory ^ print2.Directory == model.Directory)
+                return true;
+            else
+                return false;
         }
 
         public int IgnoreMatchSelectionChanged = 0;
@@ -606,7 +599,7 @@ namespace SorterExpress.Controllers
             if (Utilities.FileIsImage(filePath))
             {
                 mediaViewer.LoadMedia(filePath);
-                ShowFileInfo(side, (side == Side.Left ? inspectingDuplicate.fileprint1 : inspectingDuplicate.fileprint2).size);
+                ShowFileInfo(side, (side == Side.Left ? inspectingDuplicate.fileprint1 : inspectingDuplicate.fileprint2).Size);
             }
             else if (Utilities.FileIsVideo(filePath))
             {

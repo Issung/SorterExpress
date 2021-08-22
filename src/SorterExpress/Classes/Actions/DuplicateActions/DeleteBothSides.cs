@@ -67,8 +67,8 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
                 controller.model.Duplicates.Remove(allDuplicatesWithFile[i].Item2);
             }
 
-            FileSystem.DeleteFile(duplicate.fileprint1.filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
-            FileSystem.DeleteFile(duplicate.fileprint2.filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+            FileSystem.DeleteFile(duplicate.fileprint1.Filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+            FileSystem.DeleteFile(duplicate.fileprint2.Filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
             Successful = true;
             base.Do();
         }
@@ -101,12 +101,12 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
 
                     string itemPath = recycler.GetDetailsOf(folderItem, 1);
 
-                    if (!leftItemFound && duplicate.fileprint1.filepath == Path.Combine(itemPath, itemFilename))
+                    if (!leftItemFound && duplicate.fileprint1.Filepath == Path.Combine(itemPath, itemFilename))
                     {
                         DoVerb(folderItem, "ESTORE");
                         leftItemFound = true;
                     }
-                    else if (!rightItemFound && duplicate.fileprint2.filepath == Path.Combine(itemPath, itemFilename))
+                    else if (!rightItemFound && duplicate.fileprint2.Filepath == Path.Combine(itemPath, itemFilename))
                     {
                         DoVerb(folderItem, "ESTORE");
                         rightItemFound = true;

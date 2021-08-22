@@ -219,18 +219,6 @@ namespace SorterExpress.Forms
                 int printsCount = prints.Count();
 
                 Size noSize = new Size(-1, -1);
-
-                Parallel.ForEach(prints, (print) =>
-                {
-                    if (print.size == noSize)
-                    {
-                        print.size = FFWorker.GetSizeWait(print.filepath);
-                    }
-
-                    sizesRetrieved += 1;
-
-                    backgroundWorker.ReportProgress((int)(((float)sizesRetrieved / printsCount) * 100) / 2);
-                });
             }
 
             Invoke((MethodInvoker)delegate { loadingPanel.BottomText = "Performing filtering and removing files..."; });
@@ -299,8 +287,8 @@ namespace SorterExpress.Forms
             }
             else if (preference == Preference.HighestResolution)
             {
-                int file1pixels = duplicate.fileprint1.size.Width * duplicate.fileprint1.size.Height;
-                int file2pixels = duplicate.fileprint2.size.Width * duplicate.fileprint2.size.Height;
+                int file1pixels = duplicate.fileprint1.Size.Width * duplicate.fileprint1.Size.Height;
+                int file2pixels = duplicate.fileprint2.Size.Width * duplicate.fileprint2.Size.Height;
 
                 int comp = file1pixels.CompareTo(file2pixels);
 
