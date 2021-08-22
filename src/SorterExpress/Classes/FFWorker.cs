@@ -27,7 +27,7 @@ namespace SorterExpress.Classes
             FFMPEGProcess process = CreateFFMPEGProcess();
 
             process.StartInfo.FileName = "ffmpeg.exe";
-            process.StartInfo.Arguments = $"-y -i \"{input}\" -vframes: 1 -vf scale={size}:{size} \"{output}\"";
+            process.StartInfo.Arguments = CreateFfmpegThumbnailArgs(input, output, size);
             process.input = input;
             process.output = output;
 
@@ -44,13 +44,13 @@ namespace SorterExpress.Classes
             FFMPEGProcess ffmpeg = CreateFFMPEGProcess();
 
             ffmpeg.StartInfo.FileName = "ffmpeg.exe";
-            //ffmpeg.StartInfo.Arguments = "-y -i \"" + directory + "/" + filename + "\" -vframes: 1 -vf scale=" + size + ":" + size + " \"" + output + "\""; 
-            ffmpeg.StartInfo.Arguments = $"-y -i \"{input}\" -vframes: 1 -vf scale={size}:{size} \"{output}\"";
+            ffmpeg.StartInfo.Arguments = CreateFfmpegThumbnailArgs(input, output, size);
             ffmpeg.callback = callback;
             ffmpeg.input = input;
             ffmpeg.output = output;
             
-            ffmpeg.Exited += (sender, e) => {
+            ffmpeg.Exited += (sender, e) => 
+            {
                 var process = (FFMPEGProcess)sender;
 
                 if (process.callback != null)
@@ -63,6 +63,17 @@ namespace SorterExpress.Classes
 
             ffmpeg.Start();
         }
+
+        private static string CreateFfmpegThumbnailArgs(string input, string output, int size)
+        {
+            // -ss (Screenshot this far into the video (1 second ftb).
+            // -y (Overwrite output if it already exists).
+            // -vframes: 1 (Output 1 frame).
+            // -vf (??).
+            // -vf scale=w:h.
+            // Destination output filepath at end.
+            return $"-ss 00:00:02 -y -i \"{input}\" -vframes: 1 -vf scale={size}:{size} \"{output}\"";
+        } 
 
         private static FFProbeProcess CreateFFProbeProcess(bool raiseEvents)
         {

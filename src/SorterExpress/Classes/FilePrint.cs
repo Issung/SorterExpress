@@ -4,37 +4,50 @@ using SorterExpress.Properties;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Windows.Media.Imaging;
 
 public class FilePrint
 {
     const int THUMB_SIZE = 60;
 
-    public string directory;
-    public string filepath;
-    public FileType fileType;
-    public Size size = new Size(-1, -1);
-    public float average;
-    public string print;
-
-    //string thumbPath = null;
+    /// <summary>
+    /// File sizes are lazy-loaded, this property will tell you if Size has been loaded yet for this file without actually loading Size.
+    /// </summary>
+    public bool SizeLoaded => size != null;
 
     /// <summary>
-    /// The path to the fileprint's thumbnail, if the fileprint is for an image
-    /// then the path is just to the raw image (full sized). if the fileprint is
-    /// for a video then the path is the the small jpg extracted by ffmpeg.
+    /// Obtain full-dimensions of this file.<br/>
+    /// This performs hard drive read operations if not yet loaded.
     /// </summary>
-    /*public string ThumbPath { get {
-            //if (Utilities.FileIsImage(file))
-            //    return file;
-            //else
-            //    return thumbPath;
-            return thumbPath;
+    public Size Size 
+    {
+        get 
+        {
+            if (size == null)
+            {
+                size = GetSize();
+                return size.Value;
+            }
+            else
+            {
+                return size.Value;
+            }
         }
+    }
 
-        set;
-    }*/
+    public string Directory;
+    public string Filepath;
+    public FileType FileType;
+    public float Average;
+    public string Print;
+    public string ThumbPath;
 
-    public string ThumbPath { get; set; }
+    /// <summary>
+    /// Lazily-loaded full dimensions of the file.<br/>
+    /// If this print was created from an *Image* that was not already cached then size will be set.<br/>
+    /// If a video is loaded by a video player then this can be set efficiently with <see cref="SetVideoSize"/>.
+    /// </summary>
+    private Size? size = null;
 
     /// <summary>
     /// Create a "file print" for a multi-media file. First this detects the file type (image or video) and then creates a small thumbnail for it and caches it in 
@@ -43,55 +56,85 @@ public class FilePrint
     /// <exception cref="Exception">Can throw any manner of exceptions because of constantly manipulating files.</exception>
     public FilePrint(string filePath)
     {
-        this.filepath = filePath;
-        directory = Path.GetDirectoryName(filePath);
-        Bitmap img;
-        fileType = Utilities.GetFileType(filepath);
+        this.Filepath = filePath;
+        Bitmap thumbImage;
+        Directory = Path.GetDirectoryName(filePath);
+        FileType = Utilities.GetFileType(Filepath);
 
         ThumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(filePath) + ".jpg");
 
-        if (Utilities.FileIsImage(filePath))
+        if (File.Exists(ThumbPath))
         {
-            if (File.Exists(ThumbPath))
+            thumbImage = new Bitmap(ThumbPath);
+        }
+        else
+        {
+            if (FileType == FileType.Image)
             {
-                img = new Bitmap(filePath);
-                size = img.Size;
-                img.Dispose();
-                img = new Bitmap(ThumbPath);
-                CalculatePicturePrint(img);
+                var fullImage = new Bitmap(filePath);
+                size = fullImage.Size;
+                thumbImage = Utilities.Resize(fullImage, THUMB_SIZE, THUMB_SIZE);
+                thumbImage.Save(ThumbPath);
+
+                fullImage.Dispose();
+            }
+            else if (FileType == FileType.Video)
+            {
+                FFWorker.GetThumbnailWait(filePath, ThumbPath, THUMB_SIZE);
+
+                // Should put a try catch around this, if file is corrupted or anything it leads to issues.
+                thumbImage = new Bitmap(ThumbPath);
             }
             else
             {
-                img = new Bitmap(filePath);
-                size = img.Size;
-                Utilities.Resize(img, THUMB_SIZE, THUMB_SIZE).Save(ThumbPath);
-                img.Dispose();
-
-                img = new Bitmap(ThumbPath);
-                CalculatePicturePrint(img);
+                throw new InvalidOperationException("Creating FilePrint, file must be an Image or Video.");
             }
-
-            img.Dispose();
         }
-        else if (Utilities.FileIsVideo(filePath))
+
+        if (thumbImage == null)
         {
-            if (!File.Exists(ThumbPath))
-            {
-                FFWorker.GetThumbnailWait(filePath, ThumbPath, THUMB_SIZE);
-            }
-
-            // Should put a try catch around this, if file is corrupted or anything it leads to issues.
-            img = new Bitmap(ThumbPath);
-
-            CalculatePicturePrint(img);
-
-            img.Dispose();
+            throw new Exception("ThumbImage should have been loaded by this point in order to calculate image print");
         }
+
+        CalculateImagePrint(thumbImage);
+
+        thumbImage.Dispose();
+    }
+
+    private Size GetSize()
+    {
+        if (FileType == FileType.Image)
+        {
+            using (var imageStream = File.OpenRead(Filepath))
+            {
+                var decoder = BitmapDecoder.Create(imageStream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.Default);
+                var width = decoder.Frames[0].PixelWidth;
+                var height = decoder.Frames[0].PixelHeight;
+                return new Size(width, height);
+            }
+        }
+        else if (FileType == FileType.Video)
+        {
+            return FFWorker.GetSizeWait(Filepath);
+        }
+
+        return new Size(-1, -1);
+    }
+    
+    // TODO: Make sure this is being used properly (make sure `Size` is not being accessed before this is, making this optimisation useless).
+    public void SetVideoSize(Size newSize)
+    {
+        if (FileType != FileType.Video)
+        {
+            throw new InvalidOperationException("This method should only be used when the video type is Video. It should be used by when the file size can be easily obtained from the video player.");
+        }
+
+        size = newSize;
     }
 
     static readonly float minColor = Color.FromArgb(18, 18, 18).GetBrightness();
 
-    public void CalculatePicturePrint(Bitmap img)
+    public void CalculateImagePrint(Bitmap img)
     {
         int leftBorder = 0,
             rightBorder = 0,
@@ -169,19 +212,19 @@ public class FilePrint
             }
         }
 
-        average = sum / (float)(8 * 8);
+        Average = sum / (float)(8 * 8);
 
-        print = "";
+        Print = "";
 
         for (int i = 0; i < 8; i++)
         {
             for (int j = 0; j < 8; j++)
             {
                 col = img.GetPixel(i, j);
-                if (((float)(col.R + col.G + col.B) / 3f) >= average)
-                    print += "1";
+                if (((float)(col.R + col.G + col.B) / 3f) >= Average)
+                    Print += "1";
                 else
-                    print += "0";
+                    Print += "0";
             }
         }
     }
@@ -193,9 +236,9 @@ public class FilePrint
     {
         int differenceCount = 0;
 
-        for (int i = 0; i < fp1.print.Length; i++)
+        for (int i = 0; i < fp1.Print.Length; i++)
         {
-            if (fp1.print[i] != fp2.print[i])
+            if (fp1.Print[i] != fp2.Print[i])
             {
                 differenceCount++;
             }
@@ -213,9 +256,9 @@ public class FilePrint
 
         try
         {
-            for (int i = 0; i < fp1.print.Length; i++)
+            for (int i = 0; i < fp1.Print.Length; i++)
             {
-                if (fp1.print[i] != fp2.print[i])
+                if (fp1.Print[i] != fp2.Print[i])
                 {
                     differenceCount++;
                 }

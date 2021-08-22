@@ -434,20 +434,10 @@ namespace SorterExpress
         public static Bitmap Resize(Bitmap image, int width, int height)
         {
             var ret = new Bitmap(image, width, height);
-            //image.Dispose();
             return ret;
         }
 
-        public static Bitmap MakeGrayscale(Bitmap original)
-        {
-            //create a blank bitmap the same size as original
-            Bitmap newBitmap = new Bitmap(original.Width, original.Height);
-
-            //get a graphics object from the new image
-            Graphics g = Graphics.FromImage(newBitmap);
-
-            //create the grayscale ColorMatrix
-            ColorMatrix colorMatrix = new ColorMatrix(
+        readonly static ColorMatrix grayScaleColorMatrix = new ColorMatrix(
                new float[][]
                {
                     new float[] {.3f, .3f, .3f, 0, 0},
@@ -457,11 +447,19 @@ namespace SorterExpress
                     new float[] {0, 0, 0, 0, 1}
                });
 
+        public static Bitmap MakeGrayscale(Bitmap original)
+        {
+            //create a blank bitmap the same size as original
+            Bitmap newBitmap = new Bitmap(original.Width, original.Height);
+
+            //get a graphics object from the new image
+            Graphics g = Graphics.FromImage(newBitmap);
+
             //create some image attributes
             ImageAttributes attributes = new ImageAttributes();
 
             //set the color matrix attribute
-            attributes.SetColorMatrix(colorMatrix);
+            attributes.SetColorMatrix(grayScaleColorMatrix);
 
             //draw the original image on the new image
             //using the grayscale color matrix

@@ -23,11 +23,11 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
 
         DuplicatesFormController.Side keptSide;
 
-        string keptFileFilepath { get { return keptSide == DuplicatesFormController.Side.Left ? duplicate.fileprint1.filepath : duplicate.fileprint2.filepath; } }
+        string keptFileFilepath { get { return keptSide == DuplicatesFormController.Side.Left ? duplicate.fileprint1.Filepath : duplicate.fileprint2.Filepath; } }
 
         string keptFileNewName;
 
-        string deletedFileFilepath { get { return keptSide == DuplicatesFormController.Side.Left ? duplicate.fileprint2.filepath : duplicate.fileprint1.filepath;  } }
+        string deletedFileFilepath { get { return keptSide == DuplicatesFormController.Side.Left ? duplicate.fileprint2.Filepath : duplicate.fileprint1.Filepath;  } }
 
         Duplicate duplicate;
 
