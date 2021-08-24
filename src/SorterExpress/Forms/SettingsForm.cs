@@ -29,7 +29,7 @@ namespace SorterExpress.Forms
         BackgroundWorker thumbsSizeWorker;
         CancellationTokenSource thumbsSizeWorkerCancelToken;
         long thumbSizeTotalBytes = 0;
-        string thumbSizeLabelText(int size) => $"Thumbs Storage Size: {size} Mb";
+        string thumbSizeLabelText(int? fileCount, int size) => $"Thumbnail Cache Storage: {size}Mb" + ((fileCount != null) ? $" ({String.Format("{0:n0}", fileCount)} files)" : string.Empty);
 
         public delegate void TagsSavedEvent(IEnumerable<string> currentTags);
         public event TagsSavedEvent TagsSaved;
@@ -73,11 +73,14 @@ namespace SorterExpress.Forms
             thumbsSizeWorker.RunWorkerAsync();
         }
 
+        int? fileCount = 0;
+
         private void ThumbsSizeWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var worker = sender as BackgroundWorker;
+            var worker = (BackgroundWorker)sender;
 
             string[] files = Directory.GetFiles(Program.THUMBS_PATH, "*.*");
+            fileCount = files.Length;
 
             thumbSizeTotalBytes = 0;
             List<int> sizes = new List<int>();
@@ -85,14 +88,16 @@ namespace SorterExpress.Forms
             thumbsSizeWorkerCancelToken = new CancellationTokenSource();
             
             var options = new ParallelOptions {
-                MaxDegreeOfParallelism = Environment.ProcessorCount,
+                MaxDegreeOfParallelism = Math.Min(1, Environment.ProcessorCount / 2),
                 CancellationToken = thumbsSizeWorkerCancelToken.Token
             };
 
             Parallel.ForEach(files, options, (filename, state) => 
             {
                 if (options.CancellationToken.IsCancellationRequested)
+                { 
                     state.Stop();
+                }
                 else
                 { 
                     FileInfo info = new FileInfo(filename);
@@ -104,7 +109,7 @@ namespace SorterExpress.Forms
 
         private void ThumbsSizeWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            thumbsStorageSizeLabel.Text = thumbSizeLabelText(e.ProgressPercentage);
+            thumbsStorageSizeLabel.Text = thumbSizeLabelText(fileCount, e.ProgressPercentage);
         }
 
         public void LoadSettings()
@@ -318,12 +323,12 @@ namespace SorterExpress.Forms
 
         private void thumbnailsDeleteWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            thumbsStorageSizeLabel.Text = thumbSizeLabelText(e.ProgressPercentage);
+            thumbsStorageSizeLabel.Text = thumbSizeLabelText(fileCount, e.ProgressPercentage);
         }
 
         private void thumbnailsDeleteWorker_Complete(object sender, RunWorkerCompletedEventArgs e)
         {
-            thumbsStorageSizeLabel.Text = thumbSizeLabelText(0);
+            thumbsStorageSizeLabel.Text = thumbSizeLabelText(0, 0);
         }
 
         private void locateVlcButton_Click(object sender, EventArgs e)

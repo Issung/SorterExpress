@@ -3,6 +3,7 @@ using SorterExpress.Forms;
 using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -179,6 +180,30 @@ namespace SorterExpress
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Open a file in the operating system's preferred program.
+        /// </summary>
+        /// <param name="path">Directory path to the file.</param>
+        public static void ViewFile(string path)
+        {
+            if (!string.IsNullOrWhiteSpace(path))
+            { 
+                Process.Start(path);
+            }
+        }
+
+        /// <summary>
+        /// Open windows explorer and pre-select a given file.
+        /// </summary>
+        /// <param name="path">Directory path to the file.</param>
+        public static void ViewFileInExplorer(string path)
+        {
+            if (!string.IsNullOrWhiteSpace(path))
+            { 
+                Process.Start("explorer.exe", $"/select,\"{path}\"");
+            }
         }
 
         /// <summary>

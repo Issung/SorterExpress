@@ -43,26 +43,26 @@ namespace SorterExpress.Forms
             this.directoryRemoveButton = new System.Windows.Forms.Button();
             this.directoryRemoveAllButton = new System.Windows.Forms.Button();
             this.directoryListBox = new System.Windows.Forms.ListBox();
+            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.ignoredDirectoriesLabel = new System.Windows.Forms.Label();
             this.bottomPanel = new System.Windows.Forms.Panel();
             this.filesAddButton = new System.Windows.Forms.Button();
             this.filesRemoveButton = new System.Windows.Forms.Button();
             this.filesRemoveAllButton = new System.Windows.Forms.Button();
             this.filesListBox = new System.Windows.Forms.ListBox();
-            this.ignoredFilesLabel = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.fileContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.fileContextMenuOpenButton = new System.Windows.Forms.ToolStripMenuItem();
             this.fileContextMenuOpenInExplorerButton = new System.Windows.Forms.ToolStripMenuItem();
             this.fileContextMenuRemoveButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.ignoredFilesLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.directoryContextMenuStrip.SuspendLayout();
             this.tableLayoutPanel.SuspendLayout();
             this.topPanel.SuspendLayout();
-            this.bottomPanel.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.fileContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
+            this.bottomPanel.SuspendLayout();
+            this.fileContextMenuStrip.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // directoryContextMenuStrip
@@ -153,7 +153,7 @@ namespace SorterExpress.Forms
             this.directoryAddButton.Name = "directoryAddButton";
             this.directoryAddButton.Size = new System.Drawing.Size(162, 23);
             this.directoryAddButton.TabIndex = 2;
-            this.directoryAddButton.Text = "Add";
+            this.directoryAddButton.Text = "Add Directories";
             this.directoryAddButton.UseVisualStyleBackColor = true;
             this.directoryAddButton.Click += new System.EventHandler(this.directoryAddButton_Click);
             // 
@@ -195,6 +195,10 @@ namespace SorterExpress.Forms
             this.directoryListBox.TabIndex = 1;
             this.directoryListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDown);
             // 
+            // bindingSource
+            // 
+            this.bindingSource.DataSource = typeof(SorterExpress.Forms.DuplicatesIgnoreModel);
+            // 
             // ignoredDirectoriesLabel
             // 
             this.ignoredDirectoriesLabel.AutoSize = true;
@@ -226,7 +230,7 @@ namespace SorterExpress.Forms
             this.filesAddButton.Name = "filesAddButton";
             this.filesAddButton.Size = new System.Drawing.Size(162, 23);
             this.filesAddButton.TabIndex = 7;
-            this.filesAddButton.Text = "Add";
+            this.filesAddButton.Text = "Add Files";
             this.filesAddButton.UseVisualStyleBackColor = true;
             this.filesAddButton.Click += new System.EventHandler(this.fileAddButton_Click);
             // 
@@ -268,33 +272,6 @@ namespace SorterExpress.Forms
             this.filesListBox.TabIndex = 6;
             this.filesListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox_MouseDown);
             // 
-            // ignoredFilesLabel
-            // 
-            this.ignoredFilesLabel.AutoSize = true;
-            this.ignoredFilesLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "FileCount", true));
-            this.ignoredFilesLabel.Location = new System.Drawing.Point(7, 2);
-            this.ignoredFilesLabel.Name = "ignoredFilesLabel";
-            this.ignoredFilesLabel.Size = new System.Drawing.Size(67, 13);
-            this.ignoredFilesLabel.TabIndex = 5;
-            this.ignoredFilesLabel.Text = "Ignored Files";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.saveAndExitButton, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.saveButton, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(8, 442);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(555, 27);
-            this.tableLayoutPanel1.TabIndex = 5;
-            // 
             // fileContextMenuStrip
             // 
             this.fileContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -330,9 +307,32 @@ namespace SorterExpress.Forms
             this.fileContextMenuRemoveButton.Text = "Remove";
             this.fileContextMenuRemoveButton.Click += new System.EventHandler(this.fileContextMenuRemoveButton_Click);
             // 
-            // bindingSource
+            // ignoredFilesLabel
             // 
-            this.bindingSource.DataSource = typeof(SorterExpress.Forms.DuplicatesIgnoreModel);
+            this.ignoredFilesLabel.AutoSize = true;
+            this.ignoredFilesLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bindingSource, "FileCount", true));
+            this.ignoredFilesLabel.Location = new System.Drawing.Point(7, 2);
+            this.ignoredFilesLabel.Name = "ignoredFilesLabel";
+            this.ignoredFilesLabel.Size = new System.Drawing.Size(67, 13);
+            this.ignoredFilesLabel.TabIndex = 5;
+            this.ignoredFilesLabel.Text = "Ignored Files";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.saveAndExitButton, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.saveButton, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(8, 442);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(555, 27);
+            this.tableLayoutPanel1.TabIndex = 5;
             // 
             // DuplicateSearchIgnoredForm
             // 
@@ -350,11 +350,11 @@ namespace SorterExpress.Forms
             this.tableLayoutPanel.ResumeLayout(false);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
             this.bottomPanel.ResumeLayout(false);
             this.bottomPanel.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.fileContextMenuStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

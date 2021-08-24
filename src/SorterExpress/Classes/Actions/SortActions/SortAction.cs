@@ -2,7 +2,7 @@
 
 namespace SorterExpress.Classes.Actions.SortActions
 {
-    class SortAction : Action
+    abstract class SortAction : Action
     {
         protected SortController controller;
 
