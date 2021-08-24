@@ -10,6 +10,9 @@ using System.IO;
 
 namespace SorterExpress.Forms
 {
+    /// <summary>
+    /// Form for displaying ignored directories and files in the duplicate searcher.
+    /// </summary>
     public partial class DuplicateSearchIgnoredForm : Form
     {
         internal DuplicatesIgnoreModel Model { get; set; } = new DuplicatesIgnoreModel();

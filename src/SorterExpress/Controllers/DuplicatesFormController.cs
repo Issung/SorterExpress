@@ -17,6 +17,7 @@ using SorterExpress.Models;
 using Vlc.DotNet.Forms;
 using Vlc.DotNet.Core;
 using Shortcut = SorterExpress.Classes.Shortcut;
+using SorterExpress.Model.Duplicates;
 
 namespace SorterExpress.Controllers
 {
@@ -40,8 +41,6 @@ namespace SorterExpress.Controllers
         int selectedIndexOverride = -1;
 
         public int finishedThreads = 0;
-
-        public enum Side { Left, Right };
 
         BackgroundWorker printsWorker;
         CancellationTokenSource cancelTokenSource;
@@ -177,17 +176,14 @@ namespace SorterExpress.Controllers
             }
         }
 
-        private void SearchSubfoldersCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         internal void OpenDirectoryDialog()
         {
             var dirInfo = Utilities.OpenDirectory();
 
             if (dirInfo == null)
+            { 
                 Logs.Log("Directory open cancelled.");
+            }
             else
             {
                 LoadDirectory(dirInfo);
@@ -391,7 +387,7 @@ namespace SorterExpress.Controllers
             form.Invoke((MethodInvoker)delegate () {
                 model.Duplicates.Clear();
             });
-            prints.RemoveAll(t => !scope.Contains(t.Filepath.Replace(model.Directory, "")));
+            prints.RemoveAll(t => t == null || !scope.Contains(t.Filepath.Replace(model.Directory, "")));
 
             GeneratePrints(scope, prints, sender as BackgroundWorker, e);
 
@@ -636,12 +632,16 @@ namespace SorterExpress.Controllers
 
         #region Actions
 
-        public void KeepSide(Side side, int index = -1)
+        public void KeepSide(Side side, int? index = null)
         {
-            if (index >= 0)
-                Do(new KeepSide(this, model.Duplicates[index], index, side));
+            if (index != null && index >= 0)
+            {
+                Do(new KeepSide(this, model.Duplicates[index.Value], index.Value, side));
+            }
             else
+            { 
                 Do(new KeepSide(this, inspectingDuplicate, MatchesGridViewSelectedRowIndex, side));
+            }
         }
 
         public void Skip(int index = -1)
@@ -658,6 +658,14 @@ namespace SorterExpress.Controllers
             int dupeIndex = index >= 0 ? index : MatchesGridViewSelectedRowIndex;
 
             Do(new DeleteBothSides(this, dupe, dupeIndex));
+        }
+
+        public void IgnoreFileOrDirectory(int? index, IgnoreType ignoreType, Side side)
+        {
+            Duplicate duplicate = (index != null && index >= 0) ? model.Duplicates[index.Value] : inspectingDuplicate;
+            IgnoreSide ignoreAction = new IgnoreSide(this, duplicate, ignoreType, side);
+
+            Do(ignoreAction);
         }
 
         #endregion

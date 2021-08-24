@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace SorterExpress
+namespace SorterExpress.Model.Duplicates
 {
     public class Duplicate
     {

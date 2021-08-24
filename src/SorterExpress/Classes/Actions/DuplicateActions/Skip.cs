@@ -1,4 +1,5 @@
 ﻿using SorterExpress.Controllers;
+using SorterExpress.Model.Duplicates;
 
 namespace SorterExpress.Classes.Actions.DuplicateActions
 {

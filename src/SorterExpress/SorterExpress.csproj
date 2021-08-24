@@ -173,8 +173,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Actions\Action.cs" />
+    <Compile Include="Classes\Actions\DuplicateActions\RemovedDuplicate.cs" />
     <Compile Include="Classes\Actions\DuplicateActions\DeleteBothSides.cs" />
     <Compile Include="Classes\Actions\DuplicateActions\DuplicateAction.cs" />
+    <Compile Include="Classes\Actions\DuplicateActions\IgnoreSide.cs" />
     <Compile Include="Classes\Actions\DuplicateActions\KeepSide.cs" />
     <Compile Include="Classes\Actions\DuplicateActions\Skip.cs" />
     <Compile Include="Classes\Actions\SortActions\Delete.cs" />
@@ -189,8 +191,10 @@
     <Compile Include="Classes\FFProbeProcess.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Classes\IgnoreType.cs" />
     <Compile Include="Classes\RBindingList.cs" />
     <Compile Include="Classes\Shortcut.cs" />
+    <Compile Include="Classes\Side.cs" />
     <Compile Include="Classes\SortableBindingList\PropertyComparer.cs" />
     <Compile Include="Classes\SortableBindingList\SortableBindingList.cs" />
     <Compile Include="Classes\SubfolderInfo.cs" />
@@ -446,6 +450,9 @@
     <None Include="Icons\world.png" />
     <None Include="Resources\eye.bmp" />
     <None Include="Icons\file.png" />
+    <None Include="Icons\down.png" />
+    <None Include="Icons\file-cross.png" />
+    <None Include="Icons\folder-cross.png" />
     <Content Include="Todo List and Notes.txt" />
   </ItemGroup>
   <ItemGroup>
