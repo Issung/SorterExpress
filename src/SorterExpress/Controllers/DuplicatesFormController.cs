@@ -347,10 +347,36 @@ namespace SorterExpress.Controllers
 
         private List<string> GetSearchScope(List<string> files)
         {
-            return files.Where(
+            var scope = files.ToList();
+            scope.RemoveAll(t => ShouldBeExcluded(t));
+
+            scope.Where(
                 t => (model.SearchImages && Utilities.FileIsImage(t)) ||
                 (model.SearchVideos && Utilities.FileIsVideo(t)))
                 .ToList();
+
+            return scope;
+
+            bool ShouldBeExcluded(string str)
+            {
+                foreach (var dir in Settings.Default.DuplicatesIgnoreDirectories ?? Enumerable.Empty<string>())
+                {
+                    if (str.StartsWith(dir))
+                    {
+                        return true;
+                    }
+                }
+
+                foreach (var dir in Settings.Default.DuplicatesIgnoreFiles ?? Enumerable.Empty<string>())
+                {
+                    if (str == dir)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
 
         private void PrintsWorker_DoWork(object sender, DoWorkEventArgs e)

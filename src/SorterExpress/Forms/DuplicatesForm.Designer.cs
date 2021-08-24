@@ -187,7 +187,7 @@ namespace SorterExpress.Forms
             // 
             this.infoRichTextBoxLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.infoRichTextBoxLeft.Location = new System.Drawing.Point(0, 0);
-            this.infoRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.infoRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(10);
             this.infoRichTextBoxLeft.Name = "infoRichTextBoxLeft";
             this.infoRichTextBoxLeft.ReadOnly = true;
             this.infoRichTextBoxLeft.Size = new System.Drawing.Size(100, 235);
