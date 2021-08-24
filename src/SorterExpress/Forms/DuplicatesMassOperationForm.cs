@@ -2,6 +2,7 @@
 using SorterExpress.Classes;
 using SorterExpress.Classes.Actions.DuplicateActions;
 using SorterExpress.Controllers;
+using SorterExpress.Model.Duplicates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,7 +33,7 @@ namespace SorterExpress.Forms
 
         public DuplicatesFormController Controller { get; private set; }
 
-        private Random random;
+        private Random random = new Random();
 
         public DuplicatesMassOperationForm(DuplicatesFormController controller)
         {
@@ -230,7 +231,7 @@ namespace SorterExpress.Forms
                 if (result != Result.Equal)
                 {
                     //create appropriate action and add to a list or perform the operation on the spot. 
-                    DuplicatesFormController.Side side = (result == Result.KeepLeft1) ? DuplicatesFormController.Side.Left : DuplicatesFormController.Side.Right;
+                    Side side = (result == Result.KeepLeft1) ? Side.Left : Side.Right;
 
                     KeepSide action = new KeepSide(Controller, duplicates[i], i, side);
                     Invoke((MethodInvoker)delegate

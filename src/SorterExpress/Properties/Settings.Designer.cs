@@ -283,5 +283,27 @@ namespace SorterExpress.Properties {
                 this["DuplicatesOnlyMatchSameFileTypes"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Generic.List<System.String> DuplicatesIgnoreDirectories {
+            get {
+                return ((global::System.Collections.Generic.List<System.String>)(this["DuplicatesIgnoreDirectories"]));
+            }
+            set {
+                this["DuplicatesIgnoreDirectories"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Generic.List<System.String> DuplicatesIgnoreFiles {
+            get {
+                return ((global::System.Collections.Generic.List<System.String>)(this["DuplicatesIgnoreFiles"]));
+            }
+            set {
+                this["DuplicatesIgnoreFiles"] = value;
+            }
+        }
     }
 }

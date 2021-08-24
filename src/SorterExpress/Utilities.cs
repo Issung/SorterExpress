@@ -3,6 +3,7 @@ using SorterExpress.Forms;
 using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -124,8 +125,48 @@ namespace SorterExpress
         }
 
         /// <summary>
-        /// Returns null if directory open is cancelled.
+        /// Open native directory selector to select a single file.
         /// </summary>
+        /// <returns>The selected file, null if open was cancelled.</returns>
+        // TODO: Nullable return.
+        public static FileInfo OpenFile()
+        {
+            using (var dialog = new CommonOpenFileDialog())
+            {
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok && !string.IsNullOrWhiteSpace(dialog.FileName))
+                {
+                    return new FileInfo(dialog.FileName);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Open native directory selector to select one or more files.
+        /// </summary>
+        /// <returns>Array of selected files, null if open was cancelled.</returns>
+        // TODO: Nullable return.
+        public static FileInfo[] OpenFiles()
+        {
+            using (var dialog = new CommonOpenFileDialog())
+            {
+                dialog.Multiselect = true;
+
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok && dialog.FileNames?.Count() is not null or 0)
+                {
+                    return dialog.FileNames.Select(t => new FileInfo(t)).ToArray();
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Open native directory selector to select a single directory.
+        /// </summary>
+        /// <returns>The selected directory, null if open was cancelled.</returns>
+        // TODO: Nullable return.
         public static DirectoryInfo OpenDirectory()
         {
             using (var dialog = new CommonOpenFileDialog())
@@ -135,6 +176,51 @@ namespace SorterExpress
                 if (dialog.ShowDialog() == CommonFileDialogResult.Ok && !string.IsNullOrWhiteSpace(dialog.FileName))
                 {
                     return new DirectoryInfo(dialog.FileName);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Open a file in the operating system's preferred program.
+        /// </summary>
+        /// <param name="path">Directory path to the file.</param>
+        public static void ViewFile(string path)
+        {
+            if (!string.IsNullOrWhiteSpace(path))
+            { 
+                Process.Start(path);
+            }
+        }
+
+        /// <summary>
+        /// Open windows explorer and pre-select a given file.
+        /// </summary>
+        /// <param name="path">Directory path to the file.</param>
+        public static void ViewFileInExplorer(string path)
+        {
+            if (!string.IsNullOrWhiteSpace(path))
+            { 
+                Process.Start("explorer.exe", $"/select,\"{path}\"");
+            }
+        }
+
+        /// <summary>
+        /// Open native directory selector to select one or more directories.
+        /// </summary>
+        /// <returns>Array of selected directories, null if open was cancelled.</returns>
+        // TODO: Nullable return.
+        public static DirectoryInfo[] OpenDirectories()
+        {
+            using (var dialog = new CommonOpenFileDialog())
+            {
+                dialog.IsFolderPicker = true;
+                dialog.Multiselect = true;
+
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok && dialog.FileNames?.Count() is not null or 0)
+                {
+                    return dialog.FileNames.Select(t => new DirectoryInfo(t)).ToArray();
                 }
             }
 
@@ -589,6 +675,33 @@ namespace SorterExpress
             foreach (DirectoryInfo dir in di.GetDirectories())
             {
                 dir.Delete(true);
+            }
+        }
+
+        /// <summary>
+        /// Adds a string into a list of strings in its correct alphabetical placement.
+        /// </summary>
+        public static void AddItemToListAlphabetically(IList<string> list, string newItem)
+        {
+            if (list.Count == 0)
+            {
+                list.Add(newItem);
+            }
+            else
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (String.Compare(newItem, list[i]) < 0)
+                    {
+                        list.Insert(i, newItem);
+                        break;
+                    }
+                    else if (i == (list.Count - 1))
+                    {
+                        list.Add(newItem);
+                        break;
+                    }
+                }
             }
         }
     }
