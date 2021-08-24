@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Drawing;
 
-namespace SorterExpress
+namespace SorterExpress.Model.Duplicates
 {
     public class Duplicate
     {
         public FilePrint fileprint1, fileprint2;
 
-        public string File1Path { get { return fileprint1.filepath; } }
+        public string File1Path { get { return fileprint1.Filepath; } }
         public string File1ThumbPath { get { return fileprint1.ThumbPath; } }
 
         private Image file1Thumb = null;
@@ -21,7 +21,7 @@ namespace SorterExpress
             } 
         }
 
-        public string File2Path { get { return fileprint2.filepath; } }
+        public string File2Path { get { return fileprint2.Filepath; } }
         public string File2ThumbPath { get { return fileprint2.ThumbPath; } }
 
         private Image file2Thumb;
@@ -57,9 +57,9 @@ namespace SorterExpress
 
             DifferenceCount = 0;
 
-            for (int i = 0; i < fp1.print.Length; i++)
+            for (int i = 0; i < fp1.Print.Length; i++)
             {
-                if (fp1.print[i] != fp2.print[i])
+                if (fp1.Print[i] != fp2.Print[i])
                 {
                     DifferenceCount++;
                 }

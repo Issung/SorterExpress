@@ -1,5 +1,6 @@
 ﻿using GChan.Controls;
 using SorterExpress.Classes.Actions.DuplicateActions;
+using SorterExpress.Model.Duplicates;
 using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;

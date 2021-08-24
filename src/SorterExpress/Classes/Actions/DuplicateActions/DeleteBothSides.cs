@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using Shell32;
 using SorterExpress.Controllers;
+using SorterExpress.Model.Duplicates;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +28,7 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
         /// <summary>
         /// A list of all duplicates removed that contained the removed file, including the originally removed duplicate.
         /// </summary>
-        List<Tuple<int, Duplicate>> allDuplicatesWithFile;
+        List<RemovedDuplicate> allDuplicatesWithFile;
 
         public DeleteBothSides(DuplicatesFormController controller, Duplicate duplicate, int matchIndex) : base(controller)
         {
@@ -39,7 +40,7 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
         {
             //controller.model.Duplicates.RemoveAt(duplicateIndex);
 
-            allDuplicatesWithFile = new List<Tuple<int, Duplicate>>();
+            allDuplicatesWithFile = new();
 
             for (int i = 0; i < controller.model.Duplicates.Count; i++)
             {
@@ -48,7 +49,7 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
                     || controller.model.Duplicates[i].File2Path == duplicate.File1Path
                     || controller.model.Duplicates[i].File2Path == duplicate.File2Path)
                 {
-                    allDuplicatesWithFile.Add(new Tuple<int, Duplicate>(i, controller.model.Duplicates[i]));
+                    allDuplicatesWithFile.Add(new RemovedDuplicate(i, controller.model.Duplicates[i]));
                 }
             }
 
@@ -64,11 +65,11 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
             {
                 //if (allDuplicatesWithFile[i].Item2 == duplicate)
                     //controller.IgnoreMatchSelectionChanged = 1;
-                controller.model.Duplicates.Remove(allDuplicatesWithFile[i].Item2);
+                controller.model.Duplicates.Remove(allDuplicatesWithFile[i].Duplicate);
             }
 
-            FileSystem.DeleteFile(duplicate.fileprint1.filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
-            FileSystem.DeleteFile(duplicate.fileprint2.filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+            FileSystem.DeleteFile(duplicate.fileprint1.Filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+            FileSystem.DeleteFile(duplicate.fileprint2.Filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
             Successful = true;
             base.Do();
         }
@@ -101,12 +102,12 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
 
                     string itemPath = recycler.GetDetailsOf(folderItem, 1);
 
-                    if (!leftItemFound && duplicate.fileprint1.filepath == Path.Combine(itemPath, itemFilename))
+                    if (!leftItemFound && duplicate.fileprint1.Filepath == Path.Combine(itemPath, itemFilename))
                     {
                         DoVerb(folderItem, "ESTORE");
                         leftItemFound = true;
                     }
-                    else if (!rightItemFound && duplicate.fileprint2.filepath == Path.Combine(itemPath, itemFilename))
+                    else if (!rightItemFound && duplicate.fileprint2.Filepath == Path.Combine(itemPath, itemFilename))
                     {
                         DoVerb(folderItem, "ESTORE");
                         rightItemFound = true;
@@ -123,7 +124,7 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
                 //Reinsert all duplicate entries that had that the recovered files.
                 for (int i = 0; i < allDuplicatesWithFile.Count; i++)
                 {
-                    controller.model.Duplicates.Insert(allDuplicatesWithFile[i].Item1, allDuplicatesWithFile[i].Item2);
+                    controller.model.Duplicates.Insert(allDuplicatesWithFile[i].Index, allDuplicatesWithFile[i].Duplicate);
                 }
 
                 controller.form.matchesDataGridView.CurrentCell = controller.form.matchesDataGridView.Rows[duplicateIndex].Cells[0];

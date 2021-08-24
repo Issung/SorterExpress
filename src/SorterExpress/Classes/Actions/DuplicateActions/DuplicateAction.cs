@@ -2,9 +2,9 @@
 
 namespace SorterExpress.Classes.Actions.DuplicateActions
 {
-    public class DuplicateAction : Action
+    public abstract class DuplicateAction : Action
     {
-        protected DuplicatesFormController controller;
+        protected readonly DuplicatesFormController controller;
 
         public DuplicateAction(DuplicatesFormController controller)
         {
