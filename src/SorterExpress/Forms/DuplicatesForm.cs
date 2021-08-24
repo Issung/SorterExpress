@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using SorterExpress.Controllers;
+using SorterExpress.Model.Duplicates;
 using SorterExpress.Models;
 
 namespace SorterExpress.Forms
@@ -12,10 +14,9 @@ namespace SorterExpress.Forms
     {
         DuplicatesFormController controller;
 
-        //public bool MergeFileTags { get { return mergeFileTagsCheckBox.Checked; } }
-        //public bool OnlyKeepLibraryTags { get { return onlyKeepLibraryTagsCheckBox.Checked; } }
-
         public int MatchesGridViewSelectedRow { get { return matchesDataGridView?.CurrentCell?.RowIndex ?? -1; } }
+
+        Side? lastOptionsSideClicked;
 
         public DuplicatesForm(DirectoryInfo dirInfo)
         {
@@ -100,12 +101,12 @@ namespace SorterExpress.Forms
 
         private void keepLeftButton_Click(object sender, EventArgs e)
         {
-            controller.KeepSide(DuplicatesFormController.Side.Left);
+            controller.KeepSide(Side.Left);
         }
 
         private void keepRightButton_Click(object sender, EventArgs e)
         {
-            controller.KeepSide(DuplicatesFormController.Side.Right);
+            controller.KeepSide(Side.Right);
         }
 
         private void imagesCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -137,12 +138,12 @@ namespace SorterExpress.Forms
 
         private void keepLeftToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.KeepSide(DuplicatesFormController.Side.Left, contextMenuRowIndex);
+            controller.KeepSide(Side.Left, contextMenuRowIndex);
         }
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.KeepSide(DuplicatesFormController.Side.Right, contextMenuRowIndex);
+            controller.KeepSide(Side.Right, contextMenuRowIndex);
         }
 
         private void skipToolStripMenuItem_Click(object sender, EventArgs e)
@@ -166,6 +167,72 @@ namespace SorterExpress.Forms
         private void DuplicatesForm_KeyDown(object sender, KeyEventArgs e)
         {
             controller.HandleShortcut(e);
+        }
+
+        Side? GetSide(object button)
+        {
+            if (button == optionsLeftButton)
+            {
+                return Side.Left;
+            }
+            else if (button == optionsRightButton)
+            {
+                return Side.Right;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        // TODO: Nullable (and all connections).
+        string GetSideFilepath(Side? side)
+        {
+            if (side == Side.Left)
+            {
+                return controller.inspectingDuplicate.File1Path;
+            }
+            else if (side == Side.Right)
+            {
+                return controller.inspectingDuplicate.File2Path;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private void optionsButton_Click(object sender, EventArgs e)
+        {
+            lastOptionsSideClicked = GetSide(sender);
+            var control = (Control)sender;
+            optionsContextMenuStrip.Show(control, 0, control.Height);
+        }
+
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utilities.ViewFile(GetSideFilepath(lastOptionsSideClicked));
+        }
+
+        private void openFileInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Utilities.ViewFileInExplorer(GetSideFilepath(lastOptionsSideClicked));
+        }
+
+        private void ignoreFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lastOptionsSideClicked != null)
+            { 
+                controller.IgnoreFileOrDirectory(null, IgnoreType.File, lastOptionsSideClicked.Value);
+            }
+        }
+
+        private void ignoreFilesDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lastOptionsSideClicked != null)
+            { 
+                controller.IgnoreFileOrDirectory(null, IgnoreType.Directory, lastOptionsSideClicked.Value);
+            }
         }
     }
 }

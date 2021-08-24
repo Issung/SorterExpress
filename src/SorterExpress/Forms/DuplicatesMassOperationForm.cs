@@ -2,6 +2,7 @@
 using SorterExpress.Classes;
 using SorterExpress.Classes.Actions.DuplicateActions;
 using SorterExpress.Controllers;
+using SorterExpress.Model.Duplicates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,7 +33,7 @@ namespace SorterExpress.Forms
 
         public DuplicatesFormController Controller { get; private set; }
 
-        private Random random;
+        private Random random = new Random();
 
         public DuplicatesMassOperationForm(DuplicatesFormController controller)
         {
@@ -219,18 +220,6 @@ namespace SorterExpress.Forms
                 int printsCount = prints.Count();
 
                 Size noSize = new Size(-1, -1);
-
-                Parallel.ForEach(prints, (print) =>
-                {
-                    if (print.size == noSize)
-                    {
-                        print.size = FFWorker.GetSizeWait(print.filepath);
-                    }
-
-                    sizesRetrieved += 1;
-
-                    backgroundWorker.ReportProgress((int)(((float)sizesRetrieved / printsCount) * 100) / 2);
-                });
             }
 
             Invoke((MethodInvoker)delegate { loadingPanel.BottomText = "Performing filtering and removing files..."; });
@@ -242,7 +231,7 @@ namespace SorterExpress.Forms
                 if (result != Result.Equal)
                 {
                     //create appropriate action and add to a list or perform the operation on the spot. 
-                    DuplicatesFormController.Side side = (result == Result.KeepLeft1) ? DuplicatesFormController.Side.Left : DuplicatesFormController.Side.Right;
+                    Side side = (result == Result.KeepLeft1) ? Side.Left : Side.Right;
 
                     KeepSide action = new KeepSide(Controller, duplicates[i], i, side);
                     Invoke((MethodInvoker)delegate
@@ -299,8 +288,8 @@ namespace SorterExpress.Forms
             }
             else if (preference == Preference.HighestResolution)
             {
-                int file1pixels = duplicate.fileprint1.size.Width * duplicate.fileprint1.size.Height;
-                int file2pixels = duplicate.fileprint2.size.Width * duplicate.fileprint2.size.Height;
+                int file1pixels = duplicate.fileprint1.Size.Width * duplicate.fileprint1.Size.Height;
+                int file2pixels = duplicate.fileprint2.Size.Width * duplicate.fileprint2.Size.Height;
 
                 int comp = file1pixels.CompareTo(file2pixels);
 

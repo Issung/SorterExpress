@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -173,8 +173,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Actions\Action.cs" />
+    <Compile Include="Classes\Actions\DuplicateActions\RemovedDuplicate.cs" />
     <Compile Include="Classes\Actions\DuplicateActions\DeleteBothSides.cs" />
     <Compile Include="Classes\Actions\DuplicateActions\DuplicateAction.cs" />
+    <Compile Include="Classes\Actions\DuplicateActions\IgnoreSide.cs" />
     <Compile Include="Classes\Actions\DuplicateActions\KeepSide.cs" />
     <Compile Include="Classes\Actions\DuplicateActions\Skip.cs" />
     <Compile Include="Classes\Actions\SortActions\Delete.cs" />
@@ -189,8 +191,10 @@
     <Compile Include="Classes\FFProbeProcess.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Classes\IgnoreType.cs" />
     <Compile Include="Classes\RBindingList.cs" />
     <Compile Include="Classes\Shortcut.cs" />
+    <Compile Include="Classes\Side.cs" />
     <Compile Include="Classes\SortableBindingList\PropertyComparer.cs" />
     <Compile Include="Classes\SortableBindingList\SortableBindingList.cs" />
     <Compile Include="Classes\SubfolderInfo.cs" />
@@ -274,6 +278,12 @@
     </Compile>
     <Compile Include="Forms\SortForm.Designer.cs">
       <DependentUpon>SortForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DuplicateSearchIgnoredForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DuplicateSearchIgnoredForm.Designer.cs">
+      <DependentUpon>DuplicateSearchIgnoredForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\TagsListForm.cs">
       <SubType>Form</SubType>
@@ -368,6 +378,9 @@
     <EmbeddedResource Include="Forms\SortForm.resx">
       <DependentUpon>SortForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DuplicateSearchIgnoredForm.resx">
+      <DependentUpon>DuplicateSearchIgnoredForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TagsListForm.resx">
       <DependentUpon>TagsListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -435,6 +448,11 @@
     <None Include="Icons\folder.png" />
     <None Include="Icons\question.png" />
     <None Include="Icons\world.png" />
+    <None Include="Resources\eye.bmp" />
+    <None Include="Icons\file.png" />
+    <None Include="Icons\down.png" />
+    <None Include="Icons\file-cross.png" />
+    <None Include="Icons\folder-cross.png" />
     <Content Include="Todo List and Notes.txt" />
   </ItemGroup>
   <ItemGroup>

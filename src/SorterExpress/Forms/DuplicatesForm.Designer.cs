@@ -66,6 +66,8 @@ namespace SorterExpress.Forms
             this.deleteBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.optionsLeftButton = new System.Windows.Forms.Button();
+            this.optionsRightButton = new System.Windows.Forms.Button();
             this.loadingLabel = new System.Windows.Forms.Label();
             this.filenameRichTextBoxLeft = new System.Windows.Forms.RichTextBox();
             this.filenameRichTextBoxRight = new System.Windows.Forms.RichTextBox();
@@ -83,6 +85,11 @@ namespace SorterExpress.Forms
             this.settingsButton = new System.Windows.Forms.Button();
             this.massOperationButton = new System.Windows.Forms.Button();
             this.filtersGroupBox = new System.Windows.Forms.GroupBox();
+            this.optionsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ignoreFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ignoreFilesDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).BeginInit();
@@ -94,6 +101,7 @@ namespace SorterExpress.Forms
             this.keepButtonsLayoutPanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.filtersGroupBox.SuspendLayout();
+            this.optionsContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // keepRightButton
@@ -185,12 +193,13 @@ namespace SorterExpress.Forms
             // 
             // infoRichTextBoxLeft
             // 
-            this.infoRichTextBoxLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.infoRichTextBoxLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.infoRichTextBoxLeft.Location = new System.Drawing.Point(0, 0);
-            this.infoRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.infoRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(10);
             this.infoRichTextBoxLeft.Name = "infoRichTextBoxLeft";
             this.infoRichTextBoxLeft.ReadOnly = true;
-            this.infoRichTextBoxLeft.Size = new System.Drawing.Size(100, 235);
+            this.infoRichTextBoxLeft.Size = new System.Drawing.Size(100, 209);
             this.infoRichTextBoxLeft.TabIndex = 3;
             this.infoRichTextBoxLeft.Text = "";
             this.toolTip.SetToolTip(this.infoRichTextBoxLeft, resources.GetString("infoRichTextBoxLeft.ToolTip"));
@@ -204,7 +213,7 @@ namespace SorterExpress.Forms
             this.infoRichTextBoxRight.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
             this.infoRichTextBoxRight.Name = "infoRichTextBoxRight";
             this.infoRichTextBoxRight.ReadOnly = true;
-            this.infoRichTextBoxRight.Size = new System.Drawing.Size(100, 235);
+            this.infoRichTextBoxRight.Size = new System.Drawing.Size(100, 209);
             this.infoRichTextBoxRight.TabIndex = 3;
             this.infoRichTextBoxRight.Text = "";
             this.toolTip.SetToolTip(this.infoRichTextBoxRight, resources.GetString("infoRichTextBoxRight.ToolTip"));
@@ -517,6 +526,38 @@ namespace SorterExpress.Forms
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // optionsLeftButton
+            // 
+            this.optionsLeftButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.optionsLeftButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.optionsLeftButton.Image = global::SorterExpress.Properties.Resources.down;
+            this.optionsLeftButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.optionsLeftButton.Location = new System.Drawing.Point(0, 212);
+            this.optionsLeftButton.Name = "optionsLeftButton";
+            this.optionsLeftButton.Size = new System.Drawing.Size(101, 23);
+            this.optionsLeftButton.TabIndex = 6;
+            this.optionsLeftButton.Text = "Options";
+            this.toolTip.SetToolTip(this.optionsLeftButton, "Options for viewing file or ignoring in searches.\r\nDuplicate Search file/director" +
+        "y ignores can be configured in settings.");
+            this.optionsLeftButton.UseVisualStyleBackColor = true;
+            this.optionsLeftButton.Click += new System.EventHandler(this.optionsButton_Click);
+            // 
+            // optionsRightButton
+            // 
+            this.optionsRightButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.optionsRightButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.optionsRightButton.Image = global::SorterExpress.Properties.Resources.down;
+            this.optionsRightButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.optionsRightButton.Location = new System.Drawing.Point(9, 212);
+            this.optionsRightButton.Name = "optionsRightButton";
+            this.optionsRightButton.Size = new System.Drawing.Size(101, 23);
+            this.optionsRightButton.TabIndex = 5;
+            this.optionsRightButton.Text = "Options";
+            this.toolTip.SetToolTip(this.optionsRightButton, "Options for viewing file or ignoring in searches.\r\nDuplicate Search file/director" +
+        "y ignores can be configured in settings.");
+            this.optionsRightButton.UseVisualStyleBackColor = true;
+            this.optionsRightButton.Click += new System.EventHandler(this.optionsButton_Click);
+            // 
             // loadingLabel
             // 
             this.loadingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -574,6 +615,7 @@ namespace SorterExpress.Forms
             // 
             // leftPanel
             // 
+            this.leftPanel.Controls.Add(this.optionsLeftButton);
             this.leftPanel.Controls.Add(this.mediaViewerLeft);
             this.leftPanel.Controls.Add(this.infoRichTextBoxLeft);
             this.leftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -585,7 +627,9 @@ namespace SorterExpress.Forms
             // 
             // mediaViewerLeft
             // 
-            this.mediaViewerLeft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mediaViewerLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mediaViewerLeft.Location = new System.Drawing.Point(100, 0);
             this.mediaViewerLeft.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.mediaViewerLeft.Name = "mediaViewerLeft";
@@ -595,6 +639,7 @@ namespace SorterExpress.Forms
             // 
             // rightPanel
             // 
+            this.rightPanel.Controls.Add(this.optionsRightButton);
             this.rightPanel.Controls.Add(this.mediaViewerRight);
             this.rightPanel.Controls.Add(this.infoRichTextBoxRight);
             this.rightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -732,6 +777,48 @@ namespace SorterExpress.Forms
             this.filtersGroupBox.TabStop = false;
             this.filtersGroupBox.Text = "Search Filters";
             // 
+            // optionsContextMenuStrip
+            // 
+            this.optionsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFileToolStripMenuItem,
+            this.openFileInExplorerToolStripMenuItem,
+            this.ignoreFileToolStripMenuItem,
+            this.ignoreFilesDirectoryToolStripMenuItem});
+            this.optionsContextMenuStrip.Name = "optionsContextMenuStrip";
+            this.optionsContextMenuStrip.Size = new System.Drawing.Size(189, 92);
+            // 
+            // openFileToolStripMenuItem
+            // 
+            this.openFileToolStripMenuItem.Image = global::SorterExpress.Properties.Resources.file;
+            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.openFileToolStripMenuItem.Text = "Open File";
+            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
+            // 
+            // openFileInExplorerToolStripMenuItem
+            // 
+            this.openFileInExplorerToolStripMenuItem.Image = global::SorterExpress.Properties.Resources.folder;
+            this.openFileInExplorerToolStripMenuItem.Name = "openFileInExplorerToolStripMenuItem";
+            this.openFileInExplorerToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.openFileInExplorerToolStripMenuItem.Text = "Open File in Explorer";
+            this.openFileInExplorerToolStripMenuItem.Click += new System.EventHandler(this.openFileInExplorerToolStripMenuItem_Click);
+            // 
+            // ignoreFileToolStripMenuItem
+            // 
+            this.ignoreFileToolStripMenuItem.Image = global::SorterExpress.Properties.Resources.file_grey;
+            this.ignoreFileToolStripMenuItem.Name = "ignoreFileToolStripMenuItem";
+            this.ignoreFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.ignoreFileToolStripMenuItem.Text = "Ignore File";
+            this.ignoreFileToolStripMenuItem.Click += new System.EventHandler(this.ignoreFileToolStripMenuItem_Click);
+            // 
+            // ignoreFilesDirectoryToolStripMenuItem
+            // 
+            this.ignoreFilesDirectoryToolStripMenuItem.Image = global::SorterExpress.Properties.Resources.folder_grey;
+            this.ignoreFilesDirectoryToolStripMenuItem.Name = "ignoreFilesDirectoryToolStripMenuItem";
+            this.ignoreFilesDirectoryToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.ignoreFilesDirectoryToolStripMenuItem.Text = "Ignore File\'s Directory";
+            this.ignoreFilesDirectoryToolStripMenuItem.Click += new System.EventHandler(this.ignoreFilesDirectoryToolStripMenuItem_Click);
+            // 
             // DuplicatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -776,6 +863,7 @@ namespace SorterExpress.Forms
             this.tableLayoutPanel2.ResumeLayout(false);
             this.filtersGroupBox.ResumeLayout(false);
             this.filtersGroupBox.PerformLayout();
+            this.optionsContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -832,5 +920,12 @@ namespace SorterExpress.Forms
         private System.Windows.Forms.DataGridViewTextBoxColumn similarityColumn;
         internal System.Windows.Forms.ComboBox searchScopeComboBox;
         private System.Windows.Forms.GroupBox filtersGroupBox;
+        private System.Windows.Forms.Button optionsRightButton;
+        private System.Windows.Forms.Button optionsLeftButton;
+        private System.Windows.Forms.ContextMenuStrip optionsContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem ignoreFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ignoreFilesDirectoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFileInExplorerToolStripMenuItem;
     }
 }
