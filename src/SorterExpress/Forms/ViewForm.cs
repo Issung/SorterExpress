@@ -6,6 +6,7 @@ using System;
 using System.Drawing;
 using SorterExpress.Properties;
 using SorterExpress.Classes;
+using SorterExpress.Classes.SettingsData;
 
 namespace SorterExpress.Forms
 {

@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.Win32;
+using SorterExpress.Classes.SettingsData;
 
 namespace SorterExpress.Forms
 {
@@ -114,7 +115,7 @@ namespace SorterExpress.Forms
 
         public void LoadSettings()
         {
-            tagSearchNumeric.Value = Settings.Default.TagSearchStart;
+            tagSearchNumeric.Value = Math.Max(tagSearchNumeric.Minimum, Settings.Default.TagSearchStart);
             tagSearchStartLabel.Text = $"Begin tag searching at {tagSearchNumeric.Value} amount of characters";
             autoResetTagSearchCheckBox.Checked = Settings.Default.AutoResetTagSearchBox;
             autoResetSubfolderSearchCheckBox.Checked = Settings.Default.AutoResetSubfolderSearchBox;
@@ -130,14 +131,14 @@ namespace SorterExpress.Forms
 
         private void UpdateIgnoredDirectoriesAndFilesLabel()
         {
-            ignoredFilesCountLabel.Text = $"Ignored Directories: {Settings.Default.DuplicatesIgnoreDirectories?.Count ?? 0}, Ignored Files: {Settings.Default.DuplicatesIgnoreFiles?.Count ?? 0}";
+            ignoredFilesCountLabel.Text = $"Ignored Directories: {Settings.Default.DuplicateSearch.IgnoreDirectories?.Count ?? 0}, Ignored Files: {Settings.Default.DuplicateSearch.IgnoreFiles?.Count ?? 0}";
         }
 
         string currentVlcLocationText(string path) => $"Current VLC Location: {path}";
 
         private void LoadVLCLocation()
         {
-            string location = Settings.Default.VlcLocation;
+            string location = Settings.Default.Video.VlcLocation;
 
             if (String.IsNullOrWhiteSpace(location))
             {
@@ -164,7 +165,7 @@ namespace SorterExpress.Forms
             Settings.Default.MoveSortedFiles = moveSortedFilesCheckbox.Checked;
             Settings.Default.FastResizing = fastResizingCheckbox.Checked;
 
-            Settings.Default.Save();
+            Settings.Save();
 
             if (seperateWindow)
             {
@@ -220,7 +221,7 @@ namespace SorterExpress.Forms
             {
                 var tags = JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(dialog.FileName));
 
-                Settings.Default.Tags = tags;
+                Settings.Default.Tags = tags.ToArray();
 
                 if (setTagsAction != null)
                     setTagsAction.Invoke(tags);
@@ -343,13 +344,13 @@ namespace SorterExpress.Forms
                 {
                     if (locateForm.ShowDialog() == DialogResult.OK)
                     {
-                        Settings.Default.VlcLocation = Path.GetDirectoryName(locateForm.vlcPath);
-                        Settings.Default.Save();
+                        Settings.Default.Video.VlcLocation = Path.GetDirectoryName(locateForm.vlcPath);
+                        Settings.Save();
                     }
                     else //DialogResult.Ignore
                     {
-                        Settings.Default.VlcLocation = null;
-                        Settings.Default.Save();
+                        Settings.Default.Video.VlcLocation = null;
+                        Settings.Save();
                     }
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
+using SorterExpress.Classes.SettingsData;
 using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
@@ -183,9 +184,9 @@ namespace SorterExpress.Forms
 
         private void SaveSettings()
         {
-            Settings.Default.Tags = Model.Tags.ToList();
+            Settings.Default.Tags = Model.Tags.ToArray();
             TagsSaved?.Invoke(Settings.Default.Tags);
-            Settings.Default.Save();
+            Settings.Save();
         }
 
         private void TagsListForm_FormClosing(object sender, FormClosingEventArgs e)

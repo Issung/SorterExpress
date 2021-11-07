@@ -1,5 +1,6 @@
 ﻿using GChan.Controls;
 using SorterExpress.Classes.Actions.DuplicateActions;
+using SorterExpress.Classes.SettingsData;
 using SorterExpress.Model.Duplicates;
 using SorterExpress.Properties;
 using System;
@@ -106,15 +107,15 @@ namespace SorterExpress.Models
         }
 
         private SearchScope searchScopeSelectedValue = SearchScope.ImmediateOnly;
-        private bool searchImages = Settings.Default.DuplicatesSearchImages;
-        private bool searchVideos = Settings.Default.DuplicatesSearchVideos;
-        private bool onlyMatchSameFileTypes = Settings.Default.DuplicatesOnlyMatchSameFileTypes;
-        private bool cropLeftAndRight = Settings.Default.DuplicatesCropLeftRightSides;
-        private bool cropTopAndBottom = Settings.Default.DuplicatesCropTopBottomSides;
-        private int threadCount = Settings.Default.DuplicatesSearchThreadCount == 0 ? Environment.ProcessorCount : Settings.Default.DuplicatesSearchThreadCount;
-        private int similarity = Settings.Default.DuplicatesSearchSimilarityPercentage;
-        private bool mergeFileTags = Settings.Default.DuplicatesMergeFileTags;
-        private bool onlyKeepTagsThatAreInLibrary = Settings.Default.DuplicatesOnlyKeepTagsInLibrary;
+        private bool searchImages = Settings.Default.DuplicateSearch.SearchImages;
+        private bool searchVideos = Settings.Default.DuplicateSearch.SearchVideos;
+        private bool onlyMatchSameFileTypes = Settings.Default.DuplicateSearch.OnlyMatchSameFileTypes;
+        private bool cropLeftAndRight = Settings.Default.DuplicateSearch.CropLeftRightSides;
+        private bool cropTopAndBottom = Settings.Default.DuplicateSearch.CropTopBottomSides;
+        private int threadCount = Settings.Default.DuplicateSearch.SearchThreadCount == 0 ? Environment.ProcessorCount : Settings.Default.DuplicateSearch.SearchThreadCount;
+        private int similarity = Settings.Default.DuplicateSearch.SearchSimilarityPercentage;
+        private bool mergeFileTags = Settings.Default.DuplicateSearch.MergeFileTags;
+        private bool onlyKeepTagsThatAreInLibrary = Settings.Default.DuplicateSearch.OnlyKeepTagsInLibrary;
 
         #region View Variables
 

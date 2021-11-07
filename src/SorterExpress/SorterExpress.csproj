@@ -193,6 +193,11 @@
     </Compile>
     <Compile Include="Classes\IgnoreType.cs" />
     <Compile Include="Classes\RBindingList.cs" />
+    <Compile Include="Classes\Settings\DuplicateSearchSettings.cs" />
+    <Compile Include="Classes\Settings\Settings.cs" />
+    <Compile Include="Classes\Settings\SorterExpressSettings.cs" />
+    <Compile Include="Classes\Settings\Subfolder.cs" />
+    <Compile Include="Classes\Settings\VideoSettings.cs" />
     <Compile Include="Classes\Shortcut.cs" />
     <Compile Include="Classes\Side.cs" />
     <Compile Include="Classes\SortableBindingList\PropertyComparer.cs" />
@@ -416,15 +421,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

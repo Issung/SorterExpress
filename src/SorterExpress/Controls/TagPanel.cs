@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using SorterExpress.Properties;
+using SorterExpress.Classes.SettingsData;
 
 namespace SorterExpress.Controls
 {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using SorterExpress.Properties;
 using System.IO;
+using SorterExpress.Classes.SettingsData;
 
 namespace SorterExpress.Forms
 {
@@ -60,9 +61,9 @@ namespace SorterExpress.Forms
 
         private void SaveSettings()
         {
-            Settings.Default.DuplicatesIgnoreDirectories = Model.Directories.ToList();
-            Settings.Default.DuplicatesIgnoreFiles = Model.Files.ToList();
-            Settings.Default.Save();
+            Settings.Default.DuplicateSearch.IgnoreDirectories = Model.Directories.ToList();
+            Settings.Default.DuplicateSearch.IgnoreFiles = Model.Files.ToList();
+            Settings.Save();
         }
 
         private void directoryAddButton_Click(object sender, EventArgs e)
@@ -197,9 +198,9 @@ namespace SorterExpress.Forms
 
     public class DuplicatesIgnoreModel : INotifyPropertyChanged
     {
-        public BindingList<string> Directories { get; set; } = new BindingList<string>(Settings.Default.DuplicatesIgnoreDirectories?.ToList() ?? new List<string>());
+        public BindingList<string> Directories { get; set; } = new BindingList<string>(Settings.Default.DuplicateSearch.IgnoreDirectories?.ToList() ?? new List<string>());
 
-        public BindingList<string> Files { get; set; } = new BindingList<string>(Settings.Default.DuplicatesIgnoreFiles?.ToList() ?? new List<string>());
+        public BindingList<string> Files { get; set; } = new BindingList<string>(Settings.Default.DuplicateSearch.IgnoreFiles?.ToList() ?? new List<string>());
 
         public string DirectoryCount { get { return $"Ignored Directories ({Directories.Count})"; } }
         public string FileCount { get { return $"Ignored Files ({Files.Count})"; } }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SorterExpress.Classes.SettingsData;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -90,7 +91,7 @@ namespace SorterExpress.Controls
 
                 videoPositionTrackBar.SetVlcControl(vlcControl);
 
-                mute = Properties.Settings.Default.VideoMute;
+                mute = Settings.Default.Video.Mute;
 
                 if (mute)
                 {

@@ -1,12 +1,10 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using Shell32;
+using SorterExpress.Classes.SettingsData;
 using SorterExpress.Controllers;
 using SorterExpress.Model.Duplicates;
-using SorterExpress.Properties;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -83,7 +81,9 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
 
                 //if (Settings.Default.DuplicatesOnlyKeepTagsInLibrary)
                 if (controller.model.OnlyKeepTagsThatAreInLibrary)
+                { 
                     details.RemoveTagsNotInCollection(Settings.Default.Tags);   //This should be fine because duplicates form doesnt mess with the tag collection.
+                }
 
                 keptFileNewName = details.GenerateFilename();
                 File.Move(keptFileFilepath, Path.Combine(Path.GetDirectoryName(keptFileFilepath), keptFileNewName));

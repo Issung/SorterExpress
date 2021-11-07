@@ -85,9 +85,15 @@ namespace SorterExpress.Controls
 
         /// <summary>
         /// Add a range of elements, raising the ListChanged event individually for each item.
+        /// Accepts null, returns instantly.
         /// </summary>
         public void AddRange(IEnumerable<T> items)
         {
+            if (items == null)
+            {
+                return;
+            }
+
             for (int i = 0; i < items.Count(); i++)
             { 
                 Add(items.ElementAt(i));
