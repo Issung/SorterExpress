@@ -103,7 +103,7 @@ namespace SorterExpress.Controls
                     button.Visible = button.subfolderInfo.Name.ToLower().Contains(Filter.ToLower()) ? true : false;
             }
 
-            ResumeLayout(reoderButtons: true);
+            ResumeLayout(reorderButtons: true);
         }
 
         /// <summary>
