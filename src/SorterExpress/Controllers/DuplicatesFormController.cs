@@ -66,7 +66,6 @@ namespace SorterExpress.Controllers
         {
             form = duplicatesForm;
             model = new DuplicatesFormModel();
-            model.Duplicates = new SortableBindingList<Duplicate>();
 
             printsWorker = new BackgroundWorker
             {
@@ -498,10 +497,10 @@ namespace SorterExpress.Controllers
 
                     if (isMatch)
                     {
-                        form.Invoke((MethodInvoker)delegate ()
+                        form.Invoke(delegate ()
                         {
                             lock (duplicatesLock)
-                            { 
+                            {
                                 model.Duplicates.Add(new Duplicate(print, prints[i]));
                             }
                         });

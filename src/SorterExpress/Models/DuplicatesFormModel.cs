@@ -78,16 +78,18 @@ namespace SorterExpress.Models
 
         public bool StateSorting { get { return State == FormState.Sorting; } }
 
+        public bool StateViewingDuplicates => Duplicates.Count > 0;
+
         private string directory;
-        public string Directory { get { return directory; } set { directory = value; /*NotifyPropertyChanged();*/ UpdateVisibilityAndEnabledProperties(); } }
+        public string Directory { get { return directory; } set { directory = value; UpdateVisibilityAndEnabledProperties(); } }
 
         public Stack<DuplicateAction> DoneActions { get; set; } = new Stack<DuplicateAction>();
 
-        public bool EnableUndoButton { get { return DoneActions.Count > 0; } }//{ get { return DoneActions != null ? DoneActions.Count > 0 : false; } }
+        public bool EnableUndoButton { get { return DoneActions.Count > 0; } }
 
         public Stack<DuplicateAction> UndoneActions { get; set; } = new Stack<DuplicateAction>();
 
-        public bool EnableRedoButton { get { return UndoneActions.Count > 0; } }//{ get { return UndoneActions != null ? UndoneActions.Count > 0 : false; } }
+        public bool EnableRedoButton { get { return UndoneActions.Count > 0; } }
 
         private bool searching = false;
 
@@ -95,7 +97,6 @@ namespace SorterExpress.Models
 
         public List<string> Files = new List<string>();
 
-        //public SortableBindingList<Duplicate> Duplicates { get; set; } = new SortableBindingList<Duplicate>();
         public BindingList<Duplicate> Duplicates { get; set; } = new BindingList<Duplicate>();
 
         public enum SearchScope
@@ -157,6 +158,7 @@ namespace SorterExpress.Models
         private void Duplicates_ListChanged(object sender, ListChangedEventArgs e)
         {
             Console.WriteLine($"Duplicates_ListChanged: Count: {Duplicates?.Count ?? 0}");
+            NotifyPropertyChanged(nameof(StateViewingDuplicates));
             NotifyPropertyChanged(nameof(FileAndMatchesCountText));
         }
     }
