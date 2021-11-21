@@ -112,7 +112,7 @@ namespace SorterExpress.Models
         private bool onlyMatchSameFileTypes = Settings.Default.DuplicateSearch.OnlyMatchSameFileTypes;
         private bool cropLeftAndRight = Settings.Default.DuplicateSearch.CropLeftRightSides;
         private bool cropTopAndBottom = Settings.Default.DuplicateSearch.CropTopBottomSides;
-        private int threadCount = Settings.Default.DuplicateSearch.SearchThreadCount == 0 ? Environment.ProcessorCount : Settings.Default.DuplicateSearch.SearchThreadCount;
+        private int threadCount = Settings.Default.DuplicateSearch.SearchThreadCount < 1 ? Environment.ProcessorCount : Settings.Default.DuplicateSearch.SearchThreadCount;
         private int similarity = Settings.Default.DuplicateSearch.SearchSimilarityPercentage;
         private bool mergeFileTags = Settings.Default.DuplicateSearch.MergeFileTags;
         private bool onlyKeepTagsThatAreInLibrary = Settings.Default.DuplicateSearch.OnlyKeepTagsInLibrary;
