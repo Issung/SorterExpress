@@ -14,10 +14,14 @@ namespace SorterExpress.Controls
         public RBindingList<SubfolderInfo> Subfolders { get; set; }
 
         public event EventHandler<SubfolderButtonClickedEventArgs> SubfolderButtonClicked;
+        public string Filter { get { return _filter == null ? String.Empty : _filter; } set { _filter = value; FilterChanged(); } }
 
         private string _filter;
 
-        public string Filter { get { return _filter == null ? String.Empty : _filter; } set { _filter = value; FilterChanged(); } }
+        /// <summary>
+        /// A UI label that has specific settings applied to make it look like a horizontal divider.
+        /// </summary>
+        private Label divider = null;
 
         public SubfolderPanel()
         {
@@ -107,8 +111,6 @@ namespace SorterExpress.Controls
             }
         }
 
-        Label divider = null;
-
         /// <summary>
         /// Reorders all visible tag toggle buttons in custom -> non-custom order and then alphabetical order.
         /// </summary>
@@ -196,8 +198,6 @@ namespace SorterExpress.Controls
                 }
             }
             
-            
-
             this.ResumeLayout();
         }
 

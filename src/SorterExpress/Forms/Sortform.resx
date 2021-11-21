@@ -123,6 +123,17 @@
   <metadata name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>33, 15</value>
   </metadata>
+  <metadata name="sortControllerBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>121, 15</value>
+  </metadata>
+  <metadata name="tooltip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>33, 15</value>
+  </metadata>
+  <data name="subfoldersLabel.ToolTip" xml:space="preserve">
+    <value>Below is a list of folders that can be used to send the current file to.
+The "Add Folder" button can be used to add a custom directory somewhere else to send files. These are saved in your settings and are seperated from current folders with a divider.
+Folders in the currently opened directory are also shown, the number-spinner to the right can be used to set the recursive depth for folders in this directory.</value>
+  </data>
   <data name="tagSearchTextBox.ToolTip" xml:space="preserve">
     <value>Search for a specific tag.
 The length that the search begins can be changed in the settings.
