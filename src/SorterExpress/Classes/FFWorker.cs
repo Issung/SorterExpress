@@ -66,7 +66,7 @@ namespace SorterExpress.Classes
 
         private static string CreateFfmpegThumbnailArgs(string input, string output, int size)
         {
-            // -ss (Screenshot this far into the video (1 second ftb).
+            // -ss (Screenshot this far into the video (2 seconds ftb).
             // -y (Overwrite output if it already exists).
             // -vframes: 1 (Output 1 frame).
             // -vf (??).

@@ -109,7 +109,7 @@ namespace SorterExpress.Forms
             this.keepRightButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.keepRightButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.keepRightButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.keepRightButton.Location = new System.Drawing.Point(345, 0);
             this.keepRightButton.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
             this.keepRightButton.MaximumSize = new System.Drawing.Size(0, 23);
@@ -129,7 +129,7 @@ namespace SorterExpress.Forms
             this.keepLeftButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.keepLeftButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.keepLeftButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.keepLeftButton.Location = new System.Drawing.Point(0, 0);
             this.keepLeftButton.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.keepLeftButton.MaximumSize = new System.Drawing.Size(0, 23);
@@ -144,7 +144,7 @@ namespace SorterExpress.Forms
             // 
             this.keepBothButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.keepBothButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.keepBothButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.keepBothButton.Location = new System.Drawing.Point(198, 353);
             this.keepBothButton.Name = "keepBothButton";
             this.keepBothButton.Size = new System.Drawing.Size(686, 23);
@@ -529,7 +529,7 @@ namespace SorterExpress.Forms
             // optionsLeftButton
             // 
             this.optionsLeftButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.optionsLeftButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.optionsLeftButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.optionsLeftButton.Image = global::SorterExpress.Properties.Resources.down;
             this.optionsLeftButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.optionsLeftButton.Location = new System.Drawing.Point(0, 212);
@@ -545,7 +545,7 @@ namespace SorterExpress.Forms
             // optionsRightButton
             // 
             this.optionsRightButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.optionsRightButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.optionsRightButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.optionsRightButton.Image = global::SorterExpress.Properties.Resources.down;
             this.optionsRightButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.optionsRightButton.Location = new System.Drawing.Point(9, 212);
@@ -716,7 +716,7 @@ namespace SorterExpress.Forms
             // 
             this.keepNeitherButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.keepNeitherButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.keepNeitherButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.keepNeitherButton.Location = new System.Drawing.Point(198, 377);
             this.keepNeitherButton.Name = "keepNeitherButton";
             this.keepNeitherButton.Size = new System.Drawing.Size(686, 23);
