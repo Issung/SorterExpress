@@ -33,7 +33,7 @@ namespace SorterExpress.Forms
 
             enabledTags = new List<string>();
 
-            tags = Settings.Default.Tags?.ToList() ?? new List<string>();
+            tags = Settings.Default.Tags.ToList() ?? new List<string>();
 
             if (Settings.Default.DisplayAllTags)
             { 
