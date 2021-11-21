@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SorterExpress.Classes.SettingsData;
 using SorterExpress.Controllers;
 using SorterExpress.Model.Duplicates;
-using SorterExpress.Properties;
 
 namespace SorterExpress.Classes.Actions.DuplicateActions
 {
@@ -27,7 +27,7 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
         /// <summary>
         /// Ignore settings list to modify.
         /// </summary>
-        List<String> settings => (ignoreType == IgnoreType.Directory) ? Settings.Default.DuplicatesIgnoreDirectories : Settings.Default.DuplicatesIgnoreFiles;
+        List<String> settings => (ignoreType == IgnoreType.Directory) ? Settings.Default.DuplicateSearch.IgnoreDirectories : Settings.Default.DuplicateSearch.IgnoreFiles;
 
         /// <summary>
         /// A list of all duplicates removed that contained the ignored file(s).

@@ -1,5 +1,6 @@
 ﻿using SorterExpress;
 using SorterExpress.Classes;
+using SorterExpress.Classes.SettingsData;
 using SorterExpress.Properties;
 using System;
 using System.Drawing;
@@ -141,7 +142,7 @@ public class FilePrint
             topBorder = 0,
             bottomBorder = 0;
 
-        if (Settings.Default.DuplicatesCropLeftRightSides)
+        if (Settings.Default.DuplicateSearch.CropLeftRightSides)
         {
             //Get Left Border
             for (int i = 0; i < img.Size.Width; i++)
@@ -166,7 +167,7 @@ public class FilePrint
             //Console.WriteLine($"leftBorder: {leftBorder}, rightBorder: {rightBorder}");
         }
 
-        if (Settings.Default.DuplicatesCropTopBottomSides)
+        if (Settings.Default.DuplicateSearch.CropTopBottomSides)
         {
             //Get Top Border
             for (int i = 0; i < img.Size.Height; i++)
@@ -191,7 +192,7 @@ public class FilePrint
             //Console.WriteLine($"topBorder: {topBorder}, bottomBorder: {bottomBorder}");
         }
 
-        if (Settings.Default.DuplicatesCropLeftRightSides || Settings.Default.DuplicatesCropTopBottomSides)
+        if (Settings.Default.DuplicateSearch.CropLeftRightSides || Settings.Default.DuplicateSearch.CropTopBottomSides)
         {
             int width = (leftBorder == rightBorder) ? THUMB_SIZE : (rightBorder - leftBorder);
             int height = (topBorder == bottomBorder) ? THUMB_SIZE : (bottomBorder - topBorder);

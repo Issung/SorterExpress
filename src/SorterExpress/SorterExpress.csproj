@@ -9,6 +9,7 @@
     <RootNamespace>SorterExpress</RootNamespace>
     <AssemblyName>SorterExpress</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+	<LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -88,7 +89,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
@@ -193,6 +194,11 @@
     </Compile>
     <Compile Include="Classes\IgnoreType.cs" />
     <Compile Include="Classes\RBindingList.cs" />
+    <Compile Include="Classes\Settings\DuplicateSearchSettings.cs" />
+    <Compile Include="Classes\Settings\Settings.cs" />
+    <Compile Include="Classes\Settings\SorterExpressSettings.cs" />
+    <Compile Include="Classes\Settings\Subfolder.cs" />
+    <Compile Include="Classes\Settings\VideoSettings.cs" />
     <Compile Include="Classes\Shortcut.cs" />
     <Compile Include="Classes\Side.cs" />
     <Compile Include="Classes\SortableBindingList\PropertyComparer.cs" />
@@ -416,15 +422,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

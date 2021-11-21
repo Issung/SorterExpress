@@ -8,6 +8,7 @@ using SorterExpress.Controls;
 using SorterExpress.Forms;
 using SorterExpress.Classes.Actions.SortActions;
 using Shortcut = SorterExpress.Classes.Shortcut;
+using SorterExpress.Classes.SettingsData;
 
 namespace SorterExpress.Controllers
 {
@@ -85,7 +86,7 @@ namespace SorterExpress.Controllers
 
             form.SuspendLayout();
 
-            var loadedTags = (Settings.Default.Tags != null) ? Settings.Default.Tags : new List<string>();
+            var loadedTags = (Settings.Default.Tags != null) ? Settings.Default.Tags.ToList() : new List<string>();
 
             form.tagPanel.ReorderButtons = false;
 
@@ -110,13 +111,8 @@ namespace SorterExpress.Controllers
             //Subfolders.RemoveAt(0);
             Subfolders.Clear();
 
-            var sfnames = Settings.Default.SubfolderNames ?? new List<string>();
-            var sfdirectories = Settings.Default.SubfolderDirectories ?? new List<string>();
-
-            for (int i = 0; i < Math.Min(sfnames.Count, sfdirectories.Count); i++)
-            {
-                Subfolders.Add(new SubfolderInfo(sfnames[i], sfdirectories[i], true));
-            }
+            var subfoldersFromSettings = Settings.Default.Subfolders.Select(t => new SubfolderInfo(t.Name, t.Directory, true));
+            Subfolders.AddRange(subfoldersFromSettings);
 
             // Load info specific to chosen directory.
 
@@ -131,8 +127,12 @@ namespace SorterExpress.Controllers
                 this.files = dirInfo.GetFileNamesList();
 
                 string[] folders = dirInfo.GetFolderNames();
+
+                // Add subfolders within current directory.
                 for (int i = 0; i < folders.Length; i++)
+                { 
                     Subfolders.Add(new SubfolderInfo(folders[i], Path.Combine(directory, folders[i]), false));
+                }
 
                 fileIndex = 0;
 
@@ -684,16 +684,10 @@ namespace SorterExpress.Controllers
 
         public void SaveSettings()
         {
-            // On exit, set all these prefs but dont save after each one, save after setting them all.
-            Settings.Default.Tags = Tags.ToList();
+            Settings.Default.Tags = Tags.ToArray();
+            Settings.Default.Subfolders = Subfolders.Where(t => t.custom).Select(t => new Subfolder { Name = t.name, Directory = t.directory }).ToArray();
 
-            Settings.Default.SubfolderNames = Subfolders.Where(t => t.custom).Select(t => t.name).ToList();
-            Settings.Default.SubfolderDirectories = Subfolders.Where(t => t.custom).Select(t => t.directory).ToList();
-
-            //Settings.Default.VideoMute = mediaViewer.Mute;
-            //Settings.Default.VideoVolume = mediaViewer.VolumeLevel;
-
-            Settings.Default.Save();
+            Settings.Save();
         }
 
         #endregion

@@ -18,6 +18,7 @@ using Vlc.DotNet.Forms;
 using Vlc.DotNet.Core;
 using Shortcut = SorterExpress.Classes.Shortcut;
 using SorterExpress.Model.Duplicates;
+using SorterExpress.Classes.SettingsData;
 
 namespace SorterExpress.Controllers
 {
@@ -329,8 +330,8 @@ namespace SorterExpress.Controllers
 
             model.Duplicates.Clear();
             model.Searching = true;
-            Settings.Default.DuplicatesCropLeftRightSides = model.CropLeftAndRight;
-            Settings.Default.DuplicatesCropTopBottomSides = model.CropTopAndBottom;
+            Settings.Default.DuplicateSearch.CropLeftRightSides = model.CropLeftAndRight;
+            Settings.Default.DuplicateSearch.CropTopBottomSides = model.CropTopAndBottom;
 
             printsWorker.RunWorkerAsync();
         }
@@ -355,7 +356,7 @@ namespace SorterExpress.Controllers
 
             bool ShouldBeExcluded(string str)
             {
-                foreach (var dir in Settings.Default.DuplicatesIgnoreDirectories ?? Enumerable.Empty<string>())
+                foreach (var dir in Settings.Default.DuplicateSearch.IgnoreDirectories ?? Enumerable.Empty<string>())
                 {
                     if (str.StartsWith(dir))
                     {
@@ -363,7 +364,7 @@ namespace SorterExpress.Controllers
                     }
                 }
 
-                foreach (var dir in Settings.Default.DuplicatesIgnoreFiles ?? Enumerable.Empty<string>())
+                foreach (var dir in Settings.Default.DuplicateSearch.IgnoreFiles ?? Enumerable.Empty<string>())
                 {
                     if (str == dir)
                     {
@@ -722,16 +723,16 @@ namespace SorterExpress.Controllers
 
         private void SaveSettingsPreferences()
         {
-            Settings.Default.DuplicatesSearchImages = model.SearchImages;
-            Settings.Default.DuplicatesSearchVideos = model.SearchVideos;
-            Settings.Default.DuplicatesOnlyMatchSameFileTypes = model.OnlyMatchSameFileTypes;
-            Settings.Default.DuplicatesCropLeftRightSides = model.CropLeftAndRight;
-            Settings.Default.DuplicatesCropTopBottomSides = model.CropTopAndBottom;
-            Settings.Default.DuplicatesSearchThreadCount = model.ThreadCount;
-            Settings.Default.DuplicatesSearchSimilarityPercentage = model.Similarity;
-            Settings.Default.DuplicatesMergeFileTags = model.MergeFileTags;
-            Settings.Default.DuplicatesOnlyKeepTagsInLibrary = model.OnlyKeepTagsThatAreInLibrary;
-            Settings.Default.Save();
+            Settings.Default.DuplicateSearch.SearchImages = model.SearchImages;
+            Settings.Default.DuplicateSearch.SearchVideos = model.SearchVideos;
+            Settings.Default.DuplicateSearch.OnlyMatchSameFileTypes = model.OnlyMatchSameFileTypes;
+            Settings.Default.DuplicateSearch.CropLeftRightSides = model.CropLeftAndRight;
+            Settings.Default.DuplicateSearch.CropTopBottomSides = model.CropTopAndBottom;
+            Settings.Default.DuplicateSearch.SearchThreadCount = model.ThreadCount;
+            Settings.Default.DuplicateSearch.SearchSimilarityPercentage = model.Similarity;
+            Settings.Default.DuplicateSearch.MergeFileTags = model.MergeFileTags;
+            Settings.Default.DuplicateSearch.OnlyKeepTagsInLibrary = model.OnlyKeepTagsThatAreInLibrary;
+            Settings.Save();
         }
     }
 }

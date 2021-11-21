@@ -1,4 +1,5 @@
-﻿using SorterExpress.Properties;
+﻿using SorterExpress.Classes.SettingsData;
+using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;

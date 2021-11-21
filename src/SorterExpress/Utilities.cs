@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using SorterExpress.Classes.SettingsData;
 using SorterExpress.Forms;
 using SorterExpress.Properties;
 using System;
@@ -268,7 +269,7 @@ namespace SorterExpress
 
         public static DirectoryInfo FindVlcLibDirectory()
         {
-            if (String.IsNullOrWhiteSpace(Settings.Default.VlcLocation))
+            if (String.IsNullOrWhiteSpace(Settings.Default.Video.VlcLocation))
             {
                 string programFilesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "VideoLAN", "VLC");
                 string x86programFilesDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), "VideoLAN", "VLC");
@@ -305,17 +306,17 @@ namespace SorterExpress
             }
             else
             {
-                if (Directory.Exists(Settings.Default.VlcLocation))
+                if (Directory.Exists(Settings.Default.Video.VlcLocation))
                 {
-                    Logs.Log($"Loaded VLC from directory set by the user in a previous session. ({Settings.Default.VlcLocation})");
-                    return Ret(Settings.Default.VlcLocation);
+                    Logs.Log($"Loaded VLC from directory set by the user in a previous session. ({Settings.Default.Video.VlcLocation})");
+                    return Ret(Settings.Default.Video.VlcLocation);
                 }
                 else
                 {
                     // Remove pref and try to load VLC again, this will result in either:
                     //  VLC being loaded from a default install location.
                     //  Asking the user to locate the install locations.
-                    Settings.Default.VlcLocation = null;
+                    Settings.Default.Video.VlcLocation = null;
                     Logs.Log("Could not load VLC from directory given by user in a previous session, directory in prefs has been removed. Trying again.");
                     return FindVlcLibDirectory();
                 }
@@ -330,8 +331,8 @@ namespace SorterExpress
                 else
                     di = null;
 
-                Settings.Default.VlcLocation = vlcPath;
-                Settings.Default.Save();
+                Settings.Default.Video.VlcLocation = vlcPath;
+                Settings.Save();
                 return di;
             }
         }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using SorterExpress.Properties;
 using SorterExpress.Controls;
+using SorterExpress.Classes.SettingsData;
 
 namespace SorterExpress.Forms
 {
@@ -32,10 +33,12 @@ namespace SorterExpress.Forms
 
             enabledTags = new List<string>();
 
-            tags = Settings.Default.Tags ?? new List<string>();
+            tags = Settings.Default.Tags?.ToList() ?? new List<string>();
 
             if (Settings.Default.DisplayAllTags)
+            { 
                 Show();
+            }
 
             foreach (string tag in tags)
                 tagsPanel.Controls.Add(CreateTagToggleButton(tag));
@@ -434,9 +437,9 @@ namespace SorterExpress.Forms
 
         void ApplicationExit(Object source, EventArgs e)
         {
-            Settings.Default.Tags = tags;
+            Settings.Default.Tags = tags.ToArray();
 
-            Settings.Default.Save();
+            Settings.Save();
         }
 
         #endregion
