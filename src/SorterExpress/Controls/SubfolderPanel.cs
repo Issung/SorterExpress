@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace SorterExpress.Controls
 {
@@ -18,14 +19,24 @@ namespace SorterExpress.Controls
 
         private string _filter;
 
+        private bool layoutSuspended = false;
+
         /// <summary>
         /// A UI label that has specific settings applied to make it look like a horizontal divider.
         /// </summary>
-        private Label divider = null;
+        private Label divider = new Label
+        {
+            Text = "",
+            BorderStyle = BorderStyle.Fixed3D,
+            AutoSize = false,
+            Height = 2,
+            Width = 189 - 2 - 20,
+        };
 
         public SubfolderPanel()
         {
             InitializeComponent();
+            scrollPanel.Controls.Add(divider);
         }
 
         private void TagPanel_Load(object sender, EventArgs e)
@@ -54,8 +65,10 @@ namespace SorterExpress.Controls
 
         private void SubfoldersBeforeRemove(IEnumerable<SubfolderInfo> deletedItems)
         {
-            foreach(SubfolderInfo sfi in deletedItems)
+            foreach (SubfolderInfo sfi in deletedItems)
+            { 
                 RemoveSubfolderButton(sfi, false);
+            }
         }
 
         private void SubfoldersChanged(object sender, ListChangedEventArgs e)
@@ -69,12 +82,15 @@ namespace SorterExpress.Controls
             }
 
             //Reorder incase of a deletion that wasnt caught in the above if statement and was instead done in "SubfoldersBeforeRemove".
-            ReorderSubfolderButtons();
+            if (!layoutSuspended)
+            { 
+                ReorderSubfolderButtons();
+            }
         }
 
         private void FilterChanged()
         {
-            this.SuspendLayout();
+            SuspendLayout();
 
             if (Filter.Length == 0)
             {
@@ -84,12 +100,10 @@ namespace SorterExpress.Controls
             else
             {
                 foreach (SubfolderButton button in scrollPanel.Controls.OfType<SubfolderButton>())
-                    button.Visible = button.subfolderInfo.name.ToLower().Contains(Filter.ToLower()) ? true : false;
+                    button.Visible = button.subfolderInfo.Name.ToLower().Contains(Filter.ToLower()) ? true : false;
             }
 
-            ReorderSubfolderButtons();
-
-            this.ResumeLayout();
+            ResumeLayout(reoderButtons: true);
         }
 
         /// <summary>
@@ -110,16 +124,18 @@ namespace SorterExpress.Controls
                 return false;
             }
         }
-
+        
         /// <summary>
         /// Reorders all visible tag toggle buttons in custom -> non-custom order and then alphabetical order.
         /// </summary>
         public void ReorderSubfolderButtons()
         {
+            Debug.WriteLine("ReorderSubfolderButtons!");
+
             if (Subfolders == null)
                 return;
             
-            this.SuspendLayout();
+            SuspendLayout();
 
             //Do this so that we dont remove the VScrollBar
 
@@ -131,17 +147,15 @@ namespace SorterExpress.Controls
             // If there is a filter stop seperating buttons by custom/noncustom and just order them all by StartsWith and then alphabetically by name.
             if (Filter.Length > 0)
             {
-                if (divider != null)
-                    divider.Hide();
+                divider.Hide();
 
                 var subfolderButtons = scrollPanel.Controls.OfType<SubfolderButton>()
                     .Where(t => t.Visible)
-                    .OrderByDescending(t => t.subfolderInfo.name.ToLower().StartsWith(Filter.ToLower()))
-                    .ThenBy(t => t.subfolderInfo.name);
+                    .OrderByDescending(t => t.subfolderInfo.Name.ToLower().StartsWith(Filter.ToLower()))
+                    .ThenBy(t => t.subfolderInfo.Name);
 
-                for (int i = 0; i < subfolderButtons.Count(); i++)
+                foreach (var button in subfolderButtons)
                 {
-                    var button = subfolderButtons.ElementAt(i);
                     button.Location = new Point(0, position);
                     position += positionAdd;
                     button.TabIndex = tabIndex;
@@ -150,14 +164,13 @@ namespace SorterExpress.Controls
             }
             else    // If there is no filter than seperate buttons by custom/noncustom and order alphabetically by name.
             {
-                var customSubfolders = Subfolders.Where(t => t.custom).ToArray();
-                var customSubfoldersButtons = scrollPanel.Controls.OfType<SubfolderButton>().Where(t => t.Visible && t.subfolderInfo.custom);
-                var folders = Subfolders.Where(t => !t.custom).ToArray();
-                var foldersButtons = scrollPanel.Controls.OfType<SubfolderButton>().Where(t => t.Visible && !t.subfolderInfo.custom);
+                var customSubfolders = Subfolders.Where(t => t.Custom).ToArray();
+                var customSubfoldersButtons = scrollPanel.Controls.OfType<SubfolderButton>().Where(t => t.Visible && t.subfolderInfo.Custom);
+                var folders = Subfolders.Where(t => !t.Custom).ToArray();
+                var foldersButtons = scrollPanel.Controls.OfType<SubfolderButton>().Where(t => t.Visible && !t.subfolderInfo.Custom);
 
-                for (int i = 0; i < customSubfoldersButtons.Count(); i++)
+                foreach (var button in customSubfoldersButtons)
                 {
-                    var button = customSubfoldersButtons.ElementAt(i);
                     button.Location = new Point(0, position);
                     position += positionAdd;
                     button.TabIndex = tabIndex;
@@ -166,17 +179,6 @@ namespace SorterExpress.Controls
 
                 if (customSubfolders.Length > 0 && folders.Length > 0)
                 {
-                    if (divider == null)
-                    {
-                        divider = new Label();
-                        divider.Text = "";
-                        divider.BorderStyle = BorderStyle.Fixed3D;
-                        divider.AutoSize = false;
-                        divider.Height = 2;
-                        divider.Width = 189 - 2 - 20;
-                        scrollPanel.Controls.Add(divider);
-                    }
-
                     divider.Location = new Point(0 + 10, position);
                     divider.BringToFront();
                     divider.Show();
@@ -184,21 +186,19 @@ namespace SorterExpress.Controls
                 }
                 else
                 {
-                    if (divider != null)
-                        divider.Hide();
+                    divider.Hide();
                 }
 
-                for (int i = 0; i < foldersButtons.Count(); i++)
+                foreach (var button in foldersButtons)
                 {
-                    SubfolderButton button = foldersButtons.ElementAt(i);
                     button.Location = new Point(0, position);
                     position += positionAdd;
                     button.TabIndex = tabIndex;
                     tabIndex++;
                 }
             }
-            
-            this.ResumeLayout();
+
+            ResumeLayout();
         }
 
         /// <summary>
@@ -210,8 +210,10 @@ namespace SorterExpress.Controls
         {
             scrollPanel.Controls.Add(CreateSubfolderButton(subfolderInfo));
 
-            if (reorderAllButtons)
+            if (reorderAllButtons && !layoutSuspended)
+            { 
                 ReorderSubfolderButtons();
+            }
         }
 
         public void RemoveSubfolderButton(SubfolderInfo subfolderInfo, bool reorderButtons)
@@ -225,7 +227,7 @@ namespace SorterExpress.Controls
                 changed = true;
             }
 
-            if (reorderButtons && changed)
+            if (reorderButtons && changed && !layoutSuspended)
                 ReorderSubfolderButtons();
         }
 
@@ -236,7 +238,7 @@ namespace SorterExpress.Controls
             button.UseMnemonic = false;
             button.Enabled = Enabled;
 
-            button.Text = subfolderInfo.name;
+            button.Text = subfolderInfo.Name;
             button.subfolderInfo = subfolderInfo;
 
             //tooltip.SetToolTip(button, directory + (custom ? "\nThis is a custom, user-added directory, right click to remove." : ""));
@@ -264,6 +266,25 @@ namespace SorterExpress.Controls
             }
 
             Refresh();
+        }
+
+        public new void SuspendLayout()
+        {
+            layoutSuspended = true;
+            scrollPanel.SuspendLayout();
+            base.SuspendLayout();
+        }
+
+        public new void ResumeLayout(bool reorderButtons = false)
+        {
+            if (reorderButtons)
+            {
+                ReorderSubfolderButtons();
+            }
+
+            layoutSuspended = false;
+            scrollPanel.ResumeLayout();
+            base.ResumeLayout();
         }
     }
 

@@ -622,16 +622,16 @@ namespace SorterExpress.Controllers
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (Directory.Exists(e.SubfolderInfo.directory))
+                if (Directory.Exists(e.SubfolderInfo.Directory))
                 {
-                    Move(e.SubfolderInfo.directory);
+                    Move(e.SubfolderInfo.Directory);
 
                     //TODO: What to do about moving focus between controls when moving files?
                     //form.tagSearchTextBox.Focus();
                 }
                 else
                 {
-                    DialogResult result = MessageBox.Show($"The selected directory \"{e.SubfolderInfo.directory}\" does not exist, would you like to remove it from the list?", 
+                    DialogResult result = MessageBox.Show($"The selected directory \"{e.SubfolderInfo.Directory}\" does not exist, would you like to remove it from the list?", 
                         "Directory does not exist", 
                         MessageBoxButtons.YesNo, 
                         MessageBoxIcon.Error);
@@ -642,7 +642,7 @@ namespace SorterExpress.Controllers
             }
             else if (e.Button == MouseButtons.Right)
             {
-                if (e.SubfolderInfo.custom)
+                if (e.SubfolderInfo.Custom)
                 {
                     Subfolders.Remove(e.SubfolderInfo);
                 }
@@ -653,11 +653,18 @@ namespace SorterExpress.Controllers
         {
             var dirs = Utilities.RecursiveDirectorySearch(directory, depth);
 
-            Subfolders.RemoveAll(t => !t.custom);
+            // We know that we are going to be messing with subfolder panel alot but it can't know.
+            // So suspend it's layout for it.
+            form.subfolderPanel.SuspendLayout();
+
+            Subfolders.RemoveAll(t => !t.Custom);
 
             var newFolders = dirs.Select(t => new SubfolderInfo(t.Remove(0, directory.Length + 1), t, false));
 
             Subfolders.AddRange(newFolders);
+
+            // Resume subfolderpanel layout and reorder buttons.
+            form.subfolderPanel.ResumeLayout(reorderButtons: true);
         }
 
         #region Meta Application Interactions - (ApplicationResized, ApplicationExit, etc..)
@@ -691,7 +698,7 @@ namespace SorterExpress.Controllers
         public void SaveSettings()
         {
             Settings.Default.Tags = Tags.ToArray();
-            Settings.Default.Subfolders = Subfolders.Where(t => t.custom).Select(t => new Subfolder { Name = t.name, Directory = t.directory }).ToArray();
+            Settings.Default.Subfolders = Subfolders.Where(t => t.Custom).Select(t => new Subfolder { Name = t.Name, Directory = t.Directory }).ToArray();
 
             Settings.Save();
         }
