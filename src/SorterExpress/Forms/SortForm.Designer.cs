@@ -57,6 +57,7 @@ namespace SorterExpress.Forms
             this.lastFileButton = new System.Windows.Forms.Button();
             this.redoButton = new System.Windows.Forms.Button();
             this.subfolderSearchTextBox = new System.Windows.Forms.TextBox();
+            this.subfolderSearchDepthNumeric = new System.Windows.Forms.NumericUpDown();
             this.tagSearchLabel = new System.Windows.Forms.Label();
             this.noteLabel = new System.Windows.Forms.Label();
             this.deleteButton = new System.Windows.Forms.Button();
@@ -75,6 +76,7 @@ namespace SorterExpress.Forms
             this.mediaViewer = new SorterExpress.Controls.MediaViewer();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sortControllerBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.subfolderSearchDepthNumeric)).BeginInit();
             this.openFileTableLayoutPanel.SuspendLayout();
             this.fileIndexTableLayoutPanel.SuspendLayout();
             this.loadingPanel.SuspendLayout();
@@ -165,9 +167,10 @@ namespace SorterExpress.Forms
             this.subfoldersLabel.AutoSize = true;
             this.subfoldersLabel.Location = new System.Drawing.Point(268, 44);
             this.subfoldersLabel.Name = "subfoldersLabel";
-            this.subfoldersLabel.Size = new System.Drawing.Size(94, 13);
+            this.subfoldersLabel.Size = new System.Drawing.Size(41, 13);
             this.subfoldersLabel.TabIndex = 12;
-            this.subfoldersLabel.Text = "Move to Subfolder";
+            this.subfoldersLabel.Text = "Folders";
+            this.tooltip.SetToolTip(this.subfoldersLabel, resources.GetString("subfoldersLabel.ToolTip"));
             // 
             // fileExtensionTextbox
             // 
@@ -360,6 +363,15 @@ namespace SorterExpress.Forms
             this.tooltip.SetToolTip(this.subfolderSearchTextBox, "Search for a subfolder. Press enter to move the current file to the top result.");
             this.subfolderSearchTextBox.TextChanged += new System.EventHandler(this.subfolderSearchBox_TextChanged);
             // 
+            // subfolderSearchDepthNumeric
+            // 
+            this.subfolderSearchDepthNumeric.Location = new System.Drawing.Point(425, 40);
+            this.subfolderSearchDepthNumeric.Name = "subfolderSearchDepthNumeric";
+            this.subfolderSearchDepthNumeric.Size = new System.Drawing.Size(58, 20);
+            this.subfolderSearchDepthNumeric.TabIndex = 60;
+            this.tooltip.SetToolTip(this.subfolderSearchDepthNumeric, "Depth to recursively search for subfolders (0 is immediate subfolders only).");
+            this.subfolderSearchDepthNumeric.ValueChanged += new System.EventHandler(this.subfolderSearchDepthNumeric_ValueChanged);
+            // 
             // tagSearchLabel
             // 
             this.tagSearchLabel.AutoSize = true;
@@ -396,11 +408,13 @@ namespace SorterExpress.Forms
             // 
             // addDirectoryButton
             // 
-            this.addDirectoryButton.Location = new System.Drawing.Point(369, 39);
+            this.addDirectoryButton.Location = new System.Drawing.Point(315, 39);
             this.addDirectoryButton.Name = "addDirectoryButton";
-            this.addDirectoryButton.Size = new System.Drawing.Size(116, 22);
+            this.addDirectoryButton.Size = new System.Drawing.Size(104, 22);
             this.addDirectoryButton.TabIndex = 13;
-            this.addDirectoryButton.Text = "Add Directory";
+            this.addDirectoryButton.Text = "Add Folder";
+            this.tooltip.SetToolTip(this.addDirectoryButton, "Add a folder anywhere to use for sorting.\r\nAdded folders are saved to settings an" +
+        "d seperated from folders in the immediate directory with a divider.\r\n");
             this.addDirectoryButton.UseVisualStyleBackColor = true;
             this.addDirectoryButton.Click += new System.EventHandler(this.addDirectoryButton_Click);
             // 
@@ -588,6 +602,7 @@ namespace SorterExpress.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(747, 294);
+            this.Controls.Add(this.subfolderSearchDepthNumeric);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.subfolderSearchTextBox);
             this.Controls.Add(this.loadingPanel);
@@ -625,6 +640,7 @@ namespace SorterExpress.Forms
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SortForm_KeyDown);
             this.Resize += new System.EventHandler(this.SortForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.sortControllerBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.subfolderSearchDepthNumeric)).EndInit();
             this.openFileTableLayoutPanel.ResumeLayout(false);
             this.openFileTableLayoutPanel.PerformLayout();
             this.fileIndexTableLayoutPanel.ResumeLayout(false);
@@ -679,6 +695,7 @@ namespace SorterExpress.Forms
         public System.Windows.Forms.Button saveButton;
         public System.Windows.Forms.TextBox subfolderSearchTextBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown subfolderSearchDepthNumeric;
     }
 }
 

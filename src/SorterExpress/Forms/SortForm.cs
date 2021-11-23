@@ -218,5 +218,10 @@ namespace SorterExpress.Forms
         {
             subfolderPanel.Filter = subfolderSearchTextBox.Text;
         }
+
+        private void subfolderSearchDepthNumeric_ValueChanged(object sender, EventArgs e)
+        {
+            controller.SubfolderDepthChanged((int)subfolderSearchDepthNumeric.Value);
+        }
     }
 }

@@ -11,6 +11,9 @@ namespace SorterExpress.Controls
     /// </summary>
     public class RBindingList<T> : BindingList<T>
     {
+        public event BeforeRemoveDelegate BeforeRemove;
+        public delegate void BeforeRemoveDelegate(IEnumerable<T> deletedItems);
+
         public new void RemoveAt(int index)
         {
             if (index < 0 || index >= Count)
@@ -55,6 +58,34 @@ namespace SorterExpress.Controls
             }
         }
 
+        public void RemoveAll(Func<T, bool> match)
+        {
+            bool fireEvents = RaiseListChangedEvents;
+
+            var items = this.Where(match).ToArray();
+
+            if (items.Length > 0)
+            {
+                if (RaiseListChangedEvents)
+                { 
+                    BeforeRemove?.Invoke(items);
+                }
+
+                RaiseListChangedEvents = false;
+
+                for (int i = items.Length - 1; i >= 0; i--)
+                {
+                    // Set RaiseListChangedEvents to whatever it was before this method so base class can naturally fire the event if needed.
+                    if (i == 0)
+                    {
+                        RaiseListChangedEvents = fireEvents;
+                    }
+
+                    this.Remove(items[i]);
+                }
+            }
+        }
+
         public void RemoveRange(IEnumerable<T> items)
         {
             bool fireEvents = RaiseListChangedEvents;
@@ -74,9 +105,11 @@ namespace SorterExpress.Controls
 
             for (int i = intersect.Count - 1; i >= 0; i--)
             {
-                //Raise list changed once on the last element.
+                // Set RaiseListChangedEvents to whatever it was before this method so base class can naturally fire the event if needed.
                 if (i == 0)
+                {
                     RaiseListChangedEvents = fireEvents;
+                }
 
                 this.Remove(intersect[i]);
                 intersect.RemoveAt(i);
@@ -99,8 +132,5 @@ namespace SorterExpress.Controls
                 Add(items.ElementAt(i));
             }
         }
-
-        public delegate void BeforeRemoveDelegate(IEnumerable<T> deletedItems);
-        public event BeforeRemoveDelegate BeforeRemove;
     }
 }

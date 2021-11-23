@@ -577,6 +577,29 @@ namespace SorterExpress
             return ret;
         }
 
+        public static string[] RecursiveDirectorySearch(string dir, int maxDepth)
+        {
+            return RecursiveDirectorySearchHelper(dir, 0, maxDepth);
+        }
+
+        private static string[] RecursiveDirectorySearchHelper(string dir, int currentDepth, int maxDepth)
+        {
+            if (currentDepth <= maxDepth)
+            {
+                List<string> dirs = new();
+
+                foreach (string subdir in Directory.GetDirectories(dir))
+                {
+                    dirs.Add(subdir);
+                    dirs.AddRange(RecursiveDirectorySearchHelper(subdir, currentDepth + 1, maxDepth));
+                }
+
+                return dirs.ToArray();
+            }
+
+            return Array.Empty<string>();
+        }
+
         /// <summary>
         /// Just like File.Move(string, string) except this will check if they file already exists and add a (i) 
         /// to the end of the filename to accomodate. Always use this to move files.

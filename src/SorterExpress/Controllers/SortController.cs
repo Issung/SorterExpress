@@ -22,9 +22,6 @@ namespace SorterExpress.Controllers
         public List<string> files;
         public int fileIndex = 0;
 
-        public const int MAX_FILE_WIDTH = 239;
-        public const int MAX_FILE_HEIGHT = 275;
-
         public RBindingList<SubfolderInfo> Subfolders { get; set; } = new RBindingList<SubfolderInfo>();
 
         public RBindingList<string> Tags { get; set; } = new RBindingList<string>();
@@ -107,8 +104,6 @@ namespace SorterExpress.Controllers
             form.tagPanel.ReorderTagButtons();
 
             // Empty all Subfolders and load custom ones from settings.
-            //while (Subfolders.Count > 0)
-            //Subfolders.RemoveAt(0);
             Subfolders.Clear();
 
             var subfoldersFromSettings = Settings.Default.Subfolders.Select(t => new SubfolderInfo(t.Name, t.Directory, true));
@@ -652,6 +647,17 @@ namespace SorterExpress.Controllers
                     Subfolders.Remove(e.SubfolderInfo);
                 }
             }
+        }
+
+        internal void SubfolderDepthChanged(int depth)
+        {
+            var dirs = Utilities.RecursiveDirectorySearch(directory, depth);
+
+            Subfolders.RemoveAll(t => !t.custom);
+
+            var newFolders = dirs.Select(t => new SubfolderInfo(t.Remove(0, directory.Length + 1), t, false));
+
+            Subfolders.AddRange(newFolders);
         }
 
         #region Meta Application Interactions - (ApplicationResized, ApplicationExit, etc..)
