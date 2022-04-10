@@ -32,15 +32,6 @@ namespace SorterExpress.Controllers
 
         public List<FilePrint> prints;
 
-        /// <summary>
-        /// When changing the selected index of matchesDataGridView programmatically
-        /// like in KeepBoth(), MatchesGridViewSelectedRow returns the index of the previously
-        /// selected column, can't figure out why, so we're currently using this to override that.
-        /// If this is NOT -1, then we're using it as the index to load the next duplicate.
-        /// TODO: Figure out this behaviour and get rid of this awful hack.
-        /// </summary>
-        int selectedIndexOverride = -1;
-
         public int finishedThreads = 0;
 
         BackgroundWorker printsWorker;
@@ -549,33 +540,23 @@ namespace SorterExpress.Controllers
                 return false;
         }
 
-        public int IgnoreMatchSelectionChanged = 0;
-
         internal void MatchSelectionChanged()
         {
-            if (IgnoreMatchSelectionChanged > 0)
-            {
-                IgnoreMatchSelectionChanged--;
-                Console.WriteLine($"IGNORING MatchSelectionChanged, IgnoreMatchSelectionChanged: {IgnoreMatchSelectionChanged}");
-                return;
-            }
-            else
-                Console.WriteLine($"MatchSelectionChanged, MatchesGridViewSelectedRow: {MatchesGridViewSelectedRowIndex}");
-
-            int index = (selectedIndexOverride != -1) ? selectedIndexOverride : MatchesGridViewSelectedRowIndex;
-
-            if (selectedIndexOverride != -1)
-                selectedIndexOverride = -1;
+            int index = MatchesGridViewSelectedRowIndex;
 
             if (index >= 0)
             {
                 inspectingDuplicate = model.Duplicates[index];
 
                 if (form.mediaViewerLeft.CurrentMedia == inspectingDuplicate.File2Path)
+                { 
                     form.mediaViewerLeft.UnloadMedia();
+                }
 
                 if (form.mediaViewerRight.CurrentMedia == inspectingDuplicate.File1Path)
+                { 
                     form.mediaViewerRight.UnloadMedia();
+                }
 
                 LoadFile(Side.Left, inspectingDuplicate.File1Path);
                 LoadFile(Side.Right, inspectingDuplicate.File2Path);
@@ -588,7 +569,8 @@ namespace SorterExpress.Controllers
             }
         }
 
-        private void LoadFile(Side side, string filePath)
+        /// <param name="filePath">File path to load, set to null to unload.</param>
+        internal void LoadFile(Side side, string filePath)
         {
             RichTextBox filenameBox, infoBox;
             MediaViewer mediaViewer;

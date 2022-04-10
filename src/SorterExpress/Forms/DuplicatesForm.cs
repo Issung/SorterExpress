@@ -1,17 +1,21 @@
-﻿using System;
+﻿using SorterExpress.Controllers;
+using SorterExpress.Model.Duplicates;
+using SorterExpress.Models;
+using System;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using SorterExpress.Controllers;
-using SorterExpress.Model.Duplicates;
-using SorterExpress.Models;
 
 namespace SorterExpress.Forms
 {
     public partial class DuplicatesForm : Form
     {
+        /// <summary>
+        /// Disables forwarding of selection events from form to <see cref="DuplicatesFormController.MatchSelectionChanged"/>.
+        /// </summary>
+        public bool EnableSelectionChangedEvents = true;
+
         DuplicatesFormController controller;
 
         public int MatchesGridViewSelectedRow { get { return matchesDataGridView?.CurrentCell?.RowIndex ?? -1; } }
@@ -76,7 +80,10 @@ namespace SorterExpress.Forms
 
         private void matchesDataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            controller.MatchSelectionChanged();
+            if (EnableSelectionChangedEvents)
+            { 
+                controller.MatchSelectionChanged();
+            }
         }
 
         private void undoButton_Click(object sender, EventArgs e)
