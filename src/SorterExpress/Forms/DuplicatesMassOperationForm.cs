@@ -1,6 +1,4 @@
-﻿using GChan.Controls;
-using SorterExpress.Classes;
-using SorterExpress.Classes.Actions.DuplicateActions;
+﻿using SorterExpress.Classes.Actions.DuplicateActions;
 using SorterExpress.Controllers;
 using SorterExpress.Model.Duplicates;
 using System;
@@ -10,7 +8,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SorterExpress.Forms
@@ -179,14 +176,25 @@ namespace SorterExpress.Forms
         {
             if (!backgroundWorker.IsBusy)
             {
+                // Disable loading selected duplicates because they load after removing each one and unload media.
+                if (Controller.form.matchesDataGridView.Rows.Count > 0)
+                {
+                    Controller.form.matchesDataGridView.Rows[0].Selected = true;
+                }
+                Controller.form.EnableSelectionChangedEvents = false;
+                Controller.LoadFile(Side.Left, null);
+                Controller.LoadFile(Side.Right, null);
+
                 this.ControlBox = false;
                 performOperationButton.Enabled = false;
+
                 loadingPanel.ProgressBarStyle = ProgressBarStyle.Continuous;
                 loadingPanel.ProgressValue = 0;
                 loadingPanel.BottomText = "Loading...";
                 loadingPanel.Show();
 
-                preferences = keepFilePreferenceFlowLayoutPanel.Controls.OfType<TableLayoutPanel>()
+                preferences = keepFilePreferenceFlowLayoutPanel.Controls
+                    .OfType<TableLayoutPanel>()
                     .OrderBy(t => Convert.ToInt32(t.Tag))
                     .Select(t => (Preference)t.Controls.OfType<ComboBox>().First().SelectedValue)
                     .ToArray();
@@ -261,7 +269,9 @@ namespace SorterExpress.Forms
 
                 // If a file has been decided on break this loop going through preferences.
                 if (result != Result.Equal)
+                { 
                     return result;
+                }
             }
 
             return Result.Equal;
@@ -275,15 +285,16 @@ namespace SorterExpress.Forms
             }
             else if (preference == Preference.DeepestDirectory)
             {
-                int comp = GetDirectoryDepth(duplicate.File1Path).CompareTo(GetDirectoryDepth(duplicate.File2Path));
+                var file1depth = GetDirectoryDepth(duplicate.File1Path);
+                var file2depth = GetDirectoryDepth(duplicate.File2Path);
 
-                if (comp < 0)
+                if (file1depth > file2depth)
                 {
-                    return Result.KeepRight2;
-                }
-                else if (comp > 0)
-                { 
                     return Result.KeepLeft1;
+                }
+                else if (file1depth < file2depth)
+                { 
+                    return Result.KeepRight2;
                 }
             }
             else if (preference == Preference.HighestResolution)
@@ -291,15 +302,13 @@ namespace SorterExpress.Forms
                 int file1pixels = duplicate.fileprint1.Size.Width * duplicate.fileprint1.Size.Height;
                 int file2pixels = duplicate.fileprint2.Size.Width * duplicate.fileprint2.Size.Height;
 
-                int comp = file1pixels.CompareTo(file2pixels);
-
-                if (comp < 0)
-                { 
-                    return Result.KeepRight2;
-                }
-                else if (comp > 0)
+                if (file1pixels > file2pixels)
                 { 
                     return Result.KeepLeft1;
+                }
+                else if (file1pixels < file2pixels)
+                { 
+                    return Result.KeepRight2;
                 }
             }
             else if (preference == Preference.MostTags)
@@ -307,15 +316,13 @@ namespace SorterExpress.Forms
                 FileDetails file1Details = Utilities.GetFileDetails(duplicate.File1Path);
                 FileDetails file2Details = Utilities.GetFileDetails(duplicate.File2Path);
 
-                int comp = file1Details.Tags.Length.CompareTo(file2Details.Tags.Length);
-
-                if (comp < 0)
-                { 
-                    return Result.KeepRight2;
-                }
-                else if (comp > 0)
+                if (file1Details.Tags.Length > file2Details.Tags.Length)
                 { 
                     return Result.KeepLeft1;
+                }
+                else if (file1Details.Tags.Length < file2Details.Tags.Length)
+                {
+                    return Result.KeepRight2;
                 }
             }
             else if (preference == Preference.Random)
@@ -343,6 +350,9 @@ namespace SorterExpress.Forms
             loadingPanel.Hide();
             performOperationButton.Enabled = true;
             this.ControlBox = true;
+
+            // Re-enable loading selected duplicates.
+            Controller.form.EnableSelectionChangedEvents = true;
         }
 
         private void keepFilePreferenceFlowLayoutPanel_Paint(object sender, PaintEventArgs e)
