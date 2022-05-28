@@ -185,6 +185,8 @@ namespace SorterExpress.Controllers
                     { new Shortcut(key: Keys.Down), () => { SendKeys.Send("{TAB}"); return true; }},
                     { new Shortcut(alt: true, key: Keys.Left), () => { form.mediaViewer.VideoPosition -= 0.1f; return true; } },
                     { new Shortcut(alt: true, key: Keys.Right), () => { form.mediaViewer.VideoPosition += 0.1f; return true; } },
+                    { new Shortcut(ctrl: true, key: Keys.T), () => { form.tagSearchTextBox.Focus(); return true; } },
+                    { new Shortcut(ctrl: true, key: Keys.F), () => { form.subfolderSearchTextBox.Focus(); return true; } },
                     { new Shortcut(ctrl: true, key: Keys.D), () => { Delete(); return true; } },
                     { new Shortcut(ctrl: true, key: Keys.Z), () => { return Undo(); } },
                     { new Shortcut(ctrl: true, key: Keys.Y), () => { return Redo(); } },
