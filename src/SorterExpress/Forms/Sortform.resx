@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -145,6 +145,8 @@ ALT + Left / Right - Skip backwards/forwards through playing video.
 Down / Up - Move down/up to highlight tags (Simulates Tab/Shift+Tab).
 CTRL + D - Delete the current file (Requires confirmation).
 CTRL + P - Reload the tags used on the last saved image.
+CTRL + T - Focus the tag search textbox.
+CTRL + F - Focus the subfolder search textbox.
 CTRL + S - Save the file.
 CTRL + Z - Undo.
 CTRL + Y - Redo.</value>
