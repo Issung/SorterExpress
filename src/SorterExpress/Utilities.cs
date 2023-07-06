@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SorterExpress
@@ -446,6 +447,11 @@ namespace SorterExpress
             return false;
         }
 
+        public static int Clamp(int value, int min, int max)
+        {
+            return (value < min) ? min : (value > max) ? max : value;
+        }
+
         public static float FloatClamp(float value, float min, float max)
         {
             return (value < min) ? min : (value > max) ? max : value;
@@ -561,20 +567,19 @@ namespace SorterExpress
 
         public static List<string> RecursivelyGetFileNames(string dir)
         {
-            List<string> ret = new List<string>();
+            var files = Directory.GetFiles(dir).ToList();
 
-            var files = Directory.GetFiles(dir);
+            Console.WriteLine("Recursively searching for files in " + dir + ". Found " + files.Count + " files.");
 
-            Console.WriteLine("Recursively searching for files in " + dir + ". Found " + files.Length + " files.");
-
-            ret.AddRange(files);
-
-            foreach (string folder in Directory.GetDirectories(dir))
+            foreach (var path in Directory.GetDirectories(dir))
             {
-                ret.AddRange(RecursivelyGetFileNames(folder));
+                if (!Regex.IsMatch(path, ".*thumbs?.*"))
+                {
+                    files.AddRange(RecursivelyGetFileNames(path));
+                }
             }
 
-            return ret;
+            return files;
         }
 
         public static string[] RecursiveDirectorySearch(string dir, int maxDepth)
@@ -590,8 +595,12 @@ namespace SorterExpress
 
                 foreach (string subdir in Directory.GetDirectories(dir))
                 {
-                    dirs.Add(subdir);
-                    dirs.AddRange(RecursiveDirectorySearchHelper(subdir, currentDepth + 1, maxDepth));
+                    // Don't search directories named 'thumb' or 'thumbs'
+                    if (!Regex.IsMatch(subdir, ".*thumbs?.*"))
+                    { 
+                        dirs.Add(subdir);
+                        dirs.AddRange(RecursiveDirectorySearchHelper(subdir, currentDepth + 1, maxDepth));
+                    }
                 }
 
                 return dirs.ToArray();

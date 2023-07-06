@@ -1,12 +1,9 @@
-﻿using GChan.Controls;
-using SorterExpress.Classes.Actions.DuplicateActions;
+﻿using SorterExpress.Classes.Actions.DuplicateActions;
 using SorterExpress.Classes.SettingsData;
 using SorterExpress.Model.Duplicates;
-using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace SorterExpress.Models
@@ -95,7 +92,7 @@ namespace SorterExpress.Models
 
         public bool Searching { get { return searching; } set { searching = value; NotifyPropertyChanged(); UpdateVisibilityAndEnabledProperties(); } }
 
-        public List<string> Files = new List<string>();
+        public List<string> Files = new();
 
         public BindingList<Duplicate> Duplicates { get; set; } = new BindingList<Duplicate>();
 

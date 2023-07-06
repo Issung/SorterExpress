@@ -207,8 +207,7 @@ namespace SorterExpress.Forms
         {
             Console.WriteLine("backgroundWorker_DoWork");
 
-            //SortableBindingList<Duplicate> duplicates = Controller.model.Duplicates;
-            BindingList<Duplicate> duplicates = Controller.model.Duplicates;
+            var duplicates = Controller.model.Duplicates;
 
             // Set to only "Ignore". Alert user and return. 
             if (preferences == null || preferences.Length < 2)
@@ -224,24 +223,23 @@ namespace SorterExpress.Forms
                 Invoke((MethodInvoker)delegate { loadingPanel.BottomText = "Retrieving video dimensions..."; });
                 var prints = Controller.prints.Where(t => duplicates.Any(d => d.fileprint1 == t || d.fileprint2 == t));
 
-                int sizesRetrieved = 0;
                 int printsCount = prints.Count();
 
-                Size noSize = new Size(-1, -1);
+                var noSize = new Size(-1, -1);
             }
 
             Invoke((MethodInvoker)delegate { loadingPanel.BottomText = "Performing filtering and removing files..."; });
 
-            for (int i = 0; i < duplicates.Count(); i++)
+            for (int i = 0; i < duplicates.Count; i++)
             {
-                Result result = GetPreferencesResult(duplicates[i]);
+                var result = GetPreferencesResult(duplicates[i]);
 
                 if (result != Result.Equal)
                 {
                     //create appropriate action and add to a list or perform the operation on the spot. 
-                    Side side = (result == Result.KeepLeft1) ? Side.Left : Side.Right;
+                    var side = (result == Result.KeepLeft1) ? Side.Left : Side.Right;
 
-                    KeepSide action = new KeepSide(Controller, duplicates[i], i, side);
+                    var action = new KeepSide(Controller, duplicates[i], i, side);
                     Invoke((MethodInvoker)delegate
                     {
                         action.Do();

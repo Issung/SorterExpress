@@ -2,10 +2,8 @@
 using Shell32;
 using SorterExpress.Controllers;
 using SorterExpress.Model.Duplicates;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,9 +19,8 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
         const string LOADING_DESCRIPTION = "To undelete a file the recycle bin must be searched to find it. " +
             "If this is taking a long time, consider emptying your recycle bin to make it faster to search through.";
 
-        Duplicate duplicate;
-
-        int duplicateIndex;
+        readonly Duplicate duplicate;
+        readonly int duplicateIndex;
 
         /// <summary>
         /// A list of all duplicates removed that contained the removed file, including the originally removed duplicate.
@@ -68,6 +65,8 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
                 controller.model.Duplicates.Remove(allDuplicatesWithFile[i].Duplicate);
             }
 
+            controller.model.Files.Remove(duplicate.File1Path);
+            controller.model.Files.Remove(duplicate.File2Path);
             FileSystem.DeleteFile(duplicate.fileprint1.Filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
             FileSystem.DeleteFile(duplicate.fileprint2.Filepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
             Successful = true;
@@ -76,15 +75,12 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
 
         public override void Undo()
         {
-            //TODO: Loading dialog for duplicates form.
-            //controller.ShowLoading(LOADING_TITLE, LOADING_DESCRIPTION);
-
-            bool leftItemFound = false,
-                rightItemFound = false;
-            Shell shell = new Shell();
-            Folder recycler = shell.NameSpace(10);
-            FolderItems items = recycler.Items();
-            int count = items.Count;
+            var leftItemFound = false;
+            var rightItemFound = false;
+            var shell = new Shell();
+            var recycler = shell.NameSpace(10);
+            var items = recycler.Items();
+            var count = items.Count;
 
             Parallel.For(0, count,
                 (i, state) =>
@@ -94,22 +90,26 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
                         state.Break();
                     }
 
-                    FolderItem folderItem = items.Item(i);
+                    var folderItem = items.Item(i);
 
-                    string itemFilename = recycler.GetDetailsOf(folderItem, 0);
+                    var itemFilename = recycler.GetDetailsOf(folderItem, 0);
                     if (Path.GetExtension(itemFilename) == "")
-                        itemFilename += Path.GetExtension(folderItem.Path);     //Necessary for systems with hidden file extensions.
+                    {
+                        itemFilename += Path.GetExtension(folderItem.Path);     // Necessary for systems with hidden file extensions.
+                    }
 
-                    string itemPath = recycler.GetDetailsOf(folderItem, 1);
+                    var itemPath = recycler.GetDetailsOf(folderItem, 1);
 
                     if (!leftItemFound && duplicate.fileprint1.Filepath == Path.Combine(itemPath, itemFilename))
                     {
                         DoVerb(folderItem, "ESTORE");
+                        controller.model.Files.Add(duplicate.File1Path);
                         leftItemFound = true;
                     }
                     else if (!rightItemFound && duplicate.fileprint2.Filepath == Path.Combine(itemPath, itemFilename))
                     {
                         DoVerb(folderItem, "ESTORE");
+                        controller.model.Files.Add(duplicate.File2Path);
                         rightItemFound = true;
                     }
                 });
@@ -117,11 +117,9 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
 
             if (leftItemFound && rightItemFound)
             {
-                //File should be recovered by this point.
-                //controller.ReloadMatch(Path.GetFileName(leftFilepath), duplicateIndex);
-                //controller.model.Duplicates.Insert(duplicateIndex, duplicate);
+                // File should be recovered by this point.
 
-                //Reinsert all duplicate entries that had that the recovered files.
+                // Reinsert all duplicate entries that had that the recovered files.
                 for (int i = 0; i < allDuplicatesWithFile.Count; i++)
                 {
                     controller.model.Duplicates.Insert(allDuplicatesWithFile[i].Index, allDuplicatesWithFile[i].Duplicate);
@@ -135,24 +133,22 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
             {
                 string side = leftItemFound ? "right" : "left";
 
-                System.Windows.Forms.MessageBox.Show(
-                    $"The {side} file could be found in the recycling bin and thus could not be undeleted. " +
+                MessageBox.Show(
+                    $"The {side} file could not be found in the recycling bin and thus could not be undeleted. " +
                     "You can attempt to search for the file yourself.",
                     "Delete Undo Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 Successful = true;
             }
-            else //Neither found.
+            else // Neither found.
             {
-                System.Windows.Forms.MessageBox.Show(
+                MessageBox.Show(
                     "Neither file could be found in the recycling bin and thus could not be undeleted. " +
                     "You can attempt to search for the files yourself.",
                     "Delete Undo Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 Successful = false;
             }
-
-            //controller.HideLoading();
 
             base.Undo();
         }
