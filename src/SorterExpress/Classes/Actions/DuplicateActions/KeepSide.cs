@@ -3,6 +3,7 @@ using Shell32;
 using SorterExpress.Classes.SettingsData;
 using SorterExpress.Controllers;
 using SorterExpress.Model.Duplicates;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -20,17 +21,15 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
         const string LOADING_DESCRIPTION = "To undelete a file the recycle bin must be searched to find it. " +
             "If this is taking a long time, consider emptying your recycle bin to make it faster to search through.";
 
-        Side keptSide;
+        readonly Duplicate duplicate;
+        readonly int duplicateIndex;
+        readonly Side keptSide;
 
-        string keptFileFilepath { get { return keptSide == Side.Left ? duplicate.fileprint1.Filepath : duplicate.fileprint2.Filepath; } }
+        string keptFileFilepath => keptSide == Side.Left ? duplicate.fileprint1.Filepath : duplicate.fileprint2.Filepath; 
 
         string keptFileNewName;
 
-        string deletedFileFilepath { get { return keptSide == Side.Left ? duplicate.fileprint2.Filepath : duplicate.fileprint1.Filepath;  } }
-
-        Duplicate duplicate;
-
-        int duplicateIndex;
+        string deletedFileFilepath => keptSide == Side.Left ? duplicate.fileprint2.Filepath : duplicate.fileprint1.Filepath;
 
         /// <summary>
         /// A list of all duplicates removed that contained the removed file, including the originally removed duplicate.
@@ -70,7 +69,16 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
                 controller.model.Duplicates.Remove(allDuplicatesWithFile[i].Duplicate);
             }
 
-            FileSystem.DeleteFile(deletedFileFilepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+            controller.model.Files.Remove(deletedFileFilepath);
+            try
+            {
+                FileSystem.DeleteFile(deletedFileFilepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+            }
+            catch (FileNotFoundException fnf)
+            {
+                // Carry on.. If it's not found it's probably already deleted by a mass operation.
+                Logs.Log("File not found exception during KeepSide action: " + fnf.Message);
+            }
 
             //TODO: Decide if we want to get these properties from Settings or from the model...
             //if (Settings.Default.DuplicatesMergeFileTags) 
@@ -95,50 +103,49 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
 
         public override void Undo()
         {
-            //TODO: Loading dialog for duplicates form.
-            //controller.ShowLoading(LOADING_TITLE, LOADING_DESCRIPTION);
-
-            bool fileRecovered = false;
-            Shell shell = new Shell();
-            Folder recycler = shell.NameSpace(10);
-            FolderItems items = recycler.Items();
-            int count = items.Count;
+            var fileRecovered = false;
+            var shell = new Shell();
+            var recycler = shell.NameSpace(10);
+            var items = recycler.Items();
+            var count = items.Count;
 
             Parallel.For(0, count,
                 (i, state) =>
                 {
+                    var folderItem = items.Item(i);
 
-                    FolderItem folderItem = items.Item(i);
-
-                    string itemFilename = recycler.GetDetailsOf(folderItem, 0);
+                    var itemFilename = recycler.GetDetailsOf(folderItem, 0);
                     if (Path.GetExtension(itemFilename) == "")
-                        itemFilename += Path.GetExtension(folderItem.Path);     //Necessary for systems with hidden file extensions.
+                    {
+                        itemFilename += Path.GetExtension(folderItem.Path);     // Necessary for systems with hidden file extensions.
+                    }
 
-                    string itemPath = recycler.GetDetailsOf(folderItem, 1);
+                    var itemPath = recycler.GetDetailsOf(folderItem, 1);
 
                     if (deletedFileFilepath == Path.Combine(itemPath, itemFilename))
                     {
                         DoVerb(folderItem, "ESTORE");
+                        controller.model.Files.Add(deletedFileFilepath);
                         fileRecovered = true;
                         state.Break();
                     }
                 });
 
-
             if (fileRecovered)
             {
-                //File should be recovered by this point.
-                //controller.ReloadMatch(Path.GetFileName(leftFilepath), duplicateIndex);
-                //controller.model.Duplicates.Insert(duplicateIndex, duplicate);
+                // File should be recovered by this point.
 
-                //If the kept file was renamed change its name back to what it was.
+                // If the kept file was renamed change its name back to what it was.
                 if (!string.IsNullOrWhiteSpace(keptFileNewName))
+                { 
                     File.Move(Path.Combine(Path.GetDirectoryName(keptFileFilepath), keptFileNewName), keptFileFilepath);
+                }
 
-                //Reinsert all duplicate entries that had that the recovered file.
+                // Reinsert all duplicate entries that had that the recovered file.
                 for (int i = 0; i < allDuplicatesWithFile.Count; i++)
                 {
-                    controller.model.Duplicates.Insert(allDuplicatesWithFile[i].Index, allDuplicatesWithFile[i].Duplicate);
+                    var index = Utilities.Clamp(allDuplicatesWithFile[i].Index, 0, controller.model.Duplicates.Count);
+                    controller.model.Duplicates.Insert(index, allDuplicatesWithFile[i].Duplicate);
                 }
 
                 controller.form.matchesDataGridView.CurrentCell = controller.form.matchesDataGridView.Rows[duplicateIndex].Cells[0];
@@ -147,15 +154,13 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
             }
             else
             {
-                System.Windows.Forms.MessageBox.Show(
+                MessageBox.Show(
                     "The deleted file could be found in the recycling bin and thus could not be undeleted. " +
                     "You can attempt to search for the files yourself.",
                     "Delete Undo Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 Successful = false;
             }
-
-            //controller.HideLoading();
 
             base.Undo();
         }

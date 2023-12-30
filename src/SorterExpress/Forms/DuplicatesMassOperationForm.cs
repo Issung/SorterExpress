@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SorterExpress.Forms
@@ -207,8 +208,7 @@ namespace SorterExpress.Forms
         {
             Console.WriteLine("backgroundWorker_DoWork");
 
-            //SortableBindingList<Duplicate> duplicates = Controller.model.Duplicates;
-            BindingList<Duplicate> duplicates = Controller.model.Duplicates;
+            var duplicatesCopy = Controller.model.Duplicates.ToArray();
 
             // Set to only "Ignore". Alert user and return. 
             if (preferences == null || preferences.Length < 2)
@@ -222,43 +222,48 @@ namespace SorterExpress.Forms
             if (preferences.Contains(Preference.HighestResolution))
             {
                 Invoke((MethodInvoker)delegate { loadingPanel.BottomText = "Retrieving video dimensions..."; });
-                var prints = Controller.prints.Where(t => duplicates.Any(d => d.fileprint1 == t || d.fileprint2 == t));
+                var prints = Controller.prints.Where(t => duplicatesCopy.Any(d => d.fileprint1 == t || d.fileprint2 == t));
 
-                int sizesRetrieved = 0;
                 int printsCount = prints.Count();
 
-                Size noSize = new Size(-1, -1);
+                var noSize = new Size(-1, -1);
             }
 
             Invoke((MethodInvoker)delegate { loadingPanel.BottomText = "Performing filtering and removing files..."; });
 
-            for (int i = 0; i < duplicates.Count(); i++)
-            {
-                Result result = GetPreferencesResult(duplicates[i]);
+            var duplicateToIndexDictionary = duplicatesCopy.Select((d, i) => (d, i)).ToDictionary(t => t.d, t => t.i);
 
-                if (result != Result.Equal)
+            var i = 0;
+            Parallel.ForEach(duplicatesCopy,
+                (duplicate) =>
                 {
-                    //create appropriate action and add to a list or perform the operation on the spot. 
-                    Side side = (result == Result.KeepLeft1) ? Side.Left : Side.Right;
+                    var result = GetPreferencesResult(duplicate);
 
-                    KeepSide action = new KeepSide(Controller, duplicates[i], i, side);
-                    Invoke((MethodInvoker)delegate
+                    if (result != Result.Equal)
                     {
-                        action.Do();
+                        // Create appropriate action and add to a list or perform the operation on the spot. 
+                        var side = (result == Result.KeepLeft1) ? Side.Left : Side.Right;
 
-                        Controller.model.UndoneActions.Clear();
-                        Controller.model.DoneActions.Push(action);
+                        var action = new KeepSide(Controller, duplicate, duplicateToIndexDictionary[duplicate], side);
 
-                        Controller.model.NotifyPropertyChanged(nameof(Controller.model.EnableRedoButton));
-                        Controller.model.NotifyPropertyChanged(nameof(Controller.model.EnableUndoButton));
-                    });
+                        Invoke((MethodInvoker)delegate
+                        {
+                            action.Do();
 
-                    //Decrement index because the action just removed the current duplicate from the list. 
-                    i--;
+                            Controller.model.UndoneActions.Clear();
+                            Controller.model.DoneActions.Push(action);
+
+                            Controller.model.NotifyPropertyChanged(nameof(Controller.model.EnableRedoButton));
+                            Controller.model.NotifyPropertyChanged(nameof(Controller.model.EnableUndoButton));
+                        });
+                    }
+
+                    // TODO: This is not working, progress bar just goes empty.
+                    // Too many threads being used by the parallel?
+                    // Would be good if we could only refresh the UI for each percentage point, so we don't waste cycles on each duplicate removed.
+                    backgroundWorker.ReportProgress((int)(((float)i++ / duplicatesCopy.Length) * 100));
                 }
-
-                backgroundWorker.ReportProgress((int)((((float)i / duplicates.Count) * 100) / 2) + 50);
-            }
+            );
         }
 
         private Result GetPreferencesResult(Duplicate duplicate)
