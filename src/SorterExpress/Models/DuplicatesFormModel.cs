@@ -152,7 +152,7 @@ namespace SorterExpress.Models
             NotifyPropertyChanged(nameof(FileAndMatchesCountText));
         }
 
-        private void Duplicates_ListChanged(object sender, ListChangedEventArgs e)
+        public void Duplicates_ListChanged(object sender, ListChangedEventArgs e)
         {
             Console.WriteLine($"Duplicates_ListChanged: Count: {Duplicates?.Count ?? 0}");
             NotifyPropertyChanged(nameof(StateViewingDuplicates));

@@ -70,7 +70,15 @@ namespace SorterExpress.Classes.Actions.DuplicateActions
             }
 
             controller.model.Files.Remove(deletedFileFilepath);
-            FileSystem.DeleteFile(deletedFileFilepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+            try
+            {
+                FileSystem.DeleteFile(deletedFileFilepath, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+            }
+            catch (FileNotFoundException fnf)
+            {
+                // Carry on.. If it's not found it's probably already deleted by a mass operation.
+                Logs.Log("File not found exception during KeepSide action: " + fnf.Message);
+            }
 
             //TODO: Decide if we want to get these properties from Settings or from the model...
             //if (Settings.Default.DuplicatesMergeFileTags) 
