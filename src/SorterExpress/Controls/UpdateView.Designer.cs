@@ -29,54 +29,54 @@ namespace SorterExpress.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            this.label = new System.Windows.Forms.Label();
-            this.button = new System.Windows.Forms.Button();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.SuspendLayout();
+            label = new System.Windows.Forms.Label();
+            button = new System.Windows.Forms.Button();
+            progressBar = new System.Windows.Forms.ProgressBar();
+            SuspendLayout();
             // 
             // label
             // 
-            this.label.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label.Location = new System.Drawing.Point(0, 0);
-            this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(243, 29);
-            this.label.TabIndex = 0;
-            this.label.Text = "No updates available";
+            label.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            label.Location = new System.Drawing.Point(0, 0);
+            label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label.Name = "label";
+            label.Size = new System.Drawing.Size(284, 33);
+            label.TabIndex = 0;
+            label.Text = "No updates available";
             // 
             // button
             // 
-            this.button.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button.Location = new System.Drawing.Point(0, 32);
-            this.button.Name = "button";
-            this.button.Size = new System.Drawing.Size(243, 23);
-            this.button.TabIndex = 1;
-            this.button.Text = "Check for Updates";
-            this.button.UseVisualStyleBackColor = true;
-            this.button.Click += new System.EventHandler(this.button_Click);
+            button.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            button.Location = new System.Drawing.Point(0, 37);
+            button.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button.Name = "button";
+            button.Size = new System.Drawing.Size(284, 27);
+            button.TabIndex = 1;
+            button.Text = "Check for Updates";
+            button.UseVisualStyleBackColor = true;
+            button.Click += button_Click;
             // 
             // progressBar
             // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(0, 32);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(243, 23);
-            this.progressBar.TabIndex = 2;
+            progressBar.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            progressBar.Location = new System.Drawing.Point(0, 37);
+            progressBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new System.Drawing.Size(284, 27);
+            progressBar.TabIndex = 2;
             // 
             // UpdateView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.button);
-            this.Controls.Add(this.label);
-            this.Controls.Add(this.progressBar);
-            this.Name = "UpdateView";
-            this.Size = new System.Drawing.Size(243, 55);
-            this.Load += new System.EventHandler(this.UpdateView_Load);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(button);
+            Controls.Add(label);
+            Controls.Add(progressBar);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "UpdateView";
+            Size = new System.Drawing.Size(284, 63);
+            Load += UpdateView_Load;
+            ResumeLayout(false);
         }
 
         #endregion

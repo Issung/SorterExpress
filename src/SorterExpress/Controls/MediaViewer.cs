@@ -188,12 +188,18 @@ namespace SorterExpress.Controls
                     {
                         FileInfo fi = new FileInfo(path);
 
-                        ThreadPool.QueueUserWorkItem(_ => 
+                        Invoke(() =>
                         {
                             vlcControl.SetMedia(fi, (repeat) ? "input-repeat=4000" : "input-repeat=0");
                             vlcControl.Play();
                             vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
                         });
+                        /*ThreadPool.QueueUserWorkItem(_ => 
+                        {
+                            vlcControl.SetMedia(fi, (repeat) ? "input-repeat=4000" : "input-repeat=0");
+                            vlcControl.Play();
+                            vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
+                        });*/
 
                         vlcPlayerTableLayoutPanel.Show();
                     }
@@ -244,7 +250,7 @@ namespace SorterExpress.Controls
                     }
                     else
                     {
-                        ThreadPool.QueueUserWorkItem(_ =>
+                        Invoke(() =>
                         {
                             vlcControl.Stop();
                             vlcControl.ResetMedia();
@@ -334,12 +340,12 @@ namespace SorterExpress.Controls
             }
         }
 
-        private void volumeTrackbar_ValueChanged(object sender, decimal value)
+        private void volumeTrackbar_ValueChanged(object sender, EventArgs e)
         {
             if (vlcControl == null)
                 return;
 
-            if (value > 0)
+            if (volumeTrackbar.Value > 0)
             {
                 muteButton.Text = UNMUTED_ICON;
                 tooltip.SetToolTip(muteButton, "Mute video");
@@ -352,7 +358,7 @@ namespace SorterExpress.Controls
                 mute = true;
             }
 
-            vlcControl.Audio.Volume = (int)value;
+            vlcControl.Audio.Volume = volumeTrackbar.Value;
         }
 
         private void volumeTrackbar_MouseDown(object sender, MouseEventArgs e)

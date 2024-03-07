@@ -28,205 +28,200 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
-            this.label1 = new System.Windows.Forms.Label();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.massTagButton = new System.Windows.Forms.Button();
-            this.allInOneButton = new System.Windows.Forms.Button();
-            this.duplicatesButton = new System.Windows.Forms.Button();
-            this.viewFormButton = new System.Windows.Forms.Button();
-            this.exitButton = new System.Windows.Forms.Button();
-            this.renameTagButton = new System.Windows.Forms.Button();
-            this.settingsButton = new System.Windows.Forms.Button();
-            this.sortButton = new System.Windows.Forms.Button();
-            this.updatesGroupBox = new System.Windows.Forms.GroupBox();
-            this.updateView1 = new SorterExpress.Controls.UpdateView();
-            this.optionsGroupBox = new System.Windows.Forms.GroupBox();
-            this.updatesGroupBox.SuspendLayout();
-            this.optionsGroupBox.SuspendLayout();
-            this.SuspendLayout();
+            label1 = new System.Windows.Forms.Label();
+            toolTip = new System.Windows.Forms.ToolTip(components);
+            massTagButton = new System.Windows.Forms.Button();
+            allInOneButton = new System.Windows.Forms.Button();
+            duplicatesButton = new System.Windows.Forms.Button();
+            viewFormButton = new System.Windows.Forms.Button();
+            exitButton = new System.Windows.Forms.Button();
+            renameTagButton = new System.Windows.Forms.Button();
+            settingsButton = new System.Windows.Forms.Button();
+            sortButton = new System.Windows.Forms.Button();
+            updatesGroupBox = new System.Windows.Forms.GroupBox();
+            updateView1 = new Controls.UpdateView();
+            optionsGroupBox = new System.Windows.Forms.GroupBox();
+            updatesGroupBox.SuspendLayout();
+            optionsGroupBox.SuspendLayout();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(12, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(351, 13);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Hover over an option to read about it\'s function.";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            label1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            label1.Location = new System.Drawing.Point(14, 21);
+            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(410, 15);
+            label1.TabIndex = 8;
+            label1.Text = "Hover over an option to read about it's function.";
+            label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // massTagButton
             // 
-            this.massTagButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.massTagButton.Location = new System.Drawing.Point(6, 49);
-            this.massTagButton.Name = "massTagButton";
-            this.massTagButton.Size = new System.Drawing.Size(339, 23);
-            this.massTagButton.TabIndex = 15;
-            this.massTagButton.Text = "Mass Tag Collection";
-            this.toolTip.SetToolTip(this.massTagButton, "Modify tags en masse to mutiple files in your collection at once. This option all" +
-        "ows you to open a directory and add specific tags to selected files in that dire" +
-        "ctory.");
-            this.massTagButton.UseVisualStyleBackColor = true;
-            this.massTagButton.Click += new System.EventHandler(this.massTagButton_Click);
+            massTagButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            massTagButton.Location = new System.Drawing.Point(7, 57);
+            massTagButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            massTagButton.Name = "massTagButton";
+            massTagButton.Size = new System.Drawing.Size(396, 27);
+            massTagButton.TabIndex = 15;
+            massTagButton.Text = "Mass Tag Collection";
+            toolTip.SetToolTip(massTagButton, "Modify tags en masse to mutiple files in your collection at once. This option allows you to open a directory and add specific tags to selected files in that directory.");
+            massTagButton.UseVisualStyleBackColor = true;
+            massTagButton.Click += massTagButton_Click;
             // 
             // allInOneButton
             // 
-            this.allInOneButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.allInOneButton.Location = new System.Drawing.Point(6, 164);
-            this.allInOneButton.Name = "allInOneButton";
-            this.allInOneButton.Size = new System.Drawing.Size(339, 23);
-            this.allInOneButton.TabIndex = 14;
-            this.allInOneButton.Text = "All In One [WIP, Slow]";
-            this.toolTip.SetToolTip(this.allInOneButton, "A form that has all features of the application displayed in seperate tabs.");
-            this.allInOneButton.UseVisualStyleBackColor = true;
-            this.allInOneButton.Click += new System.EventHandler(this.AllInOneButton_Click);
+            allInOneButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            allInOneButton.Location = new System.Drawing.Point(7, 189);
+            allInOneButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            allInOneButton.Name = "allInOneButton";
+            allInOneButton.Size = new System.Drawing.Size(396, 27);
+            allInOneButton.TabIndex = 14;
+            allInOneButton.Text = "All In One [WIP, Slow]";
+            toolTip.SetToolTip(allInOneButton, "A form that has all features of the application displayed in seperate tabs.");
+            allInOneButton.UseVisualStyleBackColor = true;
+            allInOneButton.Click += AllInOneButton_Click;
             // 
             // duplicatesButton
             // 
-            this.duplicatesButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.duplicatesButton.Location = new System.Drawing.Point(6, 135);
-            this.duplicatesButton.Name = "duplicatesButton";
-            this.duplicatesButton.Size = new System.Drawing.Size(339, 23);
-            this.duplicatesButton.TabIndex = 11;
-            this.duplicatesButton.Text = "Find Duplicates in Collection";
-            this.toolTip.SetToolTip(this.duplicatesButton, "Search your collection for duplicates. Features recursive directory searching, su" +
-        "pport for image & videos, cropping, similarity threshold, multithreading and mor" +
-        "e.");
-            this.duplicatesButton.UseVisualStyleBackColor = true;
-            this.duplicatesButton.Click += new System.EventHandler(this.DuplicatesButton_Click);
+            duplicatesButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            duplicatesButton.Location = new System.Drawing.Point(7, 156);
+            duplicatesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            duplicatesButton.Name = "duplicatesButton";
+            duplicatesButton.Size = new System.Drawing.Size(396, 27);
+            duplicatesButton.TabIndex = 11;
+            duplicatesButton.Text = "Find Duplicates in Collection";
+            toolTip.SetToolTip(duplicatesButton, "Search your collection for duplicates. Features recursive directory searching, support for image & videos, cropping, similarity threshold, multithreading and more.");
+            duplicatesButton.UseVisualStyleBackColor = true;
+            duplicatesButton.Click += DuplicatesButton_Click;
             // 
             // viewFormButton
             // 
-            this.viewFormButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.viewFormButton.Location = new System.Drawing.Point(6, 77);
-            this.viewFormButton.Name = "viewFormButton";
-            this.viewFormButton.Size = new System.Drawing.Size(339, 23);
-            this.viewFormButton.TabIndex = 9;
-            this.viewFormButton.Text = "View Collection";
-            this.toolTip.SetToolTip(this.viewFormButton, "View your collection by specifying a search criteria of tags featuring AND, OR & " +
-        "NOT filters. You may then scroll through results.");
-            this.viewFormButton.UseVisualStyleBackColor = true;
-            this.viewFormButton.Click += new System.EventHandler(this.viewFormButton_Click);
+            viewFormButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            viewFormButton.Location = new System.Drawing.Point(7, 89);
+            viewFormButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            viewFormButton.Name = "viewFormButton";
+            viewFormButton.Size = new System.Drawing.Size(396, 27);
+            viewFormButton.TabIndex = 9;
+            viewFormButton.Text = "View Collection";
+            toolTip.SetToolTip(viewFormButton, "View your collection by specifying a search criteria of tags featuring AND, OR & NOT filters. You may then scroll through results.");
+            viewFormButton.UseVisualStyleBackColor = true;
+            viewFormButton.Click += viewFormButton_Click;
             // 
             // exitButton
             // 
-            this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.exitButton.Location = new System.Drawing.Point(5, 239);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(339, 23);
-            this.exitButton.TabIndex = 13;
-            this.exitButton.Text = "Exit";
-            this.toolTip.SetToolTip(this.exitButton, "Exit SorterExpress, bye!");
-            this.exitButton.UseVisualStyleBackColor = true;
-            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            exitButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            exitButton.Location = new System.Drawing.Point(6, 276);
+            exitButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            exitButton.Name = "exitButton";
+            exitButton.Size = new System.Drawing.Size(396, 27);
+            exitButton.TabIndex = 13;
+            exitButton.Text = "Exit";
+            toolTip.SetToolTip(exitButton, "Exit SorterExpress, bye!");
+            exitButton.UseVisualStyleBackColor = true;
+            exitButton.Click += exitButton_Click;
             // 
             // renameTagButton
             // 
-            this.renameTagButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.renameTagButton.Location = new System.Drawing.Point(6, 107);
-            this.renameTagButton.Name = "renameTagButton";
-            this.renameTagButton.Size = new System.Drawing.Size(339, 23);
-            this.renameTagButton.TabIndex = 10;
-            this.renameTagButton.Text = "Rename Tag in Collection";
-            this.toolTip.SetToolTip(this.renameTagButton, resources.GetString("renameTagButton.ToolTip"));
-            this.renameTagButton.UseVisualStyleBackColor = true;
-            this.renameTagButton.Click += new System.EventHandler(this.renameTagButton_Click);
+            renameTagButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            renameTagButton.Location = new System.Drawing.Point(7, 123);
+            renameTagButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            renameTagButton.Name = "renameTagButton";
+            renameTagButton.Size = new System.Drawing.Size(396, 27);
+            renameTagButton.TabIndex = 10;
+            renameTagButton.Text = "Rename Tag in Collection";
+            toolTip.SetToolTip(renameTagButton, resources.GetString("renameTagButton.ToolTip"));
+            renameTagButton.UseVisualStyleBackColor = true;
+            renameTagButton.Click += renameTagButton_Click;
             // 
             // settingsButton
             // 
-            this.settingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.settingsButton.Location = new System.Drawing.Point(5, 211);
-            this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(339, 23);
-            this.settingsButton.TabIndex = 12;
-            this.settingsButton.Text = "Settings";
-            this.toolTip.SetToolTip(this.settingsButton, "Change settings for the application.");
-            this.settingsButton.UseVisualStyleBackColor = true;
-            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            settingsButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            settingsButton.Location = new System.Drawing.Point(6, 243);
+            settingsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            settingsButton.Name = "settingsButton";
+            settingsButton.Size = new System.Drawing.Size(396, 27);
+            settingsButton.TabIndex = 12;
+            settingsButton.Text = "Settings";
+            toolTip.SetToolTip(settingsButton, "Change settings for the application.");
+            settingsButton.UseVisualStyleBackColor = true;
+            settingsButton.Click += settingsButton_Click;
             // 
             // sortButton
             // 
-            this.sortButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.sortButton.Location = new System.Drawing.Point(6, 19);
-            this.sortButton.Name = "sortButton";
-            this.sortButton.Size = new System.Drawing.Size(339, 23);
-            this.sortButton.TabIndex = 8;
-            this.sortButton.Text = "Sort Collection";
-            this.toolTip.SetToolTip(this.sortButton, "Organise your collection by adding tags and notes to filenames or just moving the" +
-        "m to other folders, or both at the same time for more organisation!");
-            this.sortButton.UseVisualStyleBackColor = true;
-            this.sortButton.Click += new System.EventHandler(this.sortButton_Click);
+            sortButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            sortButton.Location = new System.Drawing.Point(7, 22);
+            sortButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            sortButton.Name = "sortButton";
+            sortButton.Size = new System.Drawing.Size(396, 27);
+            sortButton.TabIndex = 8;
+            sortButton.Text = "Sort Collection";
+            toolTip.SetToolTip(sortButton, "Organise your collection by adding tags and notes to filenames or just moving them to other folders, or both at the same time for more organisation!");
+            sortButton.UseVisualStyleBackColor = true;
+            sortButton.Click += sortButton_Click;
             // 
             // updatesGroupBox
             // 
-            this.updatesGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.updatesGroupBox.Controls.Add(this.updateView1);
-            this.updatesGroupBox.Location = new System.Drawing.Point(12, 322);
-            this.updatesGroupBox.Name = "updatesGroupBox";
-            this.updatesGroupBox.Padding = new System.Windows.Forms.Padding(6);
-            this.updatesGroupBox.Size = new System.Drawing.Size(351, 83);
-            this.updatesGroupBox.TabIndex = 10;
-            this.updatesGroupBox.TabStop = false;
-            this.updatesGroupBox.Text = "Updates";
+            updatesGroupBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            updatesGroupBox.Controls.Add(updateView1);
+            updatesGroupBox.Location = new System.Drawing.Point(14, 372);
+            updatesGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            updatesGroupBox.Name = "updatesGroupBox";
+            updatesGroupBox.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            updatesGroupBox.Size = new System.Drawing.Size(375, 96);
+            updatesGroupBox.TabIndex = 10;
+            updatesGroupBox.TabStop = false;
+            updatesGroupBox.Text = "Updates";
             // 
             // updateView1
             // 
-            this.updateView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.updateView1.Location = new System.Drawing.Point(6, 19);
-            this.updateView1.Name = "updateView1";
-            this.updateView1.Size = new System.Drawing.Size(339, 58);
-            this.updateView1.TabIndex = 0;
-            this.updateView1.UpdateStarted += new SorterExpress.Controls.UpdateView.UpdateStartedEvent(this.updateView_UpdateStarted);
+            updateView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            updateView1.Location = new System.Drawing.Point(7, 23);
+            updateView1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            updateView1.Name = "updateView1";
+            updateView1.Size = new System.Drawing.Size(361, 66);
+            updateView1.TabIndex = 0;
+            updateView1.UpdateStarted += updateView_UpdateStarted;
             // 
             // optionsGroupBox
             // 
-            this.optionsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.optionsGroupBox.Controls.Add(this.massTagButton);
-            this.optionsGroupBox.Controls.Add(this.allInOneButton);
-            this.optionsGroupBox.Controls.Add(this.duplicatesButton);
-            this.optionsGroupBox.Controls.Add(this.viewFormButton);
-            this.optionsGroupBox.Controls.Add(this.exitButton);
-            this.optionsGroupBox.Controls.Add(this.renameTagButton);
-            this.optionsGroupBox.Controls.Add(this.settingsButton);
-            this.optionsGroupBox.Controls.Add(this.sortButton);
-            this.optionsGroupBox.Location = new System.Drawing.Point(12, 45);
-            this.optionsGroupBox.Name = "optionsGroupBox";
-            this.optionsGroupBox.Size = new System.Drawing.Size(351, 272);
-            this.optionsGroupBox.TabIndex = 11;
-            this.optionsGroupBox.TabStop = false;
-            this.optionsGroupBox.Text = "Options";
+            optionsGroupBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            optionsGroupBox.Controls.Add(massTagButton);
+            optionsGroupBox.Controls.Add(allInOneButton);
+            optionsGroupBox.Controls.Add(duplicatesButton);
+            optionsGroupBox.Controls.Add(viewFormButton);
+            optionsGroupBox.Controls.Add(exitButton);
+            optionsGroupBox.Controls.Add(renameTagButton);
+            optionsGroupBox.Controls.Add(settingsButton);
+            optionsGroupBox.Controls.Add(sortButton);
+            optionsGroupBox.Location = new System.Drawing.Point(14, 52);
+            optionsGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            optionsGroupBox.Name = "optionsGroupBox";
+            optionsGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            optionsGroupBox.Size = new System.Drawing.Size(410, 314);
+            optionsGroupBox.TabIndex = 11;
+            optionsGroupBox.TabStop = false;
+            optionsGroupBox.Text = "Options";
             // 
             // WelcomeForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(375, 415);
-            this.Controls.Add(this.optionsGroupBox);
-            this.Controls.Add(this.updatesGroupBox);
-            this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "WelcomeForm";
-            this.Text = "Sorter Express - Welcome";
-            this.TransparencyKey = System.Drawing.Color.White;
-            this.updatesGroupBox.ResumeLayout(false);
-            this.optionsGroupBox.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(438, 479);
+            Controls.Add(optionsGroupBox);
+            Controls.Add(updatesGroupBox);
+            Controls.Add(label1);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "WelcomeForm";
+            Text = "Sorter Express - Welcome";
+            TransparencyKey = System.Drawing.Color.White;
+            updatesGroupBox.ResumeLayout(false);
+            optionsGroupBox.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion

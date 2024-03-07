@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using Vlc.DotNet.Forms;
-using EConTech.Windows.MACUI;
 using System.Threading;
 
 namespace SorterExpress.Controls
 {
-    public class VideoPositionTrackBar : MACTrackBar
+    public class VideoPositionTrackBar : TrackBar
     {
         private VlcControl vlcControl = null;
         System.Windows.Forms.Timer videoPositionUpdateTimer;
@@ -33,12 +32,11 @@ namespace SorterExpress.Controls
 
         private void VideoPositionUpdate(object sender, EventArgs e)
         {
-            if (vlcControl != null)
-                if (vlcControl.IsPlaying)
-                {
-                    //Value = (int)(vlcControl.Position * 100);
-                    ThreadPool.QueueUserWorkItem(_ => { Value = (int)(vlcControl.Position * 100); });
-                }
+            if (vlcControl != null && vlcControl.IsPlaying)
+            {
+                //Value = (int)(vlcControl.Position * 100);
+                Invoke(() => { Value = (int)(vlcControl.Position * 100); });
+            }
         }
 
         private void TrackBar_MouseDown(object sender, MouseEventArgs e)

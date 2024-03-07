@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Onova;
 using Onova.Models;
 using Onova.Services;
+using MethodInvoker = System.Windows.Forms.MethodInvoker;
 
 namespace SorterExpress.Controls
 {
