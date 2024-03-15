@@ -42,9 +42,9 @@
             sortButton = new System.Windows.Forms.Button();
             updatesGroupBox = new System.Windows.Forms.GroupBox();
             updateView1 = new Controls.UpdateView();
-            optionsGroupBox = new System.Windows.Forms.GroupBox();
+            operationsGroupBox = new System.Windows.Forms.GroupBox();
             updatesGroupBox.SuspendLayout();
-            optionsGroupBox.SuspendLayout();
+            operationsGroupBox.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -169,8 +169,8 @@
             updatesGroupBox.Location = new System.Drawing.Point(14, 372);
             updatesGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             updatesGroupBox.Name = "updatesGroupBox";
-            updatesGroupBox.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
-            updatesGroupBox.Size = new System.Drawing.Size(375, 96);
+            updatesGroupBox.Padding = new System.Windows.Forms.Padding(7);
+            updatesGroupBox.Size = new System.Drawing.Size(410, 96);
             updatesGroupBox.TabIndex = 10;
             updatesGroupBox.TabStop = false;
             updatesGroupBox.Text = "Updates";
@@ -181,36 +181,36 @@
             updateView1.Location = new System.Drawing.Point(7, 23);
             updateView1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             updateView1.Name = "updateView1";
-            updateView1.Size = new System.Drawing.Size(361, 66);
+            updateView1.Size = new System.Drawing.Size(396, 66);
             updateView1.TabIndex = 0;
             updateView1.UpdateStarted += updateView_UpdateStarted;
             // 
-            // optionsGroupBox
+            // operationsGroupBox
             // 
-            optionsGroupBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            optionsGroupBox.Controls.Add(massTagButton);
-            optionsGroupBox.Controls.Add(allInOneButton);
-            optionsGroupBox.Controls.Add(duplicatesButton);
-            optionsGroupBox.Controls.Add(viewFormButton);
-            optionsGroupBox.Controls.Add(exitButton);
-            optionsGroupBox.Controls.Add(renameTagButton);
-            optionsGroupBox.Controls.Add(settingsButton);
-            optionsGroupBox.Controls.Add(sortButton);
-            optionsGroupBox.Location = new System.Drawing.Point(14, 52);
-            optionsGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            optionsGroupBox.Name = "optionsGroupBox";
-            optionsGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            optionsGroupBox.Size = new System.Drawing.Size(410, 314);
-            optionsGroupBox.TabIndex = 11;
-            optionsGroupBox.TabStop = false;
-            optionsGroupBox.Text = "Options";
+            operationsGroupBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            operationsGroupBox.Controls.Add(massTagButton);
+            operationsGroupBox.Controls.Add(allInOneButton);
+            operationsGroupBox.Controls.Add(duplicatesButton);
+            operationsGroupBox.Controls.Add(viewFormButton);
+            operationsGroupBox.Controls.Add(exitButton);
+            operationsGroupBox.Controls.Add(renameTagButton);
+            operationsGroupBox.Controls.Add(settingsButton);
+            operationsGroupBox.Controls.Add(sortButton);
+            operationsGroupBox.Location = new System.Drawing.Point(14, 52);
+            operationsGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            operationsGroupBox.Name = "operationsGroupBox";
+            operationsGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            operationsGroupBox.Size = new System.Drawing.Size(410, 314);
+            operationsGroupBox.TabIndex = 11;
+            operationsGroupBox.TabStop = false;
+            operationsGroupBox.Text = "Operations";
             // 
             // WelcomeForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(438, 479);
-            Controls.Add(optionsGroupBox);
+            Controls.Add(operationsGroupBox);
             Controls.Add(updatesGroupBox);
             Controls.Add(label1);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -220,7 +220,7 @@
             Text = "Sorter Express - Welcome";
             TransparencyKey = System.Drawing.Color.White;
             updatesGroupBox.ResumeLayout(false);
-            optionsGroupBox.ResumeLayout(false);
+            operationsGroupBox.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -228,7 +228,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.GroupBox updatesGroupBox;
-        private System.Windows.Forms.GroupBox optionsGroupBox;
+        private System.Windows.Forms.GroupBox operationsGroupBox;
         private System.Windows.Forms.Button massTagButton;
         private System.Windows.Forms.Button allInOneButton;
         private System.Windows.Forms.Button duplicatesButton;
