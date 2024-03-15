@@ -28,216 +28,194 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.tooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.volumeTrackbar = new EConTech.Windows.MACUI.MACTrackBar();
-            this.mediaViewerBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.videoPositionTrackBar = new SorterExpress.Controls.VideoPositionTrackBar();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.pictureModeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.stretchImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.errorMessageTextBox = new System.Windows.Forms.RichTextBox();
-            this.vlcPlayerTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.muteButton = new System.Windows.Forms.Button();
-            this.videoPauseButton = new System.Windows.Forms.Button();
-            this.videoPlayButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.mediaViewerBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
-            this.pictureModeContextMenu.SuspendLayout();
-            this.vlcPlayerTableLayoutPanel.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            tooltip = new System.Windows.Forms.ToolTip(components);
+            volumeTrackbar = new System.Windows.Forms.TrackBar();
+            mediaViewerBindingSource = new System.Windows.Forms.BindingSource(components);
+            videoPositionTrackBar = new VideoPositionTrackBar();
+            pictureBox = new System.Windows.Forms.PictureBox();
+            pictureModeContextMenu = new System.Windows.Forms.ContextMenuStrip(components);
+            stretchImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            errorMessageTextBox = new System.Windows.Forms.RichTextBox();
+            vlcPlayerTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            muteButton = new System.Windows.Forms.Button();
+            videoPauseButton = new System.Windows.Forms.Button();
+            videoPlayButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)volumeTrackbar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)mediaViewerBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)videoPositionTrackBar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
+            pictureModeContextMenu.SuspendLayout();
+            vlcPlayerTableLayoutPanel.SuspendLayout();
+            SuspendLayout();
             // 
             // volumeTrackbar
             // 
-            this.volumeTrackbar.BackColor = System.Drawing.Color.Transparent;
-            this.volumeTrackbar.BorderColor = System.Drawing.SystemColors.ActiveBorder;
-            this.volumeTrackbar.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.mediaViewerBindingSource, "EnableButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.volumeTrackbar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.volumeTrackbar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.volumeTrackbar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(125)))), ((int)(((byte)(123)))));
-            this.volumeTrackbar.IndentHeight = 6;
-            this.volumeTrackbar.Location = new System.Drawing.Point(266, 375);
-            this.volumeTrackbar.Margin = new System.Windows.Forms.Padding(0);
-            this.volumeTrackbar.Maximum = 100;
-            this.volumeTrackbar.Minimum = 0;
-            this.volumeTrackbar.Name = "volumeTrackbar";
-            this.volumeTrackbar.Size = new System.Drawing.Size(134, 25);
-            this.volumeTrackbar.TabIndex = 27;
-            this.volumeTrackbar.TabStop = false;
-            this.volumeTrackbar.TextTickStyle = System.Windows.Forms.TickStyle.None;
-            this.volumeTrackbar.TickColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(146)))), ((int)(((byte)(148)))));
-            this.volumeTrackbar.TickHeight = 1;
-            this.volumeTrackbar.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tooltip.SetToolTip(this.volumeTrackbar, "Adjust video volume");
-            this.volumeTrackbar.TrackerColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(130)))), ((int)(((byte)(198)))));
-            this.volumeTrackbar.TrackerSize = new System.Drawing.Size(16, 16);
-            this.volumeTrackbar.TrackLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(93)))), ((int)(((byte)(90)))));
-            this.volumeTrackbar.TrackLineHeight = 3;
-            this.volumeTrackbar.Value = 0;
-            this.volumeTrackbar.ValueChanged += new EConTech.Windows.MACUI.ValueChangedHandler(this.volumeTrackbar_ValueChanged);
-            this.volumeTrackbar.MouseDown += new System.Windows.Forms.MouseEventHandler(this.volumeTrackbar_MouseDown);
+            volumeTrackbar.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", mediaViewerBindingSource, "EnableButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            volumeTrackbar.Dock = System.Windows.Forms.DockStyle.Fill;
+            volumeTrackbar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            volumeTrackbar.Location = new System.Drawing.Point(310, 437);
+            volumeTrackbar.Margin = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            volumeTrackbar.Maximum = 100;
+            volumeTrackbar.Name = "volumeTrackbar";
+            volumeTrackbar.Size = new System.Drawing.Size(157, 25);
+            volumeTrackbar.TabIndex = 27;
+            volumeTrackbar.TabStop = false;
+            volumeTrackbar.TickStyle = System.Windows.Forms.TickStyle.None;
+            tooltip.SetToolTip(volumeTrackbar, "Adjust video volume");
+            volumeTrackbar.ValueChanged += volumeTrackbar_ValueChanged;
+            volumeTrackbar.MouseDown += volumeTrackbar_MouseDown;
             // 
             // mediaViewerBindingSource
             // 
-            this.mediaViewerBindingSource.DataSource = typeof(SorterExpress.Controls.MediaViewer);
+            mediaViewerBindingSource.DataSource = typeof(MediaViewer);
             // 
             // videoPositionTrackBar
             // 
-            this.videoPositionTrackBar.BackColor = System.Drawing.Color.Transparent;
-            this.videoPositionTrackBar.BorderColor = System.Drawing.SystemColors.ActiveBorder;
-            this.vlcPlayerTableLayoutPanel.SetColumnSpan(this.videoPositionTrackBar, 2);
-            this.videoPositionTrackBar.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.mediaViewerBindingSource, "EnableButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.videoPositionTrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoPositionTrackBar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.videoPositionTrackBar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(125)))), ((int)(((byte)(123)))));
-            this.videoPositionTrackBar.IndentHeight = 6;
-            this.videoPositionTrackBar.Location = new System.Drawing.Point(3, 375);
-            this.videoPositionTrackBar.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.videoPositionTrackBar.Maximum = 100;
-            this.videoPositionTrackBar.Minimum = 0;
-            this.videoPositionTrackBar.Name = "videoPositionTrackBar";
-            this.videoPositionTrackBar.Size = new System.Drawing.Size(260, 25);
-            this.videoPositionTrackBar.TabIndex = 28;
-            this.videoPositionTrackBar.TextTickStyle = System.Windows.Forms.TickStyle.None;
-            this.videoPositionTrackBar.TickColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(146)))), ((int)(((byte)(148)))));
-            this.videoPositionTrackBar.TickHeight = 4;
-            this.videoPositionTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tooltip.SetToolTip(this.videoPositionTrackBar, "Adjust video time position");
-            this.videoPositionTrackBar.TrackerColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(130)))), ((int)(((byte)(198)))));
-            this.videoPositionTrackBar.TrackerSize = new System.Drawing.Size(16, 16);
-            this.videoPositionTrackBar.TrackLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(93)))), ((int)(((byte)(90)))));
-            this.videoPositionTrackBar.TrackLineHeight = 3;
-            this.videoPositionTrackBar.Value = 0;
+            vlcPlayerTableLayoutPanel.SetColumnSpan(videoPositionTrackBar, 2);
+            videoPositionTrackBar.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", mediaViewerBindingSource, "EnableButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            videoPositionTrackBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            videoPositionTrackBar.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            videoPositionTrackBar.Location = new System.Drawing.Point(4, 437);
+            videoPositionTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 0);
+            videoPositionTrackBar.Maximum = 100;
+            videoPositionTrackBar.Name = "videoPositionTrackBar";
+            videoPositionTrackBar.Size = new System.Drawing.Size(302, 25);
+            videoPositionTrackBar.TabIndex = 28;
+            videoPositionTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            tooltip.SetToolTip(videoPositionTrackBar, "Adjust video time position");
             // 
             // pictureBox
             // 
-            this.pictureBox.ContextMenuStrip = this.pictureModeContextMenu;
-            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(400, 400);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox.TabIndex = 29;
-            this.pictureBox.TabStop = false;
+            pictureBox.ContextMenuStrip = pictureModeContextMenu;
+            pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            pictureBox.Location = new System.Drawing.Point(0, 0);
+            pictureBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            pictureBox.Name = "pictureBox";
+            pictureBox.Size = new System.Drawing.Size(467, 462);
+            pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pictureBox.TabIndex = 29;
+            pictureBox.TabStop = false;
             // 
             // pictureModeContextMenu
             // 
-            this.pictureModeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stretchImageToolStripMenuItem,
-            this.zoomToolStripMenuItem});
-            this.pictureModeContextMenu.Name = "PictureModeContextMenu";
-            this.pictureModeContextMenu.Size = new System.Drawing.Size(148, 48);
+            pictureModeContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { stretchImageToolStripMenuItem, zoomToolStripMenuItem });
+            pictureModeContextMenu.Name = "PictureModeContextMenu";
+            pictureModeContextMenu.Size = new System.Drawing.Size(148, 48);
             // 
             // stretchImageToolStripMenuItem
             // 
-            this.stretchImageToolStripMenuItem.Name = "stretchImageToolStripMenuItem";
-            this.stretchImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
-            this.stretchImageToolStripMenuItem.Text = "Stretch Image";
-            this.stretchImageToolStripMenuItem.Click += new System.EventHandler(this.stretchImageToolStripMenuItem_Click);
+            stretchImageToolStripMenuItem.Name = "stretchImageToolStripMenuItem";
+            stretchImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            stretchImageToolStripMenuItem.Text = "Stretch Image";
+            stretchImageToolStripMenuItem.Click += stretchImageToolStripMenuItem_Click;
             // 
             // zoomToolStripMenuItem
             // 
-            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
-            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
-            this.zoomToolStripMenuItem.Text = "Fit Image";
-            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
+            zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            zoomToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            zoomToolStripMenuItem.Text = "Fit Image";
+            zoomToolStripMenuItem.Click += zoomToolStripMenuItem_Click;
             // 
             // errorMessageTextBox
             // 
-            this.errorMessageTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.errorMessageTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.errorMessageTextBox.Location = new System.Drawing.Point(0, 0);
-            this.errorMessageTextBox.Name = "errorMessageTextBox";
-            this.errorMessageTextBox.ReadOnly = true;
-            this.errorMessageTextBox.Size = new System.Drawing.Size(400, 400);
-            this.errorMessageTextBox.TabIndex = 30;
-            this.errorMessageTextBox.TabStop = false;
-            this.errorMessageTextBox.Text = "File format not supported.\n\nYou can view the file by clicking \"Open File\" or \"Ope" +
-    "n File In Explorer\" buttons below.";
-            this.errorMessageTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.errorMessageTextBox_LinkClicked);
+            errorMessageTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            errorMessageTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            errorMessageTextBox.Location = new System.Drawing.Point(0, 0);
+            errorMessageTextBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            errorMessageTextBox.Name = "errorMessageTextBox";
+            errorMessageTextBox.ReadOnly = true;
+            errorMessageTextBox.Size = new System.Drawing.Size(467, 462);
+            errorMessageTextBox.TabIndex = 30;
+            errorMessageTextBox.TabStop = false;
+            errorMessageTextBox.Text = "File format not supported.\n\nYou can view the file by clicking \"Open File\" or \"Open File In Explorer\" buttons below.";
+            errorMessageTextBox.LinkClicked += errorMessageTextBox_LinkClicked;
             // 
             // vlcPlayerTableLayoutPanel
             // 
-            this.vlcPlayerTableLayoutPanel.ColumnCount = 3;
-            this.vlcPlayerTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
-            this.vlcPlayerTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.vlcPlayerTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
-            this.vlcPlayerTableLayoutPanel.Controls.Add(this.videoPositionTrackBar, 0, 2);
-            this.vlcPlayerTableLayoutPanel.Controls.Add(this.volumeTrackbar, 2, 2);
-            this.vlcPlayerTableLayoutPanel.Controls.Add(this.muteButton, 2, 1);
-            this.vlcPlayerTableLayoutPanel.Controls.Add(this.videoPauseButton, 1, 1);
-            this.vlcPlayerTableLayoutPanel.Controls.Add(this.videoPlayButton, 0, 1);
-            this.vlcPlayerTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vlcPlayerTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.vlcPlayerTableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.vlcPlayerTableLayoutPanel.Name = "vlcPlayerTableLayoutPanel";
-            this.vlcPlayerTableLayoutPanel.RowCount = 3;
-            this.vlcPlayerTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.vlcPlayerTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.vlcPlayerTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.vlcPlayerTableLayoutPanel.Size = new System.Drawing.Size(400, 400);
-            this.vlcPlayerTableLayoutPanel.TabIndex = 32;
+            vlcPlayerTableLayoutPanel.ColumnCount = 3;
+            vlcPlayerTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33332F));
+            vlcPlayerTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            vlcPlayerTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            vlcPlayerTableLayoutPanel.Controls.Add(videoPositionTrackBar, 0, 2);
+            vlcPlayerTableLayoutPanel.Controls.Add(volumeTrackbar, 2, 2);
+            vlcPlayerTableLayoutPanel.Controls.Add(muteButton, 2, 1);
+            vlcPlayerTableLayoutPanel.Controls.Add(videoPauseButton, 1, 1);
+            vlcPlayerTableLayoutPanel.Controls.Add(videoPlayButton, 0, 1);
+            vlcPlayerTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            vlcPlayerTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            vlcPlayerTableLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
+            vlcPlayerTableLayoutPanel.Name = "vlcPlayerTableLayoutPanel";
+            vlcPlayerTableLayoutPanel.RowCount = 3;
+            vlcPlayerTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            vlcPlayerTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            vlcPlayerTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
+            vlcPlayerTableLayoutPanel.Size = new System.Drawing.Size(467, 462);
+            vlcPlayerTableLayoutPanel.TabIndex = 32;
             // 
             // muteButton
             // 
-            this.muteButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.mediaViewerBindingSource, "EnableButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.muteButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.muteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.muteButton.Location = new System.Drawing.Point(268, 352);
-            this.muteButton.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.muteButton.Name = "muteButton";
-            this.muteButton.Size = new System.Drawing.Size(130, 23);
-            this.muteButton.TabIndex = 25;
-            this.muteButton.TabStop = false;
-            this.muteButton.Text = "🔊";
-            this.muteButton.UseVisualStyleBackColor = true;
-            this.muteButton.Click += new System.EventHandler(this.muteButton_Click);
+            muteButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", mediaViewerBindingSource, "EnableButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            muteButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            muteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            muteButton.Location = new System.Drawing.Point(312, 406);
+            muteButton.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            muteButton.Name = "muteButton";
+            muteButton.Size = new System.Drawing.Size(153, 27);
+            muteButton.TabIndex = 25;
+            muteButton.TabStop = false;
+            muteButton.Text = "🔊";
+            muteButton.UseVisualStyleBackColor = true;
+            muteButton.Click += muteButton_Click;
             // 
             // videoPauseButton
             // 
-            this.videoPauseButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.mediaViewerBindingSource, "EnableButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.videoPauseButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoPauseButton.Location = new System.Drawing.Point(135, 352);
-            this.videoPauseButton.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.videoPauseButton.Name = "videoPauseButton";
-            this.videoPauseButton.Size = new System.Drawing.Size(129, 23);
-            this.videoPauseButton.TabIndex = 24;
-            this.videoPauseButton.TabStop = false;
-            this.videoPauseButton.Text = "❚❚";
-            this.videoPauseButton.UseVisualStyleBackColor = true;
-            this.videoPauseButton.Click += new System.EventHandler(this.videoPauseButton_Click);
+            videoPauseButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", mediaViewerBindingSource, "EnableButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            videoPauseButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            videoPauseButton.Location = new System.Drawing.Point(157, 406);
+            videoPauseButton.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            videoPauseButton.Name = "videoPauseButton";
+            videoPauseButton.Size = new System.Drawing.Size(151, 27);
+            videoPauseButton.TabIndex = 24;
+            videoPauseButton.TabStop = false;
+            videoPauseButton.Text = "❚❚";
+            videoPauseButton.UseVisualStyleBackColor = true;
+            videoPauseButton.Click += videoPauseButton_Click;
             // 
             // videoPlayButton
             // 
-            this.videoPlayButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.mediaViewerBindingSource, "EnableButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.videoPlayButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoPlayButton.Location = new System.Drawing.Point(2, 352);
-            this.videoPlayButton.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.videoPlayButton.Name = "videoPlayButton";
-            this.videoPlayButton.Size = new System.Drawing.Size(129, 23);
-            this.videoPlayButton.TabIndex = 1;
-            this.videoPlayButton.TabStop = false;
-            this.videoPlayButton.Text = "▶";
-            this.videoPlayButton.UseVisualStyleBackColor = true;
-            this.videoPlayButton.Click += new System.EventHandler(this.videoPlayButton_Click);
+            videoPlayButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", mediaViewerBindingSource, "EnableButtons", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            videoPlayButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            videoPlayButton.Location = new System.Drawing.Point(2, 406);
+            videoPlayButton.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            videoPlayButton.Name = "videoPlayButton";
+            videoPlayButton.Size = new System.Drawing.Size(151, 27);
+            videoPlayButton.TabIndex = 1;
+            videoPlayButton.TabStop = false;
+            videoPlayButton.Text = "▶";
+            videoPlayButton.UseVisualStyleBackColor = true;
+            videoPlayButton.Click += videoPlayButton_Click;
             // 
             // MediaViewer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.vlcPlayerTableLayoutPanel);
-            this.Controls.Add(this.pictureBox);
-            this.Controls.Add(this.errorMessageTextBox);
-            this.Name = "MediaViewer";
-            this.Size = new System.Drawing.Size(400, 400);
-            this.Load += new System.EventHandler(this.MediaViewer_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.mediaViewerBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
-            this.pictureModeContextMenu.ResumeLayout(false);
-            this.vlcPlayerTableLayoutPanel.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(vlcPlayerTableLayoutPanel);
+            Controls.Add(pictureBox);
+            Controls.Add(errorMessageTextBox);
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            Name = "MediaViewer";
+            Size = new System.Drawing.Size(467, 462);
+            Load += MediaViewer_Load;
+            ((System.ComponentModel.ISupportInitialize)volumeTrackbar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)mediaViewerBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)videoPositionTrackBar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
+            pictureModeContextMenu.ResumeLayout(false);
+            vlcPlayerTableLayoutPanel.ResumeLayout(false);
+            vlcPlayerTableLayoutPanel.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -249,7 +227,7 @@
         private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel vlcPlayerTableLayoutPanel;
         private VideoPositionTrackBar videoPositionTrackBar;
-        private EConTech.Windows.MACUI.MACTrackBar volumeTrackbar;
+        private System.Windows.Forms.TrackBar volumeTrackbar;
         private System.Windows.Forms.Button muteButton;
         private System.Windows.Forms.Button videoPauseButton;
         private System.Windows.Forms.Button videoPlayButton;
