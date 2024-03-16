@@ -390,13 +390,12 @@ namespace SorterExpress.Forms
         private void openFileButton_Click(object sender, EventArgs e)
         {
             //https://stackoverflow.com/questions/11365984/c-sharp-open-file-with-default-application-and-parameters
-            System.Diagnostics.Process.Start(directory + "/" + currentFile);
+            Utilities.OsOpen(Path.Combine(directory, currentFile));
         }
 
         private void openFileInExplorerButton_Click(object sender, EventArgs e)
         {
-            //https://stackoverflow.com/questions/13680415/how-to-open-explorer-with-a-specific-file-selected
-            System.Diagnostics.Process.Start("explorer.exe", string.Format("/select," + directory + "\\" + currentFile));
+            Utilities.ViewFileInExplorer(Path.Combine(directory, currentFile));
         }
 
         private void OpenDirectoryButton_Click(object sender, EventArgs e)

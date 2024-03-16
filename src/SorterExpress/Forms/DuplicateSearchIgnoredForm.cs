@@ -162,7 +162,7 @@ namespace SorterExpress.Forms
 
         private void directoryContextMenuOpenInExplorerButton_Click(object sender, EventArgs e)
         {
-            Process.Start(SelectedDirectory);
+            Utilities.OsOpen(SelectedDirectory);
         }
 
         private void directoryContextMenuRemoveButton_Click(object sender, EventArgs e)
@@ -182,12 +182,12 @@ namespace SorterExpress.Forms
 
         private void fileContextMenuOpenButton_Click(object sender, EventArgs e)
         {
-            Process.Start(SelectedFile);
+            Utilities.OsOpen(SelectedFile);
         }
 
         private void fileContextMenuOpenInExplorerButton_Click(object sender, EventArgs e)
         {
-            Process.Start("explorer.exe", $"/select,\"{SelectedFile}\"");
+            Utilities.ViewFileInExplorer(SelectedFile);
         }
 
         private void fileContextMenuRemoveButton_Click(object sender, EventArgs e)

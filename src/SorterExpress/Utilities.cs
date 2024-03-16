@@ -81,6 +81,15 @@ namespace SorterExpress
         public static readonly char[] NoteForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.' };
         public static readonly char[] TagForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.', ' ', '(', ')' };
 
+        /// <summary>
+        /// Open "path" with the operating system's default app.<br/>
+        /// Can be a directory, file path, browser link, etc.
+        /// </summary>
+        public static void OsOpen(string path)
+        {
+            Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
+        }
+
         public static FileDetails GetFileDetails(string filepath)
         {
             FileDetails details = new FileDetails();
@@ -191,8 +200,8 @@ namespace SorterExpress
         public static void ViewFile(string path)
         {
             if (!string.IsNullOrWhiteSpace(path))
-            { 
-                Process.Start(path);
+            {
+                Utilities.OsOpen(path);
             }
         }
 
@@ -202,6 +211,7 @@ namespace SorterExpress
         /// <param name="path">Directory path to the file.</param>
         public static void ViewFileInExplorer(string path)
         {
+            // https://stackoverflow.com/questions/13680415/how-to-open-explorer-with-a-specific-file-selected
             if (!string.IsNullOrWhiteSpace(path))
             { 
                 Process.Start("explorer.exe", $"/select,\"{path}\"");

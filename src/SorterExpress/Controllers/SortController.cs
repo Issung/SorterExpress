@@ -1,14 +1,13 @@
-﻿using System;
-using System.Windows.Forms;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
-using SorterExpress.Properties;
+﻿using SorterExpress.Classes.Actions.SortActions;
+using SorterExpress.Classes.SettingsData;
 using SorterExpress.Controls;
 using SorterExpress.Forms;
-using SorterExpress.Classes.Actions.SortActions;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 using Shortcut = SorterExpress.Classes.Shortcut;
-using SorterExpress.Classes.SettingsData;
 
 namespace SorterExpress.Controllers
 {

@@ -176,7 +176,7 @@ namespace SorterExpress.Forms
 
         private void websiteButton_Click(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Issung/SorterExpress");
+            Utilities.OsOpen("https://github.com/Issung/SorterExpress");
         }
 
         private void manageTagLibraryButton_Click(object sender, EventArgs e)
@@ -230,7 +230,7 @@ namespace SorterExpress.Forms
 
         private void ViewLogsButton_Click(object sender, EventArgs e)
         {
-            Process.Start(Logs.LOGS_FILE_PATH);
+            Utilities.OsOpen(Logs.LOGS_FILE_PATH);
         }
 
         private void TagSearchNumeric_ValueChanged(object sender, EventArgs e)
@@ -447,7 +447,7 @@ namespace SorterExpress.Forms
 
         private void thumbsStorageViewButton_Click(object sender, EventArgs e)
         {
-            Process.Start(Program.THUMBS_PATH);
+            Utilities.OsOpen(Program.THUMBS_PATH);
         }
 
         private void ignoredFilesInfoButton_Click(object sender, EventArgs e)

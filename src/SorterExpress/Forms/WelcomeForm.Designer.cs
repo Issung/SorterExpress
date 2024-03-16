@@ -43,6 +43,7 @@
             updatesGroupBox = new System.Windows.Forms.GroupBox();
             updateView1 = new Controls.UpdateView();
             operationsGroupBox = new System.Windows.Forms.GroupBox();
+            nsfwSortButton = new System.Windows.Forms.Button();
             updatesGroupBox.SuspendLayout();
             operationsGroupBox.SuspendLayout();
             SuspendLayout();
@@ -74,7 +75,7 @@
             // allInOneButton
             // 
             allInOneButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            allInOneButton.Location = new System.Drawing.Point(7, 189);
+            allInOneButton.Location = new System.Drawing.Point(7, 222);
             allInOneButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             allInOneButton.Name = "allInOneButton";
             allInOneButton.Size = new System.Drawing.Size(396, 27);
@@ -113,7 +114,7 @@
             // exitButton
             // 
             exitButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            exitButton.Location = new System.Drawing.Point(6, 276);
+            exitButton.Location = new System.Drawing.Point(6, 310);
             exitButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             exitButton.Name = "exitButton";
             exitButton.Size = new System.Drawing.Size(396, 27);
@@ -139,7 +140,7 @@
             // settingsButton
             // 
             settingsButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            settingsButton.Location = new System.Drawing.Point(6, 243);
+            settingsButton.Location = new System.Drawing.Point(6, 277);
             settingsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             settingsButton.Name = "settingsButton";
             settingsButton.Size = new System.Drawing.Size(396, 27);
@@ -166,7 +167,7 @@
             // 
             updatesGroupBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             updatesGroupBox.Controls.Add(updateView1);
-            updatesGroupBox.Location = new System.Drawing.Point(14, 372);
+            updatesGroupBox.Location = new System.Drawing.Point(14, 406);
             updatesGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             updatesGroupBox.Name = "updatesGroupBox";
             updatesGroupBox.Padding = new System.Windows.Forms.Padding(7);
@@ -188,6 +189,7 @@
             // operationsGroupBox
             // 
             operationsGroupBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            operationsGroupBox.Controls.Add(nsfwSortButton);
             operationsGroupBox.Controls.Add(massTagButton);
             operationsGroupBox.Controls.Add(allInOneButton);
             operationsGroupBox.Controls.Add(duplicatesButton);
@@ -200,16 +202,28 @@
             operationsGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             operationsGroupBox.Name = "operationsGroupBox";
             operationsGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            operationsGroupBox.Size = new System.Drawing.Size(410, 314);
+            operationsGroupBox.Size = new System.Drawing.Size(410, 348);
             operationsGroupBox.TabIndex = 11;
             operationsGroupBox.TabStop = false;
             operationsGroupBox.Text = "Operations";
+            // 
+            // nsfwSortButton
+            // 
+            nsfwSortButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            nsfwSortButton.Location = new System.Drawing.Point(7, 189);
+            nsfwSortButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            nsfwSortButton.Name = "nsfwSortButton";
+            nsfwSortButton.Size = new System.Drawing.Size(396, 27);
+            nsfwSortButton.TabIndex = 16;
+            nsfwSortButton.Text = "NSFW Sort Collection";
+            toolTip.SetToolTip(nsfwSortButton, "A form that has all features of the application displayed in seperate tabs.");
+            nsfwSortButton.UseVisualStyleBackColor = true;
             // 
             // WelcomeForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(438, 479);
+            ClientSize = new System.Drawing.Size(438, 513);
             Controls.Add(operationsGroupBox);
             Controls.Add(updatesGroupBox);
             Controls.Add(label1);
@@ -238,5 +252,6 @@
         private System.Windows.Forms.Button settingsButton;
         private System.Windows.Forms.Button sortButton;
         private Controls.UpdateView updateView1;
+        private System.Windows.Forms.Button nsfwSortButton;
     }
 }

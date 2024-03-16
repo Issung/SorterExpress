@@ -48,13 +48,7 @@ namespace SorterExpress.Controls
                     new ZipPackageExtractor()
                 );
 
-                currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString().Trim();
-
-                // Cut off trailing ".0"'s.
-                while (string.Join("", currentVersion.Skip(Math.Max(0, currentVersion.Length - 2))) == ".0")
-                {
-                    currentVersion = currentVersion.Substring(0, currentVersion.Length - 2);
-                }
+                currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString().TrimEnd(['0', '.', ' ']);
 
                 CheckForUpdates();
             }

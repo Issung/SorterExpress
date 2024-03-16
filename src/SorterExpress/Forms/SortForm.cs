@@ -57,7 +57,7 @@ namespace SorterExpress.Forms
             int goalFileIndex = 0;
 
             if (!ignoreFileIndexTextChange)
-            { 
+            {
                 if (String.IsNullOrWhiteSpace(fileIndexTextbox.Text))
                 {
                     // String is null or white space, setting file index to 0.
@@ -222,6 +222,21 @@ namespace SorterExpress.Forms
         private void subfolderSearchDepthNumeric_ValueChanged(object sender, EventArgs e)
         {
             controller.SubfolderDepthChanged((int)subfolderSearchDepthNumeric.Value);
+        }
+
+        private string GetCurrentFilePath()
+        {
+            return Path.Combine(controller.directory, controller.files[controller.fileIndex]);
+        }
+
+        private void openFileInExplorerButton_Click(object sender, EventArgs e)
+        {
+            Utilities.ViewFileInExplorer(GetCurrentFilePath());
+        }
+
+        private void openFileButton_Click(object sender, EventArgs e)
+        {
+            Utilities.OsOpen(GetCurrentFilePath());
         }
     }
 }

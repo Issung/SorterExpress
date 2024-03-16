@@ -381,7 +381,7 @@ namespace SorterExpress.Controls
 
         private void errorMessageTextBox_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            Process.Start(e.LinkText);
+            Utilities.OsOpen(e.LinkText);
         }
     }
 }
