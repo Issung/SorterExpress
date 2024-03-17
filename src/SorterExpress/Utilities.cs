@@ -1,7 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using SorterExpress.Classes.SettingsData;
 using SorterExpress.Forms;
-using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -1,7 +1,6 @@
 ﻿using NsfwSpyNS;
 using SorterExpress.Classes;
 using SorterExpress.Classes.SettingsData;
-using SorterExpress.Controls;
 using SorterExpress.Forms;
 using SorterExpress.Models;
 using System;
@@ -9,18 +8,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
-using Vlc.DotNet.Core;
-using Vlc.DotNet.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
 using Shortcut = SorterExpress.Classes.Shortcut;
 
 #nullable enable

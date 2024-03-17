@@ -1,7 +1,4 @@
-﻿using System;
-using Vlc.DotNet.Forms;
-
-namespace SorterExpress.Forms
+﻿namespace SorterExpress.Forms
 {
     partial class NsfwSortForm
     {
