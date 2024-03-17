@@ -31,842 +31,813 @@ namespace SorterExpress.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DuplicatesForm));
-            this.keepRightButton = new System.Windows.Forms.Button();
-            this.duplicatesFormModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.keepLeftButton = new System.Windows.Forms.Button();
-            this.keepBothButton = new System.Windows.Forms.Button();
-            this.openDirectoryButton = new System.Windows.Forms.Button();
-            this.similarityNumeric = new System.Windows.Forms.NumericUpDown();
-            this.similarityLabel = new System.Windows.Forms.Label();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.infoRichTextBoxLeft = new System.Windows.Forms.RichTextBox();
-            this.infoRichTextBoxRight = new System.Windows.Forms.RichTextBox();
-            this.searchButton = new System.Windows.Forms.Button();
-            this.imagesCheckBox = new System.Windows.Forms.CheckBox();
-            this.videosCheckBox = new System.Windows.Forms.CheckBox();
-            this.threadCountNumeric = new System.Windows.Forms.NumericUpDown();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.mergeFileTagsCheckBox = new System.Windows.Forms.CheckBox();
-            this.onlyKeepLibraryTagsCheckBox = new System.Windows.Forms.CheckBox();
-            this.matchFileTypesCheckBox = new System.Windows.Forms.CheckBox();
-            this.fileCountLabel = new System.Windows.Forms.Label();
-            this.cropLeftRightCheckBox = new System.Windows.Forms.CheckBox();
-            this.cropTopBottomCheckBox = new System.Windows.Forms.CheckBox();
-            this.searchScopeComboBox = new System.Windows.Forms.ComboBox();
-            this.matchesDataGridView = new System.Windows.Forms.DataGridView();
-            this.file1ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.file2ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.similarityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matchesContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.keepLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.skipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.undoButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.optionsLeftButton = new System.Windows.Forms.Button();
-            this.optionsRightButton = new System.Windows.Forms.Button();
-            this.loadingLabel = new System.Windows.Forms.Label();
-            this.filenameRichTextBoxLeft = new System.Windows.Forms.RichTextBox();
-            this.filenameRichTextBoxRight = new System.Windows.Forms.RichTextBox();
-            this.sidesLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.leftPanel = new System.Windows.Forms.Panel();
-            this.mediaViewerLeft = new SorterExpress.Controls.MediaViewer();
-            this.rightPanel = new System.Windows.Forms.Panel();
-            this.mediaViewerRight = new SorterExpress.Controls.MediaViewer();
-            this.keepButtonsLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.threadsLabel = new System.Windows.Forms.Label();
-            this.keepNeitherButton = new System.Windows.Forms.Button();
-            this.percentageLabel = new System.Windows.Forms.Label();
-            this.settingsButton = new System.Windows.Forms.Button();
-            this.massOperationButton = new System.Windows.Forms.Button();
-            this.filtersGroupBox = new System.Windows.Forms.GroupBox();
-            this.optionsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ignoreFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ignoreFilesDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).BeginInit();
-            this.matchesContextMenu.SuspendLayout();
-            this.sidesLayoutPanel.SuspendLayout();
-            this.leftPanel.SuspendLayout();
-            this.rightPanel.SuspendLayout();
-            this.keepButtonsLayoutPanel.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.filtersGroupBox.SuspendLayout();
-            this.optionsContextMenuStrip.SuspendLayout();
-            this.SuspendLayout();
+            keepRightButton = new System.Windows.Forms.Button();
+            duplicatesFormModelBindingSource = new System.Windows.Forms.BindingSource(components);
+            keepLeftButton = new System.Windows.Forms.Button();
+            keepBothButton = new System.Windows.Forms.Button();
+            openDirectoryButton = new System.Windows.Forms.Button();
+            similarityNumeric = new System.Windows.Forms.NumericUpDown();
+            similarityLabel = new System.Windows.Forms.Label();
+            toolTip = new System.Windows.Forms.ToolTip(components);
+            infoRichTextBoxLeft = new System.Windows.Forms.RichTextBox();
+            infoRichTextBoxRight = new System.Windows.Forms.RichTextBox();
+            searchButton = new System.Windows.Forms.Button();
+            imagesCheckBox = new System.Windows.Forms.CheckBox();
+            videosCheckBox = new System.Windows.Forms.CheckBox();
+            threadCountNumeric = new System.Windows.Forms.NumericUpDown();
+            cancelButton = new System.Windows.Forms.Button();
+            mergeFileTagsCheckBox = new System.Windows.Forms.CheckBox();
+            onlyKeepLibraryTagsCheckBox = new System.Windows.Forms.CheckBox();
+            matchFileTypesCheckBox = new System.Windows.Forms.CheckBox();
+            fileCountLabel = new System.Windows.Forms.Label();
+            cropLeftRightCheckBox = new System.Windows.Forms.CheckBox();
+            cropTopBottomCheckBox = new System.Windows.Forms.CheckBox();
+            searchScopeComboBox = new System.Windows.Forms.ComboBox();
+            matchesDataGridView = new System.Windows.Forms.DataGridView();
+            file1ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            file2ImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
+            similarityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            matchesContextMenu = new System.Windows.Forms.ContextMenuStrip(components);
+            keepLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            skipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            deleteBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            undoButton = new System.Windows.Forms.Button();
+            button1 = new System.Windows.Forms.Button();
+            optionsLeftButton = new System.Windows.Forms.Button();
+            optionsRightButton = new System.Windows.Forms.Button();
+            loadingLabel = new System.Windows.Forms.Label();
+            filenameRichTextBoxLeft = new System.Windows.Forms.RichTextBox();
+            filenameRichTextBoxRight = new System.Windows.Forms.RichTextBox();
+            sidesLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            leftPanel = new System.Windows.Forms.Panel();
+            mediaViewerLeft = new Controls.MediaViewer();
+            rightPanel = new System.Windows.Forms.Panel();
+            mediaViewerRight = new Controls.MediaViewer();
+            keepButtonsLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            progressBar = new System.Windows.Forms.ProgressBar();
+            threadsLabel = new System.Windows.Forms.Label();
+            keepNeitherButton = new System.Windows.Forms.Button();
+            percentageLabel = new System.Windows.Forms.Label();
+            settingsButton = new System.Windows.Forms.Button();
+            massOperationButton = new System.Windows.Forms.Button();
+            filtersGroupBox = new System.Windows.Forms.GroupBox();
+            optionsContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(components);
+            openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            openFileInExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ignoreFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ignoreFilesDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)duplicatesFormModelBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)similarityNumeric).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)threadCountNumeric).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)matchesDataGridView).BeginInit();
+            matchesContextMenu.SuspendLayout();
+            sidesLayoutPanel.SuspendLayout();
+            leftPanel.SuspendLayout();
+            rightPanel.SuspendLayout();
+            keepButtonsLayoutPanel.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            filtersGroupBox.SuspendLayout();
+            optionsContextMenuStrip.SuspendLayout();
+            SuspendLayout();
             // 
             // keepRightButton
             // 
-            this.keepRightButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.keepRightButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.keepRightButton.Location = new System.Drawing.Point(345, 0);
-            this.keepRightButton.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
-            this.keepRightButton.MaximumSize = new System.Drawing.Size(0, 23);
-            this.keepRightButton.Name = "keepRightButton";
-            this.keepRightButton.Size = new System.Drawing.Size(341, 23);
-            this.keepRightButton.TabIndex = 4;
-            this.keepRightButton.Text = "Keep &Right (Delete Left)";
-            this.keepRightButton.UseVisualStyleBackColor = true;
-            this.keepRightButton.Click += new System.EventHandler(this.keepRightButton_Click);
+            keepRightButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            keepRightButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            keepRightButton.Location = new System.Drawing.Point(402, 0);
+            keepRightButton.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            keepRightButton.MaximumSize = new System.Drawing.Size(0, 27);
+            keepRightButton.Name = "keepRightButton";
+            keepRightButton.Size = new System.Drawing.Size(398, 27);
+            keepRightButton.TabIndex = 4;
+            keepRightButton.Text = "Keep &Right (Delete Left)";
+            keepRightButton.UseVisualStyleBackColor = true;
+            keepRightButton.Click += keepRightButton_Click;
             // 
             // duplicatesFormModelBindingSource
             // 
-            this.duplicatesFormModelBindingSource.DataSource = typeof(SorterExpress.Models.DuplicatesFormModel);
+            duplicatesFormModelBindingSource.DataSource = typeof(Models.DuplicatesFormModel);
             // 
             // keepLeftButton
             // 
-            this.keepLeftButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.keepLeftButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.keepLeftButton.Location = new System.Drawing.Point(0, 0);
-            this.keepLeftButton.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.keepLeftButton.MaximumSize = new System.Drawing.Size(0, 23);
-            this.keepLeftButton.Name = "keepLeftButton";
-            this.keepLeftButton.Size = new System.Drawing.Size(341, 23);
-            this.keepLeftButton.TabIndex = 5;
-            this.keepLeftButton.Text = "Keep &Left (Delete Right)";
-            this.keepLeftButton.UseVisualStyleBackColor = true;
-            this.keepLeftButton.Click += new System.EventHandler(this.keepLeftButton_Click);
+            keepLeftButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            keepLeftButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            keepLeftButton.Location = new System.Drawing.Point(0, 0);
+            keepLeftButton.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            keepLeftButton.MaximumSize = new System.Drawing.Size(0, 27);
+            keepLeftButton.Name = "keepLeftButton";
+            keepLeftButton.Size = new System.Drawing.Size(398, 27);
+            keepLeftButton.TabIndex = 5;
+            keepLeftButton.Text = "Keep &Left (Delete Right)";
+            keepLeftButton.UseVisualStyleBackColor = true;
+            keepLeftButton.Click += keepLeftButton_Click;
             // 
             // keepBothButton
             // 
-            this.keepBothButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.keepBothButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.keepBothButton.Location = new System.Drawing.Point(198, 353);
-            this.keepBothButton.Name = "keepBothButton";
-            this.keepBothButton.Size = new System.Drawing.Size(686, 23);
-            this.keepBothButton.TabIndex = 6;
-            this.keepBothButton.Text = "Keep &Both (Remove Match From List)";
-            this.keepBothButton.UseVisualStyleBackColor = true;
-            this.keepBothButton.Click += new System.EventHandler(this.keepBothButton_Click);
+            keepBothButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            keepBothButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            keepBothButton.Location = new System.Drawing.Point(231, 407);
+            keepBothButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            keepBothButton.Name = "keepBothButton";
+            keepBothButton.Size = new System.Drawing.Size(800, 27);
+            keepBothButton.TabIndex = 6;
+            keepBothButton.Text = "Keep &Both (Remove Match From List)";
+            keepBothButton.UseVisualStyleBackColor = true;
+            keepBothButton.Click += keepBothButton_Click;
             // 
             // openDirectoryButton
             // 
-            this.openDirectoryButton.Location = new System.Drawing.Point(12, 37);
-            this.openDirectoryButton.Name = "openDirectoryButton";
-            this.openDirectoryButton.Size = new System.Drawing.Size(180, 23);
-            this.openDirectoryButton.TabIndex = 0;
-            this.openDirectoryButton.Text = "Open Directory";
-            this.openDirectoryButton.UseVisualStyleBackColor = true;
-            this.openDirectoryButton.Click += new System.EventHandler(this.openDirectoryButton_Click);
+            openDirectoryButton.Location = new System.Drawing.Point(14, 43);
+            openDirectoryButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            openDirectoryButton.Name = "openDirectoryButton";
+            openDirectoryButton.Size = new System.Drawing.Size(210, 27);
+            openDirectoryButton.TabIndex = 0;
+            openDirectoryButton.Text = "Open Directory";
+            openDirectoryButton.UseVisualStyleBackColor = true;
+            openDirectoryButton.Click += openDirectoryButton_Click;
             // 
             // similarityNumeric
             // 
-            this.similarityNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.duplicatesFormModelBindingSource, "Similarity", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.similarityNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
-            this.similarityNumeric.DecimalPlaces = 1;
-            this.similarityNumeric.Enabled = false;
-            this.similarityNumeric.Location = new System.Drawing.Point(54, 155);
-            this.similarityNumeric.Name = "similarityNumeric";
-            this.similarityNumeric.Size = new System.Drawing.Size(63, 20);
-            this.similarityNumeric.TabIndex = 9;
-            this.similarityNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.toolTip.SetToolTip(this.similarityNumeric, "Images searched must have a similarity chance of this or above to be considered a" +
-        " duplicate. \r\n95% or above is reccomended.");
-            this.similarityNumeric.Value = new decimal(new int[] {
-            95,
-            0,
-            0,
-            0});
+            similarityNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Value", duplicatesFormModelBindingSource, "Similarity", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            similarityNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
+            similarityNumeric.DecimalPlaces = 1;
+            similarityNumeric.Enabled = false;
+            similarityNumeric.Location = new System.Drawing.Point(63, 179);
+            similarityNumeric.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            similarityNumeric.Name = "similarityNumeric";
+            similarityNumeric.Size = new System.Drawing.Size(74, 23);
+            similarityNumeric.TabIndex = 9;
+            similarityNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            toolTip.SetToolTip(similarityNumeric, "Images searched must have a similarity chance of this or above to be considered a duplicate. \r\n95% or above is reccomended.");
+            similarityNumeric.Value = new decimal(new int[] { 95, 0, 0, 0 });
             // 
             // similarityLabel
             // 
-            this.similarityLabel.AutoSize = true;
-            this.similarityLabel.Location = new System.Drawing.Point(2, 158);
-            this.similarityLabel.Name = "similarityLabel";
-            this.similarityLabel.Size = new System.Drawing.Size(53, 13);
-            this.similarityLabel.TabIndex = 10;
-            this.similarityLabel.Text = "Similarity: ";
+            similarityLabel.AutoSize = true;
+            similarityLabel.Location = new System.Drawing.Point(2, 182);
+            similarityLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            similarityLabel.Name = "similarityLabel";
+            similarityLabel.Size = new System.Drawing.Size(62, 15);
+            similarityLabel.TabIndex = 10;
+            similarityLabel.Text = "Similarity: ";
             // 
             // infoRichTextBoxLeft
             // 
-            this.infoRichTextBoxLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.infoRichTextBoxLeft.Location = new System.Drawing.Point(0, 0);
-            this.infoRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(10);
-            this.infoRichTextBoxLeft.Name = "infoRichTextBoxLeft";
-            this.infoRichTextBoxLeft.ReadOnly = true;
-            this.infoRichTextBoxLeft.Size = new System.Drawing.Size(100, 209);
-            this.infoRichTextBoxLeft.TabIndex = 3;
-            this.infoRichTextBoxLeft.Text = "";
-            this.toolTip.SetToolTip(this.infoRichTextBoxLeft, resources.GetString("infoRichTextBoxLeft.ToolTip"));
+            infoRichTextBoxLeft.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            infoRichTextBoxLeft.Location = new System.Drawing.Point(0, 0);
+            infoRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(12, 12, 12, 12);
+            infoRichTextBoxLeft.Name = "infoRichTextBoxLeft";
+            infoRichTextBoxLeft.ReadOnly = true;
+            infoRichTextBoxLeft.Size = new System.Drawing.Size(116, 241);
+            infoRichTextBoxLeft.TabIndex = 3;
+            infoRichTextBoxLeft.Text = "";
+            toolTip.SetToolTip(infoRichTextBoxLeft, resources.GetString("infoRichTextBoxLeft.ToolTip"));
             // 
             // infoRichTextBoxRight
             // 
-            this.infoRichTextBoxRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.infoRichTextBoxRight.Location = new System.Drawing.Point(10, 0);
-            this.infoRichTextBoxRight.Margin = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.infoRichTextBoxRight.Name = "infoRichTextBoxRight";
-            this.infoRichTextBoxRight.ReadOnly = true;
-            this.infoRichTextBoxRight.Size = new System.Drawing.Size(100, 209);
-            this.infoRichTextBoxRight.TabIndex = 3;
-            this.infoRichTextBoxRight.Text = "";
-            this.toolTip.SetToolTip(this.infoRichTextBoxRight, resources.GetString("infoRichTextBoxRight.ToolTip"));
+            infoRichTextBoxRight.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            infoRichTextBoxRight.Location = new System.Drawing.Point(12, 0);
+            infoRichTextBoxRight.Margin = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            infoRichTextBoxRight.Name = "infoRichTextBoxRight";
+            infoRichTextBoxRight.ReadOnly = true;
+            infoRichTextBoxRight.Size = new System.Drawing.Size(116, 241);
+            infoRichTextBoxRight.TabIndex = 3;
+            infoRichTextBoxRight.Text = "";
+            toolTip.SetToolTip(infoRichTextBoxRight, resources.GetString("infoRichTextBoxRight.ToolTip"));
             // 
             // searchButton
             // 
-            this.searchButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
-            this.searchButton.Location = new System.Drawing.Point(10, 264);
-            this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(117, 23);
-            this.searchButton.TabIndex = 18;
-            this.searchButton.Text = "Search";
-            this.toolTip.SetToolTip(this.searchButton, "If you have changed the similarity threshold and wish to search the same director" +
-        "y you have already selected once again you can click this button to do so.");
-            this.searchButton.UseVisualStyleBackColor = true;
-            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            searchButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
+            searchButton.Location = new System.Drawing.Point(12, 305);
+            searchButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            searchButton.Name = "searchButton";
+            searchButton.Size = new System.Drawing.Size(136, 27);
+            searchButton.TabIndex = 18;
+            searchButton.Text = "Search";
+            toolTip.SetToolTip(searchButton, "If you have changed the similarity threshold and wish to search the same directory you have already selected once again you can click this button to do so.");
+            searchButton.UseVisualStyleBackColor = true;
+            searchButton.Click += searchButton_Click;
             // 
             // imagesCheckBox
             // 
-            this.imagesCheckBox.AutoSize = true;
-            this.imagesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "SearchImages", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.imagesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
-            this.imagesCheckBox.Enabled = false;
-            this.imagesCheckBox.Location = new System.Drawing.Point(6, 47);
-            this.imagesCheckBox.Name = "imagesCheckBox";
-            this.imagesCheckBox.Size = new System.Drawing.Size(60, 17);
-            this.imagesCheckBox.TabIndex = 20;
-            this.imagesCheckBox.Text = "Images";
-            this.toolTip.SetToolTip(this.imagesCheckBox, "Search image files for duplicates.");
-            this.imagesCheckBox.UseVisualStyleBackColor = true;
-            this.imagesCheckBox.CheckStateChanged += new System.EventHandler(this.imagesCheckBox_CheckedChanged);
+            imagesCheckBox.AutoSize = true;
+            imagesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", duplicatesFormModelBindingSource, "SearchImages", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            imagesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
+            imagesCheckBox.Enabled = false;
+            imagesCheckBox.Location = new System.Drawing.Point(7, 54);
+            imagesCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            imagesCheckBox.Name = "imagesCheckBox";
+            imagesCheckBox.Size = new System.Drawing.Size(64, 19);
+            imagesCheckBox.TabIndex = 20;
+            imagesCheckBox.Text = "Images";
+            toolTip.SetToolTip(imagesCheckBox, "Search image files for duplicates.");
+            imagesCheckBox.UseVisualStyleBackColor = true;
+            imagesCheckBox.CheckStateChanged += imagesCheckBox_CheckedChanged;
             // 
             // videosCheckBox
             // 
-            this.videosCheckBox.AutoSize = true;
-            this.videosCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "SearchVideos", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.videosCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
-            this.videosCheckBox.Enabled = false;
-            this.videosCheckBox.Location = new System.Drawing.Point(70, 47);
-            this.videosCheckBox.Name = "videosCheckBox";
-            this.videosCheckBox.Size = new System.Drawing.Size(58, 17);
-            this.videosCheckBox.TabIndex = 21;
-            this.videosCheckBox.Text = "Videos";
-            this.toolTip.SetToolTip(this.videosCheckBox, "Search video files for duplicates.\r\n");
-            this.videosCheckBox.UseVisualStyleBackColor = true;
-            this.videosCheckBox.CheckStateChanged += new System.EventHandler(this.videosCheckBox_CheckedChanged);
+            videosCheckBox.AutoSize = true;
+            videosCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", duplicatesFormModelBindingSource, "SearchVideos", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            videosCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
+            videosCheckBox.Enabled = false;
+            videosCheckBox.Location = new System.Drawing.Point(82, 54);
+            videosCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            videosCheckBox.Name = "videosCheckBox";
+            videosCheckBox.Size = new System.Drawing.Size(61, 19);
+            videosCheckBox.TabIndex = 21;
+            videosCheckBox.Text = "Videos";
+            toolTip.SetToolTip(videosCheckBox, "Search video files for duplicates.\r\n");
+            videosCheckBox.UseVisualStyleBackColor = true;
+            videosCheckBox.CheckStateChanged += videosCheckBox_CheckedChanged;
             // 
             // threadCountNumeric
             // 
-            this.threadCountNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.duplicatesFormModelBindingSource, "ThreadCount", true));
-            this.threadCountNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
-            this.threadCountNumeric.Enabled = false;
-            this.threadCountNumeric.Location = new System.Drawing.Point(54, 132);
-            this.threadCountNumeric.Maximum = new decimal(new int[] {
-            16,
-            0,
-            0,
-            0});
-            this.threadCountNumeric.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.threadCountNumeric.Name = "threadCountNumeric";
-            this.threadCountNumeric.Size = new System.Drawing.Size(63, 20);
-            this.threadCountNumeric.TabIndex = 22;
-            this.threadCountNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.toolTip.SetToolTip(this.threadCountNumeric, "Thread count for calculating file \'fingerprints\' used for finding similarities, t" +
-        "he reccomended amount is your computer\'s CPU core count. \r\nHigher numbers give d" +
-        "iminishing returns. Results may vary.");
-            this.threadCountNumeric.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            threadCountNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Value", duplicatesFormModelBindingSource, "ThreadCount", true));
+            threadCountNumeric.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
+            threadCountNumeric.Enabled = false;
+            threadCountNumeric.Location = new System.Drawing.Point(63, 152);
+            threadCountNumeric.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            threadCountNumeric.Maximum = new decimal(new int[] { 16, 0, 0, 0 });
+            threadCountNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            threadCountNumeric.Name = "threadCountNumeric";
+            threadCountNumeric.Size = new System.Drawing.Size(74, 23);
+            threadCountNumeric.TabIndex = 22;
+            threadCountNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            toolTip.SetToolTip(threadCountNumeric, "Thread count for calculating file 'fingerprints' used for finding similarities, the reccomended amount is your computer's CPU core count. \r\nHigher numbers give diminishing returns. Results may vary.");
+            threadCountNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // cancelButton
             // 
-            this.cancelButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSearching", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.cancelButton.Enabled = false;
-            this.cancelButton.Location = new System.Drawing.Point(132, 264);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(61, 23);
-            this.cancelButton.TabIndex = 24;
-            this.cancelButton.Text = "Cancel";
-            this.toolTip.SetToolTip(this.cancelButton, "If you have changed the similarity threshold and wish to search the same director" +
-        "y you have already selected once again you can click this button to do so.");
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            cancelButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateSearching", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            cancelButton.Enabled = false;
+            cancelButton.Location = new System.Drawing.Point(154, 305);
+            cancelButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new System.Drawing.Size(71, 27);
+            cancelButton.TabIndex = 24;
+            cancelButton.Text = "Cancel";
+            toolTip.SetToolTip(cancelButton, "If you have changed the similarity threshold and wish to search the same directory you have already selected once again you can click this button to do so.");
+            cancelButton.UseVisualStyleBackColor = true;
+            cancelButton.Click += cancelButton_Click;
             // 
             // mergeFileTagsCheckBox
             // 
-            this.mergeFileTagsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.mergeFileTagsCheckBox.AutoSize = true;
-            this.mergeFileTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "MergeFileTags", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.mergeFileTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.mergeFileTagsCheckBox.Location = new System.Drawing.Point(197, 306);
-            this.mergeFileTagsCheckBox.Name = "mergeFileTagsCheckBox";
-            this.mergeFileTagsCheckBox.Size = new System.Drawing.Size(112, 17);
-            this.mergeFileTagsCheckBox.TabIndex = 28;
-            this.mergeFileTagsCheckBox.Text = "Merge File Tags �";
-            this.toolTip.SetToolTip(this.mergeFileTagsCheckBox, "When selecting a file to keep (left or right), if this option is ticked, then Sor" +
-        "ter Express will merge\r\nthe tags of both the filenames together and rename the k" +
-        "ept file with the new tags combination.");
-            this.mergeFileTagsCheckBox.UseVisualStyleBackColor = true;
+            mergeFileTagsCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            mergeFileTagsCheckBox.AutoSize = true;
+            mergeFileTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", duplicatesFormModelBindingSource, "MergeFileTags", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            mergeFileTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            mergeFileTagsCheckBox.Location = new System.Drawing.Point(230, 354);
+            mergeFileTagsCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            mergeFileTagsCheckBox.Name = "mergeFileTagsCheckBox";
+            mergeFileTagsCheckBox.Size = new System.Drawing.Size(121, 19);
+            mergeFileTagsCheckBox.TabIndex = 28;
+            mergeFileTagsCheckBox.Text = "Merge File Tags �";
+            toolTip.SetToolTip(mergeFileTagsCheckBox, "When selecting a file to keep (left or right), if this option is ticked, then Sorter Express will merge\r\nthe tags of both the filenames together and rename the kept file with the new tags combination.");
+            mergeFileTagsCheckBox.UseVisualStyleBackColor = true;
             // 
             // onlyKeepLibraryTagsCheckBox
             // 
-            this.onlyKeepLibraryTagsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.onlyKeepLibraryTagsCheckBox.AutoSize = true;
-            this.onlyKeepLibraryTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "OnlyKeepTagsThatAreInLibrary", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.onlyKeepLibraryTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableOnlyKeepTagsInLibraryButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.onlyKeepLibraryTagsCheckBox.Location = new System.Drawing.Point(315, 306);
-            this.onlyKeepLibraryTagsCheckBox.Name = "onlyKeepLibraryTagsCheckBox";
-            this.onlyKeepLibraryTagsCheckBox.Size = new System.Drawing.Size(205, 17);
-            this.onlyKeepLibraryTagsCheckBox.TabIndex = 29;
-            this.onlyKeepLibraryTagsCheckBox.Text = "Only keep tags that are in tag library �";
-            this.toolTip.SetToolTip(this.onlyKeepLibraryTagsCheckBox, resources.GetString("onlyKeepLibraryTagsCheckBox.ToolTip"));
-            this.onlyKeepLibraryTagsCheckBox.UseVisualStyleBackColor = true;
+            onlyKeepLibraryTagsCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            onlyKeepLibraryTagsCheckBox.AutoSize = true;
+            onlyKeepLibraryTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", duplicatesFormModelBindingSource, "OnlyKeepTagsThatAreInLibrary", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            onlyKeepLibraryTagsCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "EnableOnlyKeepTagsInLibraryButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            onlyKeepLibraryTagsCheckBox.Location = new System.Drawing.Point(368, 354);
+            onlyKeepLibraryTagsCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            onlyKeepLibraryTagsCheckBox.Name = "onlyKeepLibraryTagsCheckBox";
+            onlyKeepLibraryTagsCheckBox.Size = new System.Drawing.Size(230, 19);
+            onlyKeepLibraryTagsCheckBox.TabIndex = 29;
+            onlyKeepLibraryTagsCheckBox.Text = "Only keep tags that are in tag library �";
+            toolTip.SetToolTip(onlyKeepLibraryTagsCheckBox, resources.GetString("onlyKeepLibraryTagsCheckBox.ToolTip"));
+            onlyKeepLibraryTagsCheckBox.UseVisualStyleBackColor = true;
             // 
             // matchFileTypesCheckBox
             // 
-            this.matchFileTypesCheckBox.AutoSize = true;
-            this.matchFileTypesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "OnlyMatchSameFileTypes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.matchFileTypesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableMatchFileTypesCheckBox", true));
-            this.matchFileTypesCheckBox.Location = new System.Drawing.Point(6, 68);
-            this.matchFileTypesCheckBox.Name = "matchFileTypesCheckBox";
-            this.matchFileTypesCheckBox.Size = new System.Drawing.Size(173, 17);
-            this.matchFileTypesCheckBox.TabIndex = 37;
-            this.matchFileTypesCheckBox.Text = "Only Match Files of Same Type";
-            this.toolTip.SetToolTip(this.matchFileTypesCheckBox, "Only match duplicates if the file types match.\r\nImages will only match images and" +
-        " videos will only match videos.");
-            this.matchFileTypesCheckBox.UseVisualStyleBackColor = true;
+            matchFileTypesCheckBox.AutoSize = true;
+            matchFileTypesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", duplicatesFormModelBindingSource, "OnlyMatchSameFileTypes", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            matchFileTypesCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "EnableMatchFileTypesCheckBox", true));
+            matchFileTypesCheckBox.Location = new System.Drawing.Point(7, 78);
+            matchFileTypesCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            matchFileTypesCheckBox.Name = "matchFileTypesCheckBox";
+            matchFileTypesCheckBox.Size = new System.Drawing.Size(187, 19);
+            matchFileTypesCheckBox.TabIndex = 37;
+            matchFileTypesCheckBox.Text = "Only Match Files of Same Type";
+            toolTip.SetToolTip(matchFileTypesCheckBox, "Only match duplicates if the file types match.\r\nImages will only match images and videos will only match videos.");
+            matchFileTypesCheckBox.UseVisualStyleBackColor = true;
             // 
             // fileCountLabel
             // 
-            this.fileCountLabel.AutoSize = true;
-            this.fileCountLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.duplicatesFormModelBindingSource, "FileAndMatchesCountText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.fileCountLabel.Location = new System.Drawing.Point(12, 248);
-            this.fileCountLabel.Name = "fileCountLabel";
-            this.fileCountLabel.Size = new System.Drawing.Size(40, 13);
-            this.fileCountLabel.TabIndex = 25;
-            this.fileCountLabel.Text = "Files: 0";
-            this.toolTip.SetToolTip(this.fileCountLabel, "The amount of files that will be searched given the given search criteria, and;\r\n" +
-        "the number of potential duplicate matches that are currently displayed in the gr" +
-        "id view below.");
+            fileCountLabel.AutoSize = true;
+            fileCountLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", duplicatesFormModelBindingSource, "FileAndMatchesCountText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            fileCountLabel.Location = new System.Drawing.Point(14, 286);
+            fileCountLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            fileCountLabel.Name = "fileCountLabel";
+            fileCountLabel.Size = new System.Drawing.Size(42, 15);
+            fileCountLabel.TabIndex = 25;
+            fileCountLabel.Text = "Files: 0";
+            toolTip.SetToolTip(fileCountLabel, "The amount of files that will be searched given the given search criteria, and;\r\nthe number of potential duplicate matches that are currently displayed in the grid view below.");
             // 
             // cropLeftRightCheckBox
             // 
-            this.cropLeftRightCheckBox.AutoSize = true;
-            this.cropLeftRightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "CropLeftAndRight", true));
-            this.cropLeftRightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
-            this.cropLeftRightCheckBox.Enabled = false;
-            this.cropLeftRightCheckBox.Location = new System.Drawing.Point(6, 90);
-            this.cropLeftRightCheckBox.Name = "cropLeftRightCheckBox";
-            this.cropLeftRightCheckBox.Size = new System.Drawing.Size(106, 17);
-            this.cropLeftRightCheckBox.TabIndex = 31;
-            this.cropLeftRightCheckBox.Text = "Crop Left & Right";
-            this.toolTip.SetToolTip(this.cropLeftRightCheckBox, "Crop black borders on the left and right of files.");
-            this.cropLeftRightCheckBox.UseMnemonic = false;
-            this.cropLeftRightCheckBox.UseVisualStyleBackColor = true;
+            cropLeftRightCheckBox.AutoSize = true;
+            cropLeftRightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", duplicatesFormModelBindingSource, "CropLeftAndRight", true));
+            cropLeftRightCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
+            cropLeftRightCheckBox.Enabled = false;
+            cropLeftRightCheckBox.Location = new System.Drawing.Point(7, 104);
+            cropLeftRightCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            cropLeftRightCheckBox.Name = "cropLeftRightCheckBox";
+            cropLeftRightCheckBox.Size = new System.Drawing.Size(119, 19);
+            cropLeftRightCheckBox.TabIndex = 31;
+            cropLeftRightCheckBox.Text = "Crop Left & Right";
+            toolTip.SetToolTip(cropLeftRightCheckBox, "Crop black borders on the left and right of files.");
+            cropLeftRightCheckBox.UseMnemonic = false;
+            cropLeftRightCheckBox.UseVisualStyleBackColor = true;
             // 
             // cropTopBottomCheckBox
             // 
-            this.cropTopBottomCheckBox.AutoSize = true;
-            this.cropTopBottomCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.duplicatesFormModelBindingSource, "CropTopAndBottom", true));
-            this.cropTopBottomCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
-            this.cropTopBottomCheckBox.Enabled = false;
-            this.cropTopBottomCheckBox.Location = new System.Drawing.Point(6, 112);
-            this.cropTopBottomCheckBox.Name = "cropTopBottomCheckBox";
-            this.cropTopBottomCheckBox.Size = new System.Drawing.Size(115, 17);
-            this.cropTopBottomCheckBox.TabIndex = 32;
-            this.cropTopBottomCheckBox.Text = "Crop Top & Bottom";
-            this.toolTip.SetToolTip(this.cropTopBottomCheckBox, "Crop black borders on the top and bottom of files.");
-            this.cropTopBottomCheckBox.UseMnemonic = false;
-            this.cropTopBottomCheckBox.UseVisualStyleBackColor = true;
+            cropTopBottomCheckBox.AutoSize = true;
+            cropTopBottomCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", duplicatesFormModelBindingSource, "CropTopAndBottom", true));
+            cropTopBottomCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true));
+            cropTopBottomCheckBox.Enabled = false;
+            cropTopBottomCheckBox.Location = new System.Drawing.Point(7, 129);
+            cropTopBottomCheckBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            cropTopBottomCheckBox.Name = "cropTopBottomCheckBox";
+            cropTopBottomCheckBox.Size = new System.Drawing.Size(130, 19);
+            cropTopBottomCheckBox.TabIndex = 32;
+            cropTopBottomCheckBox.Text = "Crop Top & Bottom";
+            toolTip.SetToolTip(cropTopBottomCheckBox, "Crop black borders on the top and bottom of files.");
+            cropTopBottomCheckBox.UseMnemonic = false;
+            cropTopBottomCheckBox.UseVisualStyleBackColor = true;
             // 
             // searchScopeComboBox
             // 
-            this.searchScopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.searchScopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.duplicatesFormModelBindingSource, "SearchScopeSelectedValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.searchScopeComboBox.DisplayMember = "EnumDescription";
-            this.searchScopeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.searchScopeComboBox.DropDownWidth = 300;
-            this.searchScopeComboBox.Location = new System.Drawing.Point(6, 19);
-            this.searchScopeComboBox.Name = "searchScopeComboBox";
-            this.searchScopeComboBox.Size = new System.Drawing.Size(168, 21);
-            this.searchScopeComboBox.TabIndex = 38;
-            this.toolTip.SetToolTip(this.searchScopeComboBox, resources.GetString("searchScopeComboBox.ToolTip"));
-            this.searchScopeComboBox.ValueMember = "EnumValue";
-            this.searchScopeComboBox.SelectedValueChanged += new System.EventHandler(this.searchScopeComboBox_SelectedValueChanged);
+            searchScopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateDirectoryOpenOrSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            searchScopeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", duplicatesFormModelBindingSource, "SearchScopeSelectedValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            searchScopeComboBox.DisplayMember = "EnumDescription";
+            searchScopeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            searchScopeComboBox.DropDownWidth = 300;
+            searchScopeComboBox.Location = new System.Drawing.Point(7, 22);
+            searchScopeComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            searchScopeComboBox.Name = "searchScopeComboBox";
+            searchScopeComboBox.Size = new System.Drawing.Size(195, 23);
+            searchScopeComboBox.TabIndex = 38;
+            toolTip.SetToolTip(searchScopeComboBox, resources.GetString("searchScopeComboBox.ToolTip"));
+            searchScopeComboBox.ValueMember = "EnumValue";
+            searchScopeComboBox.SelectedValueChanged += searchScopeComboBox_SelectedValueChanged;
             // 
             // matchesDataGridView
             // 
-            this.matchesDataGridView.AllowUserToAddRows = false;
-            this.matchesDataGridView.AllowUserToDeleteRows = false;
-            this.matchesDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.matchesDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
-            this.matchesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.matchesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.file1ImageColumn,
-            this.file2ImageColumn,
-            this.similarityColumn});
-            this.matchesDataGridView.ContextMenuStrip = this.matchesContextMenu;
-            this.matchesDataGridView.DataBindings.Add(new System.Windows.Forms.Binding("DataSource", this.duplicatesFormModelBindingSource, "Duplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.matchesDataGridView.Location = new System.Drawing.Point(11, 290);
-            this.matchesDataGridView.MultiSelect = false;
-            this.matchesDataGridView.Name = "matchesDataGridView";
-            this.matchesDataGridView.ReadOnly = true;
-            this.matchesDataGridView.RowHeadersVisible = false;
-            this.matchesDataGridView.RowTemplate.Height = 50;
-            this.matchesDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.matchesDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.matchesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.matchesDataGridView.Size = new System.Drawing.Size(181, 85);
-            this.matchesDataGridView.TabIndex = 30;
-            this.toolTip.SetToolTip(this.matchesDataGridView, resources.GetString("matchesDataGridView.ToolTip"));
-            this.matchesDataGridView.CellContextMenuStripNeeded += new System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventHandler(this.MatchesDataGridView_CellContextMenuStripNeeded);
-            this.matchesDataGridView.SelectionChanged += new System.EventHandler(this.matchesDataGridView_SelectionChanged);
+            matchesDataGridView.AllowUserToAddRows = false;
+            matchesDataGridView.AllowUserToDeleteRows = false;
+            matchesDataGridView.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            matchesDataGridView.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            matchesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            matchesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { file1ImageColumn, file2ImageColumn, similarityColumn });
+            matchesDataGridView.ContextMenuStrip = matchesContextMenu;
+            matchesDataGridView.DataBindings.Add(new System.Windows.Forms.Binding("DataSource", duplicatesFormModelBindingSource, "Duplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            matchesDataGridView.Location = new System.Drawing.Point(13, 335);
+            matchesDataGridView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            matchesDataGridView.MultiSelect = false;
+            matchesDataGridView.Name = "matchesDataGridView";
+            matchesDataGridView.ReadOnly = true;
+            matchesDataGridView.RowHeadersVisible = false;
+            matchesDataGridView.RowTemplate.Height = 50;
+            matchesDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            matchesDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            matchesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            matchesDataGridView.Size = new System.Drawing.Size(211, 98);
+            matchesDataGridView.TabIndex = 30;
+            toolTip.SetToolTip(matchesDataGridView, resources.GetString("matchesDataGridView.ToolTip"));
+            matchesDataGridView.CellContextMenuStripNeeded += MatchesDataGridView_CellContextMenuStripNeeded;
+            matchesDataGridView.SelectionChanged += matchesDataGridView_SelectionChanged;
             // 
             // file1ImageColumn
             // 
-            this.file1ImageColumn.DataPropertyName = "File1Thumb";
-            this.file1ImageColumn.HeaderText = "File 1";
-            this.file1ImageColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.file1ImageColumn.Name = "file1ImageColumn";
-            this.file1ImageColumn.ReadOnly = true;
-            this.file1ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.file1ImageColumn.Width = 50;
+            file1ImageColumn.DataPropertyName = "File1Thumb";
+            file1ImageColumn.HeaderText = "File 1";
+            file1ImageColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            file1ImageColumn.Name = "file1ImageColumn";
+            file1ImageColumn.ReadOnly = true;
+            file1ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            file1ImageColumn.Width = 50;
             // 
             // file2ImageColumn
             // 
-            this.file2ImageColumn.DataPropertyName = "File2Thumb";
-            this.file2ImageColumn.HeaderText = "File 2";
-            this.file2ImageColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
-            this.file2ImageColumn.Name = "file2ImageColumn";
-            this.file2ImageColumn.ReadOnly = true;
-            this.file2ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.file2ImageColumn.Width = 50;
+            file2ImageColumn.DataPropertyName = "File2Thumb";
+            file2ImageColumn.HeaderText = "File 2";
+            file2ImageColumn.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            file2ImageColumn.Name = "file2ImageColumn";
+            file2ImageColumn.ReadOnly = true;
+            file2ImageColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            file2ImageColumn.Width = 50;
             // 
             // similarityColumn
             // 
-            this.similarityColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.similarityColumn.DataPropertyName = "ChancePercentageText";
-            this.similarityColumn.HeaderText = "Similarity";
-            this.similarityColumn.Name = "similarityColumn";
-            this.similarityColumn.ReadOnly = true;
-            this.similarityColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            similarityColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            similarityColumn.DataPropertyName = "ChancePercentageText";
+            similarityColumn.HeaderText = "Similarity";
+            similarityColumn.Name = "similarityColumn";
+            similarityColumn.ReadOnly = true;
+            similarityColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // matchesContextMenu
             // 
-            this.matchesContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.keepLeftToolStripMenuItem,
-            this.removeToolStripMenuItem,
-            this.skipToolStripMenuItem,
-            this.deleteBothToolStripMenuItem});
-            this.matchesContextMenu.Name = "matchesContextMenu";
-            this.matchesContextMenu.Size = new System.Drawing.Size(272, 92);
+            matchesContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { keepLeftToolStripMenuItem, removeToolStripMenuItem, skipToolStripMenuItem, deleteBothToolStripMenuItem });
+            matchesContextMenu.Name = "matchesContextMenu";
+            matchesContextMenu.Size = new System.Drawing.Size(272, 92);
             // 
             // keepLeftToolStripMenuItem
             // 
-            this.keepLeftToolStripMenuItem.Name = "keepLeftToolStripMenuItem";
-            this.keepLeftToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
-            this.keepLeftToolStripMenuItem.Text = "Keep &Left (Delete Right)";
-            this.keepLeftToolStripMenuItem.Click += new System.EventHandler(this.keepLeftToolStripMenuItem_Click);
+            keepLeftToolStripMenuItem.Name = "keepLeftToolStripMenuItem";
+            keepLeftToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            keepLeftToolStripMenuItem.Text = "Keep &Left (Delete Right)";
+            keepLeftToolStripMenuItem.Click += keepLeftToolStripMenuItem_Click;
             // 
             // removeToolStripMenuItem
             // 
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
-            this.removeToolStripMenuItem.Text = "Keep &Right (Delete Left)";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            removeToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            removeToolStripMenuItem.Text = "Keep &Right (Delete Left)";
+            removeToolStripMenuItem.Click += removeToolStripMenuItem_Click;
             // 
             // skipToolStripMenuItem
             // 
-            this.skipToolStripMenuItem.Name = "skipToolStripMenuItem";
-            this.skipToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
-            this.skipToolStripMenuItem.Text = "Keep &Both (Remove Match From List)";
-            this.skipToolStripMenuItem.Click += new System.EventHandler(this.skipToolStripMenuItem_Click);
+            skipToolStripMenuItem.Name = "skipToolStripMenuItem";
+            skipToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            skipToolStripMenuItem.Text = "Keep &Both (Remove Match From List)";
+            skipToolStripMenuItem.Click += skipToolStripMenuItem_Click;
             // 
             // deleteBothToolStripMenuItem
             // 
-            this.deleteBothToolStripMenuItem.Name = "deleteBothToolStripMenuItem";
-            this.deleteBothToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
-            this.deleteBothToolStripMenuItem.Text = "Keep &Neither (Delete Both)";
-            this.deleteBothToolStripMenuItem.Click += new System.EventHandler(this.deleteBothToolStripMenuItem_Click);
+            deleteBothToolStripMenuItem.Name = "deleteBothToolStripMenuItem";
+            deleteBothToolStripMenuItem.Size = new System.Drawing.Size(271, 22);
+            deleteBothToolStripMenuItem.Text = "Keep &Neither (Delete Both)";
+            deleteBothToolStripMenuItem.Click += deleteBothToolStripMenuItem_Click;
             // 
             // undoButton
             // 
-            this.undoButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableUndoButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.undoButton.Location = new System.Drawing.Point(78, 12);
-            this.undoButton.Name = "undoButton";
-            this.undoButton.Size = new System.Drawing.Size(55, 23);
-            this.undoButton.TabIndex = 34;
-            this.undoButton.Text = "Undo";
-            this.toolTip.SetToolTip(this.undoButton, "Undo last action (CTRL + Z)");
-            this.undoButton.UseVisualStyleBackColor = true;
-            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
+            undoButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "EnableUndoButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            undoButton.Location = new System.Drawing.Point(91, 14);
+            undoButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            undoButton.Name = "undoButton";
+            undoButton.Size = new System.Drawing.Size(64, 27);
+            undoButton.TabIndex = 34;
+            undoButton.Text = "Undo";
+            toolTip.SetToolTip(undoButton, "Undo last action (CTRL + Z)");
+            undoButton.UseVisualStyleBackColor = true;
+            undoButton.Click += undoButton_Click;
             // 
             // button1
             // 
-            this.button1.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "EnableRedoButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.button1.Location = new System.Drawing.Point(137, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(55, 23);
-            this.button1.TabIndex = 35;
-            this.button1.Text = "Redo";
-            this.toolTip.SetToolTip(this.button1, "Redo last undone action (CTRL + Y)");
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "EnableRedoButton", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            button1.Location = new System.Drawing.Point(160, 14);
+            button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(64, 27);
+            button1.TabIndex = 35;
+            button1.Text = "Redo";
+            toolTip.SetToolTip(button1, "Redo last undone action (CTRL + Y)");
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // optionsLeftButton
             // 
-            this.optionsLeftButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.optionsLeftButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.optionsLeftButton.Image = global::SorterExpress.Properties.Resources.down;
-            this.optionsLeftButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.optionsLeftButton.Location = new System.Drawing.Point(0, 212);
-            this.optionsLeftButton.Name = "optionsLeftButton";
-            this.optionsLeftButton.Size = new System.Drawing.Size(101, 23);
-            this.optionsLeftButton.TabIndex = 6;
-            this.optionsLeftButton.Text = "Options";
-            this.toolTip.SetToolTip(this.optionsLeftButton, "Options for viewing file or ignoring in searches.\r\nDuplicate Search file/director" +
-        "y ignores can be configured in settings.");
-            this.optionsLeftButton.UseVisualStyleBackColor = true;
-            this.optionsLeftButton.Click += new System.EventHandler(this.optionsButton_Click);
+            optionsLeftButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            optionsLeftButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            optionsLeftButton.Image = Properties.Resources.down;
+            optionsLeftButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            optionsLeftButton.Location = new System.Drawing.Point(0, 245);
+            optionsLeftButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            optionsLeftButton.Name = "optionsLeftButton";
+            optionsLeftButton.Size = new System.Drawing.Size(118, 27);
+            optionsLeftButton.TabIndex = 6;
+            optionsLeftButton.Text = "Options";
+            toolTip.SetToolTip(optionsLeftButton, "Options for viewing file or ignoring in searches.\r\nDuplicate Search file/directory ignores can be configured in settings.");
+            optionsLeftButton.UseVisualStyleBackColor = true;
+            optionsLeftButton.Click += optionsButton_Click;
             // 
             // optionsRightButton
             // 
-            this.optionsRightButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.optionsRightButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.optionsRightButton.Image = global::SorterExpress.Properties.Resources.down;
-            this.optionsRightButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.optionsRightButton.Location = new System.Drawing.Point(9, 212);
-            this.optionsRightButton.Name = "optionsRightButton";
-            this.optionsRightButton.Size = new System.Drawing.Size(101, 23);
-            this.optionsRightButton.TabIndex = 5;
-            this.optionsRightButton.Text = "Options";
-            this.toolTip.SetToolTip(this.optionsRightButton, "Options for viewing file or ignoring in searches.\r\nDuplicate Search file/director" +
-        "y ignores can be configured in settings.");
-            this.optionsRightButton.UseVisualStyleBackColor = true;
-            this.optionsRightButton.Click += new System.EventHandler(this.optionsButton_Click);
+            optionsRightButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            optionsRightButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            optionsRightButton.Image = Properties.Resources.down;
+            optionsRightButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            optionsRightButton.Location = new System.Drawing.Point(10, 245);
+            optionsRightButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            optionsRightButton.Name = "optionsRightButton";
+            optionsRightButton.Size = new System.Drawing.Size(118, 27);
+            optionsRightButton.TabIndex = 5;
+            optionsRightButton.Text = "Options";
+            toolTip.SetToolTip(optionsRightButton, "Options for viewing file or ignoring in searches.\r\nDuplicate Search file/directory ignores can be configured in settings.");
+            optionsRightButton.UseVisualStyleBackColor = true;
+            optionsRightButton.Click += optionsButton_Click;
             // 
             // loadingLabel
             // 
-            this.loadingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.loadingLabel.AutoSize = true;
-            this.loadingLabel.BackColor = System.Drawing.Color.Transparent;
-            this.loadingLabel.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.duplicatesFormModelBindingSource, "StateSearching", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.loadingLabel.Location = new System.Drawing.Point(10, 376);
-            this.loadingLabel.Name = "loadingLabel";
-            this.loadingLabel.Size = new System.Drawing.Size(64, 13);
-            this.loadingLabel.TabIndex = 12;
-            this.loadingLabel.Text = "Searching...";
+            loadingLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            loadingLabel.AutoSize = true;
+            loadingLabel.BackColor = System.Drawing.Color.Transparent;
+            loadingLabel.DataBindings.Add(new System.Windows.Forms.Binding("Visible", duplicatesFormModelBindingSource, "StateSearching", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            loadingLabel.Location = new System.Drawing.Point(12, 434);
+            loadingLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            loadingLabel.Name = "loadingLabel";
+            loadingLabel.Size = new System.Drawing.Size(68, 15);
+            loadingLabel.TabIndex = 12;
+            loadingLabel.Text = "Searching...";
             // 
             // filenameRichTextBoxLeft
             // 
-            this.filenameRichTextBoxLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.filenameRichTextBoxLeft.Location = new System.Drawing.Point(0, 0);
-            this.filenameRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(0);
-            this.filenameRichTextBoxLeft.Name = "filenameRichTextBoxLeft";
-            this.filenameRichTextBoxLeft.ReadOnly = true;
-            this.filenameRichTextBoxLeft.Size = new System.Drawing.Size(343, 50);
-            this.filenameRichTextBoxLeft.TabIndex = 13;
-            this.filenameRichTextBoxLeft.Text = "";
+            filenameRichTextBoxLeft.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            filenameRichTextBoxLeft.Location = new System.Drawing.Point(0, 0);
+            filenameRichTextBoxLeft.Margin = new System.Windows.Forms.Padding(0);
+            filenameRichTextBoxLeft.Name = "filenameRichTextBoxLeft";
+            filenameRichTextBoxLeft.ReadOnly = true;
+            filenameRichTextBoxLeft.Size = new System.Drawing.Size(401, 58);
+            filenameRichTextBoxLeft.TabIndex = 13;
+            filenameRichTextBoxLeft.Text = "";
             // 
             // filenameRichTextBoxRight
             // 
-            this.filenameRichTextBoxRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.filenameRichTextBoxRight.Location = new System.Drawing.Point(353, 0);
-            this.filenameRichTextBoxRight.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.filenameRichTextBoxRight.Name = "filenameRichTextBoxRight";
-            this.filenameRichTextBoxRight.ReadOnly = true;
-            this.filenameRichTextBoxRight.Size = new System.Drawing.Size(334, 50);
-            this.filenameRichTextBoxRight.TabIndex = 14;
-            this.filenameRichTextBoxRight.Text = "";
+            filenameRichTextBoxRight.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            filenameRichTextBoxRight.Location = new System.Drawing.Point(413, 0);
+            filenameRichTextBoxRight.Margin = new System.Windows.Forms.Padding(12, 0, 0, 0);
+            filenameRichTextBoxRight.Name = "filenameRichTextBoxRight";
+            filenameRichTextBoxRight.ReadOnly = true;
+            filenameRichTextBoxRight.Size = new System.Drawing.Size(389, 58);
+            filenameRichTextBoxRight.TabIndex = 14;
+            filenameRichTextBoxRight.Text = "";
             // 
             // sidesLayoutPanel
             // 
-            this.sidesLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.sidesLayoutPanel.ColumnCount = 2;
-            this.sidesLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.sidesLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.sidesLayoutPanel.Controls.Add(this.leftPanel, 0, 0);
-            this.sidesLayoutPanel.Controls.Add(this.rightPanel, 1, 0);
-            this.sidesLayoutPanel.Location = new System.Drawing.Point(197, 66);
-            this.sidesLayoutPanel.Name = "sidesLayoutPanel";
-            this.sidesLayoutPanel.RowCount = 1;
-            this.sidesLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.sidesLayoutPanel.Size = new System.Drawing.Size(686, 235);
-            this.sidesLayoutPanel.TabIndex = 15;
+            sidesLayoutPanel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            sidesLayoutPanel.ColumnCount = 2;
+            sidesLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            sidesLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            sidesLayoutPanel.Controls.Add(leftPanel, 0, 0);
+            sidesLayoutPanel.Controls.Add(rightPanel, 1, 0);
+            sidesLayoutPanel.Location = new System.Drawing.Point(230, 76);
+            sidesLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            sidesLayoutPanel.Name = "sidesLayoutPanel";
+            sidesLayoutPanel.RowCount = 1;
+            sidesLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            sidesLayoutPanel.Size = new System.Drawing.Size(800, 271);
+            sidesLayoutPanel.TabIndex = 15;
             // 
             // leftPanel
             // 
-            this.leftPanel.Controls.Add(this.optionsLeftButton);
-            this.leftPanel.Controls.Add(this.mediaViewerLeft);
-            this.leftPanel.Controls.Add(this.infoRichTextBoxLeft);
-            this.leftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.leftPanel.Location = new System.Drawing.Point(0, 0);
-            this.leftPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.leftPanel.Name = "leftPanel";
-            this.leftPanel.Size = new System.Drawing.Size(343, 235);
-            this.leftPanel.TabIndex = 5;
+            leftPanel.Controls.Add(optionsLeftButton);
+            leftPanel.Controls.Add(mediaViewerLeft);
+            leftPanel.Controls.Add(infoRichTextBoxLeft);
+            leftPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            leftPanel.Location = new System.Drawing.Point(0, 0);
+            leftPanel.Margin = new System.Windows.Forms.Padding(0);
+            leftPanel.Name = "leftPanel";
+            leftPanel.Size = new System.Drawing.Size(400, 271);
+            leftPanel.TabIndex = 5;
             // 
             // mediaViewerLeft
             // 
-            this.mediaViewerLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mediaViewerLeft.Location = new System.Drawing.Point(100, 0);
-            this.mediaViewerLeft.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.mediaViewerLeft.Name = "mediaViewerLeft";
-            this.mediaViewerLeft.Size = new System.Drawing.Size(243, 235);
-            this.mediaViewerLeft.TabIndex = 4;
-            this.mediaViewerLeft.VideoPosition = -1F;
+            mediaViewerLeft.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            mediaViewerLeft.Location = new System.Drawing.Point(117, 0);
+            mediaViewerLeft.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            mediaViewerLeft.Name = "mediaViewerLeft";
+            mediaViewerLeft.Size = new System.Drawing.Size(284, 271);
+            mediaViewerLeft.TabIndex = 4;
+            mediaViewerLeft.VideoPosition = -1F;
             // 
             // rightPanel
             // 
-            this.rightPanel.Controls.Add(this.optionsRightButton);
-            this.rightPanel.Controls.Add(this.mediaViewerRight);
-            this.rightPanel.Controls.Add(this.infoRichTextBoxRight);
-            this.rightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightPanel.Location = new System.Drawing.Point(343, 0);
-            this.rightPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Size = new System.Drawing.Size(343, 235);
-            this.rightPanel.TabIndex = 4;
+            rightPanel.Controls.Add(optionsRightButton);
+            rightPanel.Controls.Add(mediaViewerRight);
+            rightPanel.Controls.Add(infoRichTextBoxRight);
+            rightPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            rightPanel.Location = new System.Drawing.Point(400, 0);
+            rightPanel.Margin = new System.Windows.Forms.Padding(0);
+            rightPanel.Name = "rightPanel";
+            rightPanel.Size = new System.Drawing.Size(400, 271);
+            rightPanel.TabIndex = 4;
             // 
             // mediaViewerRight
             // 
-            this.mediaViewerRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mediaViewerRight.Location = new System.Drawing.Point(110, 0);
-            this.mediaViewerRight.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.mediaViewerRight.Name = "mediaViewerRight";
-            this.mediaViewerRight.Size = new System.Drawing.Size(234, 235);
-            this.mediaViewerRight.TabIndex = 4;
-            this.mediaViewerRight.VideoPosition = -1F;
+            mediaViewerRight.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            mediaViewerRight.Location = new System.Drawing.Point(128, 0);
+            mediaViewerRight.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            mediaViewerRight.Name = "mediaViewerRight";
+            mediaViewerRight.Size = new System.Drawing.Size(273, 271);
+            mediaViewerRight.TabIndex = 4;
+            mediaViewerRight.VideoPosition = -1F;
             // 
             // keepButtonsLayoutPanel
             // 
-            this.keepButtonsLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.keepButtonsLayoutPanel.ColumnCount = 2;
-            this.keepButtonsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.keepButtonsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.keepButtonsLayoutPanel.Controls.Add(this.keepRightButton, 1, 0);
-            this.keepButtonsLayoutPanel.Controls.Add(this.keepLeftButton, 0, 0);
-            this.keepButtonsLayoutPanel.Location = new System.Drawing.Point(198, 329);
-            this.keepButtonsLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.keepButtonsLayoutPanel.Name = "keepButtonsLayoutPanel";
-            this.keepButtonsLayoutPanel.RowCount = 1;
-            this.keepButtonsLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.keepButtonsLayoutPanel.Size = new System.Drawing.Size(686, 23);
-            this.keepButtonsLayoutPanel.TabIndex = 16;
+            keepButtonsLayoutPanel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            keepButtonsLayoutPanel.ColumnCount = 2;
+            keepButtonsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            keepButtonsLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            keepButtonsLayoutPanel.Controls.Add(keepRightButton, 1, 0);
+            keepButtonsLayoutPanel.Controls.Add(keepLeftButton, 0, 0);
+            keepButtonsLayoutPanel.Location = new System.Drawing.Point(231, 380);
+            keepButtonsLayoutPanel.Margin = new System.Windows.Forms.Padding(0);
+            keepButtonsLayoutPanel.Name = "keepButtonsLayoutPanel";
+            keepButtonsLayoutPanel.RowCount = 1;
+            keepButtonsLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            keepButtonsLayoutPanel.Size = new System.Drawing.Size(800, 27);
+            keepButtonsLayoutPanel.TabIndex = 16;
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.filenameRichTextBoxLeft, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.filenameRichTextBoxRight, 1, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(197, 12);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(687, 50);
-            this.tableLayoutPanel2.TabIndex = 17;
+            tableLayoutPanel2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel2.Controls.Add(filenameRichTextBoxLeft, 0, 0);
+            tableLayoutPanel2.Controls.Add(filenameRichTextBoxRight, 1, 0);
+            tableLayoutPanel2.Location = new System.Drawing.Point(230, 14);
+            tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            tableLayoutPanel2.Size = new System.Drawing.Size(802, 58);
+            tableLayoutPanel2.TabIndex = 17;
             // 
             // progressBar
             // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.progressBar.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.duplicatesFormModelBindingSource, "StateSearching", true));
-            this.progressBar.Location = new System.Drawing.Point(73, 378);
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(119, 21);
-            this.progressBar.TabIndex = 19;
+            progressBar.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            progressBar.DataBindings.Add(new System.Windows.Forms.Binding("Visible", duplicatesFormModelBindingSource, "StateSearching", true));
+            progressBar.Location = new System.Drawing.Point(85, 436);
+            progressBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            progressBar.Name = "progressBar";
+            progressBar.Size = new System.Drawing.Size(139, 24);
+            progressBar.TabIndex = 19;
             // 
             // threadsLabel
             // 
-            this.threadsLabel.AutoSize = true;
-            this.threadsLabel.Location = new System.Drawing.Point(2, 134);
-            this.threadsLabel.Name = "threadsLabel";
-            this.threadsLabel.Size = new System.Drawing.Size(52, 13);
-            this.threadsLabel.TabIndex = 23;
-            this.threadsLabel.Text = "Threads: ";
+            threadsLabel.AutoSize = true;
+            threadsLabel.Location = new System.Drawing.Point(2, 155);
+            threadsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            threadsLabel.Name = "threadsLabel";
+            threadsLabel.Size = new System.Drawing.Size(54, 15);
+            threadsLabel.TabIndex = 23;
+            threadsLabel.Text = "Threads: ";
             // 
             // keepNeitherButton
             // 
-            this.keepNeitherButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.keepNeitherButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.keepNeitherButton.Location = new System.Drawing.Point(198, 377);
-            this.keepNeitherButton.Name = "keepNeitherButton";
-            this.keepNeitherButton.Size = new System.Drawing.Size(686, 23);
-            this.keepNeitherButton.TabIndex = 27;
-            this.keepNeitherButton.Text = "Keep &Neither (Delete Both)";
-            this.keepNeitherButton.UseVisualStyleBackColor = true;
-            this.keepNeitherButton.Click += new System.EventHandler(this.keepNeitherButton_Click);
+            keepNeitherButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            keepNeitherButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateViewingDuplicates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            keepNeitherButton.Location = new System.Drawing.Point(231, 435);
+            keepNeitherButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            keepNeitherButton.Name = "keepNeitherButton";
+            keepNeitherButton.Size = new System.Drawing.Size(800, 27);
+            keepNeitherButton.TabIndex = 27;
+            keepNeitherButton.Text = "Keep &Neither (Delete Both)";
+            keepNeitherButton.UseVisualStyleBackColor = true;
+            keepNeitherButton.Click += keepNeitherButton_Click;
             // 
             // percentageLabel
             // 
-            this.percentageLabel.AutoSize = true;
-            this.percentageLabel.Location = new System.Drawing.Point(118, 158);
-            this.percentageLabel.Name = "percentageLabel";
-            this.percentageLabel.Size = new System.Drawing.Size(60, 13);
-            this.percentageLabel.TabIndex = 11;
-            this.percentageLabel.Text = "% or above";
+            percentageLabel.AutoSize = true;
+            percentageLabel.Location = new System.Drawing.Point(138, 182);
+            percentageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            percentageLabel.Name = "percentageLabel";
+            percentageLabel.Size = new System.Drawing.Size(66, 15);
+            percentageLabel.TabIndex = 11;
+            percentageLabel.Text = "% or above";
             // 
             // settingsButton
             // 
-            this.settingsButton.Location = new System.Drawing.Point(12, 12);
-            this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(62, 23);
-            this.settingsButton.TabIndex = 33;
-            this.settingsButton.Text = "Settings";
-            this.settingsButton.UseVisualStyleBackColor = true;
-            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            settingsButton.Location = new System.Drawing.Point(14, 14);
+            settingsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            settingsButton.Name = "settingsButton";
+            settingsButton.Size = new System.Drawing.Size(72, 27);
+            settingsButton.TabIndex = 33;
+            settingsButton.Text = "Settings";
+            settingsButton.UseVisualStyleBackColor = true;
+            settingsButton.Click += settingsButton_Click;
             // 
             // massOperationButton
             // 
-            this.massOperationButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.massOperationButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.massOperationButton.DataBindings.Add(new System.Windows.Forms.Binding("Visible", this.duplicatesFormModelBindingSource, "StateNotSearching", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.massOperationButton.Location = new System.Drawing.Point(10, 377);
-            this.massOperationButton.Name = "massOperationButton";
-            this.massOperationButton.Size = new System.Drawing.Size(183, 23);
-            this.massOperationButton.TabIndex = 36;
-            this.massOperationButton.Text = "Mass Operation";
-            this.massOperationButton.UseVisualStyleBackColor = true;
-            this.massOperationButton.Click += new System.EventHandler(this.massOperationButton_Click);
+            massOperationButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            massOperationButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", duplicatesFormModelBindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            massOperationButton.DataBindings.Add(new System.Windows.Forms.Binding("Visible", duplicatesFormModelBindingSource, "StateNotSearching", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            massOperationButton.Location = new System.Drawing.Point(12, 435);
+            massOperationButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            massOperationButton.Name = "massOperationButton";
+            massOperationButton.Size = new System.Drawing.Size(214, 27);
+            massOperationButton.TabIndex = 36;
+            massOperationButton.Text = "Mass Operation";
+            massOperationButton.UseVisualStyleBackColor = true;
+            massOperationButton.Click += massOperationButton_Click;
             // 
             // filtersGroupBox
             // 
-            this.filtersGroupBox.Controls.Add(this.similarityNumeric);
-            this.filtersGroupBox.Controls.Add(this.searchScopeComboBox);
-            this.filtersGroupBox.Controls.Add(this.similarityLabel);
-            this.filtersGroupBox.Controls.Add(this.threadsLabel);
-            this.filtersGroupBox.Controls.Add(this.matchFileTypesCheckBox);
-            this.filtersGroupBox.Controls.Add(this.percentageLabel);
-            this.filtersGroupBox.Controls.Add(this.imagesCheckBox);
-            this.filtersGroupBox.Controls.Add(this.videosCheckBox);
-            this.filtersGroupBox.Controls.Add(this.threadCountNumeric);
-            this.filtersGroupBox.Controls.Add(this.cropLeftRightCheckBox);
-            this.filtersGroupBox.Controls.Add(this.cropTopBottomCheckBox);
-            this.filtersGroupBox.Location = new System.Drawing.Point(12, 63);
-            this.filtersGroupBox.Name = "filtersGroupBox";
-            this.filtersGroupBox.Size = new System.Drawing.Size(180, 182);
-            this.filtersGroupBox.TabIndex = 39;
-            this.filtersGroupBox.TabStop = false;
-            this.filtersGroupBox.Text = "Search Filters";
+            filtersGroupBox.Controls.Add(similarityNumeric);
+            filtersGroupBox.Controls.Add(searchScopeComboBox);
+            filtersGroupBox.Controls.Add(similarityLabel);
+            filtersGroupBox.Controls.Add(threadsLabel);
+            filtersGroupBox.Controls.Add(matchFileTypesCheckBox);
+            filtersGroupBox.Controls.Add(percentageLabel);
+            filtersGroupBox.Controls.Add(imagesCheckBox);
+            filtersGroupBox.Controls.Add(videosCheckBox);
+            filtersGroupBox.Controls.Add(threadCountNumeric);
+            filtersGroupBox.Controls.Add(cropLeftRightCheckBox);
+            filtersGroupBox.Controls.Add(cropTopBottomCheckBox);
+            filtersGroupBox.Location = new System.Drawing.Point(14, 73);
+            filtersGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            filtersGroupBox.Name = "filtersGroupBox";
+            filtersGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            filtersGroupBox.Size = new System.Drawing.Size(210, 210);
+            filtersGroupBox.TabIndex = 39;
+            filtersGroupBox.TabStop = false;
+            filtersGroupBox.Text = "Search Filters";
             // 
             // optionsContextMenuStrip
             // 
-            this.optionsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openFileToolStripMenuItem,
-            this.openFileInExplorerToolStripMenuItem,
-            this.ignoreFileToolStripMenuItem,
-            this.ignoreFilesDirectoryToolStripMenuItem});
-            this.optionsContextMenuStrip.Name = "optionsContextMenuStrip";
-            this.optionsContextMenuStrip.Size = new System.Drawing.Size(189, 92);
+            optionsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { openFileToolStripMenuItem, openFileInExplorerToolStripMenuItem, ignoreFileToolStripMenuItem, ignoreFilesDirectoryToolStripMenuItem });
+            optionsContextMenuStrip.Name = "optionsContextMenuStrip";
+            optionsContextMenuStrip.Size = new System.Drawing.Size(189, 92);
             // 
             // openFileToolStripMenuItem
             // 
-            this.openFileToolStripMenuItem.Image = global::SorterExpress.Properties.Resources.file;
-            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
-            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.openFileToolStripMenuItem.Text = "Open File";
-            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
+            openFileToolStripMenuItem.Image = Properties.Resources.file;
+            openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            openFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            openFileToolStripMenuItem.Text = "Open File";
+            openFileToolStripMenuItem.Click += openFileToolStripMenuItem_Click;
             // 
             // openFileInExplorerToolStripMenuItem
             // 
-            this.openFileInExplorerToolStripMenuItem.Image = global::SorterExpress.Properties.Resources.folder;
-            this.openFileInExplorerToolStripMenuItem.Name = "openFileInExplorerToolStripMenuItem";
-            this.openFileInExplorerToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.openFileInExplorerToolStripMenuItem.Text = "Open File in Explorer";
-            this.openFileInExplorerToolStripMenuItem.Click += new System.EventHandler(this.openFileInExplorerToolStripMenuItem_Click);
+            openFileInExplorerToolStripMenuItem.Image = Properties.Resources.folder;
+            openFileInExplorerToolStripMenuItem.Name = "openFileInExplorerToolStripMenuItem";
+            openFileInExplorerToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            openFileInExplorerToolStripMenuItem.Text = "Open File in Explorer";
+            openFileInExplorerToolStripMenuItem.Click += openFileInExplorerToolStripMenuItem_Click;
             // 
             // ignoreFileToolStripMenuItem
             // 
-            this.ignoreFileToolStripMenuItem.Image = global::SorterExpress.Properties.Resources.file_grey;
-            this.ignoreFileToolStripMenuItem.Name = "ignoreFileToolStripMenuItem";
-            this.ignoreFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.ignoreFileToolStripMenuItem.Text = "Ignore File";
-            this.ignoreFileToolStripMenuItem.Click += new System.EventHandler(this.ignoreFileToolStripMenuItem_Click);
+            ignoreFileToolStripMenuItem.Image = Properties.Resources.file_grey;
+            ignoreFileToolStripMenuItem.Name = "ignoreFileToolStripMenuItem";
+            ignoreFileToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            ignoreFileToolStripMenuItem.Text = "Ignore File";
+            ignoreFileToolStripMenuItem.Click += ignoreFileToolStripMenuItem_Click;
             // 
             // ignoreFilesDirectoryToolStripMenuItem
             // 
-            this.ignoreFilesDirectoryToolStripMenuItem.Image = global::SorterExpress.Properties.Resources.folder_grey;
-            this.ignoreFilesDirectoryToolStripMenuItem.Name = "ignoreFilesDirectoryToolStripMenuItem";
-            this.ignoreFilesDirectoryToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.ignoreFilesDirectoryToolStripMenuItem.Text = "Ignore File\'s Directory";
-            this.ignoreFilesDirectoryToolStripMenuItem.Click += new System.EventHandler(this.ignoreFilesDirectoryToolStripMenuItem_Click);
+            ignoreFilesDirectoryToolStripMenuItem.Image = Properties.Resources.folder_grey;
+            ignoreFilesDirectoryToolStripMenuItem.Name = "ignoreFilesDirectoryToolStripMenuItem";
+            ignoreFilesDirectoryToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            ignoreFilesDirectoryToolStripMenuItem.Text = "Ignore File's Directory";
+            ignoreFilesDirectoryToolStripMenuItem.Click += ignoreFilesDirectoryToolStripMenuItem_Click;
             // 
             // DuplicatesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(893, 411);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.undoButton);
-            this.Controls.Add(this.settingsButton);
-            this.Controls.Add(this.matchesDataGridView);
-            this.Controls.Add(this.onlyKeepLibraryTagsCheckBox);
-            this.Controls.Add(this.mergeFileTagsCheckBox);
-            this.Controls.Add(this.keepNeitherButton);
-            this.Controls.Add(this.fileCountLabel);
-            this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.loadingLabel);
-            this.Controls.Add(this.cancelButton);
-            this.Controls.Add(this.searchButton);
-            this.Controls.Add(this.keepButtonsLayoutPanel);
-            this.Controls.Add(this.sidesLayoutPanel);
-            this.Controls.Add(this.openDirectoryButton);
-            this.Controls.Add(this.keepBothButton);
-            this.Controls.Add(this.tableLayoutPanel2);
-            this.Controls.Add(this.massOperationButton);
-            this.Controls.Add(this.filtersGroupBox);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(909, 450);
-            this.Name = "DuplicatesForm";
-            this.Text = "Sorter Express - Duplicate Search";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DuplicatesForm_FormClosing);
-            this.Shown += new System.EventHandler(this.DuplicatesForm_Shown);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DuplicatesForm_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.duplicatesFormModelBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.similarityNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.threadCountNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.matchesDataGridView)).EndInit();
-            this.matchesContextMenu.ResumeLayout(false);
-            this.sidesLayoutPanel.ResumeLayout(false);
-            this.leftPanel.ResumeLayout(false);
-            this.rightPanel.ResumeLayout(false);
-            this.keepButtonsLayoutPanel.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.filtersGroupBox.ResumeLayout(false);
-            this.filtersGroupBox.PerformLayout();
-            this.optionsContextMenuStrip.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(1042, 474);
+            Controls.Add(button1);
+            Controls.Add(undoButton);
+            Controls.Add(settingsButton);
+            Controls.Add(matchesDataGridView);
+            Controls.Add(onlyKeepLibraryTagsCheckBox);
+            Controls.Add(mergeFileTagsCheckBox);
+            Controls.Add(keepNeitherButton);
+            Controls.Add(fileCountLabel);
+            Controls.Add(progressBar);
+            Controls.Add(loadingLabel);
+            Controls.Add(cancelButton);
+            Controls.Add(searchButton);
+            Controls.Add(keepButtonsLayoutPanel);
+            Controls.Add(sidesLayoutPanel);
+            Controls.Add(openDirectoryButton);
+            Controls.Add(keepBothButton);
+            Controls.Add(tableLayoutPanel2);
+            Controls.Add(massOperationButton);
+            Controls.Add(filtersGroupBox);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
+            Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            MinimumSize = new System.Drawing.Size(1058, 513);
+            Name = "DuplicatesForm";
+            Text = "Sorter Express - Duplicate Search";
+            FormClosing += DuplicatesForm_FormClosing;
+            Shown += DuplicatesForm_Shown;
+            KeyDown += DuplicatesForm_KeyDown;
+            ((System.ComponentModel.ISupportInitialize)duplicatesFormModelBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)similarityNumeric).EndInit();
+            ((System.ComponentModel.ISupportInitialize)threadCountNumeric).EndInit();
+            ((System.ComponentModel.ISupportInitialize)matchesDataGridView).EndInit();
+            matchesContextMenu.ResumeLayout(false);
+            sidesLayoutPanel.ResumeLayout(false);
+            leftPanel.ResumeLayout(false);
+            rightPanel.ResumeLayout(false);
+            keepButtonsLayoutPanel.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
+            filtersGroupBox.ResumeLayout(false);
+            filtersGroupBox.PerformLayout();
+            optionsContextMenuStrip.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

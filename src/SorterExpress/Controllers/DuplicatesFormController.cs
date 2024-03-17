@@ -286,11 +286,11 @@ namespace SorterExpress.Controllers
             if (string.IsNullOrWhiteSpace(model.Directory))
                 return;
 
-            if (model.SearchScopeSelectedValue == DuplicatesFormModel.SearchScope.ImmediateOnly)
+            if (model.SearchScopeSelectedValue == SearchScope.ImmediateOnly)
             {
                 model.Files = new DirectoryInfo(model.Directory).GetFileNamesList();
             }
-            else if (model.SearchScopeSelectedValue == DuplicatesFormModel.SearchScope.SubdirsOnly)
+            else if (model.SearchScopeSelectedValue == SearchScope.SubdirsOnly)
             {
                 model.Files = Utilities.RecursivelyGetFileNames(model.Directory);
                 var immediates = Directory.GetFiles(model.Directory);//new DirectoryInfo(model.Directory).GetFileNamesList();
@@ -532,7 +532,7 @@ namespace SorterExpress.Controllers
             // Check for "between immediate and subdirectories" filter.
             // Other filters are taken care of before this method by only passing in the required files.
 
-            if (model.SearchScopeSelectedValue != DuplicatesFormModel.SearchScope.BetweenImmediateAndSubdirs)
+            if (model.SearchScopeSelectedValue != SearchScope.BetweenImmediateAndSubdirs)
                 return true;
             else if (print1.Directory == model.Directory ^ print2.Directory == model.Directory)
                 return true;

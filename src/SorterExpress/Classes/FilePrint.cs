@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 public class FilePrint
 {
-    const int THUMB_SIZE = 60;
+    public const int THUMB_SIZE = 60;
 
     /// <summary>
     /// File sizes are lazy-loaded, this property will tell you if Size has been loaded yet for this file without actually loading Size.

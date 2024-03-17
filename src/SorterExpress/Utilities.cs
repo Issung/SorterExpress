@@ -178,10 +178,14 @@ namespace SorterExpress
         /// </summary>
         /// <returns>The selected directory, null if open was cancelled.</returns>
         // TODO: Nullable return.
-        public static DirectoryInfo OpenDirectory()
+        public static DirectoryInfo OpenDirectory(string? title = null)
         {
             using (var dialog = new CommonOpenFileDialog())
             {
+                if (title != null)
+                { 
+                    dialog.Title = title;
+                }
                 dialog.IsFolderPicker = true;
 
                 if (dialog.ShowDialog() == CommonFileDialogResult.Ok && !string.IsNullOrWhiteSpace(dialog.FileName))
@@ -191,18 +195,6 @@ namespace SorterExpress
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Open a file in the operating system's preferred program.
-        /// </summary>
-        /// <param name="path">Directory path to the file.</param>
-        public static void ViewFile(string path)
-        {
-            if (!string.IsNullOrWhiteSpace(path))
-            {
-                Utilities.OsOpen(path);
-            }
         }
 
         /// <summary>

@@ -40,10 +40,10 @@
             renameTagButton = new System.Windows.Forms.Button();
             settingsButton = new System.Windows.Forms.Button();
             sortButton = new System.Windows.Forms.Button();
+            nsfwSortButton = new System.Windows.Forms.Button();
             updatesGroupBox = new System.Windows.Forms.GroupBox();
             updateView1 = new Controls.UpdateView();
             operationsGroupBox = new System.Windows.Forms.GroupBox();
-            nsfwSortButton = new System.Windows.Forms.Button();
             updatesGroupBox.SuspendLayout();
             operationsGroupBox.SuspendLayout();
             SuspendLayout();
@@ -163,6 +163,19 @@
             sortButton.UseVisualStyleBackColor = true;
             sortButton.Click += sortButton_Click;
             // 
+            // nsfwSortButton
+            // 
+            nsfwSortButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            nsfwSortButton.Location = new System.Drawing.Point(7, 189);
+            nsfwSortButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            nsfwSortButton.Name = "nsfwSortButton";
+            nsfwSortButton.Size = new System.Drawing.Size(396, 27);
+            nsfwSortButton.TabIndex = 16;
+            nsfwSortButton.Text = "NSFW Sort Collection";
+            toolTip.SetToolTip(nsfwSortButton, "Use machine learning to classify images/files into neutral or pornographic categories, then move each classification to separate directories.");
+            nsfwSortButton.UseVisualStyleBackColor = true;
+            nsfwSortButton.Click += nsfwSortButton_Click;
+            // 
             // updatesGroupBox
             // 
             updatesGroupBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
@@ -206,18 +219,6 @@
             operationsGroupBox.TabIndex = 11;
             operationsGroupBox.TabStop = false;
             operationsGroupBox.Text = "Operations";
-            // 
-            // nsfwSortButton
-            // 
-            nsfwSortButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            nsfwSortButton.Location = new System.Drawing.Point(7, 189);
-            nsfwSortButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            nsfwSortButton.Name = "nsfwSortButton";
-            nsfwSortButton.Size = new System.Drawing.Size(396, 27);
-            nsfwSortButton.TabIndex = 16;
-            nsfwSortButton.Text = "NSFW Sort Collection";
-            toolTip.SetToolTip(nsfwSortButton, "A form that has all features of the application displayed in seperate tabs.");
-            nsfwSortButton.UseVisualStyleBackColor = true;
             // 
             // WelcomeForm
             // 

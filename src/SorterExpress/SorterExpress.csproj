@@ -90,6 +90,9 @@
     <Compile Update="Controls\ScrollingListBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Forms\NsfwSortForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <None Update="RemoveContextMenuOptions.reg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -142,6 +145,7 @@
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+    <PackageReference Include="NsfwSpy" Version="3.5.0" />
     <PackageReference Include="Onova" Version="2.6.2" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.DirectoryServices" Version="8.0.0" />

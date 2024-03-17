@@ -72,6 +72,14 @@ namespace SorterExpress.Forms
             this.Hide();
         }
 
+        private void nsfwSortButton_Click(object sender, EventArgs e)
+        {
+            var f = new NsfwSortForm(null);
+            f.FormClosed += (s, args) => this.Show();
+            f.Show();
+            this.Hide();
+        }
+
         private void AllInOneButton_Click(object sender, EventArgs e)
         {
             var allinone = new AllInOneForm();
@@ -93,15 +101,15 @@ namespace SorterExpress.Forms
 
         private void updateView_UpdateStarted(object sender, EventArgs e)
         {
-            var controls = new Control[] { 
-                sortButton, 
-                massTagButton, 
-                viewFormButton, 
-                renameTagButton, 
-                duplicatesButton, 
-                allInOneButton, 
-                settingsButton, 
-                exitButton 
+            var controls = new Control[] {
+                sortButton,
+                massTagButton,
+                viewFormButton,
+                renameTagButton,
+                duplicatesButton,
+                allInOneButton,
+                settingsButton,
+                exitButton
             };
 
             foreach (Control control in controls)

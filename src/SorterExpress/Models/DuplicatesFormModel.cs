@@ -96,14 +96,6 @@ namespace SorterExpress.Models
 
         public BindingList<Duplicate> Duplicates { get; set; } = new BindingList<Duplicate>();
 
-        public enum SearchScope
-        {
-            [Description("Immediate Directory Only")] ImmediateOnly,
-            [Description("Subdirectories Only")] SubdirsOnly,
-            [Description("Between Immediate and Subdirectories")] BetweenImmediateAndSubdirs,
-            [Description("Search All Files")] All
-        }
-
         private SearchScope searchScopeSelectedValue = SearchScope.ImmediateOnly;
         private bool searchImages = Settings.Default.DuplicateSearch.SearchImages;
         private bool searchVideos = Settings.Default.DuplicateSearch.SearchVideos;

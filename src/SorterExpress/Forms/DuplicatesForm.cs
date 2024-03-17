@@ -27,14 +27,13 @@ namespace SorterExpress.Forms
             InitializeComponent();
 
             ///Stuff designer can't do
-            
+
             matchesDataGridView.AutoGenerateColumns = false;
             //matchesDataGridView.DataSource = duplicates; //TODO: Bind in designer.
             //duplicates.ListChanged += Duplicates_ListChanged;
 
             // Add items to search scope combo box. DisplayMember and ValueMember are used with this anonymous class.
-            searchScopeComboBox.DataSource = Enum.GetValues(typeof(DuplicatesFormModel.SearchScope))
-                .Cast<DuplicatesFormModel.SearchScope>()
+            searchScopeComboBox.DataSource = Enum.GetValues<SearchScope>()
                 .Select(value => new
                 {
                     EnumDescription = EnumHelper.GetEnumDescription(value),
@@ -81,7 +80,7 @@ namespace SorterExpress.Forms
         private void matchesDataGridView_SelectionChanged(object sender, EventArgs e)
         {
             if (EnableSelectionChangedEvents)
-            { 
+            {
                 controller.MatchSelectionChanged();
             }
         }
@@ -166,7 +165,7 @@ namespace SorterExpress.Forms
         private void searchScopeComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
             searchScopeComboBox.DataBindings["SelectedValue"].WriteValue();
-            
+
             if (controller != null)
                 controller.UpdateSearchFilesScope();
         }
@@ -218,7 +217,7 @@ namespace SorterExpress.Forms
 
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Utilities.ViewFile(GetSideFilepath(lastOptionsSideClicked));
+            Utilities.OsOpen(GetSideFilepath(lastOptionsSideClicked));
         }
 
         private void openFileInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -229,7 +228,7 @@ namespace SorterExpress.Forms
         private void ignoreFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lastOptionsSideClicked != null)
-            { 
+            {
                 controller.IgnoreFileOrDirectory(null, IgnoreType.File, lastOptionsSideClicked.Value);
             }
         }
@@ -237,7 +236,7 @@ namespace SorterExpress.Forms
         private void ignoreFilesDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (lastOptionsSideClicked != null)
-            { 
+            {
                 controller.IgnoreFileOrDirectory(null, IgnoreType.Directory, lastOptionsSideClicked.Value);
             }
         }
