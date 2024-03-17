@@ -73,7 +73,8 @@ namespace SorterExpress
     {
         public const string TAGS_FILE_EXTENSION = "tgs";
 
-        private static MD5 md5 = null;
+        private static readonly object md5Lock = new();
+        private static readonly MD5 md5 = System.Security.Cryptography.MD5.Create();
         public static readonly string[] videoFileExtensions = { ".webm", ".avi", ".mp4", ".flv" };
         public static readonly string[] imageFileExtensions = { ".jpg", ".jpeg", ".jpg_large", ".png", ".bmp", ".gif" };
 
@@ -466,27 +467,27 @@ namespace SorterExpress
             return ret;
         }
 
-        static object md5Lock = new object();
-
         /// <summary>
         /// https://stackoverflow.com/questions/11454004/calculate-a-md5-hash-from-a-string
         /// </summary>
         public static string MD5(string input)
         {
-            // Use input string to calculate MD5 hash
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-            {
-                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
+            var inputBytes = Encoding.ASCII.GetBytes(input);
+            byte[] hashBytes;
 
-                // Convert the byte array to hexadecimal string
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("X2"));
-                }
-                return sb.ToString();
+            lock (md5Lock)
+            {
+                hashBytes = md5.ComputeHash(inputBytes);
             }
+
+            // Convert the byte array to hexadecimal string
+            var sb = new StringBuilder();
+            for (int i = 0; i < hashBytes.Length; i++)
+            {
+                sb.Append(hashBytes[i].ToString("X2"));
+            }
+
+            return sb.ToString();
         }
 
         //Failed idea to MD5 off of file data rather than filename. Could be fixed eventually but might be slow.
