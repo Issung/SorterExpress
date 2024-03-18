@@ -144,12 +144,6 @@ R can be used to keep the currently highlighted row's right file (delete left).
 B can be used to keep both items in the currently highlighted row (delete neither/skip).
 N can be used to keep neithr item in the currently highlighted row (delete both).</value>
   </data>
-  <metadata name="fileImageColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="classificationColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="optionsContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>269, 24</value>
   </metadata>

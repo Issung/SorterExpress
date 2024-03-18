@@ -1,5 +1,6 @@
 ﻿using NsfwSpyNS;
 using SorterExpress.Classes.SettingsData;
+using SorterExpress.Data.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,7 +24,7 @@ namespace SorterExpress.Models
 
         public enum FormState { NoDirectoryOpen, DirectoryOpen, Searching, Sorting };
 
-        public FormState State { get { return FindState(); } }
+        public FormState State => FindState();
 
         private FormState FindState()
         {
@@ -76,7 +77,7 @@ namespace SorterExpress.Models
 
         public bool StateSorting { get { return State == FormState.Sorting; } }
 
-        public bool StateViewing => FilteredResults.Count > 0;
+        public bool StateViewing => Results.Count > 0;
 
         private string? directory;
         public string? Directory { get { return directory; } set { directory = value; UpdateVisibilityAndEnabledProperties(); } }
@@ -232,9 +233,9 @@ namespace SorterExpress.Models
         public Image Thumb { get; set; }
 
         /// <summary>
-        /// Classification weights found by NsfwSpy.
+        /// Classification weights found by ML.
         /// </summary>
-        public NsfwSpyResult ClassificationWeights { get; set; }
+        public AutoClassificationWeights ClassificationWeights { get; set; }
 
         /// <summary>
         /// A manual classification override set by the user.

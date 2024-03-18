@@ -1,6 +1,7 @@
 ﻿using NsfwSpyNS;
 using SorterExpress.Classes;
 using SorterExpress.Classes.SettingsData;
+using SorterExpress.Data.Model;
 using SorterExpress.Forms;
 using SorterExpress.Models;
 using System;
@@ -285,15 +286,27 @@ namespace SorterExpress.Controllers
                         }
                         else
                         {
-                            var extension = Path.GetExtension(filename);
                             var path = Path.Combine(model.Directory, filename);
+                            var extension = Path.GetExtension(filename);
 
                             try
                             {
-                                var classification =
-                                    extension == ".gif" ? spy.ClassifyGif(path, videoOptions).Frames.First().Value :
-                                    Utilities.videoFileExtensions.Contains(extension) ? spy.ClassifyVideo(path, videoOptions).Frames.First().Value :
-                                    spy.ClassifyImage(path);
+                                var classification = Db.GetAutoClassificationWeights(path, (_) =>
+                                {
+                                    var classification =
+                                        extension == ".gif" ? spy.ClassifyGif(path, videoOptions).Frames.First().Value :
+                                        Utilities.videoFileExtensions.Contains(extension) ? spy.ClassifyVideo(path, videoOptions).Frames.First().Value :
+                                        spy.ClassifyImage(path);
+
+                                    return new AutoClassificationWeights()
+                                    {
+                                        Neutral = classification.Neutral,
+                                        Sexy = classification.Sexy,
+                                        Hentai = classification.Hentai,
+                                        Pornography = classification.Pornography,
+                                        PredictedLabel = classification.PredictedLabel,
+                                    };
+                                });
 
                                 var thumbPath = Path.Combine(Program.THUMBS_PATH, Utilities.MD5(path) + ".jpg");
 
@@ -315,7 +328,7 @@ namespace SorterExpress.Controllers
 
                                 var thumb = new Bitmap(thumbPath);
 
-                                form.Invoke(() =>
+                                form.Invoke((Delegate)(() =>
                                 {
                                     var result = new NsfwSortFileResult()
                                     {
@@ -324,7 +337,7 @@ namespace SorterExpress.Controllers
                                         ClassificationWeights = classification,
                                     };
                                     model.ResultsAdd(result);
-                                });
+                                }));
 
                                 FinishedFiles++;
                                 classifyWorker.ReportProgress(FinishedFiles * 100 / files.Count);

@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using SorterExpress.Data.DbContext;
+using SorterExpress.Forms;
+using System;
 using System.IO;
-using System.Windows.Forms;
 using System.Linq;
 using System.Threading;
-using SorterExpress.Forms;
+using System.Windows.Forms;
+using static Tensorflow.ApiDef.Types;
 
 namespace SorterExpress
 {
@@ -34,22 +38,8 @@ namespace SorterExpress
             // Unhandled exceptions for the executing UI thread
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
 
-            /*string str = "";
-
-            int i = 0;
-            foreach (string arg in args)
-            {
-                str += i + ": " + arg  + "\n";
-                i++;
-            }
-
-            MessageBox.Show("Args: \n" + str, "Args", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
-
-            //Testing area
-
-            
-
-            //Testing area
+            // Run in background because Vacuum command can be expensive.
+            new Thread(SetupSqliteDatabase).Start();
 
             if (args.Length == 0)
             {
@@ -78,6 +68,19 @@ namespace SorterExpress
                     //Application.Run(new RenameTagForm(new DirectoryInfo(args.Last())));
                 }
             }
+        }
+
+        /// <summary>
+        /// Ensure SQLite database is created, migrated, and vacuumed.
+        /// </summary>
+        private static void SetupSqliteDatabase()
+        {
+            using (var context = Designer.CreateDbContext())
+            {
+                context.Database.Migrate();
+                context.Database.ExecuteSqlRaw("VACUUM;");
+            }
+            Console.WriteLine("SQLite database created and migrations applied.");
         }
 
         /// <summary>

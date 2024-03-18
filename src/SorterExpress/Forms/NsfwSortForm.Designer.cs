@@ -312,8 +312,8 @@
             // 
             // resultsFilterComboBox
             // 
-            resultsFilterComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", bindingSource, "StateSorting", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             resultsFilterComboBox.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", bindingSource, "ResultsFilter", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            resultsFilterComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", bindingSource, "StateViewing", true));
             resultsFilterComboBox.DataSource = bindingSource;
             resultsFilterComboBox.DisplayMember = "EnumDescription";
             resultsFilterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
