@@ -241,7 +241,7 @@ namespace SorterExpress.Forms
             notesTextBox.Name = "notesTextBox";
             notesTextBox.Size = new System.Drawing.Size(235, 23);
             notesTextBox.TabIndex = 9;
-            tooltip.SetToolTip(notesTextBox, "You can add a note to the file's new name here.\r\nThe note will be encased in (parentheses) at the end of the filename before the file extension.");
+            tooltip.SetToolTip(notesTextBox, resources.GetString("notesTextBox.ToolTip"));
             // 
             // newFileNameTextBox
             // 
@@ -657,8 +657,6 @@ namespace SorterExpress.Forms
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox filenameTextbox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button openDirectoryButton;
         private System.Windows.Forms.Button openFileButton;
@@ -700,6 +698,7 @@ namespace SorterExpress.Forms
         public System.Windows.Forms.TextBox subfolderSearchTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown subfolderSearchDepthNumeric;
+        public System.Windows.Forms.TextBox filenameTextbox;
     }
 }
 

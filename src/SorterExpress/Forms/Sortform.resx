@@ -145,6 +145,12 @@ CTRL + S - Save the file.
 CTRL + Z - Undo.
 CTRL + Y - Redo.</value>
   </data>
+  <data name="notesTextBox.ToolTip" xml:space="preserve">
+    <value>You can add a note to the file's new name here.
+The note will be encased in (parentheses) at the end of the filename before the file extension.
+
+CTRL + C - While textbox is empty and focused will copy current filename to this textbox.</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
