@@ -1,9 +1,14 @@
-﻿using System;
+﻿using HeyRed.ImageSharp.Heif;
+using HeyRed.ImageSharp.Heif.Formats.Avif;
+using HeyRed.ImageSharp.Heif.Formats.Heif;
+using SixLabors.ImageSharp;
+using SorterExpress.Controls;
+using SorterExpress.Forms;
+using System;
 using System.IO;
-using System.Windows.Forms;
 using System.Linq;
 using System.Threading;
-using SorterExpress.Forms;
+using System.Windows.Forms;
 
 namespace SorterExpress
 {
@@ -33,6 +38,8 @@ namespace SorterExpress
 
             // Unhandled exceptions for the executing UI thread
             Application.ThreadException += new ThreadExceptionEventHandler(Application_ThreadException);
+            
+            ConfigureImageSharp();
 
             /*string str = "";
 
@@ -47,7 +54,7 @@ namespace SorterExpress
 
             //Testing area
 
-            
+
 
             //Testing area
 
@@ -78,6 +85,26 @@ namespace SorterExpress
                     //Application.Run(new RenameTagForm(new DirectoryInfo(args.Last())));
                 }
             }
+        }
+
+        /// <summary>
+        /// Alter ImageSharp's global configuration.<br/>
+        /// Using package ImageSharp.Heif for these decoders/encoders, and LibHeif.Native for the libheif dll.<br/>
+        /// We can't use the configuration modules (e.g. <see cref="AvifConfigurationModule"/>) because they can't be added to an 
+        /// existing config, so just do what is done inside the configuration modules.<br/>
+        /// This allows <see cref="MediaViewer"/> to do extra decoding if the extension is in <see cref="Utilities.ExtraDecodingImageExtensions"/>.
+        /// </summary>
+        private static void ConfigureImageSharp()
+        {
+            // AVIF
+            Configuration.Default.ImageFormatsManager.SetDecoder(AvifFormat.Instance, HeifDecoder.Instance);
+            Configuration.Default.ImageFormatsManager.SetEncoder(AvifFormat.Instance, new AvifEncoder());
+            Configuration.Default.ImageFormatsManager.AddImageFormatDetector(new AvifImageFormatDetector());
+
+            // HEIC/HEIF
+            Configuration.Default.ImageFormatsManager.SetDecoder(HeifFormat.Instance, HeifDecoder.Instance);
+            Configuration.Default.ImageFormatsManager.SetEncoder(HeifFormat.Instance, new HeifEncoder());
+            Configuration.Default.ImageFormatsManager.AddImageFormatDetector(new HeifImageFormatDetector());
         }
 
         /// <summary>

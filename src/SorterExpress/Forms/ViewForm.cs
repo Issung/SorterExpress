@@ -127,7 +127,7 @@ namespace SorterExpress.Forms
             Button button = new Button();
             button.Size = new Size(65, 65);
 
-            if (Utilities.videoFileExtensions.Contains(Path.GetExtension(filename)))
+            if (Utilities.VideoFileExtensions.Contains(Path.GetExtension(filename)))
             {
                 string thumbnailFilename = Program.THUMBS_PATH + "\\" + Utilities.MD5(filename) + ".jpg";
 
