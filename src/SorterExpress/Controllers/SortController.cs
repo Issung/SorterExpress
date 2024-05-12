@@ -184,6 +184,7 @@ namespace SorterExpress.Controllers
                     { new Shortcut(key: Keys.Down), () => { SendKeys.Send("{TAB}"); return true; }},
                     { new Shortcut(alt: true, key: Keys.Left), () => { form.mediaViewer.VideoPosition -= 0.1f; return true; } },
                     { new Shortcut(alt: true, key: Keys.Right), () => { form.mediaViewer.VideoPosition += 0.1f; return true; } },
+                    { new Shortcut(ctrl: true, key: Keys.C), CopyFilenameToNoteTextbox },
                     { new Shortcut(ctrl: true, key: Keys.T), () => { form.tagSearchTextBox.Focus(); return true; } },
                     { new Shortcut(ctrl: true, key: Keys.F), () => { form.subfolderSearchTextBox.Focus(); return true; } },
                     { new Shortcut(ctrl: true, key: Keys.D), () => { Delete(); return true; } },
@@ -221,6 +222,20 @@ namespace SorterExpress.Controllers
                 {
                     System.Media.SystemSounds.Beep.Play();
                 }
+            }
+
+            bool CopyFilenameToNoteTextbox()
+            {
+                // If notes textbox is focused and empty, copy the filename to it. https://github.com/Issung/SorterExpress/issues/19
+                if (form.notesTextBox.Focused && string.IsNullOrWhiteSpace(form.notesTextBox.Text))
+                {
+                    form.notesTextBox.Text = form.filenameTextbox.Text;
+                    form.notesTextBox.SelectionStart = form.notesTextBox.Text.Length;
+                    form.notesTextBox.ScrollToCaret();
+
+                }
+
+                return true;
             }
 
             bool LeftRightKeyShortcut(Keys key)
