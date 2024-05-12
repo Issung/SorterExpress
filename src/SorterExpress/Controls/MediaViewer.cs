@@ -210,7 +210,12 @@ namespace SorterExpress.Controls
         private static Image LoadImage(string filepath)
         {
             using var fs = new FileStream(filepath, FileMode.Open);
-            using var ms = new MemoryStream();
+
+            // If we put a `using` here then gif files throw a GDI+ exception when trying to load the next frame.
+            // More info here: https://stackoverflow.com/a/3007479/8306962
+            // TODO: Figure out how to fix it.
+            var ms = new MemoryStream();
+
             fs.CopyTo(ms);
             ms.Position = 0;    // Reset stream position to be read into image.
 
