@@ -1,11 +1,9 @@
 ﻿using SorterExpress.Classes.SettingsData;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows.Forms;
 using Vlc.DotNet.Forms;
 
@@ -149,26 +147,16 @@ namespace SorterExpress.Controls
 
             if (fileType == FileType.Image)
             {
+                pictureBox.Image?.Dispose();    // Dispose image currently in picture box if there is one.
                 errorMessageTextBox.Hide();
                 vlcPlayerTableLayoutPanel.Hide();
 
                 try
                 {
-                    Image img;
-
-                    using (var fs = new FileStream(path, FileMode.Open))
-                    {
-                        var ms = new MemoryStream();
-                        fs.CopyTo(ms);
-                        ms.Position = 0;                               // <=== here
-                        if (pictureBox.Image != null)
-                            pictureBox.Image.Dispose();
-                        img = Image.FromStream(ms);
-                        pictureBox.Image = img;
-
-                        pictureBox.Show();
-                        pictureBox.Enabled = true; 
-                    }
+                    var img = LoadImage(path);
+                    pictureBox.Image = img;
+                    pictureBox.Show();
+                    pictureBox.Enabled = true;
                 }
                 catch (Exception e)
                 {
@@ -194,12 +182,6 @@ namespace SorterExpress.Controls
                             vlcControl.Play();
                             vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
                         });
-                        /*ThreadPool.QueueUserWorkItem(_ => 
-                        {
-                            vlcControl.SetMedia(fi, (repeat) ? "input-repeat=4000" : "input-repeat=0");
-                            vlcControl.Play();
-                            vlcControl.Audio.Volume = (int)volumeTrackbar.Value;
-                        });*/
 
                         vlcPlayerTableLayoutPanel.Show();
                     }
@@ -219,8 +201,35 @@ namespace SorterExpress.Controls
             }
 
             CurrentMedia = path;
-            //Invoke((MethodInvoker)delegate { NotifyPropertyChanged(nameof(EnableButtons)); });
             NotifyPropertyChanged(nameof(EnableButtons));
+        }
+
+        /// <summary>
+        /// Load image at <paramref name="filepath"/>, performing extra decoding with ImageSharp if required.
+        /// </summary>
+        private static Image LoadImage(string filepath)
+        {
+            using var fs = new FileStream(filepath, FileMode.Open);
+
+            // If we put a `using` here then gif files throw a GDI+ exception when trying to load the next frame.
+            // More info here: https://stackoverflow.com/a/3007479/8306962
+            // TODO: Figure out how to fix it.
+            var ms = new MemoryStream();
+
+            fs.CopyTo(ms);
+            ms.Position = 0;    // Reset stream position to be read into image.
+
+            if (Utilities.FileRequiresExtraDecoding(filepath))
+            {
+                var img = SixLabors.ImageSharp.Image.Load(ms);
+                var dotnetImg = img.ToArray().ToSystemDrawingImage();
+                return dotnetImg;
+            }
+            else
+            {
+                var img = Image.FromStream(ms);
+                return img;
+            }
         }
 
         public void UnloadMedia(bool forceVideoWait = false)
@@ -268,12 +277,16 @@ namespace SorterExpress.Controls
             pictureBox.Hide();
             vlcPlayerTableLayoutPanel.Hide();
 
-            errorMessageTextBox.Text = $"An error occured attempting to load this file.\n\n";
-            errorMessageTextBox.Text += $"Error Type: \n{e.GetType().Name}\n";
-            errorMessageTextBox.Text += $"Error Message: \n{e.Message}\n";
-            errorMessageTextBox.Text += $"Stack Trace: \n{e.StackTrace}\n\n";
-            errorMessageTextBox.Text += $"If you believe the program is at fault please log an issue at " +
-                                        $"https://github.com/Issung/SorterExpress with the above information";
+            errorMessageTextBox.Text = $"""
+                                       An error occured attempting to load this file.
+                                       Error Type: {e.GetType().Name}
+                                       Error Message:
+                                       {e.Message}
+                                       Stack Trace:
+                                       {e.StackTrace}
+                                       If you believe the program is at fault please log an issue at
+                                       https://github.com/Issung/SorterExpress with the above information.
+                                       """;
 
             errorMessageTextBox.Show();
         }

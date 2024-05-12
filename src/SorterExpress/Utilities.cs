@@ -1,7 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using SorterExpress.Classes;
 using SorterExpress.Classes.SettingsData;
 using SorterExpress.Forms;
-using SorterExpress.Properties;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,70 +16,20 @@ using System.Windows.Forms;
 
 namespace SorterExpress
 {
-    public enum FileType { Image, Video, Other };
-
-    public class FileDetails
-    {
-        public string[] Tags;
-        public string Note;
-
-        /// <summary>
-        /// File extension including dot.
-        /// </summary>
-        public string FileExtension;
-        public FileType FileType;
-
-        /// <summary>
-        /// Merge the tags and note of another file details into these details.
-        /// Tags will remove duplicates and be ordered alphabetically once again.
-        /// Notes will be seperated by a hyphen and 2 spaces (" - ") if there is a note in both objects.
-        /// File extension and type of will remain from THIS object.
-        /// </summary>
-        public void Combine(FileDetails moreDetails)
-        {
-            Tags = Tags.Concat(moreDetails.Tags).Distinct().OrderBy(t => t).ToArray();
-
-            List<string> notes = new List<string>();
-            if (!string.IsNullOrWhiteSpace(Note))
-                notes.Add(Note);
-            if (!string.IsNullOrWhiteSpace(moreDetails.Note))
-                notes.Add(moreDetails.Note);
-
-            Note = string.Join(" - ", notes);
-        }
-
-        public string GenerateFilename()
-        {
-            string ret = "";
-
-            ret += string.Join(" ", Tags);
-
-            ret += !String.IsNullOrWhiteSpace(Note) ? $" ({Note})" : "";
-
-            ret += FileExtension;
-
-            return ret;
-        }
-
-        public int RemoveTagsNotInCollection(IEnumerable<string> collection)
-        {
-            var templist = Tags.ToList();
-            int removedCount = templist.RemoveAll(t => !collection.Contains(t));
-            Tags = templist.ToArray();
-            return removedCount;
-        }
-    }
-
     class Utilities
     {
         public const string TAGS_FILE_EXTENSION = "tgs";
 
+        // TODO: Use shared md5 instance for speed, with lock for race conditions.
         private static MD5 md5 = null;
-        public static readonly string[] videoFileExtensions = { ".webm", ".avi", ".mp4", ".flv" };
-        public static readonly string[] imageFileExtensions = { ".jpg", ".jpeg", ".jpg_large", ".png", ".bmp", ".gif" };
 
-        public static readonly char[] NoteForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.' };
-        public static readonly char[] TagForbiddenCharacters = { '/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.', ' ', '(', ')' };
+        public static readonly string[] VideoFileExtensions = [".3gp", ".avi", ".flv", ".m4v", ".mkv", ".mov", ".mp4", ".mpeg", ".mpg", ".vob", ".webm", ".wmv"];
+        public static readonly string[] ImageFileExtensions = [".avif", ".bmp", ".gif", ".heic", ".heif", ".ico", ".jpg", ".jpg_large", ".jpeg", ".png", ".tiff", ".webp"];
+        /// <summary>Image extensions that can be viewed but require additional processing via ImageSharp.</summary>
+        public static readonly string[] ExtraDecodingImageExtensions = [".avif", ".heic", ".heif", ".webp"];
+
+        public static readonly char[] NoteForbiddenCharacters = ['/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.'];
+        public static readonly char[] TagForbiddenCharacters = ['/', '\\', '?', '%', '*', ':', '|', '"', '<', '>', '.', ' ', '(', ')'];
 
         /// <summary>
         /// Open "path" with the operating system's default app.<br/>
@@ -92,10 +42,11 @@ namespace SorterExpress
 
         public static FileDetails GetFileDetails(string filepath)
         {
-            FileDetails details = new FileDetails();
-
-            details.FileExtension = Path.GetExtension(filepath);
-            details.FileType = Utilities.GetFileType(filepath);
+            var details = new FileDetails()
+            { 
+                FileExtension = Path.GetExtension(filepath),
+                FileType = Utilities.GetFileType(filepath),
+            };
 
             string strippedPath = Path.GetFileNameWithoutExtension(filepath);
 
@@ -107,10 +58,10 @@ namespace SorterExpress
             }
 
             //If there was a note, strip it out of the file name for more processing (finding tags).
-            if (!String.IsNullOrWhiteSpace(details.Note))
+            if (!string.IsNullOrWhiteSpace(details.Note))
                 strippedPath = strippedPath.Substring(0, indexOfFirstOpeningBracket);
 
-            details.Tags = strippedPath.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            details.Tags = strippedPath.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
             return details;
         }
@@ -127,12 +78,25 @@ namespace SorterExpress
 
         public static bool FileIsImage(string filepath)
         {
-            return imageFileExtensions.Contains(Path.GetExtension(filepath).ToLower());
+            return ImageFileExtensions.Contains(Path.GetExtension(filepath), StringComparer.CurrentCultureIgnoreCase);
+        }
+
+        public static bool FileRequiresExtraDecoding(string filepath)
+        {
+            var extension = Path.GetExtension(filepath);
+            if (ImageFileExtensions.Contains(extension, StringComparer.CurrentCultureIgnoreCase))
+            {
+                return ExtraDecodingImageExtensions.Contains(extension, StringComparer.CurrentCultureIgnoreCase);
+            }
+            else
+            {
+                throw new ArgumentException($"File at path is not an allowed image format. Path: {filepath}.");
+            }
         }
 
         public static bool FileIsVideo(string filepath)
         {
-            return videoFileExtensions.Contains(Path.GetExtension(filepath).ToLower());
+            return VideoFileExtensions.Contains(Path.GetExtension(filepath), StringComparer.CurrentCultureIgnoreCase);
         }
 
         /// <summary>

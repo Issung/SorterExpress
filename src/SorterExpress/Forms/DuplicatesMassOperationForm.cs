@@ -1,4 +1,5 @@
-﻿using SorterExpress.Classes.Actions.DuplicateActions;
+﻿using SorterExpress.Classes;
+using SorterExpress.Classes.Actions.DuplicateActions;
 using SorterExpress.Controllers;
 using SorterExpress.Model.Duplicates;
 using System;
